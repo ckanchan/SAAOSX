@@ -12,6 +12,15 @@
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
 		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
+		5441390B2004D30A00A64CB2 /* OraccJSONtoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */; };
+		5441390D2004D30E00A64CB2 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */; };
+		54DE21B5200D1F9400F2BBCD /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE21B4200D1F9400F2BBCD /* TextView.swift */; };
+		54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */; };
+		54FC1EF6200BDABF00AB364C /* EditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF4200BDABF00AB364C /* EditionViewController.swift */; };
+		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
+		54FC1EFB200C018F00AB364C /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EFA200C018F00AB364C /* WindowController.swift */; };
+		54FC1EFD200C820A00AB364C /* ZIPFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		54FC1F00200C820D00AB364C /* OraccJSONtoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +33,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		54FC1EFE200C820A00AB364C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				54FC1F00200C820D00AB364C /* OraccJSONtoSwift.framework in Embed Frameworks */,
+				54FC1EFD200C820A00AB364C /* ZIPFoundation.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		544138D92004D27A00A64CB2 /* SAAOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -31,10 +55,16 @@
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		544138E32004D27A00A64CB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		544138E52004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		544138E62004D27A00A64CB2 /* SAAOSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAOSX.entitlements; sourceTree = "<group>"; };
 		544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAAOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSXTests.swift; sourceTree = "<group>"; };
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OraccJSONtoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ZIPFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54DE21B4200D1F9400F2BBCD /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
+		54FC1EF4200BDABF00AB364C /* EditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditionViewController.swift; sourceTree = "<group>"; };
+		54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
+		54FC1EFA200C018F00AB364C /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5441390D2004D30E00A64CB2 /* ZIPFoundation.framework in Frameworks */,
+				5441390B2004D30A00A64CB2 /* OraccJSONtoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +93,7 @@
 				544138DB2004D27A00A64CB2 /* SAAOSX */,
 				544138EE2004D27A00A64CB2 /* SAAOSXTests */,
 				544138DA2004D27A00A64CB2 /* Products */,
+				5441390A2004D30A00A64CB2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,12 +109,16 @@
 		544138DB2004D27A00A64CB2 /* SAAOSX */ = {
 			isa = PBXGroup;
 			children = (
+				54DE21B4200D1F9400F2BBCD /* TextView.swift */,
 				544138DC2004D27A00A64CB2 /* AppDelegate.swift */,
 				544138DE2004D27A00A64CB2 /* ViewController.swift */,
+				54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */,
+				54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */,
 				544138E02004D27A00A64CB2 /* Assets.xcassets */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
+				54FC1EFA200C018F00AB364C /* WindowController.swift */,
+				54FC1EF4200BDABF00AB364C /* EditionViewController.swift */,
 				544138E52004D27A00A64CB2 /* Info.plist */,
-				544138E62004D27A00A64CB2 /* SAAOSX.entitlements */,
 			);
 			path = SAAOSX;
 			sourceTree = "<group>";
@@ -95,6 +132,15 @@
 			path = SAAOSXTests;
 			sourceTree = "<group>";
 		};
+		5441390A2004D30A00A64CB2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */,
+				5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -105,6 +151,7 @@
 				544138D52004D27A00A64CB2 /* Sources */,
 				544138D62004D27A00A64CB2 /* Frameworks */,
 				544138D72004D27A00A64CB2 /* Resources */,
+				54FC1EFE200C820A00AB364C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -146,6 +193,11 @@
 					544138D82004D27A00A64CB2 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					544138EA2004D27A00A64CB2 = {
 						CreatedOnToolsVersion = 9.2;
@@ -198,7 +250,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				544138DF2004D27A00A64CB2 /* ViewController.swift in Sources */,
+				54FC1EFB200C018F00AB364C /* WindowController.swift in Sources */,
+				54FC1EF6200BDABF00AB364C /* EditionViewController.swift in Sources */,
+				54DE21B5200D1F9400F2BBCD /* TextView.swift in Sources */,
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
+				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
+				54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +318,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -318,7 +375,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -342,7 +399,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SAAOSX/SAAOSX.entitlements;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
@@ -350,6 +407,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -358,7 +416,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SAAOSX/SAAOSX.entitlements;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
@@ -366,6 +424,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

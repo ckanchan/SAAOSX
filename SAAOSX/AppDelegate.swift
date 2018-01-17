@@ -7,14 +7,19 @@
 //
 
 import Cocoa
+import OraccJSONtoSwift
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
+    lazy var oraccInterface: OraccInterface = {
+        return try! OraccGithubToSwiftInterface()
+    }()
+    
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
