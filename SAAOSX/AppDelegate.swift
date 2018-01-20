@@ -25,6 +25,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
+    
+    @IBAction func newProjectListWindow(_ sender: Any) {
+        let storyboard = NSStoryboard.main
+        
+        guard let newWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ProjectListWindow")) as? NSWindowController else {return}
+        newWindow.showWindow(nil)
+    }
 
 
 }
