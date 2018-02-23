@@ -17,4 +17,12 @@ extension NSViewController {
     var oracc: OraccInterface {
         return appDelegate.oraccInterface
     }
+    
+    var pinnedTextController: PinnedTextController {
+        return appDelegate.pinnedTextController
+    }
+    
+    var glossaryController: GlossaryController {
+        return appDelegate.glossaryController
+    }
 }

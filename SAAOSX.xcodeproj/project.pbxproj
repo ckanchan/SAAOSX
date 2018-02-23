@@ -15,11 +15,25 @@
 		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
 		5441390B2004D30A00A64CB2 /* OraccJSONtoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */; };
 		5441390D2004D30E00A64CB2 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */; };
+		5454BD95203AEF3A0056D403 /* PinnedTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5454BD94203AEF3A0056D403 /* PinnedTextController.swift */; };
+		5454BD99203B6ED30056D403 /* CatalogueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5454BD98203B6ED30056D403 /* CatalogueProvider.swift */; };
+		54737B2A20384DE30030F71D /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54737B2920384DE30030F71D /* SQLite.framework */; };
+		54737B2B20384DE30030F71D /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 54737B2920384DE30030F71D /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		54737B2D203850D40030F71D /* GlossaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54737B2C203850D40030F71D /* GlossaryController.swift */; };
+		54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */; };
 		547BE61E20131A1B0001B8BF /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61D20131A1B0001B8BF /* TextEditionStringContainer.swift */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
+		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
+		54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AEE982203A02D800A81B97 /* TextEdition.storyboard */; };
+		54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C91A7F2017A8C0001AA675 /* Preferences.storyboard */; };
+		54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A812017AAB0001AA675 /* PreferencesViewController.swift */; };
+		54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A832017AB9F001AA675 /* UserDefaultsController.swift */; };
+		54C91A862017B688001AA675 /* CatalogueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A852017B688001AA675 /* CatalogueController.swift */; };
+		54C91A882017C743001AA675 /* TextWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A872017C743001AA675 /* TextWindowController.swift */; };
+		54D9CD092019C974005498A3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 54D9CD082019C974005498A3 /* Credits.rtf */; };
 		54ED887220107F1900B10E8F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ED887120107F1900B10E8F /* QuartzCore.framework */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */; };
@@ -48,6 +62,7 @@
 			files = (
 				54FC1F00200C820D00AB364C /* OraccJSONtoSwift.framework in Embed Frameworks */,
 				54FC1EFD200C820A00AB364C /* ZIPFoundation.framework in Embed Frameworks */,
+				54737B2B20384DE30030F71D /* SQLite.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,11 +82,26 @@
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OraccJSONtoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ZIPFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5454BD94203AEF3A0056D403 /* PinnedTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedTextController.swift; sourceTree = "<group>"; };
+		5454BD98203B6ED30056D403 /* CatalogueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueProvider.swift; sourceTree = "<group>"; };
+		54737B2920384DE30030F71D /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54737B2C203850D40030F71D /* GlossaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryController.swift; sourceTree = "<group>"; };
+		54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
 		547BE61D20131A1B0001B8BF /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
 		547BE627201345830001B8BF /* GlossaryEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryEntryViewController.swift; sourceTree = "<group>"; };
+		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
+		54AEE982203A02D800A81B97 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
+		54B35BC7203D76F600C8EADA /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SQLite.framework; sourceTree = "<group>"; };
+		54C91A7F2017A8C0001AA675 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
+		54C91A812017AAB0001AA675 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		54C91A832017AB9F001AA675 /* UserDefaultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
+		54C91A852017B688001AA675 /* CatalogueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueController.swift; sourceTree = "<group>"; };
+		54C91A872017C743001AA675 /* TextWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWindowController.swift; sourceTree = "<group>"; };
+		54D9CD082019C974005498A3 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAOSX.entitlements; sourceTree = "<group>"; };
 		54ED887120107F1900B10E8F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSideBarViewController.swift; sourceTree = "<group>"; };
 		54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +116,7 @@
 			files = (
 				54ED887220107F1900B10E8F /* QuartzCore.framework in Frameworks */,
 				5441390D2004D30E00A64CB2 /* ZIPFoundation.framework in Frameworks */,
+				54737B2A20384DE30030F71D /* SQLite.framework in Frameworks */,
 				5441390B2004D30A00A64CB2 /* OraccJSONtoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,6 +134,7 @@
 		544138D02004D27A00A64CB2 = {
 			isa = PBXGroup;
 			children = (
+				54737B2920384DE30030F71D /* SQLite.framework */,
 				544138DB2004D27A00A64CB2 /* SAAOSX */,
 				544138EE2004D27A00A64CB2 /* SAAOSXTests */,
 				544138DA2004D27A00A64CB2 /* Products */,
@@ -122,21 +154,21 @@
 		544138DB2004D27A00A64CB2 /* SAAOSX */ = {
 			isa = PBXGroup;
 			children = (
-				547BE61D20131A1B0001B8BF /* TextEditionStringContainer.swift */,
-				544138E02004D27A00A64CB2 /* Assets.xcassets */,
+				54AEE982203A02D800A81B97 /* TextEdition.storyboard */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
-				54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */,
-				54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */,
+				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
+				54737B3920387C450030F71D /* Project */,
+				54737B3820387C0E0030F71D /* TextEdition */,
+				54737B3620387B7A0030F71D /* Glossary */,
+				54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */,
+				54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */,
+				544138E02004D27A00A64CB2 /* Assets.xcassets */,
 				54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */,
 				544138DC2004D27A00A64CB2 /* AppDelegate.swift */,
-				54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */,
-				5418DF0A200F71C7001EE385 /* TextViewController.swift */,
-				5418DF0E200FD62A001EE385 /* infoViewController.swift */,
-				547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */,
-				547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */,
-				547BE61F201321670001B8BF /* GlossaryListViewController.swift */,
-				547BE627201345830001B8BF /* GlossaryEntryViewController.swift */,
+				54C91A812017AAB0001AA675 /* PreferencesViewController.swift */,
+				54C91A832017AB9F001AA675 /* UserDefaultsController.swift */,
 				544138E52004D27A00A64CB2 /* Info.plist */,
+				54D9CD082019C974005498A3 /* Credits.rtf */,
 			);
 			path = SAAOSX;
 			sourceTree = "<group>";
@@ -153,11 +185,49 @@
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				54B35BC7203D76F600C8EADA /* SQLite.framework */,
 				54ED887120107F1900B10E8F /* QuartzCore.framework */,
 				5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */,
 				5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		54737B3620387B7A0030F71D /* Glossary */ = {
+			isa = PBXGroup;
+			children = (
+				54737B2C203850D40030F71D /* GlossaryController.swift */,
+				547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */,
+				547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */,
+				547BE61F201321670001B8BF /* GlossaryListViewController.swift */,
+				547BE627201345830001B8BF /* GlossaryEntryViewController.swift */,
+			);
+			path = Glossary;
+			sourceTree = "<group>";
+		};
+		54737B3820387C0E0030F71D /* TextEdition */ = {
+			isa = PBXGroup;
+			children = (
+				547BE61D20131A1B0001B8BF /* TextEditionStringContainer.swift */,
+				54C91A872017C743001AA675 /* TextWindowController.swift */,
+				5418DF0A200F71C7001EE385 /* TextViewController.swift */,
+				54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */,
+				5418DF0E200FD62A001EE385 /* infoViewController.swift */,
+			);
+			path = TextEdition;
+			sourceTree = "<group>";
+		};
+		54737B3920387C450030F71D /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				5454BD94203AEF3A0056D403 /* PinnedTextController.swift */,
+				54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */,
+				54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */,
+				54C91A852017B688001AA675 /* CatalogueController.swift */,
+				5454BD98203B6ED30056D403 /* CatalogueProvider.swift */,
+				54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */,
+			);
+			path = Project;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +284,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -249,8 +319,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */,
 				544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */,
+				54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */,
 				544138E42004D27A00A64CB2 /* Main.storyboard in Resources */,
+				54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */,
+				54D9CD092019C974005498A3 /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,12 +348,20 @@
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */,
 				54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */,
+				54C91A882017C743001AA675 /* TextWindowController.swift in Sources */,
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
 				547BE61E20131A1B0001B8BF /* TextEditionStringContainer.swift in Sources */,
+				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
+				54C91A862017B688001AA675 /* CatalogueController.swift in Sources */,
+				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
 				547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */,
+				5454BD95203AEF3A0056D403 /* PinnedTextController.swift in Sources */,
 				54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */,
+				54737B2D203850D40030F71D /* GlossaryController.swift in Sources */,
 				5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */,
+				5454BD99203B6ED30056D403 /* CatalogueProvider.swift in Sources */,
+				54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,7 +505,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SAAOSX/SAAOSX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
@@ -440,7 +523,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SAAOSX/SAAOSX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;

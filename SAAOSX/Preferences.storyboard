@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="I3k-64-J1g">
+            <objects>
+                <windowController storyboardIdentifier="Preferences" showSeguePresentationStyle="single" id="ofM-Ez-cwo" sceneMemberID="viewController">
+                    <window key="window" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="0zb-bK-sl3">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="1865" y="641" width="480" height="270"/>
+                        <rect key="screenRect" x="1440" y="180" width="2560" height="1418"/>
+                        <connections>
+                            <outlet property="delegate" destination="ofM-Ez-cwo" id="T3u-J1-NJ3"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="6zc-4f-N5C" kind="relationship" relationship="window.shadowedContentViewController" id="Lf5-w0-k64"/>
+                    </connections>
+                </windowController>
+                <customObject id="8hy-kb-7df" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-128" y="171"/>
+        </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="7Wr-Rx-1aX">
+            <objects>
+                <tabViewController selectedTabViewItemIndex="0" id="6zc-4f-N5C" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem label="Preferences" identifier="" id="Gym-5m-JrF"/>
+                    </tabViewItems>
+                    <tabView key="tabView" type="noTabsNoBorder" id="9ea-qf-h01">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <tabViewItems/>
+                        <connections>
+                            <outlet property="delegate" destination="6zc-4f-N5C" id="CrL-g9-Ui9"/>
+                        </connections>
+                    </tabView>
+                    <connections>
+                        <outlet property="tabView" destination="9ea-qf-h01" id="ayG-Mv-XK7"/>
+                        <segue destination="ZSR-3X-mrH" kind="relationship" relationship="tabItems" id="7Tj-OR-oeA"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="aUe-iO-6KE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-128" y="584"/>
+        </scene>
+        <!--Preferences View Controller-->
+        <scene sceneID="m7d-si-xbf">
+            <objects>
+                <viewController id="ZSR-3X-mrH" customClass="PreferencesViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="WH1-Db-kfR">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dxm-wI-lwv">
+                                <rect key="frame" x="66" y="231" width="162" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default text pane number:" id="srY-pf-a7i">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hp3-jN-7SW">
+                                <rect key="frame" x="234" y="227" width="70" height="24"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="n1E-kn-T3J">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment label="1" width="32"/>
+                                        <segment label="2" width="32" selected="YES" tag="1"/>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="setPreferenceDefault:" target="ZSR-3X-mrH" id="sYx-e2-2aA"/>
+                                </connections>
+                            </segmentedControl>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgs-c3-Txu">
+                                <rect key="frame" x="66" y="104" width="135" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="File cache" id="vKp-7z-9jj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JY0-zC-ekB">
+                                <rect key="frame" x="230" y="95" width="72" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hgL-HN-jbE">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="temporaryFileClear:" target="ZSR-3X-mrH" id="HoH-qN-oJY"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8A-If-Oca">
+                                <rect key="frame" x="66" y="141" width="115" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Resource Provider" id="apB-ZR-LTN">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DWA-SY-oTQ">
+                                <rect key="frame" x="234" y="137" width="158" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="swX-Yt-IFl">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment label="Oracc.org" width="76"/>
+                                        <segment label="Github" width="76" selected="YES" tag="1"/>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="setProviderDefault:" target="ZSR-3X-mrH" id="gaO-DK-yaN"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Dxm-wI-lwv" firstAttribute="centerY" secondItem="Hp3-jN-7SW" secondAttribute="centerY" id="XFu-hL-fSm"/>
+                            <constraint firstItem="Dxm-wI-lwv" firstAttribute="top" secondItem="WH1-Db-kfR" secondAttribute="top" constant="52" id="pPT-3W-tC3"/>
+                            <constraint firstItem="Dxm-wI-lwv" firstAttribute="leading" secondItem="WH1-Db-kfR" secondAttribute="leading" constant="68" id="xcQ-YM-bxq"/>
+                            <constraint firstItem="Hp3-jN-7SW" firstAttribute="leading" secondItem="Dxm-wI-lwv" secondAttribute="trailing" constant="10" id="xg5-zV-2Wg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="providerSwitch" destination="DWA-SY-oTQ" id="2Aw-vy-gYw"/>
+                        <outlet property="temporaryFileLabel" destination="hgs-c3-Txu" id="bcE-yu-TYj"/>
+                        <outlet property="textPreferenceSwitch" destination="Hp3-jN-7SW" id="5w3-W2-8bj"/>
+                    </connections>
+                </viewController>
+                <customObject id="qPg-VT-LdR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="541" y="343"/>
+        </scene>
+    </scenes>
+</document>
