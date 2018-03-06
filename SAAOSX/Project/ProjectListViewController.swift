@@ -8,9 +8,17 @@
 
 import Cocoa
 import OraccJSONtoSwift
-import SQLite
 
-class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, BookmarkDisplaying {
+    
+    enum CatalogueSource: String {
+        case sqlite = "Local Database", bookmarks = "Bookmarks", online = "Online"
+    }
+    
+    func refreshTableView() {
+        self.catalogueEntryView.reloadData()
+    }
+    
 
     @IBOutlet weak var catalogueEntryView: NSTableView!
     
@@ -33,29 +41,32 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     
     var catalogueProvider: CatalogueProvider?
     var selectedText: OraccCatalogEntry? = nil
-    var showingPins: Bool = false
+    var catalogueSource: CatalogueSource = .online {
+        didSet {
+            windowController.setConnectionStatus(to: catalogueSource.rawValue)
+        }
+    }
 
     
     override func viewDidAppear() {
-        pinnedTextController.tableViews.add(self)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: BookmarkedTextController.Update, object: nil)
         catalogueEntryView.doubleAction = #selector(doubleClickLoadText(_:))
         
         // If the window is being duplicated, then use a previously existing catalogue to save memory.
         guard self.catalogueProvider == nil else {
             windowController.setTitle(catalogueProvider?.name ?? "SAAoSX")
-            windowController.setConnectionStatus(to: "connected")
             catalogueEntryView.reloadData()
             return
         }
         
         // Otherwise load a default catalogue
-        loadCatalogue("saa01")
+        loadCatalogue("sqlite")
         windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
 
     }
     
     override func viewWillDisappear() {
-        pinnedTextController.tableViews.remove(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     
@@ -63,11 +74,19 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         self.windowController.loadingIndicator.startAnimation(nil)
         
         if s == "pins" {
-            self.showingPins = true
-            self.catalogueProvider = pinnedTextController
+            self.catalogueSource = .bookmarks
+            self.catalogueProvider = bookmarkedTextController
             self.catalogueEntryView.reloadData()
             self.windowController.loadingIndicator.stopAnimation(nil)
             self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
+            return
+        }
+        
+        if s == "sqlite" {
+            self.catalogueSource = .sqlite
+            self.catalogueProvider = self.sqlite
+            self.catalogueEntryView.reloadData()
+            self.windowController.loadingIndicator.stopAnimation(nil)
             return
         }
         
@@ -81,7 +100,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                     DispatchQueue.main.async {
                         self.windowController.setConnectionStatus(to: "disconnected")
                         self.windowController.pinnedToggle.state = .on
-                        self.loadCatalogue("pins")
+                        self.loadCatalogue("saa01")
                     }
                     return
             }
@@ -97,14 +116,14 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                     self.windowController.loadingIndicator.stopAnimation(nil)
                     self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
                     self.windowController.setConnectionStatus(to: "connected")
-                    self.showingPins = false
+                    self.catalogueSource = .online
                 }
             } catch {
                 print(error)
                 DispatchQueue.main.async {
                     self.loadCatalogue("pins")
                     self.windowController.setConnectionStatus(to: "disconnected")
-                    self.showingPins = true
+                    self.catalogueSource = .bookmarks
                     self.windowController.pinnedToggle.state = .on
                 }
             }
@@ -115,7 +134,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         if !searchBarIsEmpty {
             return filteredTexts.count
         }
-        return catalogueProvider?.texts.count ?? 0
+        return catalogueProvider?.count ?? 0
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -125,7 +144,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         if !searchBarIsEmpty {
             text = filteredTexts[row]
         } else {
-            guard let txt = catalogueProvider?.texts[row] else { return nil }
+            guard let txt = catalogueProvider?.text(at: row) else { return nil }
             text = txt
         }
         
@@ -137,7 +156,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             vw.textField?.stringValue = text.ancientAuthor ?? "(unassigned)"
         }
         
-        if let pinned = pinnedTextController.contains(textID: text.id) {
+        if let pinned = bookmarkedTextController.contains(textID: text.id) {
             if pinned {
                 vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
             } else {
@@ -195,8 +214,25 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     }
     
     func callLoadTextWindow(_ textEntry: OraccCatalogEntry){
-        if self.showingPins {
-            if let stringContainer = pinnedTextController.getTextStrings(textEntry.id) {
+        switch self.catalogueSource {
+        case .bookmarks:
+            if let stringContainer = bookmarkedTextController.getTextStrings(textEntry.id) {
+                guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else {return}
+                guard let textView = window.contentViewController as? TextViewController else {return}
+                window.window?.title = "\(textEntry.displayName): \(textEntry.title)"
+                
+                textView.catalogueEntry = textEntry
+                textView.stringContainer = stringContainer
+                textView.catalogueController = bookmarkedTextController
+                window.textViewController = [textView]
+                
+                window.showWindow(self)
+                self.windowController.loadingIndicator.stopAnimation(nil)
+                return
+            }
+        case .sqlite:
+            guard let sqlite = self.sqlite else {return}
+            if let stringContainer = sqlite.getTextStrings(textEntry.id) {
                 guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else {return}
                 guard let textView = window.contentViewController as? TextViewController else {return}
                 
@@ -204,40 +240,41 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 
                 textView.catalogueEntry = textEntry
                 textView.stringContainer = stringContainer
-                textView.catalogueController = pinnedTextController
+                textView.catalogueController = sqlite
                 window.textViewController = [textView]
                 
                 window.showWindow(self)
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
-        }
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let textEdition = try? self.oracc.loadText(textEntry) {
-                DispatchQueue.main.async {
-                    switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
-                    case 0:
-                        self.loadTextWindow(withText: textEdition, catalogueEntry: textEntry)
-                    case 1:
-                        self.loadSplitTextWindow(withText: textEdition, catalogueEntry: textEntry)
-                    default:
-                        print("Colossal error")
+            
+        case .online:
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let textEdition = try? self.oracc.loadText(textEntry) {
+                    DispatchQueue.main.async {
+                        switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
+                        case 0:
+                            self.loadTextWindow(withText: textEdition, catalogueEntry: textEntry)
+                        case 1:
+                            self.loadSplitTextWindow(withText: textEdition, catalogueEntry: textEntry)
+                        default:
+                            print("Colossal error")
+                        }
+                        self.windowController.loadingIndicator.stopAnimation(nil)
                     }
-                    self.windowController.loadingIndicator.stopAnimation(nil)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.windowController.loadingIndicator.stopAnimation(nil)
-                    let alert = NSAlert()
-                    alert.messageText = "No text available"
-                    alert.informativeText = "Edition for \(textEntry.title) not available"
-                    alert.addButton(withTitle: "OK")
-                    alert.addButton(withTitle: "Try online")
-                    alert.alertStyle = .warning
-                    let response = alert.runModal()
-                    if response == NSApplication.ModalResponse.alertSecondButtonReturn {
-                        self.viewOnline(self)
+                } else {
+                    DispatchQueue.main.async {
+                        self.windowController.loadingIndicator.stopAnimation(nil)
+                        let alert = NSAlert()
+                        alert.messageText = "No text available"
+                        alert.informativeText = "Edition for \(textEntry.title) not available"
+                        alert.addButton(withTitle: "OK")
+                        alert.addButton(withTitle: "Try online")
+                        alert.alertStyle = .warning
+                        let response = alert.runModal()
+                        if response == NSApplication.ModalResponse.alertSecondButtonReturn {
+                            self.viewOnline(self)
+                        }
                     }
                 }
             }
@@ -248,7 +285,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         if !searchBarIsEmpty {
             selectedText = filteredTexts[catalogueEntryView.selectedRow]
         } else {
-            guard let txt = catalogueProvider?.texts[catalogueEntryView.selectedRow] else { return  }
+            guard let txt = catalogueProvider?.text(at: catalogueEntryView.selectedRow) else { return  }
             selectedText = txt
         }
         
@@ -273,16 +310,17 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     
     
     func filterContentForSearchText(_ searchText: String){
-        guard let texts = catalogueProvider?.texts else { return }
-        filteredTexts = texts.filter {
-            $0.description.lowercased().contains(searchText.lowercased())
-        }
+        filteredTexts = catalogueProvider?.search(searchText) ?? []
     }
     
     @IBAction func search(_ sender: NSSearchFieldCell) {
-        if !sender.stringValue.isEmpty {
+        search(sender.stringValue)
+    }
+    
+    func search(_ str: String){
+        if !str.isEmpty {
             searchBarIsEmpty = false
-            filterContentForSearchText(sender.stringValue)
+            filterContentForSearchText(str)
             catalogueEntryView.reloadData()
         } else {
             searchBarIsEmpty = true
@@ -305,9 +343,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     }
 
     @IBAction func newProjectListWindow(_ sender: Any) {
-        guard let newWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ProjectListWindow")) as? ProjectListWindowController else {return}
-        newWindow.projectViewController.catalogueProvider = self.catalogueProvider
-        newWindow.showWindow(nil)
+        ProjectListWindowController.new(catalogue: self.catalogueProvider)
     }
     
     @IBAction func newDocument(_ sender: Any){

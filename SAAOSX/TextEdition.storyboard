@@ -266,14 +266,14 @@
                                     <button key="view" verticalHuggingPriority="750" id="Wv4-iO-820">
                                         <rect key="frame" x="10" y="14" width="40" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSBookmarksTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vdm-uI-hUC">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSBookmarksTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vdm-uI-hUC">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="bookmark:" target="WtX-rM-ZzQ" id="1uK-m3-Cdq"/>
+                                        </connections>
                                     </button>
-                                    <connections>
-                                        <action selector="saveEncode:" target="WtX-rM-ZzQ" id="37c-eM-3jq"/>
-                                    </connections>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
@@ -292,6 +292,7 @@
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="bookmarksBtn" destination="Wv4-iO-820" id="jJm-aA-RtT"/>
                         <outlet property="catalogueSearch" destination="fit-tg-5sd" id="t9J-MO-Nyr"/>
                         <segue destination="hW3-B0-a6o" kind="relationship" relationship="window.shadowedContentViewController" id="AAm-Vi-Ibw"/>
                     </connections>

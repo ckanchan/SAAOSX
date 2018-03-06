@@ -9,6 +9,7 @@
 import Cocoa
 import OraccJSONtoSwift
 
+
 class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
     @IBOutlet weak var ResultsTableView: NSTableView!
     
@@ -34,7 +35,7 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
     
     @IBAction func searchCatalogue(_ sender: NSSearchField){
         let filterText = sender.stringValue
-        guard let results = catalogueController?.texts.filter({$0.description.lowercased().contains(filterText.lowercased())}) else {return}
+        guard let results = catalogueController?.search(filterText) else {return}
         self.results = results
         self.view.window?.windowController?.showWindow(self)
         
@@ -85,18 +86,29 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
     }
     
     func loadNewText(_ entry: OraccCatalogEntry){
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let text = try? self.oracc.loadText(entry){
-                DispatchQueue.main.async {
-                    let stringContainer = TextEditionStringContainer(text)
-                    
-                    for controller in self.textViewController.allObjects as! [TextViewController] {
-                        controller.catalogueEntry = entry
-                        controller.stringContainer = stringContainer
-                        controller.setText(self)
-                        controller.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+        if let text = sqlite?.getTextStrings(entry.id) {
+            for controller in self.textViewController.allObjects as! [TextViewController] {
+                controller.catalogueEntry = entry
+                controller.stringContainer = text
+                controller.setText(self)
+                controller.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+            }
+            self.textWindow?.resultsPopover.close()
+        } else {
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let text = try? self.oracc.loadText(entry){
+                    DispatchQueue.main.async {
+                        let stringContainer = TextEditionStringContainer(text)
+                        
+                        for controller in self.textViewController.allObjects as! [TextViewController] {
+                            controller.catalogueEntry = entry
+                            controller.stringContainer = stringContainer
+                            controller.setText(self)
+                            controller.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+                        }
+                        self.textWindow?.resultsPopover.close()
+                        
                     }
-                    self.textWindow?.resultsPopover.close()
                     
                 }
             }

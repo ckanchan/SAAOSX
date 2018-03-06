@@ -9,38 +9,39 @@
 /* Begin PBXBuildFile section */
 		5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0A200F71C7001EE385 /* TextViewController.swift */; };
 		5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* infoViewController.swift */; };
+		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
 		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
-		5441390B2004D30A00A64CB2 /* OraccJSONtoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */; };
-		5441390D2004D30E00A64CB2 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */; };
-		5454BD95203AEF3A0056D403 /* PinnedTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5454BD94203AEF3A0056D403 /* PinnedTextController.swift */; };
-		5454BD99203B6ED30056D403 /* CatalogueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5454BD98203B6ED30056D403 /* CatalogueProvider.swift */; };
-		54737B2A20384DE30030F71D /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54737B2920384DE30030F71D /* SQLite.framework */; };
-		54737B2B20384DE30030F71D /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 54737B2920384DE30030F71D /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		54737B2D203850D40030F71D /* GlossaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54737B2C203850D40030F71D /* GlossaryController.swift */; };
+		544D4FFE204196F6009016DA /* SAAOSAQLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SAAOSAQLController.swift */; };
 		54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */; };
-		547BE61E20131A1B0001B8BF /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61D20131A1B0001B8BF /* TextEditionStringContainer.swift */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
 		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
+		5494D8C92042D36B0071756C /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5494D8C82042D36B0071756C /* SQLite.framework */; };
+		5494D8CA2042D36B0071756C /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5494D8C82042D36B0071756C /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5494D8CC2042D36B0071756C /* OraccJSONtoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5494D8CB2042D36B0071756C /* OraccJSONtoSwift.framework */; };
+		5494D8CD2042D36B0071756C /* OraccJSONtoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5494D8CB2042D36B0071756C /* OraccJSONtoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5494D8CF2042D36B0071756C /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5494D8CE2042D36B0071756C /* ZIPFoundation.framework */; };
+		5494D8D02042D36B0071756C /* ZIPFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5494D8CE2042D36B0071756C /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5494D8D22042D38B0071756C /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */; };
+		54A9521A204058D60042E1BA /* cdTextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* cdTextEditionStringContainer.swift */; };
+		54A9521B204058D60042E1BA /* cdCatalogueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* cdCatalogueController.swift */; };
+		54A9521C204058D60042E1BA /* BookmarkedTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* BookmarkedTextController.swift */; };
+		54A9521D204058D60042E1BA /* cdGlossaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95219204058D60042E1BA /* cdGlossaryController.swift */; };
 		54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AEE982203A02D800A81B97 /* TextEdition.storyboard */; };
 		54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C91A7F2017A8C0001AA675 /* Preferences.storyboard */; };
 		54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A812017AAB0001AA675 /* PreferencesViewController.swift */; };
 		54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A832017AB9F001AA675 /* UserDefaultsController.swift */; };
-		54C91A862017B688001AA675 /* CatalogueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A852017B688001AA675 /* CatalogueController.swift */; };
 		54C91A882017C743001AA675 /* TextWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A872017C743001AA675 /* TextWindowController.swift */; };
 		54D9CD092019C974005498A3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 54D9CD082019C974005498A3 /* Credits.rtf */; };
-		54ED887220107F1900B10E8F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ED887120107F1900B10E8F /* QuartzCore.framework */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */; };
 		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
 		54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */; };
-		54FC1EFD200C820A00AB364C /* ZIPFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		54FC1F00200C820D00AB364C /* OraccJSONtoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,15 +55,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		54FC1EFE200C820A00AB364C /* Embed Frameworks */ = {
+		5494D8D12042D36C0071756C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				54FC1F00200C820D00AB364C /* OraccJSONtoSwift.framework in Embed Frameworks */,
-				54FC1EFD200C820A00AB364C /* ZIPFoundation.framework in Embed Frameworks */,
-				54737B2B20384DE30030F71D /* SQLite.framework in Embed Frameworks */,
+				5494D8CD2042D36B0071756C /* OraccJSONtoSwift.framework in Embed Frameworks */,
+				5494D8CA2042D36B0071756C /* SQLite.framework in Embed Frameworks */,
+				5494D8D02042D36B0071756C /* ZIPFoundation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,6 +73,7 @@
 /* Begin PBXFileReference section */
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		5418DF0E200FD62A001EE385 /* infoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoViewController.swift; sourceTree = "<group>"; };
+		5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+CoreSpotlight.swift"; sourceTree = "<group>"; };
 		544138D92004D27A00A64CB2 /* SAAOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,29 +82,28 @@
 		544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAAOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSXTests.swift; sourceTree = "<group>"; };
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OraccJSONtoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ZIPFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5454BD94203AEF3A0056D403 /* PinnedTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedTextController.swift; sourceTree = "<group>"; };
-		5454BD98203B6ED30056D403 /* CatalogueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueProvider.swift; sourceTree = "<group>"; };
-		54737B2920384DE30030F71D /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		54737B2C203850D40030F71D /* GlossaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryController.swift; sourceTree = "<group>"; };
+		544D4FFD204196F6009016DA /* SAAOSAQLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSAQLController.swift; sourceTree = "<group>"; };
+		544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAA_Lemmatised.sqlite3; sourceTree = "<group>"; };
 		54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
-		547BE61D20131A1B0001B8BF /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
 		547BE627201345830001B8BF /* GlossaryEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryEntryViewController.swift; sourceTree = "<group>"; };
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
+		5494D8C82042D36B0071756C /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5494D8CB2042D36B0071756C /* OraccJSONtoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OraccJSONtoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5494D8CE2042D36B0071756C /* ZIPFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ZIPFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54A95216204058D60042E1BA /* cdTextEditionStringContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cdTextEditionStringContainer.swift; sourceTree = "<group>"; };
+		54A95217204058D60042E1BA /* cdCatalogueController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cdCatalogueController.swift; sourceTree = "<group>"; };
+		54A95218204058D60042E1BA /* BookmarkedTextController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkedTextController.swift; sourceTree = "<group>"; };
+		54A95219204058D60042E1BA /* cdGlossaryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cdGlossaryController.swift; sourceTree = "<group>"; };
 		54AEE982203A02D800A81B97 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
-		54B35BC7203D76F600C8EADA /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SQLite.framework; sourceTree = "<group>"; };
 		54C91A7F2017A8C0001AA675 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		54C91A812017AAB0001AA675 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		54C91A832017AB9F001AA675 /* UserDefaultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
-		54C91A852017B688001AA675 /* CatalogueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueController.swift; sourceTree = "<group>"; };
 		54C91A872017C743001AA675 /* TextWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWindowController.swift; sourceTree = "<group>"; };
 		54D9CD082019C974005498A3 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAOSX.entitlements; sourceTree = "<group>"; };
-		54ED887120107F1900B10E8F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSideBarViewController.swift; sourceTree = "<group>"; };
 		54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
 		54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -114,10 +115,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54ED887220107F1900B10E8F /* QuartzCore.framework in Frameworks */,
-				5441390D2004D30E00A64CB2 /* ZIPFoundation.framework in Frameworks */,
-				54737B2A20384DE30030F71D /* SQLite.framework in Frameworks */,
-				5441390B2004D30A00A64CB2 /* OraccJSONtoSwift.framework in Frameworks */,
+				5494D8CC2042D36B0071756C /* OraccJSONtoSwift.framework in Frameworks */,
+				5494D8C92042D36B0071756C /* SQLite.framework in Frameworks */,
+				5494D8CF2042D36B0071756C /* ZIPFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +134,9 @@
 		544138D02004D27A00A64CB2 = {
 			isa = PBXGroup;
 			children = (
-				54737B2920384DE30030F71D /* SQLite.framework */,
+				5494D8CE2042D36B0071756C /* ZIPFoundation.framework */,
+				5494D8CB2042D36B0071756C /* OraccJSONtoSwift.framework */,
+				5494D8C82042D36B0071756C /* SQLite.framework */,
 				544138DB2004D27A00A64CB2 /* SAAOSX */,
 				544138EE2004D27A00A64CB2 /* SAAOSXTests */,
 				544138DA2004D27A00A64CB2 /* Products */,
@@ -154,6 +156,8 @@
 		544138DB2004D27A00A64CB2 /* SAAOSX */ = {
 			isa = PBXGroup;
 			children = (
+				544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */,
+				54A9520B204058C40042E1BA /* CDKOraccSources */,
 				54AEE982203A02D800A81B97 /* TextEdition.storyboard */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
 				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
@@ -169,6 +173,7 @@
 				54C91A832017AB9F001AA675 /* UserDefaultsController.swift */,
 				544138E52004D27A00A64CB2 /* Info.plist */,
 				54D9CD082019C974005498A3 /* Credits.rtf */,
+				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
 			);
 			path = SAAOSX;
 			sourceTree = "<group>";
@@ -185,10 +190,6 @@
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				54B35BC7203D76F600C8EADA /* SQLite.framework */,
-				54ED887120107F1900B10E8F /* QuartzCore.framework */,
-				5441390E2004D30E00A64CB2 /* ZIPFoundation.framework */,
-				5441390C2004D30A00A64CB2 /* OraccJSONtoSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,7 +197,6 @@
 		54737B3620387B7A0030F71D /* Glossary */ = {
 			isa = PBXGroup;
 			children = (
-				54737B2C203850D40030F71D /* GlossaryController.swift */,
 				547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */,
 				547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */,
 				547BE61F201321670001B8BF /* GlossaryListViewController.swift */,
@@ -208,7 +208,6 @@
 		54737B3820387C0E0030F71D /* TextEdition */ = {
 			isa = PBXGroup;
 			children = (
-				547BE61D20131A1B0001B8BF /* TextEditionStringContainer.swift */,
 				54C91A872017C743001AA675 /* TextWindowController.swift */,
 				5418DF0A200F71C7001EE385 /* TextViewController.swift */,
 				54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */,
@@ -220,14 +219,23 @@
 		54737B3920387C450030F71D /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				5454BD94203AEF3A0056D403 /* PinnedTextController.swift */,
 				54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */,
 				54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */,
-				54C91A852017B688001AA675 /* CatalogueController.swift */,
-				5454BD98203B6ED30056D403 /* CatalogueProvider.swift */,
+				544D4FFD204196F6009016DA /* SAAOSAQLController.swift */,
 				54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */,
 			);
 			path = Project;
+			sourceTree = "<group>";
+		};
+		54A9520B204058C40042E1BA /* CDKOraccSources */ = {
+			isa = PBXGroup;
+			children = (
+				54A95218204058D60042E1BA /* BookmarkedTextController.swift */,
+				54A95216204058D60042E1BA /* cdTextEditionStringContainer.swift */,
+				54A95217204058D60042E1BA /* cdCatalogueController.swift */,
+				54A95219204058D60042E1BA /* cdGlossaryController.swift */,
+			);
+			name = CDKOraccSources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,10 +245,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 544138F42004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAOSX" */;
 			buildPhases = (
-				544138D52004D27A00A64CB2 /* Sources */,
 				544138D62004D27A00A64CB2 /* Frameworks */,
+				544138D52004D27A00A64CB2 /* Sources */,
 				544138D72004D27A00A64CB2 /* Resources */,
-				54FC1EFE200C820A00AB364C /* Embed Frameworks */,
+				5494D8D12042D36C0071756C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -284,7 +292,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -320,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */,
+				5494D8D22042D38B0071756C /* SAA_Lemmatised.sqlite3 in Resources */,
 				544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */,
 				54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */,
 				544138E42004D27A00A64CB2 /* Main.storyboard in Resources */,
@@ -345,22 +354,23 @@
 				54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */,
 				547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */,
 				547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */,
+				54A9521D204058D60042E1BA /* cdGlossaryController.swift in Sources */,
+				54A9521B204058D60042E1BA /* cdCatalogueController.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */,
 				54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */,
 				54C91A882017C743001AA675 /* TextWindowController.swift in Sources */,
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
-				547BE61E20131A1B0001B8BF /* TextEditionStringContainer.swift in Sources */,
+				54A9521A204058D60042E1BA /* cdTextEditionStringContainer.swift in Sources */,
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
+				544D4FFE204196F6009016DA /* SAAOSAQLController.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
-				54C91A862017B688001AA675 /* CatalogueController.swift in Sources */,
+				54A9521C204058D60042E1BA /* BookmarkedTextController.swift in Sources */,
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
 				547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */,
-				5454BD95203AEF3A0056D403 /* PinnedTextController.swift in Sources */,
 				54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */,
-				54737B2D203850D40030F71D /* GlossaryController.swift in Sources */,
 				5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */,
-				5454BD99203B6ED30056D403 /* CatalogueProvider.swift in Sources */,
+				5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
 				54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,11 +515,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SAAOSX/SAAOSX.entitlements;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSX;
@@ -523,11 +537,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SAAOSX/SAAOSX.entitlements;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSX;

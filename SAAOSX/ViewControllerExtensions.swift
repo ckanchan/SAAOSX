@@ -9,6 +9,7 @@
 import Cocoa
 import OraccJSONtoSwift
 
+
 extension NSViewController {
     var appDelegate: AppDelegate {
         return NSApplication.shared.delegate! as! AppDelegate
@@ -18,11 +19,13 @@ extension NSViewController {
         return appDelegate.oraccInterface
     }
     
-    var pinnedTextController: PinnedTextController {
-        return appDelegate.pinnedTextController
+    var bookmarkedTextController: BookmarkedTextController {
+        return appDelegate.bookmarkedTextController
     }
     
     var glossaryController: GlossaryController {
         return appDelegate.glossaryController
     }
+    
+    var sqlite: SAAOSQLController? {return appDelegate.sqlite}
 }

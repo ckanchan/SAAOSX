@@ -719,6 +719,7 @@
                                                 <string>saao/saa19</string>
                                                 <string>cams/gkab</string>
                                                 <string>pins</string>
+                                                <string>sqlite</string>
                                             </objectValues>
                                         </comboBoxCell>
                                         <connections>

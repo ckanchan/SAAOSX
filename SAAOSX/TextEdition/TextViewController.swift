@@ -9,13 +9,54 @@
 import Cocoa
 import OraccJSONtoSwift
 
+
 class TextViewController: NSViewController, NSTextViewDelegate {
     @IBOutlet weak var textSelected: NSSegmentedControl!
     @IBOutlet var textView: NSTextView!
     @IBOutlet weak var definitionView: NSTextField!
     @IBOutlet var textMenu: NSMenu!
     
+    
     var catalogueController: CatalogueProvider?
+    var stringContainer: TextEditionStringContainer?
+    var splitViewController: NSSplitViewController?
+    var catalogueEntry: OraccCatalogEntry! {
+        didSet {
+            guard let cat = catalogueEntry else {return}
+            self.saved = self.bookmarkedTextController.contains(textID: cat.id)
+    
+            guard self.windowController != nil else {return}
+            guard splitViewController == nil else {return}
+            windowController?.catalogueSearch.stringValue = catalogueEntry.title
+        }
+    }
+    
+    var saved: Bool? = false {
+        didSet {
+            guard self.windowController != nil else {return}
+            if case .some(true) = self.saved {
+                windowController?.bookmarksBtn.state = .on
+            } else {
+                windowController?.bookmarksBtn.state = .off
+            }
+        }
+    }
+    
+    
+    lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
+    
+    
+    lazy var fontManager = {return NSFontManager.shared}()
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.title = catalogueEntry?.title ?? "Text Edition"
+        setText(self)
+        textView.delegate = self
+        
+        self.textView.usesFontPanel = true
+    }
+
     
     @IBAction func setText(_ sender: Any) {
         guard let stringContainer = self.stringContainer else {return}
@@ -49,54 +90,20 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     }
     
     
-    var splitViewController: NSSplitViewController?
     
-    var catalogueEntry: OraccCatalogEntry? {
-        didSet{
-            guard splitViewController == nil else {return}
-            guard self.windowController != nil else {return}
-            windowController?.catalogueSearch.stringValue = catalogueEntry?.title ?? ""
-        }
-    }
-    
-    var stringContainer: TextEditionStringContainer?
-    lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
-    
-    
-    lazy var fontManager = {return NSFontManager.shared}()
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        self.title = catalogueEntry?.title ?? "Text Edition"
-        setText(self)
-        textView.delegate = self
-        
-        self.textView.usesFontPanel = true
-    }
-
     // MARK :- Toolbar Control Methods
     @IBAction func newTextWindow(_ sender: Any) {
-        guard let newWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else {return}
-        guard let newView = newWindow.contentViewController as? TextViewController else {return}
-        
-        
-        newView.catalogueController = self.catalogueController
-        newView.catalogueEntry = self.catalogueEntry
-        newView.stringContainer = self.stringContainer
-        newWindow.window?.title = "\(catalogueEntry!.displayName): \(catalogueEntry!.title)"
-        newWindow.textViewController = [newView]
-        
-        newWindow.showWindow(self)
-        
+        TextWindowController.new(self.catalogueEntry, strings: self.stringContainer, catalogue: self.catalogueController)
     }
     
     @IBAction func showInfoView(_ sender: Any) {
         guard let infoWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("infoWindow")) as? NSWindowController else {return}
         guard let infoView = infoWindow.contentViewController as? InfoViewController else {return}
         
-        infoView.infoLabel.stringValue = self.catalogueEntry?.description ?? "?"
+        infoView.infoLabel.stringValue = self.catalogueEntry.description
         infoWindow.showWindow(nil)
     }
+    
     
     @IBAction func newDocument(_ sender: Any){
         newTextWindow(self)
@@ -149,13 +156,11 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     }
     
     @IBAction func viewOnline(_ sender: Any) {
-        if let text = catalogueEntry {
-            var baseURL = URL(string: "http://oracc.org")!
-            baseURL.appendPathComponent(text.project)
-            baseURL.appendPathComponent(text.id)
-            baseURL.appendPathComponent("html")
-            NSWorkspace.shared.open(baseURL)
-        }
+        var baseURL = URL(string: "http://oracc.org")!
+        baseURL.appendPathComponent(catalogueEntry.project)
+        baseURL.appendPathComponent(catalogueEntry.id)
+        baseURL.appendPathComponent("html")
+        NSWorkspace.shared.open(baseURL)
     }
     
     @IBAction func navigate(_ sender: NSSegmentedControl){
@@ -163,7 +168,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         case 0:
             print("navigate back")
         case 1:
-             print("navigate forward")
+            print("navigate forward")
         default:
             return
         }
@@ -174,34 +179,22 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         GlossaryWindowController.new(self)
     }
     
-    @IBAction func saveEncode(_ sender: Any) {
-        
-        guard let cat = self.catalogueEntry else {return}
+    @IBAction func bookmark(_ sender: NSButton) {
         guard let str = self.stringContainer else {return}
         
-        do {
-            try pinnedTextController.save(entry: cat, strings: str)
-        } catch {
-            print(error)
+        if let alreadySaved = self.bookmarkedTextController.contains(textID: self.catalogueEntry.id) {
+            if alreadySaved {
+                self.bookmarkedTextController.remove(entry: self.catalogueEntry)
+                sender.state = .off
+            } else {
+                do {
+                    try bookmarkedTextController.save(entry: self.catalogueEntry, strings: str)
+                    sender.state = .on
+                } catch {
+                    print(error)
+                }
+            }
         }
-        
-        
-        
-        
-        
-//        let path = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(self.catalogueEntry!.id).appendingPathExtension("oraccstringcontainer")
-//
-//
-//        let encoder = JSONEncoder()
-//        encoder.outputFormatting = .prettyPrinted
-//
-//        do {
-//            let data = try encoder.encode(self.stringContainer!)
-//            try data.write(to: path)
-//        } catch {print(error)}
-
-        
-        
     }
 }
 
