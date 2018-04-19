@@ -12,6 +12,7 @@ import OraccJSONtoSwift
 public protocol CatalogueProvider: AnyObject {
     var name: String { get }
     var count: Int { get }
+    var texts: [OraccCatalogEntry] { get }
     
     func text(at row: Int) -> OraccCatalogEntry?
     func search(_ string: String) -> [OraccCatalogEntry]

@@ -17,6 +17,10 @@ import SQLite3
 
 /// Responsible for saving and loading bookmarked texts to the SQLite store.
 public class BookmarkedTextController: CatalogueProvider {
+    public lazy var texts: [OraccCatalogEntry] = {
+        return self.getCatalogueEntries() ?? []
+    }()
+    
     
     static let Update = Notification.Name.init("BookmarksUpdated")
     
@@ -238,7 +242,14 @@ public class BookmarkedTextController: CatalogueProvider {
 
     
     public init() throws {
-        let path = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
+        let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        let appSupportPath = paths[0].appendingPathComponent("SAAOSX", isDirectory: true)
+        if !FileManager.default.fileExists(atPath: appSupportPath.path) {
+            try FileManager.default.createDirectory(at: appSupportPath, withIntermediateDirectories: true, attributes: nil)
+        }
+        
+        let path = paths[0].appendingPathComponent("SAAOSX").appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
+       // let path = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
         self.db = try Connection(path.path)
         try BookmarkedTextController.initialiseTable(on: self.db)
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,37 +19,12 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="6zc-4f-N5C" kind="relationship" relationship="window.shadowedContentViewController" id="Lf5-w0-k64"/>
+                        <segue destination="ZSR-3X-mrH" kind="relationship" relationship="window.shadowedContentViewController" id="FdB-OB-tsg"/>
                     </connections>
                 </windowController>
                 <customObject id="8hy-kb-7df" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-128" y="171"/>
-        </scene>
-        <!--Tab View Controller-->
-        <scene sceneID="7Wr-Rx-1aX">
-            <objects>
-                <tabViewController selectedTabViewItemIndex="0" id="6zc-4f-N5C" sceneMemberID="viewController">
-                    <tabViewItems>
-                        <tabViewItem label="Preferences" identifier="" id="Gym-5m-JrF"/>
-                    </tabViewItems>
-                    <tabView key="tabView" type="noTabsNoBorder" id="9ea-qf-h01">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <font key="font" metaFont="message"/>
-                        <tabViewItems/>
-                        <connections>
-                            <outlet property="delegate" destination="6zc-4f-N5C" id="CrL-g9-Ui9"/>
-                        </connections>
-                    </tabView>
-                    <connections>
-                        <outlet property="tabView" destination="9ea-qf-h01" id="ayG-Mv-XK7"/>
-                        <segue destination="ZSR-3X-mrH" kind="relationship" relationship="tabItems" id="7Tj-OR-oeA"/>
-                    </connections>
-                </tabViewController>
-                <customObject id="aUe-iO-6KE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-128" y="584"/>
         </scene>
         <!--Preferences View Controller-->
         <scene sceneID="m7d-si-xbf">

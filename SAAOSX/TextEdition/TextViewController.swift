@@ -11,11 +11,15 @@ import OraccJSONtoSwift
 
 
 class TextViewController: NSViewController, NSTextViewDelegate {
+    
+    enum Navigate {
+        case left, right
+    }
+    
     @IBOutlet weak var textSelected: NSSegmentedControl!
     @IBOutlet var textView: NSTextView!
     @IBOutlet weak var definitionView: NSTextField!
     @IBOutlet var textMenu: NSMenu!
-    
     
     var catalogueController: CatalogueProvider?
     var stringContainer: TextEditionStringContainer?
@@ -42,6 +46,9 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         }
     }
     
+    lazy var currentIdx: Int? = {
+        return catalogueController?.texts.index(where: {$0.id == self.catalogueEntry.id})
+        }()
     
     lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
     
@@ -110,6 +117,28 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     }
     
     
+    func loadText(entry: OraccCatalogEntry) -> Bool{
+        if let text = sqlite?.getTextStrings(entry.id) {
+            catalogueEntry = entry
+            stringContainer = text
+            setText(self)
+            windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+            return true
+        } else {
+                if let text = try? self.oracc.loadText(entry){
+                        let stringContainer = TextEditionStringContainer(text)
+                        self.catalogueEntry = entry
+                        self.stringContainer = stringContainer
+                        self.setText(self)
+                        self.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+                        return true
+            }
+        }
+        
+        return false
+    }
+    
+    
     func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
         let menu = NSMenu(title: "Text")
         let str = view.attributedString()
@@ -166,13 +195,46 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     @IBAction func navigate(_ sender: NSSegmentedControl){
         switch sender.selectedSegment {
         case 0:
-            print("navigate back")
+            navigate(.left)
         case 1:
-            print("navigate forward")
+            navigate(.right)
         default:
             return
         }
     }
+    
+    @IBAction func previousText(_ sender: NSMenuItem) {
+        navigate(.left)
+    }
+    
+    @IBAction func nextText(_ sender: NSMenuItem) {
+        navigate(.right)
+    }
+    
+    func navigate(_ direction: Navigate) {
+        guard let currentIdx = self.currentIdx else {return}
+        guard let catalogueController = self.catalogueController else {return}
+        
+        switch direction {
+        case .left:
+            let prev = currentIdx - 1
+            guard prev >= 0 else {return}
+            guard catalogueController.texts.count >= prev else {return}
+            let newCatalogueEntry = catalogueController.texts[prev]
+            if loadText(entry: newCatalogueEntry) {
+                self.currentIdx = prev
+            }
+        case .right:
+            let next = currentIdx + 1
+            guard catalogueController.texts.count > next else {return}
+            let newCatalogueEntry = catalogueController.texts[next]
+            if loadText(entry: newCatalogueEntry) {
+                self.currentIdx = next
+            }
+        }
+    }
+    
+
     
     
     @IBAction func glossary(_ sender: Any){

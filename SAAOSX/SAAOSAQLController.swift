@@ -6,7 +6,7 @@
 //  Copyright © 2018 Chaitanya Kanchan. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 import SQLite
 import OraccJSONtoSwift
 
@@ -23,6 +23,10 @@ class SAAOSQLController: CatalogueProvider {
     var count: Int {
         return self.textCount
     }
+    
+    public lazy var texts: [OraccCatalogEntry] = {
+        self.getCatalogueEntries() ?? []
+    }()
     
     func text(at row: Int) -> OraccCatalogEntry? {
         return getEntryAt(row: row)
@@ -52,7 +56,7 @@ class SAAOSQLController: CatalogueProvider {
     
     
     public func getCatalogueEntries() -> [OraccCatalogEntry]? {
-        let query = textTable.select(id, displayName,ancientAuthor, title, project)
+        let query = textTable.select(id, displayName,ancientAuthor, title, project).order(displayName)
         
         guard let rows = try? db.prepare(query) else { return nil }
         let entries = rows.map { row in return OraccCatalogEntry.initFromSaved(id: row[id], displayName: row[displayName], ancientAuthor: row[ancientAuthor], title: row[title], project: row[project])
@@ -63,15 +67,18 @@ class SAAOSQLController: CatalogueProvider {
     
     
     func getEntryAt(row: Int) -> OraccCatalogEntry? {
-        let query = textTable.select(rowid).order(displayName).limit(1, offset: row)
-        guard let qr = try? db.pluck(query) else {return nil}
-        guard let qrow = qr else {return nil}
-        let rowId = qrow[rowid]
-        let entryQuery = textTable.select(id, displayName, ancientAuthor, title, project).filter(rowid == rowId)
-        guard let r = try? db.pluck(entryQuery) else {return nil}
+//        let query = textTable.select(rowid).order(displayName).limit(1, offset: row)
+//        guard let qr = try? db.pluck(query) else {return nil}
+//        guard let qrow = qr else {return nil}
+//        let rowId = qrow[rowid]
+//        let entryQuery = textTable.select(id, displayName, ancientAuthor, title, project).filter(rowid == rowId)
+//        guard let r = try? db.pluck(entryQuery) else {return nil}
+//
+//        guard let row = r else {return nil}
+//        return OraccCatalogEntry.initFromSaved(id: row[id], displayName: row[displayName], ancientAuthor: row[ancientAuthor], title: row[title], project: row[project])
         
-        guard let row = r else {return nil}
-        return OraccCatalogEntry.initFromSaved(id: row[id], displayName: row[displayName], ancientAuthor: row[ancientAuthor], title: row[title], project: row[project])
+        guard row < texts.count else {return nil}
+        return texts[row]
     }
     
     func getEntryFor(id cdliID: String) -> OraccCatalogEntry? {
@@ -94,6 +101,32 @@ class SAAOSQLController: CatalogueProvider {
         
         return stringContainer
     }
+    
+//    func nextText(followingTextID: String) -> (OraccCatalogEntry, TextEditionStringContainer)? {
+//
+//        let query = textTable.select(rowid).filter(id == followingTextID)
+//        guard let r = try? db.pluck(query) else {return nil}
+//        guard let initialRow = r else {return nil}
+//        let nextRowNumber = Int(initialRow[rowid]) + 1
+//        guard let nextTextEntry = self.getEntryAt(row: nextRowNumber) else {return nil}
+//        guard let textStrings = self.getTextStrings(nextTextEntry.id) else {return nil}
+//
+//        return (nextTextEntry, textStrings)
+//    }
+//
+//    func previousText(followingTextID: String) -> (OraccCatalogEntry, TextEditionStringContainer)? {
+//
+//        let query = textTable.select(rowid).filter(id == followingTextID)
+//        guard let r = try? db.pluck(query) else {return nil}
+//        guard let initialRow = r else {return nil}
+//        let nextRowNumber = Int(initialRow[rowid]) - 1
+//        guard nextRowNumber != 0 else {return nil}
+//        guard let nextTextEntry = self.getEntryAt(row: nextRowNumber) else {return nil}
+//        guard let textStrings = self.getTextStrings(nextTextEntry.id) else {return nil}
+//
+//        return (nextTextEntry, textStrings)
+//    }
+    
     
     init? () {
         guard let bundle = Bundle.main.resourceURL else {return nil}

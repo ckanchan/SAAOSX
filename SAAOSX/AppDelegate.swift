@@ -79,17 +79,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             guard let url = panel.urls.first else {return}
             
             switch url.pathExtension {
-            case "oraccstringcontainer":
-                if let stringContainerData = try? Data(contentsOf: url) {
-                    let decoder = JSONDecoder()
-                    if let textContainer = try? decoder.decode(TextEditionStringContainer.self, from: stringContainerData) {
-                        
-                        let dummyData = OraccCatalogEntry.initFromSaved(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
-                        
-                        TextWindowController.new(dummyData, strings: textContainer, catalogue: nil)
-                        
-                    } else {self.openError(fileAt: url)}
-                } else {self.openError(fileAt: url)}
                 
             case "json":
                 if let data = try? Data(contentsOf: url){

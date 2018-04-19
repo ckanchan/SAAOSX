@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -623,8 +623,15 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="d2G-6L-oNt"/>
-                                        <menuItem title="Show Translation" id="5Ma-px-EPr">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Previous Text" keyEquivalent="" id="VDy-X6-4hd">
+                                            <connections>
+                                                <action selector="previousText:" target="Ady-hI-5gd" id="Qoc-8F-bWJ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Next Text" keyEquivalent="" id="5Ma-px-EPr">
+                                            <connections>
+                                                <action selector="nextText:" target="Ady-hI-5gd" id="c6T-gt-hez"/>
+                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>

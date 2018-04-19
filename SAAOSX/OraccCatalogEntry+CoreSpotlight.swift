@@ -10,6 +10,11 @@ import Foundation
 import CoreSpotlight
 import OraccJSONtoSwift
 
+#if os(iOS)
+    import MobileCoreServices
+#endif
+
+
 extension OraccCatalogEntry {
     
     /// Adds the catalogue entry to the system Spotlight database

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
@@ -19,6 +19,22 @@
                         <toolbar key="toolbar" implicitIdentifier="A3C47D81-A942-4B48-BB86-A4741AC90D7A" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="8Lh-TX-KUY">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Xrt-nG-DYo"/>
+                                <toolbarItem implicitItemIdentifier="97C7230B-1A20-4803-8FD0-0CB2EDB530A7" label="Bookmark" paletteLabel="Bookmark" image="NSBookmarksTemplate" id="cye-Ov-dNb">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="40" height="25"/>
+                                    <size key="maxSize" width="40" height="25"/>
+                                    <button key="view" verticalHuggingPriority="750" id="OCZ-xn-4oE">
+                                        <rect key="frame" x="10" y="14" width="40" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSBookmarksTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iB9-uw-G32">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="bookmark:" target="a8r-0S-bul" id="9mD-Ra-TxI"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="hgM-2x-27o"/>
                                 <toolbarItem implicitItemIdentifier="FC67BF7E-D18F-436F-BA6E-2ED64EB2FAB2" label="Get Info" paletteLabel="Get Info" image="NSInfo" id="BRf-Hu-loj">
                                     <nil key="toolTip"/>
@@ -128,6 +144,7 @@
                                 <toolbarItem reference="hgM-2x-27o"/>
                                 <toolbarItem reference="NT6-DN-xkd"/>
                                 <toolbarItem reference="hgM-2x-27o"/>
+                                <toolbarItem reference="cye-Ov-dNb"/>
                                 <toolbarItem reference="BRf-Hu-loj"/>
                                 <toolbarItem reference="5tZ-xd-zmf"/>
                             </defaultToolbarItems>
@@ -137,6 +154,7 @@
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="bookmarksBtn" destination="OCZ-xn-4oE" id="aFY-9C-ZVo"/>
                         <outlet property="catalogueSearch" destination="BFn-WZ-F03" id="yz5-KK-qjh"/>
                         <segue destination="w0y-Cu-t5U" kind="relationship" relationship="window.shadowedContentViewController" id="XbA-An-KnM"/>
                     </connections>
@@ -280,6 +298,7 @@
                                 <toolbarItem reference="vqC-G8-bQo"/>
                                 <toolbarItem reference="4JP-4O-Qgf"/>
                                 <toolbarItem reference="8sK-Hc-7TN"/>
+                                <toolbarItem reference="9UG-R7-4Mu"/>
                                 <toolbarItem reference="nsW-gI-Wdh"/>
                                 <toolbarItem reference="8sK-Hc-7TN"/>
                                 <toolbarItem reference="ozP-8L-xzn"/>

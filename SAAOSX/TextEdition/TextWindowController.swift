@@ -36,8 +36,6 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
         
     }
     
-    
-    
     lazy var resultsPopover: NSPopover = {
         let popover = NSPopover()
         popover.behavior = .transient
@@ -71,6 +69,4 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             resultsPopover.show(relativeTo: catalogueSearch.visibleRect, of: catalogueSearch, preferredEdge: .maxY)
         }
     }
-    
- 
 }
