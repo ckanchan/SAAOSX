@@ -100,7 +100,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     
     // MARK :- Toolbar Control Methods
     @IBAction func newTextWindow(_ sender: Any) {
-        TextWindowController.new(self.catalogueEntry, strings: self.stringContainer, catalogue: self.catalogueController, panes: UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue))
+        TextWindowController.new(self.catalogueEntry, strings: self.stringContainer, catalogue: self.catalogueController)
     }
     
     @IBAction func showInfoView(_ sender: Any) {

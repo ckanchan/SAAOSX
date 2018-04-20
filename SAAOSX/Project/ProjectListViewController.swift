@@ -191,14 +191,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         switch self.catalogueSource {
         case .bookmarks:
             if let stringContainer = bookmarkedTextController.getTextStrings(textEntry.id) {
-                switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
-                case 0:
-                    TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 1)
-                case 1:
-                     TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 2)
-                default:
-                    print("colossal error")
-                }
+                TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
@@ -206,15 +199,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         case .sqlite:
             guard let sqlite = self.sqlite else {return}
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
-                
-                switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
-                case 0:
-                    TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 1)
-                case 1:
-                    TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 2)
-                default:
-                    print("colossal error")
-                }
+                TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
@@ -224,14 +209,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 if let textEdition = try? self.oracc.loadText(textEntry) {
                     let stringContainer = TextEditionStringContainer(textEdition)
                     DispatchQueue.main.async {
-                        switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
-                        case 0:
-                            TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 1)
-                        case 1:
-                            TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 2)
-                        default:
-                            print("Colossal error")
-                        }
+                        TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
                         self.windowController.loadingIndicator.stopAnimation(nil)
                     }
                 } else {

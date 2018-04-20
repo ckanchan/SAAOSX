@@ -13,10 +13,12 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
     @IBOutlet weak var catalogueSearch: NSSearchField!
     @IBOutlet weak var bookmarksBtn: NSButton!
     
-    @discardableResult static func new(_ entry: OraccCatalogEntry, strings: TextEditionStringContainer?, catalogue: CatalogueProvider?, panes: Int) -> TextWindowController? {
+    @discardableResult static func new(_ entry: OraccCatalogEntry, strings: TextEditionStringContainer?, catalogue: CatalogueProvider?) -> TextWindowController? {
+        
+        let panes = UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue)
         
         switch panes {
-        case 1:
+        case 0:
             let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "TextEdition"), bundle: Bundle.main)
             
             guard let textWindow = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else { return nil}
@@ -37,7 +39,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             textWindow.showWindow(nil)
             return textWindow
             
-        case 2:
+        case 1:
             let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "TextEdition"), bundle: Bundle.main)
             guard let window = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("SplitTextWindow")) as? TextWindowController else { return nil}
             guard let splitTextViewController = window.contentViewController as? NSSplitViewController else { return nil}

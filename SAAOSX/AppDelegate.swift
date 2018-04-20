@@ -87,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         let stringContainer = TextEditionStringContainer(textEdition)
                         let dummyData = OraccCatalogEntry.initFromSaved(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
                         
-                        TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil, panes: UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue))
+                        TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
                         
                         
                     } else if let catalogue = try? decoder.decode(OraccCatalog.self, from: data) {
@@ -122,7 +122,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     if result {
                         guard let entry = self.bookmarkedTextController.getCatalogueEntry(forID: cdliID) else {return openFromDatabase(withID: cdliID)}
                         let strings = self.bookmarkedTextController.getTextStrings(cdliID)
-                        TextWindowController.new(entry, strings: strings, catalogue: bookmarkedTextController, panes: UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue))
+                        TextWindowController.new(entry, strings: strings, catalogue: bookmarkedTextController)
                         return true
                     }
                 } else {
@@ -137,7 +137,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let sqliteDB = self.sqlite else {return false}
         if let entry = sqliteDB.getEntryFor(id: id) {
             if let strings = sqliteDB.getTextStrings(id) {
-                TextWindowController.new(entry, strings: strings, catalogue: sqliteDB, panes: UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue))
+                TextWindowController.new(entry, strings: strings, catalogue: sqliteDB)
                 return true
             }
         }
@@ -168,7 +168,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let results = sqlite.search(components)
                 guard let first = results.first else {return}
                 guard let strings = sqlite.getTextStrings(first.id) else {return}
-                window = TextWindowController.new(first, strings: strings, catalogue: sqlite, panes: UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue))
+                window = TextWindowController.new(first, strings: strings, catalogue: sqlite)
                 
             case "id":
                 let id = url.lastPathComponent.uppercased()
@@ -177,7 +177,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                
                 guard let result = sqlite.getEntryFor(id: id) else {return}
                 guard let strings = sqlite.getTextStrings(id) else {return}
-                window = TextWindowController.new(result, strings: strings, catalogue: sqlite, panes: UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue))
+                window = TextWindowController.new(result, strings: strings, catalogue: sqlite)
 
             case "search":
                 let searchString = url.pathComponents.reduce("", {result, next in
