@@ -187,50 +187,15 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         window.showWindow(self)
     }
     
-    func loadTextWindow(withStrings stringContainer: TextEditionStringContainer, catalogueEntry: OraccCatalogEntry) {
-        guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else { return }
-        guard let textView = window.contentViewController as? TextViewController else { return }
-        
-        window.window?.title = "\(catalogueEntry.displayName): \(catalogueEntry.title)"
-        
-        textView.catalogueEntry = catalogueEntry
-        textView.stringContainer = stringContainer
-        textView.catalogueController = catalogueProvider
-        window.textViewController = [textView]
-        
-        window.showWindow(self)
-    }
-    
-    func loadSplitTextWindow(withStrings stringContainer: TextEditionStringContainer, catalogueEntry: OraccCatalogEntry) {
-        guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("SplitTextWindow")) as? TextWindowController else { return }
-        guard let splitTextViewController = window.contentViewController as? NSSplitViewController else { return }
-        guard let controllers = splitTextViewController.childViewControllers as? [TextViewController] else {return}
-        controllers.forEach{
-            $0.stringContainer = stringContainer
-            $0.catalogueEntry = catalogueEntry
-            $0.catalogueController = catalogueProvider
-            $0.splitViewController = splitTextViewController
-            window.textViewController.append($0)
-        }
-        
-        controllers[1].textSelected.selectedSegment = 3
-        window.contentViewController = splitTextViewController
-        window.window?.title = "\(catalogueEntry.displayName): \(catalogueEntry.title)"
-        window.window?.setFrame(NSRect(x: 640, y: 640, width: 1000, height: 800), display: false)
-        window.catalogueSearch.stringValue = catalogueEntry.title
-        window.catalogueSearch.delegate = window
-        window.showWindow(self)
-    }
-    
     func callLoadTextWindow(_ textEntry: OraccCatalogEntry){
         switch self.catalogueSource {
         case .bookmarks:
             if let stringContainer = bookmarkedTextController.getTextStrings(textEntry.id) {
                 switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
                 case 0:
-                    self.loadTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                    TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 1)
                 case 1:
-                    self.loadSplitTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                     TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 2)
                 default:
                     print("colossal error")
                 }
@@ -244,9 +209,9 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 
                 switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
                 case 0:
-                    self.loadTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                    TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 1)
                 case 1:
-                    self.loadSplitTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                    TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 2)
                 default:
                     print("colossal error")
                 }
@@ -257,13 +222,13 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         case .online:
             DispatchQueue.global(qos: .userInitiated).async {
                 if let textEdition = try? self.oracc.loadText(textEntry) {
-                    let strings = TextEditionStringContainer(textEdition)
+                    let stringContainer = TextEditionStringContainer(textEdition)
                     DispatchQueue.main.async {
                         switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
                         case 0:
-                            self.loadTextWindow(withText: textEdition, catalogueEntry: textEntry)
+                            TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 1)
                         case 1:
-                            self.loadSplitTextWindow(withStrings: strings, catalogueEntry: textEntry)
+                            TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, panes: 2)
                         default:
                             print("Colossal error")
                         }
@@ -303,7 +268,10 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     
     override func keyDown(with event: NSEvent) {
         if event.keyCode == 36 || event.keyCode == 76 {
-            self.doubleClickLoadText(self)
+            if let text = selectedText {
+                windowController.loadingIndicator.startAnimation(nil)
+                callLoadTextWindow(text)
+            }
         } else {
             super.keyDown(with: event)
         }
