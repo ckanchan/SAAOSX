@@ -185,15 +185,25 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         window.textViewController = [textView]
         
         window.showWindow(self)
-
     }
     
-    func loadSplitTextWindow(withText textEdition: OraccTextEdition, catalogueEntry: OraccCatalogEntry){
+    func loadTextWindow(withStrings stringContainer: TextEditionStringContainer, catalogueEntry: OraccCatalogEntry) {
+        guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else { return }
+        guard let textView = window.contentViewController as? TextViewController else { return }
         
+        window.window?.title = "\(catalogueEntry.displayName): \(catalogueEntry.title)"
+        
+        textView.catalogueEntry = catalogueEntry
+        textView.stringContainer = stringContainer
+        textView.catalogueController = catalogueProvider
+        window.textViewController = [textView]
+        
+        window.showWindow(self)
+    }
+    
+    func loadSplitTextWindow(withStrings stringContainer: TextEditionStringContainer, catalogueEntry: OraccCatalogEntry) {
         guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("SplitTextWindow")) as? TextWindowController else { return }
         guard let splitTextViewController = window.contentViewController as? NSSplitViewController else { return }
-        
-        let stringContainer = TextEditionStringContainer(textEdition)
         guard let controllers = splitTextViewController.childViewControllers as? [TextViewController] else {return}
         controllers.forEach{
             $0.stringContainer = stringContainer
@@ -203,8 +213,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             window.textViewController.append($0)
         }
         
-
-        
+        controllers[1].textSelected.selectedSegment = 3
         window.contentViewController = splitTextViewController
         window.window?.title = "\(catalogueEntry.displayName): \(catalogueEntry.title)"
         window.window?.setFrame(NSRect(x: 640, y: 640, width: 1000, height: 800), display: false)
@@ -217,33 +226,30 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         switch self.catalogueSource {
         case .bookmarks:
             if let stringContainer = bookmarkedTextController.getTextStrings(textEntry.id) {
-                guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else {return}
-                guard let textView = window.contentViewController as? TextViewController else {return}
-                window.window?.title = "\(textEntry.displayName): \(textEntry.title)"
-                
-                textView.catalogueEntry = textEntry
-                textView.stringContainer = stringContainer
-                textView.catalogueController = bookmarkedTextController
-                window.textViewController = [textView]
-                
-                window.showWindow(self)
+                switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
+                case 0:
+                    self.loadTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                case 1:
+                    self.loadSplitTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                default:
+                    print("colossal error")
+                }
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
+            
         case .sqlite:
             guard let sqlite = self.sqlite else {return}
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
-                guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else {return}
-                guard let textView = window.contentViewController as? TextViewController else {return}
                 
-                window.window?.title = "\(textEntry.displayName): \(textEntry.title)"
-                
-                textView.catalogueEntry = textEntry
-                textView.stringContainer = stringContainer
-                textView.catalogueController = sqlite
-                window.textViewController = [textView]
-                
-                window.showWindow(self)
+                switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
+                case 0:
+                    self.loadTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                case 1:
+                    self.loadSplitTextWindow(withStrings: stringContainer, catalogueEntry: textEntry)
+                default:
+                    print("colossal error")
+                }
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
@@ -251,12 +257,13 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         case .online:
             DispatchQueue.global(qos: .userInitiated).async {
                 if let textEdition = try? self.oracc.loadText(textEntry) {
+                    let strings = TextEditionStringContainer(textEdition)
                     DispatchQueue.main.async {
                         switch UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue) {
                         case 0:
                             self.loadTextWindow(withText: textEdition, catalogueEntry: textEntry)
                         case 1:
-                            self.loadSplitTextWindow(withText: textEdition, catalogueEntry: textEntry)
+                            self.loadSplitTextWindow(withStrings: strings, catalogueEntry: textEntry)
                         default:
                             print("Colossal error")
                         }
