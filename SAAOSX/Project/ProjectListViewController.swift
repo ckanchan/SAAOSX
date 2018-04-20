@@ -301,6 +301,15 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         }
     }
     
+    override func keyDown(with event: NSEvent) {
+        if event.keyCode == 36 || event.keyCode == 76 {
+            self.doubleClickLoadText(self)
+        } else {
+            super.keyDown(with: event)
+        }
+    }
+    
+    
     
     @objc func doubleClickLoadText(_ sender: Any){
         if let text = selectedText {

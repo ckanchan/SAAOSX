@@ -331,6 +331,28 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Navigate" id="bcc-Nd-O9N">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Navigate" id="1NE-Qt-8ja">
+                                    <items>
+                                        <menuItem title="Go to Text" keyEquivalent="l" id="Cqf-Fv-ged">
+                                            <connections>
+                                                <action selector="beginSearch:" target="Ady-hI-5gd" id="jkG-x3-eMI"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Previous Text" keyEquivalent="" id="VDy-X6-4hd">
+                                            <connections>
+                                                <action selector="previousText:" target="Ady-hI-5gd" id="Qoc-8F-bWJ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Next Text" keyEquivalent="" id="5Ma-px-EPr">
+                                            <connections>
+                                                <action selector="nextText:" target="Ady-hI-5gd" id="c6T-gt-hez"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Format" id="jxT-CU-nIS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Format" id="GEO-Iw-cKr">
@@ -623,16 +645,6 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="d2G-6L-oNt"/>
-                                        <menuItem title="Previous Text" keyEquivalent="" id="VDy-X6-4hd">
-                                            <connections>
-                                                <action selector="previousText:" target="Ady-hI-5gd" id="Qoc-8F-bWJ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Next Text" keyEquivalent="" id="5Ma-px-EPr">
-                                            <connections>
-                                                <action selector="nextText:" target="Ady-hI-5gd" id="c6T-gt-hez"/>
-                                            </connections>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

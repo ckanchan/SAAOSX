@@ -33,6 +33,14 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
         textWindow?.resultsPopover.close()
     }
     
+    override func keyDown(with event: NSEvent) {
+        if event.keyCode == 36 || event.keyCode == 76 {
+            self.doubleClickLoadText(self)
+            } else {
+            super.keyDown(with: event)
+        }
+    }
+    
     @IBAction func searchCatalogue(_ sender: NSSearchField){
         let filterText = sender.stringValue
         guard let results = catalogueController?.search(filterText) else {return}
@@ -92,6 +100,7 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
                 controller.stringContainer = text
                 controller.setText(self)
                 controller.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+                controller.currentIdx = controller.catalogueController?.texts.index(where: {$0.id == controller.catalogueEntry.id})
             }
             self.textWindow?.resultsPopover.close()
         } else {
@@ -105,6 +114,7 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
                             controller.stringContainer = stringContainer
                             controller.setText(self)
                             controller.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+                            controller.currentIdx = controller.catalogueController?.texts.index(where: {$0.id == controller.catalogueEntry.id})
                         }
                         self.textWindow?.resultsPopover.close()
                         

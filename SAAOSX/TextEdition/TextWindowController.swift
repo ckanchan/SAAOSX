@@ -53,6 +53,10 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
     
     var textViewController: [TextViewController] = []
     
+    @IBAction func beginSearch(_ sender: Any) {
+        catalogueSearch.becomeFirstResponder()
+    }
+    
     @IBAction func searchCatalogue(_ sender: NSSearchField) {
         let text = sender.stringValue
         if text != "" {
@@ -69,4 +73,17 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             resultsPopover.show(relativeTo: catalogueSearch.visibleRect, of: catalogueSearch, preferredEdge: .maxY)
         }
     }
+    
+    @IBAction func nextText(_ sender: NSMenuItem) {
+        for controller in self.textViewController {
+            controller.navigate(.right)
+        }
+    }
+    
+    @IBAction func previousText(_ sender: NSMenuItem) {
+        for controller in self.textViewController {
+            controller.navigate(.left)
+        }
+    }
+    
 }

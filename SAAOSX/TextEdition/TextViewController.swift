@@ -12,7 +12,7 @@ import OraccJSONtoSwift
 
 class TextViewController: NSViewController, NSTextViewDelegate {
     
-    enum Navigate {
+    public enum Navigate {
         case left, right
     }
     
@@ -123,15 +123,16 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             stringContainer = text
             setText(self)
             windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+            windowController?.catalogueSearch.stringValue = entry.title
             return true
         } else {
-                if let text = try? self.oracc.loadText(entry){
-                        let stringContainer = TextEditionStringContainer(text)
-                        self.catalogueEntry = entry
-                        self.stringContainer = stringContainer
-                        self.setText(self)
-                        self.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
-                        return true
+            if let text = try? self.oracc.loadText(entry){
+                let stringContainer = TextEditionStringContainer(text)
+                self.catalogueEntry = entry
+                self.stringContainer = stringContainer
+                self.setText(self)
+                self.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
+                return true
             }
         }
         
@@ -203,13 +204,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         }
     }
     
-    @IBAction func previousText(_ sender: NSMenuItem) {
-        navigate(.left)
-    }
-    
-    @IBAction func nextText(_ sender: NSMenuItem) {
-        navigate(.right)
-    }
     
     func navigate(_ direction: Navigate) {
         guard let currentIdx = self.currentIdx else {return}
