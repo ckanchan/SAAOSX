@@ -9,6 +9,7 @@
 import Cocoa
 import OraccJSONtoSwift
 import CoreSpotlight
+import CDKOraccInterface
 
 
 @NSApplicationMain

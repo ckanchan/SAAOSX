@@ -8,6 +8,7 @@
 
 import Cocoa
 import OraccJSONtoSwift
+import CDKOraccInterface
 
 class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, BookmarkDisplaying {
     
@@ -170,24 +171,9 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         self.catalogueProvider = provider
         catalogueEntryView.reloadData()
     }
+
     
-    
-    func loadTextWindow(withText textEdition: OraccTextEdition, catalogueEntry: OraccCatalogEntry) {
-        guard let window = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else { return }
-        guard let textView = window.contentViewController as? TextViewController else { return }
-        
-        window.window?.title = "\(catalogueEntry.displayName): \(catalogueEntry.title)"
-        
-        let stringContainer = TextEditionStringContainer(textEdition)
-        textView.catalogueEntry = catalogueEntry
-        textView.stringContainer = stringContainer
-        textView.catalogueController = catalogueProvider
-        window.textViewController = [textView]
-        
-        window.showWindow(self)
-    }
-    
-    func callLoadTextWindow(_ textEntry: OraccCatalogEntry){
+    func openTextWindow(_ textEntry: OraccCatalogEntry){
         switch self.catalogueSource {
         case .bookmarks:
             if let stringContainer = bookmarkedTextController.getTextStrings(textEntry.id) {
@@ -248,7 +234,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         if event.keyCode == 36 || event.keyCode == 76 {
             if let text = selectedText {
                 windowController.loadingIndicator.startAnimation(nil)
-                callLoadTextWindow(text)
+                openTextWindow(text)
             }
         } else {
             super.keyDown(with: event)
@@ -260,7 +246,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     @objc func doubleClickLoadText(_ sender: Any){
         if let text = selectedText {
             windowController.loadingIndicator.startAnimation(nil)
-            callLoadTextWindow(text)
+            openTextWindow(text)
         }
     }
     

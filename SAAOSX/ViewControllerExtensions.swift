@@ -8,6 +8,7 @@
 
 import Cocoa
 import OraccJSONtoSwift
+import CDKOraccInterface
 
 
 extension NSViewController {
