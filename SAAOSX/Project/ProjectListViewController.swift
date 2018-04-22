@@ -23,7 +23,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
 
     @IBOutlet weak var catalogueEntryView: NSTableView!
     
-    lazy var projectList: [OraccProjectEntry] = {
+    lazy var projectList: [CDKOraccProject] = {
         if let result = try? oracc.getOraccProjects() { return result
         } else {
             return []

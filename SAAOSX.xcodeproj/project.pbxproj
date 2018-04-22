@@ -20,6 +20,14 @@
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
+		5483FB94208D1E8500FADF53 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB90208D1E8400FADF53 /* ZIPFoundation.framework */; };
+		5483FB95208D1E8500FADF53 /* ZIPFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB90208D1E8400FADF53 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5483FB96208D1E8500FADF53 /* CDKSwiftOracc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB91208D1E8400FADF53 /* CDKSwiftOracc.framework */; };
+		5483FB97208D1E8500FADF53 /* CDKSwiftOracc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB91208D1E8400FADF53 /* CDKSwiftOracc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5483FB98208D1E8500FADF53 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB92208D1E8400FADF53 /* SQLite.framework */; };
+		5483FB99208D1E8500FADF53 /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB92208D1E8400FADF53 /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5483FB9A208D1E8500FADF53 /* CDKOraccInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB93208D1E8500FADF53 /* CDKOraccInterface.framework */; };
+		5483FB9B208D1E8500FADF53 /* CDKOraccInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB93208D1E8500FADF53 /* CDKOraccInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
 		5494D8D22042D38B0071756C /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */; };
 		5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADA204EAF63004C774A /* AppDelegate.swift */; };
@@ -70,6 +78,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5483FB97208D1E8500FADF53 /* CDKSwiftOracc.framework in Embed Frameworks */,
+				5483FB95208D1E8500FADF53 /* ZIPFoundation.framework in Embed Frameworks */,
+				5483FB9B208D1E8500FADF53 /* CDKOraccInterface.framework in Embed Frameworks */,
+				5483FB99208D1E8500FADF53 /* SQLite.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,6 +117,10 @@
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
 		547BE627201345830001B8BF /* GlossaryEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryEntryViewController.swift; sourceTree = "<group>"; };
+		5483FB90208D1E8400FADF53 /* ZIPFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZIPFoundation.framework; path = Carthage/Build/Mac/ZIPFoundation.framework; sourceTree = "<group>"; };
+		5483FB91208D1E8400FADF53 /* CDKSwiftOracc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CDKSwiftOracc.framework; path = Carthage/Build/Mac/CDKSwiftOracc.framework; sourceTree = "<group>"; };
+		5483FB92208D1E8400FADF53 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/Mac/SQLite.framework; sourceTree = "<group>"; };
+		5483FB93208D1E8500FADF53 /* CDKOraccInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CDKOraccInterface.framework; path = Carthage/Build/Mac/CDKOraccInterface.framework; sourceTree = "<group>"; };
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
 		5498CAD8204EAF63004C774A /* SAAiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5498CADA204EAF63004C774A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +153,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5483FB96208D1E8500FADF53 /* CDKSwiftOracc.framework in Frameworks */,
+				5483FB94208D1E8500FADF53 /* ZIPFoundation.framework in Frameworks */,
+				5483FB9A208D1E8500FADF53 /* CDKOraccInterface.framework in Frameworks */,
+				5483FB98208D1E8500FADF53 /* SQLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +180,10 @@
 		544138D02004D27A00A64CB2 = {
 			isa = PBXGroup;
 			children = (
+				5483FB93208D1E8500FADF53 /* CDKOraccInterface.framework */,
+				5483FB91208D1E8400FADF53 /* CDKSwiftOracc.framework */,
+				5483FB92208D1E8400FADF53 /* SQLite.framework */,
+				5483FB90208D1E8400FADF53 /* ZIPFoundation.framework */,
 				54A9520B204058C40042E1BA /* OraccCommon */,
 				544138DB2004D27A00A64CB2 /* SAAOSX */,
 				544138EE2004D27A00A64CB2 /* SAAOSXTests */,
@@ -636,6 +660,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -658,6 +683,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
