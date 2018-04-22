@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreSpotlight
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 #if os(iOS)
     import MobileCoreServices

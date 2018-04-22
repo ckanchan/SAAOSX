@@ -8,7 +8,7 @@
 
 import Foundation
 import SQLite
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 class SAAOSQLController: CatalogueProvider {
     

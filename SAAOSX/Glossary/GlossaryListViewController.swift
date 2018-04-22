@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
     @IBOutlet weak var glossaryTableView: NSTableView!

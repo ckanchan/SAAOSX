@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 
 class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {

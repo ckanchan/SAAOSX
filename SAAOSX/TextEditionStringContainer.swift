@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 #if os(macOS)
     import AppKit.NSFont
@@ -39,7 +39,7 @@ public class TextEditionStringContainer: NSCoding {
     
     public lazy var translation: String = {
         #if os(macOS)
-            return self.textEdition?.scrapeTranslation ?? self.textEdition?.literalTranslation ?? "No translation available"
+            return self.textEdition?.scrapeTranslation() ?? self.textEdition?.literalTranslation ?? "No translation available"
         #elseif os(iOS)
             return self.textEdition?.literalTranslation ?? "No translation available"
         #endif

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import OraccJSONtoSwift
+import CDKSwiftOracc
 import SQLite
 
 public class GlossaryController {

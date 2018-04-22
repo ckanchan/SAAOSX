@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import OraccJSONtoSwift
+import CDKSwiftOracc
 import CDKOraccInterface
 
 class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, BookmarkDisplaying {

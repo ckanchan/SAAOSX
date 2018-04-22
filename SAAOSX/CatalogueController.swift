@@ -5,7 +5,7 @@
 //  Created by Chaitanya Kanchan on 23/02/2018.
 //
 
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 /// Defines an interface for objects that can supply Oracc Catalogue data to view controllers and other interested parties.
 

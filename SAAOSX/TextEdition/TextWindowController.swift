@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 class TextWindowController: NSWindowController, NSSearchFieldDelegate {
     @IBOutlet weak var catalogueSearch: NSSearchField!

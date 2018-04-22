@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 class MasterViewController: UITableViewController {
 

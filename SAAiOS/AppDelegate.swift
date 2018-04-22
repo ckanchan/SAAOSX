@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {

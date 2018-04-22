@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import OraccJSONtoSwift
+import CDKSwiftOracc
 
 class GlossaryEntryViewController: NSViewController {
     var glossaryEntry: GlossaryEntry? {
