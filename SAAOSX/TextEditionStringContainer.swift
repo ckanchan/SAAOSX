@@ -14,6 +14,7 @@ import CDKSwiftOracc
     import UIKit.UIFont
 #endif
 
+/// A class that caches the strings of an `OraccTextEdition`
 public class TextEditionStringContainer: NSCoding {
     
     public lazy var cuneiform: String = {
@@ -97,6 +98,7 @@ public class TextEditionStringContainer: NSCoding {
 //        self.normalisation = normalisation ?? NSAttributedString(string: "No text found")
 //    }
 //
+    
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(cuneiform, forKey: "cuneiform")
         aCoder.encode(transliteration, forKey: "transliteration")

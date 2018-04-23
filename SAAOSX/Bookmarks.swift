@@ -9,13 +9,13 @@ import Foundation
 import CDKSwiftOracc
 import SQLite
 
-/// Conform to this protocol to allow BookmarkedTextController to send messages when entries are added or removed from its database.
+/// Conform to this protocol to allow BookmarkedTextController to refresh the table view when entries are added or removed from the database.
 @objc public protocol BookmarkDisplaying: AnyObject {
     func refreshTableView()
 }
 
 /// Responsible for saving and loading bookmarked texts to the SQLite store.
-public class BookmarkedTextController: CatalogueProvider {
+public class Bookmarks: CatalogueProvider {
     public var source: CatalogueSource = .bookmarks
     
     public lazy var texts: [OraccCatalogEntry] = {
@@ -27,20 +27,20 @@ public class BookmarkedTextController: CatalogueProvider {
     
     public func search(_ string: String) -> [OraccCatalogEntry] {
         let searchString = "%\(string)%"
-        let query = BookmarkedTextController.bookmarks.select(
-            BookmarkedTextController.id,
-            BookmarkedTextController.displayName,
-            BookmarkedTextController.ancientAuthor,
-            BookmarkedTextController.title,
-            BookmarkedTextController.project
+        let query = Bookmarks.bookmarks.select(
+            Bookmarks.id,
+            Bookmarks.displayName,
+            Bookmarks.ancientAuthor,
+            Bookmarks.title,
+            Bookmarks.project
             ).filter(
-                BookmarkedTextController.id.like(searchString) ||
-                    BookmarkedTextController.displayName.like(searchString)
+                Bookmarks.id.like(searchString) ||
+                    Bookmarks.displayName.like(searchString)
         )
         
         if let results = try? db.prepare(query) {
             let x = results.map({row in
-                return OraccCatalogEntry.initFromSaved(id: row[BookmarkedTextController.id], displayName: row[BookmarkedTextController.displayName], ancientAuthor: row[BookmarkedTextController.ancientAuthor], title: row[BookmarkedTextController.title], project: row[BookmarkedTextController.project])
+                return OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
             })
             return x
         } else {
@@ -63,7 +63,7 @@ public class BookmarkedTextController: CatalogueProvider {
     let db: Connection
     
     // Bookmarked text count. Returns nil if unable to access the database.
-    public var textCount: Int? { return try? db.scalar(BookmarkedTextController.bookmarks.count) }
+    public var textCount: Int? { return try? db.scalar(Bookmarks.bookmarks.count) }
     
     
     // MARK: - Table Definitions
@@ -88,7 +88,7 @@ public class BookmarkedTextController: CatalogueProvider {
     }
     
     public func contains(textID: String) -> Bool? {
-        guard let result = try? db.scalar(BookmarkedTextController.bookmarks.filter(BookmarkedTextController.id == textID).count) else {return nil}
+        guard let result = try? db.scalar(Bookmarks.bookmarks.filter(Bookmarks.id == textID).count) else {return nil}
         
         if result > 0 {
             return true
@@ -98,16 +98,16 @@ public class BookmarkedTextController: CatalogueProvider {
     }
     
     public func getCatalogueEntries() -> [OraccCatalogEntry]? {
-        let query = BookmarkedTextController.bookmarks.select(
-            BookmarkedTextController.id,
-            BookmarkedTextController.displayName,
-            BookmarkedTextController.ancientAuthor,
-            BookmarkedTextController.title,
-            BookmarkedTextController.project
+        let query = Bookmarks.bookmarks.select(
+            Bookmarks.id,
+            Bookmarks.displayName,
+            Bookmarks.ancientAuthor,
+            Bookmarks.title,
+            Bookmarks.project
         )
         
         guard let rows = try? db.prepare(query) else { return nil }
-        let entries = rows.map { row in return OraccCatalogEntry.initFromSaved(id: row[BookmarkedTextController.id], displayName: row[BookmarkedTextController.displayName], ancientAuthor: row[BookmarkedTextController.ancientAuthor], title: row[BookmarkedTextController.title], project: row[BookmarkedTextController.project])
+        let entries = rows.map { row in return OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
         }
         
         return entries
@@ -120,13 +120,13 @@ public class BookmarkedTextController: CatalogueProvider {
         
         
         do {
-            try db.run(BookmarkedTextController.bookmarks.insert(
-                BookmarkedTextController.id <- entry.id,
-                BookmarkedTextController.displayName <- entry.displayName,
-                BookmarkedTextController.title <- entry.title,
-                BookmarkedTextController.ancientAuthor <- entry.ancientAuthor,
-                BookmarkedTextController.textStrings <- data,
-                BookmarkedTextController.project <- entry.project
+            try db.run(Bookmarks.bookmarks.insert(
+                Bookmarks.id <- entry.id,
+                Bookmarks.displayName <- entry.displayName,
+                Bookmarks.title <- entry.title,
+                Bookmarks.ancientAuthor <- entry.ancientAuthor,
+                Bookmarks.textStrings <- data,
+                Bookmarks.project <- entry.project
             ))
         } catch let Result.error(message: message, code: code, statement: statement) where code == SQLITE_CONSTRAINT {
             print("Item already exists in database: \(message), \(String(describing: statement)), \(entry.id)")
@@ -146,17 +146,11 @@ public class BookmarkedTextController: CatalogueProvider {
     
     public func remove(at row: Int) {
         let row = Int64(row)
-        let query = BookmarkedTextController.bookmarks.select(rowid == row)
+        let query = Bookmarks.bookmarks.select(rowid == row)
         do {
             let result = try db.run(query.delete())
             print("Deleted", result)
             postNotification()
-//            if tableViews.count != 0 {
-//                tableViews.allObjects.forEach {
-//                    $0.refreshTableView()
-//                }
-//            }
-            
         } catch {
             print(error)
         }
@@ -164,64 +158,64 @@ public class BookmarkedTextController: CatalogueProvider {
     }
     
     func postNotification() {
-         let notification = Notification.init(name: BookmarkedTextController.Update, object: self, userInfo: nil)
+         let notification = Notification.init(name: Bookmarks.Update, object: self, userInfo: nil)
         NotificationCenter.default.post(notification)
     }
     
     
     public func getRowDetails(at rowID: Int) -> (String, String, String)? {
         let rowID = Int64(rowID)
-        let query = BookmarkedTextController.bookmarks.select(BookmarkedTextController.id, BookmarkedTextController.displayName, BookmarkedTextController.displayName, BookmarkedTextController.title).filter(rowid == rowID)
+        let query = Bookmarks.bookmarks.select(Bookmarks.id, Bookmarks.displayName, Bookmarks.displayName, Bookmarks.title).filter(rowid == rowID)
         
         guard let r = try? db.pluck(query) else { return nil }
         guard let row = r else {return nil}
         
-        return (row[BookmarkedTextController.displayName], row[BookmarkedTextController.title], row[BookmarkedTextController.id])
+        return (row[Bookmarks.displayName], row[Bookmarks.title], row[Bookmarks.id])
         
     }
     
     public func getCatalogueEntry(at rowID: Int) -> OraccCatalogEntry? {
-        let query = BookmarkedTextController.bookmarks.select(
-            BookmarkedTextController.id,
-            BookmarkedTextController.displayName,
-            BookmarkedTextController.ancientAuthor,
-            BookmarkedTextController.title,
-            BookmarkedTextController.project
+        let query = Bookmarks.bookmarks.select(
+            Bookmarks.id,
+            Bookmarks.displayName,
+            Bookmarks.ancientAuthor,
+            Bookmarks.title,
+            Bookmarks.project
             ).filter(rowid == Int64(rowID))
         
         guard let r = try? db.pluck(query) else { return nil }
         
         guard let row = r else { return nil}
         
-        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[BookmarkedTextController.id], displayName: row[BookmarkedTextController.displayName], ancientAuthor: row[BookmarkedTextController.ancientAuthor], title: row[BookmarkedTextController.title], project: row[BookmarkedTextController.project])
+        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
         
         return catalogueEntry
     }
     
     public func getCatalogueEntry(forID id: String) -> OraccCatalogEntry? {
-        let query = BookmarkedTextController.bookmarks.select(
-            BookmarkedTextController.id,
-            BookmarkedTextController.displayName,
-            BookmarkedTextController.ancientAuthor,
-            BookmarkedTextController.title,
-            BookmarkedTextController.project
-            ).filter(BookmarkedTextController.id == id)
+        let query = Bookmarks.bookmarks.select(
+            Bookmarks.id,
+            Bookmarks.displayName,
+            Bookmarks.ancientAuthor,
+            Bookmarks.title,
+            Bookmarks.project
+            ).filter(Bookmarks.id == id)
         
         guard let r = try? db.pluck(query) else { return nil }
         
         guard let row = r else { return nil}
         
-        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[BookmarkedTextController.id], displayName: row[BookmarkedTextController.displayName], ancientAuthor: row[BookmarkedTextController.ancientAuthor], title: row[BookmarkedTextController.title], project: row[BookmarkedTextController.project])
+        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
         
         return catalogueEntry
     }
     
     public func getTextStrings(_ id: String) -> TextEditionStringContainer? {
-        let query = BookmarkedTextController.bookmarks.select(BookmarkedTextController.textStrings).filter(BookmarkedTextController.id == id)
+        let query = Bookmarks.bookmarks.select(Bookmarks.textStrings).filter(Bookmarks.id == id)
         
         guard let encodedStringRow = try? db.pluck(query) else {return nil}
         guard let row = encodedStringRow else {return nil}
-        let encodedString = row[BookmarkedTextController.textStrings]
+        let encodedString = row[Bookmarks.textStrings]
         
         let decoder = NSKeyedUnarchiver(forReadingWith: encodedString)
         guard let stringContainer = TextEditionStringContainer(coder: decoder) else {return nil}
@@ -231,7 +225,7 @@ public class BookmarkedTextController: CatalogueProvider {
     }
     
     public func remove(entry: OraccCatalogEntry) {
-        let query = BookmarkedTextController.bookmarks.select(rowid).filter(BookmarkedTextController.id == entry.id)
+        let query = Bookmarks.bookmarks.select(rowid).filter(Bookmarks.id == entry.id)
         
         guard let r = try? db.pluck(query) else {return}
         guard let row = r else {return}
@@ -250,9 +244,8 @@ public class BookmarkedTextController: CatalogueProvider {
         }
         
         let path = paths[0].appendingPathComponent("SAAOSX").appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
-       // let path = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
         self.db = try Connection(path.path)
-        try BookmarkedTextController.initialiseTable(on: self.db)
+        try Bookmarks.initialiseTable(on: self.db)
     }
     
 }

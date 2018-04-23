@@ -20,13 +20,13 @@ extension NSViewController {
         return appDelegate.oraccInterface
     }
     
-    var bookmarkedTextController: BookmarkedTextController {
-        return appDelegate.bookmarkedTextController
+    var bookmarks: Bookmarks {
+        return appDelegate.bookmarks
     }
     
-    var glossaryController: GlossaryController {
-        return appDelegate.glossaryController
+    var glossary: Glossary {
+        return appDelegate.glossary
     }
     
-    var sqlite: SAAOSQLController? {return appDelegate.sqlite}
+    var sqlite: SQLiteCatalogue? {return appDelegate.sqlite}
 }

@@ -12,7 +12,6 @@ public enum CatalogueSource: String {
 }
 
 /// Defines an interface for objects that can supply Oracc Catalogue data to view controllers and other interested parties
-
 public protocol CatalogueProvider: AnyObject {
     var name: String { get }
     var count: Int { get }
@@ -23,7 +22,8 @@ public protocol CatalogueProvider: AnyObject {
     func search(_ string: String) -> [OraccCatalogEntry]
 }
 
-public class CatalogueController: CatalogueProvider {
+
+public class Catalogue: CatalogueProvider {
     public func search(_ string: String) -> [OraccCatalogEntry] {
         return texts.filter{$0.description.lowercased().contains(string.lowercased())}
     }

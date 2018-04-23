@@ -9,7 +9,7 @@ import Foundation
 import CDKSwiftOracc
 import SQLite
 
-public class GlossaryController {
+public class Glossary {
     lazy var db: Connection = {
         let path = Bundle.main.resourcePath! + "/SAAO_CompleteGlossary.sqlite3"
         return try! Connection(path, readonly: true)

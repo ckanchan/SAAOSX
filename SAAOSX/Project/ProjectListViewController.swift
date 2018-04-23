@@ -20,7 +20,8 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     @IBOutlet weak var catalogueEntryView: NSTableView!
     
     lazy var projectList: [CDKOraccProject] = {
-        if let result = try? oracc.getOraccProjects() { return result
+        if let result = try? oracc.getOraccProjects() {
+            return result
         } else {
             return []
         }
@@ -38,26 +39,17 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     
     var catalogueProvider: CatalogueProvider? {
         didSet {
-            
             DispatchQueue.main.async {
                 self.windowController.setConnectionStatus(to: self.catalogueProvider?.source.rawValue ?? "disconnected")
             }
-
-           // self.catalogueSource = catalogueProvider?.source ?? .local
         }
     }
-    
-    
+
     var selectedText: OraccCatalogEntry? = nil
-//    var catalogueSource: CatalogueSource = .online {
-//        didSet {
-//            windowController.setConnectionStatus(to: catalogueSource.rawValue)
-//        }
-//    }
 
     
     override func viewDidAppear() {
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: BookmarkedTextController.Update, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: Bookmarks.Update, object: nil)
         catalogueEntryView.doubleAction = #selector(doubleClickLoadText(_:))
         
         // If the window is being duplicated, then use a previously existing catalogue to save memory.
@@ -82,8 +74,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         self.windowController.loadingIndicator.startAnimation(nil)
         
         if s == "pins" {
-//            self.catalogueSource = .bookmarks
-            self.catalogueProvider = bookmarkedTextController
+            self.catalogueProvider = bookmarks
             self.catalogueEntryView.reloadData()
             self.windowController.loadingIndicator.stopAnimation(nil)
             self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
@@ -91,7 +82,6 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         }
         
         if s == "sqlite" {
-//            self.catalogueSource = .sqlite
             self.catalogueProvider = self.sqlite
             self.catalogueEntryView.reloadData()
             self.windowController.loadingIndicator.stopAnimation(nil)
@@ -117,21 +107,19 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 let catalogue = try self.oracc.loadCatalogue(cat)
                 var texts = Array(catalogue.members.values)
                 texts.sort{$0.displayName < $1.displayName}
-                let controller = CatalogueController(catalogue: catalogue, sorted: texts, source: .online)
+                let controller = Catalogue(catalogue: catalogue, sorted: texts, source: .online)
                 self.catalogueProvider = controller
                 DispatchQueue.main.async {
                     self.catalogueEntryView.reloadData()
                     self.windowController.loadingIndicator.stopAnimation(nil)
                     self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
                     self.windowController.setConnectionStatus(to: "connected")
-//                    self.catalogueSource = .online
                 }
             } catch {
                 print(error)
                 DispatchQueue.main.async {
                     self.loadCatalogue("pins")
                     self.windowController.setConnectionStatus(to: "disconnected")
-//                    self.catalogueSource = .bookmarks
                     self.windowController.pinnedToggle.state = .on
                 }
             }
@@ -164,7 +152,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             vw.textField?.stringValue = text.ancientAuthor ?? "(unassigned)"
         }
         
-        if let pinned = bookmarkedTextController.contains(textID: text.id) {
+        if let pinned = bookmarks.contains(textID: text.id) {
             if pinned {
                 vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
             } else {
@@ -184,7 +172,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         guard let catalogueSource = self.catalogueProvider?.source else { return }
         switch catalogueSource {
         case .bookmarks:
-            if let stringContainer = bookmarkedTextController.getTextStrings(textEntry.id) {
+            if let stringContainer = bookmarks.getTextStrings(textEntry.id) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return

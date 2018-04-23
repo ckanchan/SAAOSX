@@ -37,17 +37,17 @@
 		5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE3204EAF63004C774A /* Assets.xcassets */; };
 		5498CAE7204EAF63004C774A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */; };
 		5498CAEC204EAF7D004C774A /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */; };
-		5498CAF7204EB0B8004C774A /* BookmarkedTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* BookmarkedTextController.swift */; };
+		5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* Bookmarks.swift */; };
 		5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
-		5498CAF9204EB0B8004C774A /* CatalogueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* CatalogueController.swift */; };
-		5498CAFA204EB0B8004C774A /* GlossaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95219204058D60042E1BA /* GlossaryController.swift */; };
+		5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
+		5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95219204058D60042E1BA /* Glossary.swift */; };
 		5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		5498CAFC204EB34B004C774A /* SAAOSAQLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SAAOSAQLController.swift */; };
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
 		54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
-		54A9521B204058D60042E1BA /* CatalogueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* CatalogueController.swift */; };
-		54A9521C204058D60042E1BA /* BookmarkedTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* BookmarkedTextController.swift */; };
-		54A9521D204058D60042E1BA /* GlossaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95219204058D60042E1BA /* GlossaryController.swift */; };
+		54A9521B204058D60042E1BA /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
+		54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* Bookmarks.swift */; };
+		54A9521D204058D60042E1BA /* Glossary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95219204058D60042E1BA /* Glossary.swift */; };
 		54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AEE982203A02D800A81B97 /* TextEdition.storyboard */; };
 		54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C91A7F2017A8C0001AA675 /* Preferences.storyboard */; };
 		54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A812017AAB0001AA675 /* PreferencesViewController.swift */; };
@@ -132,9 +132,9 @@
 		5498CAE8204EAF63004C774A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		54A95216204058D60042E1BA /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
-		54A95217204058D60042E1BA /* CatalogueController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogueController.swift; sourceTree = "<group>"; };
-		54A95218204058D60042E1BA /* BookmarkedTextController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkedTextController.swift; sourceTree = "<group>"; };
-		54A95219204058D60042E1BA /* GlossaryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlossaryController.swift; sourceTree = "<group>"; };
+		54A95217204058D60042E1BA /* Catalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalogue.swift; sourceTree = "<group>"; };
+		54A95218204058D60042E1BA /* Bookmarks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
+		54A95219204058D60042E1BA /* Glossary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Glossary.swift; sourceTree = "<group>"; };
 		54AEE982203A02D800A81B97 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54C91A7F2017A8C0001AA675 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		54C91A812017AAB0001AA675 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -292,10 +292,10 @@
 		54A9520B204058C40042E1BA /* OraccCommon */ = {
 			isa = PBXGroup;
 			children = (
-				54A95218204058D60042E1BA /* BookmarkedTextController.swift */,
+				54A95218204058D60042E1BA /* Bookmarks.swift */,
 				54A95216204058D60042E1BA /* TextEditionStringContainer.swift */,
-				54A95217204058D60042E1BA /* CatalogueController.swift */,
-				54A95219204058D60042E1BA /* GlossaryController.swift */,
+				54A95217204058D60042E1BA /* Catalogue.swift */,
+				54A95219204058D60042E1BA /* Glossary.swift */,
 				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
 				544D4FFD204196F6009016DA /* SAAOSAQLController.swift */,
 			);
@@ -454,8 +454,8 @@
 				54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */,
 				547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */,
 				547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */,
-				54A9521D204058D60042E1BA /* GlossaryController.swift in Sources */,
-				54A9521B204058D60042E1BA /* CatalogueController.swift in Sources */,
+				54A9521D204058D60042E1BA /* Glossary.swift in Sources */,
+				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */,
 				54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */,
@@ -465,7 +465,7 @@
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
 				544D4FFE204196F6009016DA /* SAAOSAQLController.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
-				54A9521C204058D60042E1BA /* BookmarkedTextController.swift in Sources */,
+				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
 				547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */,
 				54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */,
@@ -487,10 +487,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5498CAFA204EB0B8004C774A /* GlossaryController.swift in Sources */,
+				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
 				5498CADF204EAF63004C774A /* DetailViewController.swift in Sources */,
-				5498CAF9204EB0B8004C774A /* CatalogueController.swift in Sources */,
-				5498CAF7204EB0B8004C774A /* BookmarkedTextController.swift in Sources */,
+				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
+				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
 				5498CADD204EAF63004C774A /* MasterViewController.swift in Sources */,
 				5498CAFC204EB34B004C774A /* SAAOSAQLController.swift in Sources */,

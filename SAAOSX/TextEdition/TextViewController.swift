@@ -21,13 +21,13 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     @IBOutlet weak var definitionView: NSTextField!
     @IBOutlet var textMenu: NSMenu!
     
-    var catalogueController: CatalogueProvider?
+    var catalogue: CatalogueProvider?
     var stringContainer: TextEditionStringContainer?
     var splitViewController: NSSplitViewController?
     var catalogueEntry: OraccCatalogEntry! {
         didSet {
             guard let cat = catalogueEntry else {return}
-            self.saved = self.bookmarkedTextController.contains(textID: cat.id)
+            self.saved = self.bookmarks.contains(textID: cat.id)
     
             guard self.windowController != nil else {return}
             guard splitViewController == nil else {return}
@@ -47,7 +47,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     }
     
     lazy var currentIdx: Int? = {
-        return catalogueController?.texts.index(where: {$0.id == self.catalogueEntry.id})
+        return catalogue?.texts.index(where: {$0.id == self.catalogueEntry.id})
         }()
     
     lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
@@ -100,7 +100,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     
     // MARK :- Toolbar Control Methods
     @IBAction func newTextWindow(_ sender: Any) {
-        TextWindowController.new(self.catalogueEntry, strings: self.stringContainer, catalogue: self.catalogueController)
+        TextWindowController.new(self.catalogueEntry, strings: self.stringContainer, catalogue: self.catalogue)
     }
     
     @IBAction func showInfoView(_ sender: Any) {
@@ -207,7 +207,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     
     func navigate(_ direction: Navigate) {
         guard let currentIdx = self.currentIdx else {return}
-        guard let catalogueController = self.catalogueController else {return}
+        guard let catalogueController = self.catalogue else {return}
         
         switch direction {
         case .left:
@@ -238,13 +238,13 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     @IBAction func bookmark(_ sender: NSButton) {
         guard let str = self.stringContainer else {return}
         
-        if let alreadySaved = self.bookmarkedTextController.contains(textID: self.catalogueEntry.id) {
+        if let alreadySaved = self.bookmarks.contains(textID: self.catalogueEntry.id) {
             if alreadySaved {
-                self.bookmarkedTextController.remove(entry: self.catalogueEntry)
+                self.bookmarks.remove(entry: self.catalogueEntry)
                 sender.state = .off
             } else {
                 do {
-                    try bookmarkedTextController.save(entry: self.catalogueEntry, strings: str)
+                    try bookmarks.save(entry: self.catalogueEntry, strings: str)
                     sender.state = .on
                 } catch {
                     print(error)

@@ -21,12 +21,6 @@ class InfoSideBarViewController: NSViewController {
     @IBOutlet weak var pubData: NSTextField!
     @IBOutlet weak var Credits: NSTextField!
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
-    }
-    
     func setLabels(_ selectedText: OraccCatalogEntry){
         textTitle.stringValue = selectedText.title
         chapterTitle.stringValue = selectedText.chapter

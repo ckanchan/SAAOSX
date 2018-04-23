@@ -32,7 +32,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             }
             
             textView.catalogueEntry = entry
-            textView.catalogueController = catalogue
+            textView.catalogue = catalogue
             textWindow.window?.title = "\(entry.displayName): \(entry.title)"
             textWindow.textViewController = [textView]
             
@@ -56,7 +56,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             controllers.forEach{
                 $0.stringContainer = stringContainer
                 $0.catalogueEntry = entry
-                $0.catalogueController = catalogue
+                $0.catalogue = catalogue
                 $0.splitViewController = splitTextViewController
                 window.textViewController.append($0)
             }
@@ -85,7 +85,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
     
     lazy var quickSearchResultsViewController: QuickSearchResultsViewController = {
         let qsr = storyboard?.instantiateController(withIdentifier: .init("QuickSearchResultsViewController")) as! QuickSearchResultsViewController
-        qsr.catalogueController = textViewController.first?.catalogueController
+        qsr.catalogueController = textViewController.first?.catalogue
         qsr.textWindow = self
         self.textViewController.forEach { qsr.textViewController.addPointer(Unmanaged.passUnretained($0).toOpaque()) }
         return qsr

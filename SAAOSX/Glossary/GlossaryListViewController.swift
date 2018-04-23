@@ -20,7 +20,7 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
         if !searchBarIsEmpty {
             return filteredGlossary.count
         }
-        return glossaryController.glossaryCount
+        return glossary.glossaryCount
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -34,7 +34,7 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
             citationForm = cf
             guideWord = gw
         } else {
-            guard let (cf, gw) = glossaryController.labelsForRow(row: row + 1) else {return nil}
+            guard let (cf, gw) = glossary.labelsForRow(row: row + 1) else {return nil}
             citationForm = cf
             guideWord = gw
         }
@@ -61,10 +61,10 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
         
         if !searchBarIsEmpty {
             let rowID = filteredGlossary[glossaryTableView.selectedRow].0
-            guard let ge = glossaryController.entryForRow(row: rowID) else {return}
+            guard let ge = glossary.entryForRow(row: rowID) else {return}
             glossaryEntry = ge
         } else {
-            guard let ge = glossaryController.entryForRow(row: glossaryTableView.selectedRow + 1) else { return }
+            guard let ge = glossary.entryForRow(row: glossaryTableView.selectedRow + 1) else { return }
             glossaryEntry = ge
         }
         
@@ -76,7 +76,7 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
     
     // MARK :- Search functions
     func filterContentForSearchText(_ searchText: String) {
-        filteredGlossary = glossaryController.searchDatabase(searchText.lowercased())
+        filteredGlossary = glossary.searchDatabase(searchText.lowercased())
     }
     
     @IBAction func search(_ sender: NSSearchField) {

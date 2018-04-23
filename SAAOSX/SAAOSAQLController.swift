@@ -1,5 +1,5 @@
 //
-//  SAAOSAQLController.swift
+//  SQLiteCatalogue.swift
 //  SAAOSX
 //
 //  Created by Chaitanya Kanchan on 24/02/2018.
@@ -10,7 +10,7 @@ import Foundation
 import SQLite
 import CDKSwiftOracc
 
-class SAAOSQLController: CatalogueProvider {
+class SQLiteCatalogue: CatalogueProvider {
     let source: CatalogueSource = .sqlite
     
     

@@ -22,15 +22,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }()
     
-    lazy var glossaryController: GlossaryController = {
-        return GlossaryController()
+    lazy var glossary: Glossary = {
+        return Glossary()
     }()
     
-    lazy var bookmarkedTextController: BookmarkedTextController = {
-        return try! BookmarkedTextController()
+    lazy var bookmarks: Bookmarks = {
+        return try! Bookmarks()
     }()
     
-    lazy var sqlite: SAAOSQLController? = { return SAAOSQLController() }()
+    lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
     
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -94,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     } else if let catalogue = try? decoder.decode(OraccCatalog.self, from: data) {
                         var texts = Array(catalogue.members.values)
                         texts.sort{$0.displayName < $1.displayName}
-                        let catalogueProvider = CatalogueController(catalogue: catalogue, sorted: texts, source: .local)
+                        let catalogueProvider = Catalogue(catalogue: catalogue, sorted: texts, source: .local)
 
                         let newWindow = ProjectListWindowController.new(catalogue: catalogueProvider)
                         
@@ -119,11 +119,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func application(_ application: NSApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
             if let cdliID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                if let result = self.bookmarkedTextController.contains(textID: cdliID) {
+                if let result = self.bookmarks.contains(textID: cdliID) {
                     if result {
-                        guard let entry = self.bookmarkedTextController.getCatalogueEntry(forID: cdliID) else {return openFromDatabase(withID: cdliID)}
-                        let strings = self.bookmarkedTextController.getTextStrings(cdliID)
-                        TextWindowController.new(entry, strings: strings, catalogue: bookmarkedTextController)
+                        guard let entry = self.bookmarks.getCatalogueEntry(forID: cdliID) else {return openFromDatabase(withID: cdliID)}
+                        let strings = self.bookmarks.getTextStrings(cdliID)
+                        TextWindowController.new(entry, strings: strings, catalogue: bookmarks)
                         return true
                     }
                 } else {
