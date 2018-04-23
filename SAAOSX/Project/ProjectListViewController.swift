@@ -12,10 +12,6 @@ import CDKOraccInterface
 
 class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, BookmarkDisplaying {
     
-    enum CatalogueSource: String {
-        case sqlite = "Local Database", bookmarks = "Bookmarks", online = "Online"
-    }
-    
     func refreshTableView() {
         self.catalogueEntryView.reloadData()
     }
@@ -40,13 +36,24 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     }()
     
     
-    var catalogueProvider: CatalogueProvider?
-    var selectedText: OraccCatalogEntry? = nil
-    var catalogueSource: CatalogueSource = .online {
+    var catalogueProvider: CatalogueProvider? {
         didSet {
-            windowController.setConnectionStatus(to: catalogueSource.rawValue)
+            
+            DispatchQueue.main.async {
+                self.windowController.setConnectionStatus(to: self.catalogueProvider?.source.rawValue ?? "disconnected")
+            }
+
+           // self.catalogueSource = catalogueProvider?.source ?? .local
         }
     }
+    
+    
+    var selectedText: OraccCatalogEntry? = nil
+//    var catalogueSource: CatalogueSource = .online {
+//        didSet {
+//            windowController.setConnectionStatus(to: catalogueSource.rawValue)
+//        }
+//    }
 
     
     override func viewDidAppear() {
@@ -75,7 +82,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         self.windowController.loadingIndicator.startAnimation(nil)
         
         if s == "pins" {
-            self.catalogueSource = .bookmarks
+//            self.catalogueSource = .bookmarks
             self.catalogueProvider = bookmarkedTextController
             self.catalogueEntryView.reloadData()
             self.windowController.loadingIndicator.stopAnimation(nil)
@@ -84,7 +91,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         }
         
         if s == "sqlite" {
-            self.catalogueSource = .sqlite
+//            self.catalogueSource = .sqlite
             self.catalogueProvider = self.sqlite
             self.catalogueEntryView.reloadData()
             self.windowController.loadingIndicator.stopAnimation(nil)
@@ -110,21 +117,21 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 let catalogue = try self.oracc.loadCatalogue(cat)
                 var texts = Array(catalogue.members.values)
                 texts.sort{$0.displayName < $1.displayName}
-                let controller = CatalogueController(catalogue: catalogue, sorted: texts, source: .interface)
+                let controller = CatalogueController(catalogue: catalogue, sorted: texts, source: .online)
                 self.catalogueProvider = controller
                 DispatchQueue.main.async {
                     self.catalogueEntryView.reloadData()
                     self.windowController.loadingIndicator.stopAnimation(nil)
                     self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
                     self.windowController.setConnectionStatus(to: "connected")
-                    self.catalogueSource = .online
+//                    self.catalogueSource = .online
                 }
             } catch {
                 print(error)
                 DispatchQueue.main.async {
                     self.loadCatalogue("pins")
                     self.windowController.setConnectionStatus(to: "disconnected")
-                    self.catalogueSource = .bookmarks
+//                    self.catalogueSource = .bookmarks
                     self.windowController.pinnedToggle.state = .on
                 }
             }
@@ -174,7 +181,8 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
 
     
     func openTextWindow(_ textEntry: OraccCatalogEntry){
-        switch self.catalogueSource {
+        guard let catalogueSource = self.catalogueProvider?.source else { return }
+        switch catalogueSource {
         case .bookmarks:
             if let stringContainer = bookmarkedTextController.getTextStrings(textEntry.id) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
@@ -214,6 +222,8 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                     }
                 }
             }
+        case .local:
+            break
         }
     }
     

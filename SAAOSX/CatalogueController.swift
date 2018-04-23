@@ -7,12 +7,17 @@
 
 import CDKSwiftOracc
 
-/// Defines an interface for objects that can supply Oracc Catalogue data to view controllers and other interested parties.
+public enum CatalogueSource: String {
+    case sqlite = "Local Database", online = "Online", bookmarks = "Bookmarks", local
+}
+
+/// Defines an interface for objects that can supply Oracc Catalogue data to view controllers and other interested parties
 
 public protocol CatalogueProvider: AnyObject {
     var name: String { get }
     var count: Int { get }
     var texts: [OraccCatalogEntry] { get }
+    var source: CatalogueSource { get }
     
     func text(at row: Int) -> OraccCatalogEntry?
     func search(_ string: String) -> [OraccCatalogEntry]
@@ -31,10 +36,6 @@ public class CatalogueController: CatalogueProvider {
         return texts[row]
     }
 
-    public enum CatalogueSource {
-        case local, interface, pins
-    }
-    
     public let catalogue: OraccCatalog
     public let texts: [OraccCatalogEntry]
     public let source: CatalogueSource

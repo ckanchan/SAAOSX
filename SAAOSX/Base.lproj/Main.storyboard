@@ -902,7 +902,7 @@
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lTa-A5-aZU">
                                 <rect key="frame" x="18" y="354" width="414" height="24"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Select text" id="h1K-Dz-kJx">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Select text" id="h1K-Dz-kJx">
                                     <font key="font" metaFont="systemBold" size="20"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

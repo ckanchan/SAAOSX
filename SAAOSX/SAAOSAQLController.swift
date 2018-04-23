@@ -11,6 +11,8 @@ import SQLite
 import CDKSwiftOracc
 
 class SAAOSQLController: CatalogueProvider {
+    let source: CatalogueSource = .sqlite
+    
     
     let textTable = Table("texts")
     let id = Expression<String>("id")

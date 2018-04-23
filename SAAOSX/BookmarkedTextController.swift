@@ -8,7 +8,6 @@
 import Foundation
 import CDKSwiftOracc
 import SQLite
-import SQLite3
 
 /// Conform to this protocol to allow BookmarkedTextController to send messages when entries are added or removed from its database.
 @objc public protocol BookmarkDisplaying: AnyObject {
@@ -17,6 +16,8 @@ import SQLite3
 
 /// Responsible for saving and loading bookmarked texts to the SQLite store.
 public class BookmarkedTextController: CatalogueProvider {
+    public var source: CatalogueSource = .bookmarks
+    
     public lazy var texts: [OraccCatalogEntry] = {
         return self.getCatalogueEntries() ?? []
     }()

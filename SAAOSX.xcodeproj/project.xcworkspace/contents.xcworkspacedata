@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../SQLiteSwift/SQLite.swift/SQLite.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:../../OraccJSONtoSwift/OraccJSONtoSwift.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>
