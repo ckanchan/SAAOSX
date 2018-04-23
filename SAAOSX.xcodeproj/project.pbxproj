@@ -14,7 +14,7 @@
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
 		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
-		544D4FFE204196F6009016DA /* SAAOSAQLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SAAOSAQLController.swift */; };
+		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
@@ -42,7 +42,7 @@
 		5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
 		5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95219204058D60042E1BA /* Glossary.swift */; };
 		5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
-		5498CAFC204EB34B004C774A /* SAAOSAQLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SAAOSAQLController.swift */; };
+		5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
 		54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
 		54A9521B204058D60042E1BA /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
@@ -110,7 +110,7 @@
 		544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAAOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSXTests.swift; sourceTree = "<group>"; };
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		544D4FFD204196F6009016DA /* SAAOSAQLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSAQLController.swift; sourceTree = "<group>"; };
+		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
 		544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAA_Lemmatised.sqlite3; sourceTree = "<group>"; };
 		54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 				54A95217204058D60042E1BA /* Catalogue.swift */,
 				54A95219204058D60042E1BA /* Glossary.swift */,
 				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
-				544D4FFD204196F6009016DA /* SAAOSAQLController.swift */,
+				544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */,
 			);
 			name = OraccCommon;
 			path = SAAOSX;
@@ -463,7 +463,7 @@
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
 				54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */,
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
-				544D4FFE204196F6009016DA /* SAAOSAQLController.swift in Sources */,
+				544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
 				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
@@ -493,7 +493,7 @@
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
 				5498CADD204EAF63004C774A /* MasterViewController.swift in Sources */,
-				5498CAFC204EB34B004C774A /* SAAOSAQLController.swift in Sources */,
+				5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
 				5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
