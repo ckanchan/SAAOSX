@@ -69,16 +69,6 @@ class SQLiteCatalogue: CatalogueProvider {
     
     
     func getEntryAt(row: Int) -> OraccCatalogEntry? {
-//        let query = textTable.select(rowid).order(displayName).limit(1, offset: row)
-//        guard let qr = try? db.pluck(query) else {return nil}
-//        guard let qrow = qr else {return nil}
-//        let rowId = qrow[rowid]
-//        let entryQuery = textTable.select(id, displayName, ancientAuthor, title, project).filter(rowid == rowId)
-//        guard let r = try? db.pluck(entryQuery) else {return nil}
-//
-//        guard let row = r else {return nil}
-//        return OraccCatalogEntry.initFromSaved(id: row[id], displayName: row[displayName], ancientAuthor: row[ancientAuthor], title: row[title], project: row[project])
-        
         guard row < texts.count else {return nil}
         return texts[row]
     }
@@ -104,32 +94,7 @@ class SQLiteCatalogue: CatalogueProvider {
         return stringContainer
     }
     
-//    func nextText(followingTextID: String) -> (OraccCatalogEntry, TextEditionStringContainer)? {
-//
-//        let query = textTable.select(rowid).filter(id == followingTextID)
-//        guard let r = try? db.pluck(query) else {return nil}
-//        guard let initialRow = r else {return nil}
-//        let nextRowNumber = Int(initialRow[rowid]) + 1
-//        guard let nextTextEntry = self.getEntryAt(row: nextRowNumber) else {return nil}
-//        guard let textStrings = self.getTextStrings(nextTextEntry.id) else {return nil}
-//
-//        return (nextTextEntry, textStrings)
-//    }
-//
-//    func previousText(followingTextID: String) -> (OraccCatalogEntry, TextEditionStringContainer)? {
-//
-//        let query = textTable.select(rowid).filter(id == followingTextID)
-//        guard let r = try? db.pluck(query) else {return nil}
-//        guard let initialRow = r else {return nil}
-//        let nextRowNumber = Int(initialRow[rowid]) - 1
-//        guard nextRowNumber != 0 else {return nil}
-//        guard let nextTextEntry = self.getEntryAt(row: nextRowNumber) else {return nil}
-//        guard let textStrings = self.getTextStrings(nextTextEntry.id) else {return nil}
-//
-//        return (nextTextEntry, textStrings)
-//    }
-    
-    
+ 
     init? () {
         guard let bundle = Bundle.main.resourceURL else {return nil}
         let url = bundle.appendingPathComponent("SAA_Lemmatised").appendingPathExtension("sqlite3").path
