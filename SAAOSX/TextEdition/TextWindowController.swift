@@ -13,7 +13,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
     @IBOutlet weak var catalogueSearch: NSSearchField!
     @IBOutlet weak var bookmarksBtn: NSButton!
     
-    @discardableResult static func new(_ entry: OraccCatalogEntry, strings: TextEditionStringContainer?, catalogue: CatalogueProvider?) -> TextWindowController? {
+    @discardableResult static func new(_ entry: OraccCatalogEntry, strings: TextEditionStringContainer?, catalogue: CatalogueProvider?, searchTerm: String? = nil) -> TextWindowController? {
         
         let panes = UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue)
         

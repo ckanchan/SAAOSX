@@ -187,14 +187,25 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 return
             }
             
-        case .sqlite, .search:
+        case .search:
+            guard let sqlite = self.sqlite else {return}
+            guard let catalogue = self.catalogueProvider as? Catalogue else {return}
+            guard let textSearchCollection = catalogue.catalogue as? TextSearchCollection else { return }
+            
+            if let stringContainer = sqlite.getTextStrings(textEntry.id) {
+                TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, searchTerm: textSearchCollection.searchTerm)
+                self.windowController.loadingIndicator.stopAnimation(nil)
+                return
+            }
+            
+        case .sqlite:
             guard let sqlite = self.sqlite else {return}
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
-            
+
         case .online:
             DispatchQueue.global(qos: .userInitiated).async {
                 if let textEdition = try? self.oracc.loadText(textEntry) {

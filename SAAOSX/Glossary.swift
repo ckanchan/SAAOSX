@@ -16,7 +16,7 @@ public class Glossary {
     }()
     
     let id = Expression<String>("id")
-    let xisKey = Expression<String>("xis")
+//    let xisKey = Expression<String>("xis")
     let xisInstances = Expression<String>("xisInstances")
     let headWord = Expression<String>("headword")
     let citationForm = Expression<String>("cf")
@@ -77,23 +77,25 @@ public class Glossary {
     }
     
     public func getXISReferences(_ searchQuery: String) -> [String]? {
-        guard searchQuery.prefix(3) == "cf:" else { return nil}
-        let cf = String(searchQuery.dropFirst(3))
-        let query = entries.select(rowid, xisKey).filter(citationForm.like(cf))
+        //        guard searchQuery.prefix(3) == "cf:" else { return nil}
+        //        let cf = String(searchQuery.dropFirst(3))
         
-        guard let result = try? db.pluck(query) else { return nil }
-        guard let row = result else {return nil}
-        let xisRef = row[xisKey]
+        let iQ = instances.select(xisInstances).filter(headWord.like(searchQuery))
         
-        let iQ = instances.select(xisInstances).filter(xisKey.like(xisRef))
-        guard let instanceResult = try? db.pluck(iQ) else { return nil }
-        guard let instanceRow = instanceResult else {return nil }
-        let references = instanceRow[xisInstances]
-        let referenceStrings = references.split(separator: ",")
-            .map({String($0)})
-            .map({String($0.trimmingCharacters(in: .whitespacesAndNewlines))})
-            .filter({$0.count > 6})
+        
+        guard let instanceResult = try? db.prepare(iQ) else { return nil }
+        var referenceStrings = [String]()
+        for instanceRow in instanceResult {
+            let references = instanceRow[xisInstances]
+            let strings = references.split(separator: ",")
+                .map({String($0)})
+                .map({String($0.trimmingCharacters(in: .whitespacesAndNewlines))})
+                .filter({$0.count > 6})
             
+            referenceStrings.append(contentsOf: strings)
+            
+        }
+        
         return referenceStrings
     }
     
