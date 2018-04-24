@@ -21,6 +21,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     @IBOutlet weak var definitionView: NSTextField!
     @IBOutlet var textMenu: NSMenu!
     
+    var searchTerm: String? = nil
     var catalogue: CatalogueProvider?
     var stringContainer: TextEditionStringContainer?
     var splitViewController: NSSplitViewController?
@@ -77,6 +78,19 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             textView.textStorage?.setAttributedString(stringContainer.transliteration)
         case 2:
             textView.textStorage?.setAttributedString(stringContainer.normalisation)
+            if let searchTerm = searchTerm {
+                textView.textStorage?.enumerateAttribute(.oraccCitationForm, in: NSMakeRange(0, textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
+                    value, range, stop in
+                    guard let stringVal = value as? String else {return}
+                    if searchTerm.lowercased().contains(stringVal.lowercased()) {
+                        guard range.length > 2 else {return}
+                        let newRange = NSMakeRange(range.location, range.length - 1)
+                        textView.textStorage?.addAttributes([NSAttributedStringKey.backgroundColor: NSColor.systemYellow], range: newRange)
+                    }
+                    
+                })
+            }
+            
         case 3:
             textView.string = stringContainer.translation
             textView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)

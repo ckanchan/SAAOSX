@@ -31,6 +31,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
                 textView.stringContainer = TextEditionStringContainer(textEdition)
             }
             
+            textView.searchTerm = searchTerm
             textView.catalogueEntry = entry
             textView.catalogue = catalogue
             textWindow.window?.title = "\(entry.displayName): \(entry.title)"
@@ -54,6 +55,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             }
             
             controllers.forEach{
+                $0.searchTerm = searchTerm
                 $0.stringContainer = stringContainer
                 $0.catalogueEntry = entry
                 $0.catalogue = catalogue
