@@ -28,6 +28,7 @@ public class Glossary {
     let senses = Expression<String?>("senses")
     
     let entries = Table("entries")
+    let instances = Table("instances")
     
     public var glossaryCount: Int {
         return try! db.scalar(entries.count)
@@ -73,6 +74,27 @@ public class Glossary {
         
         return result
         
+    }
+    
+    public func getXISReferences(_ searchQuery: String) -> [String]? {
+        guard searchQuery.prefix(3) == "cf:" else { return nil}
+        let cf = String(searchQuery.dropFirst(3))
+        let query = entries.select(rowid, xisKey).filter(citationForm.like(cf))
+        
+        guard let result = try? db.pluck(query) else { return nil }
+        guard let row = result else {return nil}
+        let xisRef = row[xisKey]
+        
+        let iQ = instances.select(xisInstances).filter(xisKey.like(xisRef))
+        guard let instanceResult = try? db.pluck(iQ) else { return nil }
+        guard let instanceRow = instanceResult else {return nil }
+        let references = instanceRow[xisInstances]
+        let referenceStrings = references.split(separator: ",")
+            .map({String($0)})
+            .map({String($0.trimmingCharacters(in: .whitespacesAndNewlines))})
+            .filter({$0.count > 6})
+            
+        return referenceStrings
     }
     
     

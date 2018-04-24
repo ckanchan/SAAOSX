@@ -1031,10 +1031,27 @@
                                         </connections>
                                     </searchField>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="B3203A2C-BFCE-4B7B-A5A9-7FF9314CD9DA" label="Texts" paletteLabel="Texts" image="NSQuickLookTemplate" id="mxZ-CB-i8n">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="82" height="32"/>
+                                    <size key="maxSize" width="82" height="32"/>
+                                    <button key="view" verticalHuggingPriority="750" id="q30-Dk-DMs">
+                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSQuickLookTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tgt-jh-LUc">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="getSearchSet:" target="YCz-8p-lwc" id="ZBD-nl-rUh"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="ZgP-ub-6Uw"/>
                                 <toolbarItem reference="UbC-lK-AEL"/>
+                                <toolbarItem reference="mxZ-CB-i8n"/>
                             </defaultToolbarItems>
                         </toolbar>
                     </window>
@@ -1491,6 +1508,7 @@
     <resources>
         <image name="NSBookmarksTemplate" width="17" height="18"/>
         <image name="NSListViewTemplate" width="14" height="10"/>
+        <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="NSTouchBarOpenInBrowserTemplate" width="18" height="30"/>
     </resources>
 </document>

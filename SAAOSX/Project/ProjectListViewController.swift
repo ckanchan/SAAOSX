@@ -40,7 +40,16 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     var catalogueProvider: CatalogueProvider? {
         didSet {
             DispatchQueue.main.async {
-                self.windowController.setConnectionStatus(to: self.catalogueProvider?.source.rawValue ?? "disconnected")
+                if let source = self.catalogueProvider?.source {
+                    switch source {
+                    case .search:
+                        self.windowController.setConnectionStatus(to: self.catalogueProvider?.name ?? "Search Results")
+                    case .sqlite, .online, .bookmarks, .local:
+                        self.windowController.setConnectionStatus(to: "\(source.rawValue) \(self.catalogueProvider?.name ?? "")")
+                    }
+                } else {
+                    self.windowController.setConnectionStatus(to: "disconnected")
+                } 
             }
         }
     }
@@ -178,7 +187,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 return
             }
             
-        case .sqlite:
+        case .sqlite, .search:
             guard let sqlite = self.sqlite else {return}
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
@@ -210,6 +219,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                     }
                 }
             }
+            
         case .local:
             break
         }

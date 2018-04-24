@@ -90,5 +90,20 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
         }
     }
     
+    @IBAction func getSearchSet(_ sender: Any) {
+        guard let entry = definitionViewController?.glossaryEntry else { return }
+        guard let references = glossary.getXISReferences("cf:\(entry.citationForm)") else {return}
+        guard let collection = sqlite?.getSearchCollection(term: entry.citationForm, references: references) else {return}
+        
+        let sorted = collection.members.values.sorted(by: {lhs, rhs in lhs.displayName < rhs.displayName})
+        
+        let catalogue = Catalogue(catalogue: collection, sorted: sorted, source: .search)
+        
+        let resultsWindow = ProjectListWindowController.new(catalogue: catalogue)
+        resultsWindow.showWindow(sender)
+
+        
+    }
+    
     
 }

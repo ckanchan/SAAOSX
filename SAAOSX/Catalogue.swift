@@ -8,7 +8,7 @@
 import CDKSwiftOracc
 
 public enum CatalogueSource: String {
-    case sqlite = "Local Database", online = "Online", bookmarks = "Bookmarks", local
+    case sqlite = "Local Database", online = "Online", bookmarks = "Bookmarks", local, search
 }
 
 /// Defines an interface for objects that can supply Oracc Catalogue data to view controllers and other interested parties
@@ -36,13 +36,13 @@ public class Catalogue: CatalogueProvider {
         return texts[row]
     }
 
-    public let catalogue: OraccCatalog
+    public let catalogue: TextSet
     public let texts: [OraccCatalogEntry]
     public let source: CatalogueSource
     
     
-    public lazy var name = {return self.catalogue.project}()
-    public init(catalogue: OraccCatalog, sorted: [OraccCatalogEntry], source: CatalogueSource) {
+    public lazy var name = { return self.catalogue.title }()
+    public init(catalogue: TextSet, sorted: [OraccCatalogEntry], source: CatalogueSource) {
         self.catalogue = catalogue
         self.texts = sorted
         self.source = source

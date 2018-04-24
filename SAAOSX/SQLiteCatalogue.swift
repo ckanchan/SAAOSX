@@ -67,6 +67,21 @@ class SQLiteCatalogue: CatalogueProvider {
         return entries
     }
     
+    public func getSearchCollection(term: String, references: [String]) -> TextSearchCollection {
+        var results = [OraccCatalogEntry?]()
+        for reference in references {
+            results.append(self.getEntryFor(id: String(reference.prefix(while:{$0 != "."}))))
+        }
+        
+        var members = [String: OraccCatalogEntry]()
+        for result in results.compactMap({$0}) {
+            members[result.id] = result
+        }
+
+        
+        return TextSearchCollection(searchTerm: term, members: members, searchIDs: references)
+    }
+    
     
     func getEntryAt(row: Int) -> OraccCatalogEntry? {
         guard row < texts.count else {return nil}
