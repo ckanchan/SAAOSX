@@ -33,8 +33,15 @@ public class Glossary {
         return try! db.scalar(entries.count)
     }
     
-    public func searchDatabase(_ query: String) -> [(Int, String, String)] {
-        let query = entries.select(rowid, citationForm, guideWord).filter(headWord.like("%\(query)%"))
+    public func searchDatabase(_ searchQuery: String) -> [(Int, String, String)] {
+        let query: Table
+        
+        if searchQuery.prefix(3) == "cf:" {
+            let cf = String(searchQuery.dropFirst(3))
+            query = entries.select(rowid, citationForm, guideWord).filter(citationForm.like(cf))
+        } else {
+            query = entries.select(rowid, citationForm, guideWord).filter(headWord.like("%\(searchQuery)%"))
+        }
         
         if let results = try? db.prepare(query) {
             let x = results.map({ row in return

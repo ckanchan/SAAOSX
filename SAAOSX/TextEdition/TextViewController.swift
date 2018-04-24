@@ -146,7 +146,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         let words = str.attributes(at: charIndex, effectiveRange: nil)
         
         if let citationForm = words[.oraccCitationForm] as? String {
-            menu.addItem(withTitle: citationForm, action: nil, keyEquivalent: "")
+            menu.addItem(withTitle: citationForm, action: #selector(lookUpInGlossaryWindow), keyEquivalent: "")
         }
         
         if let guideWord = words[.oraccGuideWord] as? String {
@@ -160,6 +160,10 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         guard menu.items.count > 0 else { return nil }
         
         return menu
+    }
+    
+    @objc func lookUpInGlossaryWindow(_ sender: NSMenuItem) {
+        GlossaryWindowController.searchField(sender)
     }
 
 
