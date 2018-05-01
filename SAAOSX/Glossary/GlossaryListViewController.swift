@@ -15,6 +15,10 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
     var searchBarIsEmpty: Bool = true
     var definitionViewController: GlossaryEntryViewController?
     
+    override func viewDidAppear() {
+        glossaryTableView.doubleAction = #selector(getSearchSet(_:))
+    }
+    
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         if !searchBarIsEmpty {
@@ -38,10 +42,6 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
             citationForm = cf
             guideWord = gw
         }
-
-        
-
-        
 
         guard let tableColumn = tableColumn else {return nil}
         switch tableColumn.identifier.rawValue {
@@ -74,6 +74,8 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
     }
     
     
+    
+    
     // MARK :- Search functions
     func filterContentForSearchText(_ searchText: String) {
         filteredGlossary = glossary.searchDatabase(searchText.lowercased())
@@ -101,8 +103,6 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
         
         let resultsWindow = ProjectListWindowController.new(catalogue: catalogue)
         resultsWindow.showWindow(sender)
-
-        
     }
     
     

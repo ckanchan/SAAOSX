@@ -82,7 +82,8 @@ class TextViewController: NSViewController, NSTextViewDelegate {
                 textView.textStorage?.enumerateAttribute(.oraccCitationForm, in: NSMakeRange(0, textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
                     value, range, stop in
                     guard let stringVal = value as? String else {return}
-                    if searchTerm.lowercased().contains(stringVal.lowercased()) {
+                    //if searchTerm.lowercased().contains(stringVal.lowercased())
+                    if searchTerm.lowercased() == stringVal.lowercased() {
                         guard range.length > 2 else {return}
                         let newRange = NSMakeRange(range.location, range.length - 1)
                         textView.textStorage?.addAttributes([NSAttributedStringKey.backgroundColor: NSColor.systemYellow], range: newRange)
