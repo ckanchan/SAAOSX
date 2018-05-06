@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		540756A1209F96A100EB6942 /* CDKSwiftOracc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5407569F209F96A100EB6942 /* CDKSwiftOracc.framework */; };
+		540756A2209F96A100EB6942 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540756A0209F96A100EB6942 /* SQLite.framework */; };
 		5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0A200F71C7001EE385 /* TextViewController.swift */; };
 		5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* infoViewController.swift */; };
 		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
+		54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
+		54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
+		543709AB209F9D8C00CE41F7 /* DejaVuSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709A9209F9D8C00CE41F7 /* DejaVuSans.ttf */; };
+		543709AC209F9D8C00CE41F7 /* CuneiformNA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */; };
+		543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */; };
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
 		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
-		54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
@@ -32,8 +38,8 @@
 		549832FB209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */; };
 		549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */; };
 		5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADA204EAF63004C774A /* AppDelegate.swift */; };
-		5498CADD204EAF63004C774A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADC204EAF63004C774A /* MasterViewController.swift */; };
-		5498CADF204EAF63004C774A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADE204EAF63004C774A /* DetailViewController.swift */; };
+		5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADC204EAF63004C774A /* ProjectListViewController.swift */; };
+		5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADE204EAF63004C774A /* TextEditionViewController.swift */; };
 		5498CAE2204EAF63004C774A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE0204EAF63004C774A /* Main.storyboard */; };
 		5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE3204EAF63004C774A /* Assets.xcassets */; };
 		5498CAE7204EAF63004C774A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */; };
@@ -54,7 +60,6 @@
 		54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A832017AB9F001AA675 /* UserDefaultsController.swift */; };
 		54C91A882017C743001AA675 /* TextWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A872017C743001AA675 /* TextWindowController.swift */; };
 		54D9CD092019C974005498A3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 54D9CD082019C974005498A3 /* Credits.rtf */; };
-		54DD36FB205409DE001F44D9 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */; };
 		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
@@ -86,22 +91,18 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5498CAF6204EB07F004C774A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5407569F209F96A100EB6942 /* CDKSwiftOracc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CDKSwiftOracc.framework; path = Carthage/Build/iOS/CDKSwiftOracc.framework; sourceTree = "<group>"; };
+		540756A0209F96A100EB6942 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		5418DF0E200FD62A001EE385 /* infoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoViewController.swift; sourceTree = "<group>"; };
 		5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+CoreSpotlight.swift"; sourceTree = "<group>"; };
+		54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
+		543709A9209F9D8C00CE41F7 /* DejaVuSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DejaVuSans.ttf; sourceTree = "<group>"; };
+		543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CuneiformNA.ttf; sourceTree = "<group>"; };
+		543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
 		544138D92004D27A00A64CB2 /* SAAOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,7 +112,6 @@
 		544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSXTests.swift; sourceTree = "<group>"; };
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
-		54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
@@ -124,8 +124,8 @@
 		549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAA_Lemmatised.sqlite3; sourceTree = "<group>"; };
 		5498CAD8204EAF63004C774A /* SAAiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5498CADA204EAF63004C774A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5498CADC204EAF63004C774A /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		5498CADE204EAF63004C774A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		5498CADC204EAF63004C774A /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
+		5498CADE204EAF63004C774A /* TextEditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditionViewController.swift; sourceTree = "<group>"; };
 		5498CAE1204EAF63004C774A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5498CAE3204EAF63004C774A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5498CAE6204EAF63004C774A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -171,12 +171,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				540756A1209F96A100EB6942 /* CDKSwiftOracc.framework in Frameworks */,
+				540756A2209F96A100EB6942 /* SQLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		543709A8209F9D4100CE41F7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */,
+				543709A9209F9D8C00CE41F7 /* DejaVuSans.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		544138D02004D27A00A64CB2 = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +198,7 @@
 				54A9520B204058C40042E1BA /* OraccCommon */,
 				544138DB2004D27A00A64CB2 /* SAAOSX */,
 				544138EE2004D27A00A64CB2 /* SAAOSXTests */,
+				543709A8209F9D4100CE41F7 /* Fonts */,
 				5498CAD9204EAF63004C774A /* SAAiOS */,
 				544138DA2004D27A00A64CB2 /* Products */,
 				5441390A2004D30A00A64CB2 /* Frameworks */,
@@ -207,7 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */,
-				54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */,
+				54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */,
 				54AEE982203A02D800A81B97 /* TextEdition.storyboard */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
 				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
@@ -238,6 +250,8 @@
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5407569F209F96A100EB6942 /* CDKSwiftOracc.framework */,
+				540756A0209F96A100EB6942 /* SQLite.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -274,13 +288,22 @@
 			path = Project;
 			sourceTree = "<group>";
 		};
+		547BEB35209FA8C000C42007 /* TextEdition */ = {
+			isa = PBXGroup;
+			children = (
+				5498CADE204EAF63004C774A /* TextEditionViewController.swift */,
+			);
+			path = TextEdition;
+			sourceTree = "<group>";
+		};
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
-				5498CADA204EAF63004C774A /* AppDelegate.swift */,
-				5498CADC204EAF63004C774A /* MasterViewController.swift */,
 				5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */,
-				5498CADE204EAF63004C774A /* DetailViewController.swift */,
+				547BEB35209FA8C000C42007 /* TextEdition */,
+				5498CADA204EAF63004C774A /* AppDelegate.swift */,
+				5498CADC204EAF63004C774A /* ProjectListViewController.swift */,
+				543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */,
 				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
@@ -346,10 +369,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAiOS" */;
 			buildPhases = (
+				540756A3209F96D100EB6942 /* ShellScript */,
 				5498CAD4204EAF63004C774A /* Sources */,
 				5498CAD5204EAF63004C774A /* Frameworks */,
 				5498CAD6204EAF63004C774A /* Resources */,
-				5498CAF6204EB07F004C774A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -418,10 +441,10 @@
 				54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */,
 				549832FB209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
 				544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */,
-				54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */,
 				544138E42004D27A00A64CB2 /* Main.storyboard in Resources */,
 				54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */,
 				54D9CD092019C974005498A3 /* Credits.rtf in Resources */,
+				54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,14 +460,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				5498CAE7204EAF63004C774A /* LaunchScreen.storyboard in Resources */,
+				54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */,
+				543709AB209F9D8C00CE41F7 /* DejaVuSans.ttf in Resources */,
 				5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */,
 				549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
-				54DD36FB205409DE001F44D9 /* SAAO_CompleteGlossary.sqlite3 in Resources */,
 				5498CAE2204EAF63004C774A /* Main.storyboard in Resources */,
+				543709AC209F9D8C00CE41F7 /* CuneiformNA.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		540756A3209F96D100EB6942 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/CDKSwiftOracc.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SQLite.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CDKSwiftOracc.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SQLite.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/local/bin/fish;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		544138D52004D27A00A64CB2 /* Sources */ = {
@@ -488,11 +533,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
-				5498CADF204EAF63004C774A /* DetailViewController.swift in Sources */,
+				5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
+				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
-				5498CADD204EAF63004C774A /* MasterViewController.swift in Sources */,
+				5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */,
 				5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
@@ -735,8 +781,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SAAiOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2018.SAAiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -753,8 +803,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SAAiOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2018.SAAiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";

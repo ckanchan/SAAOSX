@@ -24,9 +24,13 @@ public class TextEditionStringContainer: NSCoding {
         return self.textEdition?.normalised() ?? NSAttributedString(string: "No edition available")
     }()
     
+    #if os(macOS)
     public lazy var translation: String = {
         return self.textEdition?.scrapeTranslation() ?? self.textEdition?.literalTranslation ?? "No translation available"
     }()
+    #elseif os(iOS)
+    public lazy var translation: String = {self.textEdition?.literalTranslation ?? "No translation available"}()
+    #endif
     
     public var textEdition: OraccTextEdition? = nil
     

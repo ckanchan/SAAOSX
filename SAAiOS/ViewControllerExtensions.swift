@@ -13,7 +13,9 @@ extension UIViewController {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
-    var sqlite: SAAOSQLController {
+    var sqlite: SQLiteCatalogue {
         return appDelegate.sqlDB
     }
+    
+
 }

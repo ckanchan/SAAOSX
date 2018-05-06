@@ -9,9 +9,9 @@ This application is in alpha and is deficient in important ways:
 
 ## Introduction
 This application provides a Mac native user interface to the [SAAo](http://oracc.org/saao/corpus) and [RINAP](http://oracc.org/rinap/corpus) text editions hosted on Oracc. 
+This application also includes an iOS alpha interface.
 
-
-## Copyrights
+## Copyrights and Licenses
 See [CREDITS](CREDITS)
 
 
