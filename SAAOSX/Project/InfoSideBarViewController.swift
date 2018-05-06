@@ -23,7 +23,10 @@ class InfoSideBarViewController: NSViewController {
     
     func setLabels(_ selectedText: OraccCatalogEntry){
         textTitle.stringValue = selectedText.title
-        chapterTitle.stringValue = selectedText.chapter
+        if let chapterNumber = selectedText.chapterNumber {
+            chapterTitle.stringValue = "Chapter \(chapterNumber): \(selectedText.chapterName?.trimmingCharacters(in: CharacterSet(charactersIn: "()")) ?? "no chapter assigned")"
+        }
+        
         ancientAuthor.stringValue = selectedText.ancientAuthor ?? "No author assigned"
         textIDs.stringValue = {
             var str = ""

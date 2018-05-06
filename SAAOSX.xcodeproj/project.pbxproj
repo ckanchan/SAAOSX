@@ -29,14 +29,14 @@
 		5483FB9A208D1E8500FADF53 /* CDKOraccInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB93208D1E8500FADF53 /* CDKOraccInterface.framework */; };
 		5483FB9B208D1E8500FADF53 /* CDKOraccInterface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5483FB93208D1E8500FADF53 /* CDKOraccInterface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
-		5494D8D22042D38B0071756C /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */; };
+		549832FB209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */; };
+		549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */; };
 		5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADA204EAF63004C774A /* AppDelegate.swift */; };
 		5498CADD204EAF63004C774A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADC204EAF63004C774A /* MasterViewController.swift */; };
 		5498CADF204EAF63004C774A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADE204EAF63004C774A /* DetailViewController.swift */; };
 		5498CAE2204EAF63004C774A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE0204EAF63004C774A /* Main.storyboard */; };
 		5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE3204EAF63004C774A /* Assets.xcassets */; };
 		5498CAE7204EAF63004C774A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */; };
-		5498CAEC204EAF7D004C774A /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */; };
 		5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* Bookmarks.swift */; };
 		5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
 		5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
@@ -111,7 +111,6 @@
 		544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSXTests.swift; sourceTree = "<group>"; };
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
-		544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAA_Lemmatised.sqlite3; sourceTree = "<group>"; };
 		54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +121,7 @@
 		5483FB92208D1E8400FADF53 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/Mac/SQLite.framework; sourceTree = "<group>"; };
 		5483FB93208D1E8500FADF53 /* CDKOraccInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CDKOraccInterface.framework; path = Carthage/Build/Mac/CDKOraccInterface.framework; sourceTree = "<group>"; };
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
+		549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAA_Lemmatised.sqlite3; sourceTree = "<group>"; };
 		5498CAD8204EAF63004C774A /* SAAiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5498CADA204EAF63004C774A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5498CADC204EAF63004C774A /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 		544138DB2004D27A00A64CB2 /* SAAOSX */ = {
 			isa = PBXGroup;
 			children = (
-				544D500320421451009016DA /* SAA_Lemmatised.sqlite3 */,
+				549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */,
 				54737B34203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 */,
 				54AEE982203A02D800A81B97 /* TextEdition.storyboard */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
@@ -416,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */,
-				5494D8D22042D38B0071756C /* SAA_Lemmatised.sqlite3 in Resources */,
+				549832FB209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
 				544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */,
 				54737B35203877FE0030F71D /* SAAO_CompleteGlossary.sqlite3 in Resources */,
 				544138E42004D27A00A64CB2 /* Main.storyboard in Resources */,
@@ -438,8 +438,8 @@
 			files = (
 				5498CAE7204EAF63004C774A /* LaunchScreen.storyboard in Resources */,
 				5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */,
+				549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
 				54DD36FB205409DE001F44D9 /* SAAO_CompleteGlossary.sqlite3 in Resources */,
-				5498CAEC204EAF7D004C774A /* SAA_Lemmatised.sqlite3 in Resources */,
 				5498CAE2204EAF63004C774A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

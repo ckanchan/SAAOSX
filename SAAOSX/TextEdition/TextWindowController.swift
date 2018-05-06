@@ -13,6 +13,8 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
     @IBOutlet weak var catalogueSearch: NSSearchField!
     @IBOutlet weak var bookmarksBtn: NSButton!
     
+    static let defaultformattingPreferences: OraccTextEdition.FormattingPreferences = NSFont.systemFont(ofSize: NSFont.systemFontSize).makeDefaultPreferences()
+    
     @discardableResult static func new(_ entry: OraccCatalogEntry, strings: TextEditionStringContainer?, catalogue: CatalogueProvider?, searchTerm: String? = nil) -> TextWindowController? {
         
         let panes = UserDefaults.standard.integer(forKey: PreferenceKey.textWindowNumber.rawValue)
@@ -25,6 +27,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             guard let textView = textWindow.contentViewController as? TextViewController else { return nil}
             
             if let strings = strings {
+                strings.render(withPreferences: defaultformattingPreferences)
                 textView.stringContainer = strings
             } else {
                 guard let textEdition = try? textView.oracc.loadText(entry) else {return nil}
@@ -48,6 +51,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             
             let stringContainer: TextEditionStringContainer
             if let str = strings {
+                str.render(withPreferences: defaultformattingPreferences)
                 stringContainer = str
             } else {
                 guard let textEdition = try? controllers.first!.oracc.loadText(entry) else {return nil}

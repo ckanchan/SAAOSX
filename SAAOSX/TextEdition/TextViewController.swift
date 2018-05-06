@@ -82,7 +82,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
                 textView.textStorage?.enumerateAttribute(.oraccCitationForm, in: NSMakeRange(0, textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
                     value, range, stop in
                     guard let stringVal = value as? String else {return}
-                    //if searchTerm.lowercased().contains(stringVal.lowercased())
                     if searchTerm.lowercased() == stringVal.lowercased() {
                         guard range.length > 2 else {return}
                         let newRange = NSMakeRange(range.location, range.length - 1)
@@ -108,6 +107,8 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         } else {
             newFont = sender.selectedFont ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
         }
+        
+        //self.stringContainer?.render(withPreferences: newFont.makeDefaultPreferences())
         self.textView.setFont(newFont, range: NSMakeRange(0, self.textView.string.utf16.count))
     }
     
@@ -135,6 +136,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     func loadText(entry: OraccCatalogEntry) -> Bool{
         if let text = sqlite?.getTextStrings(entry.id) {
             catalogueEntry = entry
+            text.render(withPreferences: TextWindowController.defaultformattingPreferences)
             stringContainer = text
             setText(self)
             windowController?.window?.title = "\(entry.displayName): \(entry.title)"
@@ -143,6 +145,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         } else {
             if let text = try? self.oracc.loadText(entry){
                 let stringContainer = TextEditionStringContainer(text)
+                stringContainer.render(withPreferences: TextWindowController.defaultformattingPreferences)
                 self.catalogueEntry = entry
                 self.stringContainer = stringContainer
                 self.setText(self)

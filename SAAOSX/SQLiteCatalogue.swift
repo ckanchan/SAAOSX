@@ -13,14 +13,39 @@ import CDKSwiftOracc
 class SQLiteCatalogue: CatalogueProvider {
     let source: CatalogueSource = .sqlite
     
+    let textid = Expression<String>("textid")
+    let project = Expression<String>("project")
+    let displayName = Expression<String>("display_name")
+    let title = Expression<String>("title")
+    let ancientAuthor = Expression<String?>("ancient_author")
+    
+    // Additional catalogue data
+    let chapterNumber = Expression<Int?>("chapter_num")
+    let chapterName = Expression<String?>("chapter_name")
+    let museumNumber = Expression<String?>("museum_num")
+    
+    //Archaeological data
+    let genre = Expression<String?>("genre")
+    let material = Expression<String?>("material")
+    let period = Expression<String?>("period")
+    let provenience = Expression<String?>("provenience")
+    
+    
+    //Publication data
+    let primaryPublication = Expression<String?>("primary_publication")
+    let publicationHistory = Expression<String?>("publication_history")
+    let notes = Expression<String?>("notes")
+    let credits = Expression<String?>("credits")
+    
+    
+    // A place to encode TextEditionStringContainer with NSCoding
+     let textStrings = Expression<Data>("Text")
+    
     
     let textTable = Table("texts")
-    let id = Expression<String>("id")
-    let project = Expression<String>("project")
-    let displayName = Expression<String>("DisplayName")
-    let title = Expression<String>("Title")
-    let ancientAuthor = Expression<String?>("Ancient Author")
-    let textStrings = Expression<Data>("Text")
+   
+   
+   
     
     var count: Int {
         return self.textCount
@@ -36,11 +61,10 @@ class SQLiteCatalogue: CatalogueProvider {
     
     func search(_ string: String) -> [OraccCatalogEntry] {
         let searchString = "%\(string)%"
-        let query = textTable.select(id, displayName, title, ancientAuthor, project).filter(id.like(searchString) || displayName.like(searchString) || title.like(searchString) || ancientAuthor.like(searchString))
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid.like(searchString) || displayName.like(searchString) || title.like(searchString) || ancientAuthor.like(searchString))
         
         if let rows = try? db.prepare(query) {
-            let entries = rows.map { row in return OraccCatalogEntry.initFromSaved(id: row[id], displayName: row[displayName], ancientAuthor: row[ancientAuthor], title: row[title], project: row[project])
-            }
+            let entries = rows.map { row in return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], credits: row[credits])}
             return entries
         } else {
             return []
@@ -58,11 +82,10 @@ class SQLiteCatalogue: CatalogueProvider {
     
     
     public func getCatalogueEntries() -> [OraccCatalogEntry]? {
-        let query = textTable.select(id, displayName,ancientAuthor, title, project).order(displayName)
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits)
         
         guard let rows = try? db.prepare(query) else { return nil }
-        let entries = rows.map { row in return OraccCatalogEntry.initFromSaved(id: row[id], displayName: row[displayName], ancientAuthor: row[ancientAuthor], title: row[title], project: row[project])
-        }
+        let entries = rows.map { row in return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], credits: row[credits])}
         
         return entries
     }
@@ -89,15 +112,16 @@ class SQLiteCatalogue: CatalogueProvider {
     }
     
     func getEntryFor(id cdliID: String) -> OraccCatalogEntry? {
-        let query = textTable.select(id, displayName,ancientAuthor, title, project).filter(id == cdliID)
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid == cdliID)
+        
         guard let r = try? db.pluck(query) else {return nil}
         guard let row = r else {return nil}
-        return OraccCatalogEntry.initFromSaved(id: row[id], displayName: row[displayName], ancientAuthor: row[ancientAuthor], title: row[title], project: row[project])
+        return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], credits: row[credits])
     }
     
     
     func getTextStrings(_ textId: String) -> TextEditionStringContainer? {
-        let query = textTable.select(textStrings).filter(id == textId)
+        let query = textTable.select(textStrings).filter(textid == textId)
         
         guard let encodedStringRow = try? db.pluck(query) else {return nil}
         guard let row = encodedStringRow else {return nil}
