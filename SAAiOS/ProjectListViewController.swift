@@ -112,6 +112,7 @@ class ProjectListViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search texts"
+        searchController.searchBar.addShortcuts()
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }

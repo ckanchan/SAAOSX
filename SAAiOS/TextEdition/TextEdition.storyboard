@@ -98,6 +98,7 @@
                             <outlet property="delegate" destination="SPC-gf-gcU" id="z34-fb-SOb"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cPi-0l-sFZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

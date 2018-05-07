@@ -90,8 +90,11 @@ class GlossaryTableViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search glossary"
+        searchController.searchBar.addShortcuts()
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        
     }
     
     func searchBarIsEmpty() -> Bool {
