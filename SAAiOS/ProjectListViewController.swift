@@ -54,7 +54,7 @@ class ProjectListViewController: UITableViewController {
                 
                 guard let textStrings = sqlite.getTextStrings(catalogueEntry.id) else {return}
                 let controller = (segue.destination as! UINavigationController).topViewController as! TextEditionViewController
-                controller.detailItem = catalogueEntry
+                controller.textItem = catalogueEntry
                 controller.textStrings = textStrings
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
