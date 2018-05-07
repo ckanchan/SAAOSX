@@ -23,7 +23,7 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    enum TextDisplay {
+    enum TextDisplay: Int {
         case Cuneiform, Transliteration, Normalisation, Translation
     }
     
@@ -32,7 +32,50 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         case double(left: TextDisplay, right: TextDisplay)
     }
     
-    var displayState: DisplayState? = nil
+    var displayState: DisplayState? = nil {
+        didSet {
+            refreshState()
+        }
+    }
+    
+    func refreshState(leftOffSet: CGPoint? = nil, rightOffSet: CGPoint? = nil) {
+        guard let state = self.displayState else {return}
+        switch state {
+        case .single(let textState):
+            guard let textView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
+            switchTextTo(textState, textView: textView)
+            
+            guard let control = self.stackView.subviews[0].subviews.last as? UISegmentedControl else {return}
+            control.selectedSegmentIndex = textState.rawValue
+            
+            if let offset = leftOffSet {
+                textView.setContentOffset(offset, animated: false)
+            }
+            
+        case .double(let left, let right):
+            guard let leftView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
+            guard let rightView = self.stackView.subviews[1].subviews.first as? UITextView else {return}
+            
+            switchTextTo(left, textView: leftView)
+            switchTextTo(right, textView: rightView)
+            
+            guard let leftControl = self.stackView.subviews[0].subviews.last as? UISegmentedControl else {return}
+            guard let rightControl = self.stackView.subviews[1].subviews.last as? UISegmentedControl else {return}
+            
+            leftControl.selectedSegmentIndex = left.rawValue
+            rightControl.selectedSegmentIndex = right.rawValue
+            
+            if let offset = leftOffSet {
+                leftView.setContentOffset(offset, animated: false)
+            }
+            
+            if let offset = rightOffSet {
+                rightView.setContentOffset(offset, animated: false)
+            }
+        }
+    }
+    
+    
     var searchTerm: String? = nil
     
     func addInfoButton() {
@@ -156,8 +199,8 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         
         switch displayState {
         case .single(_):
-            guard let textView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
-            switchTextTo(newState, textView: textView)
+//            guard let textView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
+//            switchTextTo(newState, textView: textView)
             self.displayState = DisplayState.single(newState)
             
         case .double(let leftDisplay, let rightDisplay):
@@ -179,7 +222,7 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
                 return
             }
             
-            switchTextTo(newState, textView: textViewToChange)
+//            switchTextTo(newState, textView: textViewToChange)
             self.displayState = newDisplayState
             
         }
@@ -269,6 +312,86 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             rightColumn.isHidden = true
             
         }
+    }
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        if let displayState = displayState {
+            switch displayState {
+            case .single(let state):
+                coder.encode(true, forKey: "isSingle")
+                coder.encode(state.rawValue, forKey: "leftState")
+                coder.encode(-1, forKey: "rightState")
+                if let view = self.stackView.subviews[0].subviews.first as? UITextView {
+                    let position = view.contentOffset
+                    coder.encode(position, forKey: "leftOffset")
+                }
+                
+            case .double(let left, let right):
+                coder.encode(left.rawValue, forKey: "leftState")
+                coder.encode(right.rawValue, forKey: "rightState")
+                if let view = self.stackView.subviews[0].subviews.first as? UITextView {
+                    let position = view.contentOffset
+                    coder.encode(position, forKey: "leftOffset")
+                }
+                if let view = self.stackView.subviews[1].subviews.first as? UITextView {
+                    let position = view.contentOffset
+                    coder.encode(position, forKey: "rightOffset")
+                }
+                
+                
+            }
+        }
+        
+        if let searchTerm = searchTerm {
+            coder.encode(searchTerm, forKey: "searchTerm")
+        }
+        
+        if let item = textItem {
+            coder.encode(item.id, forKey: "id")
+        }
+
+
+
+        
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        defer {super.decodeRestorableState(with: coder)}
+        
+        guard UIApplication.shared.delegate != nil else {return}
+        guard let key = coder.decodeObject(forKey: "id") as? NSString else {return}
+        guard let catalogueEntry = sqlite.texts.first(where: {$0.id == key as String}) else {return}
+        guard let textStrings = sqlite.getTextStrings(key as String) else {return}
+        
+        self.textStrings = textStrings
+        self.textItem = catalogueEntry
+
+        
+        switch coder.decodeBool(forKey: "isSingle") {
+        case true:
+            let rawDisplay = coder.decodeInteger(forKey: "leftState")
+            let textDisplay = TextDisplay.init(rawValue: rawDisplay)!
+            self.displayState = DisplayState.single(textDisplay)
+            
+            let offSet = coder.decodeCGPoint(forKey: "leftOffset")
+            refreshState(leftOffSet: offSet, rightOffSet: nil)
+            
+        case false:
+            let rawLeftDisplay = coder.decodeInteger(forKey: "leftState")
+            let rawRightDisplay = coder.decodeInteger(forKey: "rightState")
+            let leftDisplay = TextDisplay.init(rawValue: rawLeftDisplay)!
+            let rightDisplay = TextDisplay.init(rawValue: rawRightDisplay)!
+            self.displayState = DisplayState.double(left: leftDisplay, right: rightDisplay)
+            
+            let leftOffset = coder.decodeCGPoint(forKey: "leftOffset")
+            let rightOffset = coder.decodeCGPoint(forKey: "rightOffset")
+            refreshState(leftOffSet: leftOffset, rightOffSet: rightOffset)
+        }
+    }
+    
+    override func applicationFinishedRestoringState() {
+        self.title = textItem?.title
     }
 }
 

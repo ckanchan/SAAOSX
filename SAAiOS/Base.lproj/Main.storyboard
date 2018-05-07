@@ -12,7 +12,7 @@
         <!--SAAiOS-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <navigationController title="SAAiOS" toolbarHidden="NO" id="RMx-3f-FxP" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MasterNavigationController" title="SAAiOS" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="RMx-3f-FxP" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -32,7 +32,7 @@
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
-                <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="MainSplitView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H1p-Uh-vWS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <connections>
                         <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
@@ -46,7 +46,7 @@
         <!--SAAiOS-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController storyboardIdentifier="ProjectListViewController" title="SAAiOS" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="ProjectListViewController" customModule="SAAiOS" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProjectListViewController" title="SAAiOS" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="ProjectListViewController" customModule="SAAiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="980"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,7 +96,7 @@
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
             <objects>
-                <navigationController storyboardIdentifier="detailNavigationController" toolbarHidden="NO" id="vC3-pB-5Vb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="detailNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="vC3-pB-5Vb" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
                         <rect key="frame" x="0.0" y="20" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

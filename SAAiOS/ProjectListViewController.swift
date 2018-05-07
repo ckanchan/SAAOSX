@@ -131,6 +131,24 @@ class ProjectListViewController: UITableViewController {
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
+    
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            coder.encode(indexPath.section, forKey: "selectedSection")
+            coder.encode(indexPath.row, forKey: "selectedRow")
+        }
+        
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        defer {super.decodeRestorableState(with: coder)}
+        let row = coder.decodeInteger(forKey: "selectedRow")
+        let section = coder.decodeInteger(forKey: "selectedSection")
+        let indexPath = IndexPath(row: row, section: section)
+        self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
+    }
 
 }
 

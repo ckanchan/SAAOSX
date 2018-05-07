@@ -13,8 +13,13 @@ import CDKSwiftOracc
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    var sqlDB: SQLiteCatalogue!
-    var glossaryDB: Glossary!
+    lazy var sqlDB: SQLiteCatalogue = {
+        return SQLiteCatalogue()
+        }()!
+    
+    lazy var glossaryDB: Glossary = {
+        return Glossary()
+    }()
     
     
     var splitViewController: UISplitViewController {
@@ -36,10 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
         
-        
-        
-        self.sqlDB = SQLiteCatalogue()
-        self.glossaryDB = Glossary()
         
         let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
         
@@ -75,6 +76,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
+        self.sqlDB = SQLiteCatalogue()!
+        self.glossaryDB = Glossary()
+    }
 
     // MARK: - Split view
 
@@ -86,6 +92,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             return true
         }
         return false
+    }
+    
+    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+        return true
+    }
+    
+    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        return true
     }
 
 }
