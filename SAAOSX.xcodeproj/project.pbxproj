@@ -24,6 +24,9 @@
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */; };
 		54657A5C20A078B100FAC8E3 /* TextStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5B20A078B100FAC8E3 /* TextStackView.swift */; };
+		54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */; };
+		54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */; };
+		54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6220A0DFA500FAC8E3 /* GlossaryTableViewController.swift */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
@@ -116,6 +119,9 @@
 		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
 		54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54657A5B20A078B100FAC8E3 /* TextStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStackView.swift; sourceTree = "<group>"; };
+		54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
+		54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineViewController.swift; sourceTree = "<group>"; };
+		54657A6220A0DFA500FAC8E3 /* GlossaryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryTableViewController.swift; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
@@ -260,6 +266,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		54657A5D20A0C0FC00FAC8E3 /* Glossary */ = {
+			isa = PBXGroup;
+			children = (
+				54657A6220A0DFA500FAC8E3 /* GlossaryTableViewController.swift */,
+			);
+			path = Glossary;
+			sourceTree = "<group>";
+		};
 		54737B3620387B7A0030F71D /* Glossary */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +310,8 @@
 			isa = PBXGroup;
 			children = (
 				54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */,
+				54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */,
+				54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */,
 				5498CADE204EAF63004C774A /* TextEditionViewController.swift */,
 				54657A5B20A078B100FAC8E3 /* TextStackView.swift */,
 			);
@@ -305,11 +321,12 @@
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
-				5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */,
+				54657A5D20A0C0FC00FAC8E3 /* Glossary */,
 				547BEB35209FA8C000C42007 /* TextEdition */,
 				5498CADA204EAF63004C774A /* AppDelegate.swift */,
 				5498CADC204EAF63004C774A /* ProjectListViewController.swift */,
 				543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */,
+				5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */,
 				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
@@ -540,8 +557,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				54657A5C20A078B100FAC8E3 /* TextStackView.swift in Sources */,
+				54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */,
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
 				5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */,
+				54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
@@ -549,6 +568,7 @@
 				5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */,
 				5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
+				54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
 				5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
 			);

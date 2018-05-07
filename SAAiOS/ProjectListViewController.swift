@@ -25,6 +25,16 @@ class ProjectListViewController: UITableViewController {
         }
         
         tableView.reloadData()
+        
+        
+        if self.catalogue.source != .search {
+        let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
+        self.setToolbarItems([glossaryButton], animated: false)
+        } else {
+            self.title = catalogue.name
+        }
+        
+        
         self.initialiseSearchControllers()
         
     }
@@ -33,10 +43,10 @@ class ProjectListViewController: UITableViewController {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @objc func showGlossary() {
+        guard let glossaryController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.Glossary) else {return}
+        self.navigationController?.pushViewController(glossaryController, animated: true)
     }
 
 
@@ -56,6 +66,14 @@ class ProjectListViewController: UITableViewController {
                 let controller = (segue.destination as! UINavigationController).topViewController as! TextEditionViewController
                 controller.textItem = catalogueEntry
                 controller.textStrings = textStrings
+                
+                if catalogue.source == .search {
+                    guard let catalogue = self.catalogue as? Catalogue else {return}
+                    guard let textSearch = catalogue.catalogue as? TextSearchCollection else {return}
+                    let searchTerm = textSearch.searchTerm
+                    controller.searchTerm = searchTerm
+                }
+                
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }

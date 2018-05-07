@@ -15,10 +15,7 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
     
     static let defaultFormattingPreferences: OraccTextEdition.FormattingPreferences = UIFont.defaultFont.makeDefaultPreferences()
     
-    var textItem: OraccCatalogEntry? {
-        didSet {
-        }
-    }
+    var textItem: OraccCatalogEntry?
     
     var textStrings: TextEditionStringContainer? {
         didSet {
@@ -36,7 +33,27 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
     }
     
     var displayState: DisplayState? = nil
-
+    var searchTerm: String? = nil
+    
+    func addInfoButton() {
+        let info = UIButton(type: .infoLight)
+        info.addTarget(self, action: #selector(presentInformation), for: UIControlEvents.touchUpInside)
+        let infoBarButton = UIBarButtonItem(customView: info)
+        navigationItem.rightBarButtonItem = infoBarButton
+    }
+    
+    @objc func presentInformation() {
+        guard let catalogueInfo = self.textItem else {return}
+        guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
+        infoTableController.catalogueInfo = catalogueInfo
+        infoTableController.textEditionViewController = self
+        
+        infoTableController.modalPresentationStyle = .popover
+        present(infoTableController, animated: true)
+        let popoverController = infoTableController.popoverPresentationController
+        popoverController?.barButtonItem = self.navigationItem.rightBarButtonItem
+    }
+    
     
     override func viewDidLoad() {
         navigationItem.title = textItem?.title
@@ -54,6 +71,7 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         
         configureStackViews()
         configureToolBar(withText: "Quick define")
+        addInfoButton()
     }
     
     func configureStackViews() {
@@ -62,8 +80,11 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             guard let textView = view.arrangedSubviews[0] as? UITextView else {return}
             guard let segmentedControl = view.arrangedSubviews[1] as? UISegmentedControl else {return}
             
-            textView.attributedText = textStrings?.transliteration
-            segmentedControl.selectedSegmentIndex = 1
+            textView.attributedText = textStrings?.normalisation
+            if let searchTerm = searchTerm {
+                highlightSearchTerm(searchTerm, in: textView)
+            }
+            segmentedControl.selectedSegmentIndex = 2
             segmentedControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
             setState(isSingleColumn: true)
             
@@ -74,9 +95,12 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             
             guard let leftTextView = leftView.arrangedSubviews[0] as? UITextView else {return}
             guard let leftControl =  leftView.arrangedSubviews[1] as? UISegmentedControl else {return}
-            leftTextView.attributedText = textStrings?.transliteration
+            leftTextView.attributedText = textStrings?.normalisation
+            if let searchTerm = searchTerm {
+                highlightSearchTerm(searchTerm, in: leftTextView)
+            }
             
-            leftControl.selectedSegmentIndex = 1
+            leftControl.selectedSegmentIndex = 2
             leftControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
             
             
@@ -181,7 +205,29 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         configureToolBar(withText: detailString)
     }
     
+    func viewOnline() {
+        guard let catalogueInfo = self.textItem else {return}
+        let textID = catalogueInfo.id
+        let projectPath = catalogueInfo.project
+        let url = URL(string: "http://oracc.org/\(projectPath)/\(textID)/html")!
+        
+        let webView = OnlineViewController()
+        webView.url = url
+        
+        self.navigationController?.pushViewController(webView, animated: true)
+    }
     
+    func highlightSearchTerm(_ searchTerm: String, in textView: UITextView) {
+        textView.textStorage.enumerateAttribute(.oraccCitationForm, in: NSMakeRange(0, textView.textStorage.length), options: .longestEffectiveRangeNotRequired, using: {
+            value, range, stop in
+            guard let stringVal = value as? String else {return}
+            if searchTerm.lowercased() == stringVal.lowercased() {
+                guard range.length > 2 else {return}
+                let newRange = NSMakeRange(range.location, range.length - 1)
+                textView.textStorage.addAttributes([NSAttributedStringKey.backgroundColor: UIColor.yellow], range: newRange)
+            }
+        })
+    }
     
     
     func switchTextTo(_ text: TextDisplay, textView: UITextView) {
@@ -196,6 +242,9 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         case .Normalisation:
             textView.attributedText = textStrings?.normalisation
             textView.delegate = self
+            if let searchTerm = searchTerm {
+                highlightSearchTerm(searchTerm, in: textView)
+            }
         case .Translation:
             textView.font = UIFont.defaultFont
             textView.text = textStrings?.translation
@@ -206,23 +255,20 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-            let leftColumn = stackView.arrangedSubviews[0]
-            let rightColumn = stackView.arrangedSubviews[1]
-
-            switch traitCollection.horizontalSizeClass {
-            case .regular:
-                leftColumn.isHidden = false
-                rightColumn.isHidden = false
-
-            default:
-//                activateSingleColumnViewConstraints(leftColumn)
-                leftColumn.isHidden = false
-                rightColumn.isHidden = true
-                
-            }
-      
-    
+        
+        let leftColumn = stackView.arrangedSubviews[0]
+        let rightColumn = stackView.arrangedSubviews[1]
+        
+        switch traitCollection.horizontalSizeClass {
+        case .regular:
+            leftColumn.isHidden = false
+            rightColumn.isHidden = false
+            
+        default:
+            leftColumn.isHidden = false
+            rightColumn.isHidden = true
+            
+        }
     }
 }
 

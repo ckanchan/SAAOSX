@@ -14,18 +14,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
     var sqlDB: SQLiteCatalogue!
+    var glossaryDB: Glossary!
+    
+    
+    var splitViewController: UISplitViewController {
+        return window!.rootViewController as! UISplitViewController
+    }
+    
+    var navigationController: UINavigationController {
+        return splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
+    }
+    
+    var detailNavigationController: UINavigationController {
+     return self.splitViewController.viewControllers.last! as! UINavigationController
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let splitViewController = window!.rootViewController as! UISplitViewController
-        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
+        
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
         
+        
+        
         self.sqlDB = SQLiteCatalogue()
+        self.glossaryDB = Glossary()
+        
+        let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
+        
+        self.navigationController.topViewController!.setToolbarItems([glossaryButton], animated: false)
+        self.detailNavigationController.topViewController!.setToolbarItems([glossaryButton], animated: false)
         
         return true
+    }
+    
+    @objc func showGlossary() {
+        let glossaryController = GlossaryTableViewController()
+        self.navigationController.pushViewController(glossaryController, animated: true)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

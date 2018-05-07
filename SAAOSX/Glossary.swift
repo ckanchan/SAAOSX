@@ -16,7 +16,6 @@ public class Glossary {
     }()
     
     let id = Expression<String>("id")
-//    let xisKey = Expression<String>("xis")
     let xisInstances = Expression<String>("xisInstances")
     let headWord = Expression<String>("headword")
     let citationForm = Expression<String>("cf")
@@ -77,9 +76,6 @@ public class Glossary {
     }
     
     public func getXISReferences(_ searchQuery: String) -> [String]? {
-        //        guard searchQuery.prefix(3) == "cf:" else { return nil}
-        //        let cf = String(searchQuery.dropFirst(3))
-        
         let iQ = instances.select(xisInstances).filter(headWord.like(searchQuery))
         
         
