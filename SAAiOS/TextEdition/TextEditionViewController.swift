@@ -15,11 +15,10 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textControl: UISegmentedControl!
     
-    static let defaultFormattingPreferences = UIFont.defaultFont.makeDefaultPreferences()
+    static let defaultFormattingPreferences: OraccTextEdition.FormattingPreferences = UIFont.defaultFont.makeDefaultPreferences()
     
     var detailItem: OraccCatalogEntry? {
         didSet {
-            // Update the view.
             configureView()
         }
     }
@@ -32,10 +31,8 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
     }
     
     func configureView() {
-        // Update the user interface for the detail item.
         textControl?.selectedSegmentIndex = 2
         textView?.attributedText = textStrings?.normalisation
-        
         navigationItem.title = detailItem?.title
     }
     

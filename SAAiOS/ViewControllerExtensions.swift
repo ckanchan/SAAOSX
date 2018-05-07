@@ -16,6 +16,15 @@ extension UIViewController {
     var sqlite: SQLiteCatalogue {
         return appDelegate.sqlDB
     }
-    
-
 }
+
+// Storyboard IDs
+extension UIViewController {
+    enum StoryboardIDs {
+        static var TextEditionViewController: String {
+            return "TextEditionViewController"
+        }
+    }
+}
+
+
