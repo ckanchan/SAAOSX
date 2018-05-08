@@ -320,20 +320,28 @@
 			path = TextEdition;
 			sourceTree = "<group>";
 		};
+		548C57D120A1C4CE008E8C1F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */,
+				543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */,
+				5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
+				548C57D120A1C4CE008E8C1F /* Extensions */,
 				54657A5D20A0C0FC00FAC8E3 /* Glossary */,
 				547BEB35209FA8C000C42007 /* TextEdition */,
 				5498CADA204EAF63004C774A /* AppDelegate.swift */,
 				5498CADC204EAF63004C774A /* ProjectListViewController.swift */,
-				543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */,
-				5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */,
 				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
 				5498CAE8204EAF63004C774A /* Info.plist */,
-				54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */,
 			);
 			path = SAAiOS;
 			sourceTree = "<group>";

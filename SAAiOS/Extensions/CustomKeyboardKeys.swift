@@ -47,8 +47,10 @@ extension TextToolbarInput {
     }
     
     var spacer: UIBarButtonItem {
-        return UIBarButtonItem(title: "\t", style: .plain, target: nil, action: nil)
+        return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     }
+    
+
     
     func makeToolBar() -> UIToolbar {
         let toolbar = UIToolbar()

@@ -37,6 +37,8 @@ class ProjectListViewController: UITableViewController {
         
         self.initialiseSearchControllers()
         
+        
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {

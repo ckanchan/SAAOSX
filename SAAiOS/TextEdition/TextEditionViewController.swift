@@ -91,12 +91,18 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         infoTableController.catalogueInfo = catalogueInfo
         infoTableController.textEditionViewController = self
         
-        infoTableController.modalPresentationStyle = .popover
-        present(infoTableController, animated: true)
-        let popoverController = infoTableController.popoverPresentationController
-        popoverController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            infoTableController.modalPresentationStyle = .popover
+            present(infoTableController, animated: true)
+            let popoverController = infoTableController.popoverPresentationController
+            popoverController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        } else {
+            navigationController?.pushViewController(infoTableController, animated: true)
+        }
+        
+        
     }
-    
     
     override func viewDidLoad() {
         navigationItem.title = textItem?.title
@@ -117,6 +123,12 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         addInfoButton()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setToolbarHidden(false, animated: false)
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
     func configureStackViews() {
         if self.stackView.arrangedSubviews.count == 1 {
             guard let view = stackView.arrangedSubviews.first as? UIStackView else {return}
@@ -129,7 +141,7 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             }
             segmentedControl.selectedSegmentIndex = 2
             segmentedControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
-            setState(isSingleColumn: true)
+           self.displayState = DisplayState.single(.Normalisation)
             
             
         } else if self.stackView.arrangedSubviews.count == 2 {
@@ -153,19 +165,11 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             rightControl.selectedSegmentIndex = 3
             rightControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
             
-            setState(isSingleColumn: false)
+            self.displayState = DisplayState.double(left: .Normalisation,
+                                                    right: .Translation)
             
             
             stackView.distribution = .fillEqually
-        }
-    }
-    
-    func setState(isSingleColumn: Bool) {
-        if isSingleColumn {
-            self.displayState = DisplayState.single(.Transliteration)
-        } else {
-            self.displayState = DisplayState.double(left: .Transliteration,
-                                                    right: .Translation)
         }
     }
     
@@ -199,30 +203,23 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         
         switch displayState {
         case .single(_):
-//            guard let textView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
-//            switchTextTo(newState, textView: textView)
             self.displayState = DisplayState.single(newState)
             
         case .double(let leftDisplay, let rightDisplay):
-            let textViewToChange: UITextView
             let newDisplayState: DisplayState
             
             switch sender.tag {
             case 0: // Changing the left display's text
-                guard let textView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
-                textViewToChange = textView
                 newDisplayState = DisplayState.double(left: newState, right: rightDisplay)
                 
             case 1: // Changing the right display's text
-                guard let textView = self.stackView.subviews[1].subviews.first as? UITextView else {return}
-                textViewToChange = textView
                 newDisplayState = DisplayState.double(left: leftDisplay, right: newState)
                 
             default: // Big error
                 return
             }
             
-//            switchTextTo(newState, textView: textViewToChange)
+            
             self.displayState = newDisplayState
             
         }

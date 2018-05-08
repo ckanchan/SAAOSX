@@ -41,10 +41,14 @@ class InfoTableViewController: UITableViewController {
                            "Publication history",
                            "Notes",
                            ]
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setToolbarHidden(true, animated: false)
     }
+    
 
     // MARK: - Table view data source
 
@@ -65,7 +69,7 @@ class InfoTableViewController: UITableViewController {
         case 4:
             return 1
         case 5:
-            return 2
+            return 1
         default:
             return 0
         }
@@ -75,11 +79,13 @@ class InfoTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { return InfoTableViewController.sectionTitles[section] }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = nil
-        cell.textLabel?.textColor = UIColor.darkText
-        cell.detailTextLabel?.text = nil
-        cell.selectionStyle = .none
+        let cell: UITableViewCell
+        
+        if indexPath.section == 5 {
+            cell = dequeueCell(type: .interactive, indexPath: indexPath)
+        } else {
+            cell = dequeueCell(type: .normal, indexPath: indexPath)
+        }
         
         switch indexPath.section {
         case 0:
@@ -97,24 +103,30 @@ class InfoTableViewController: UITableViewController {
         case 4:
             //credits data
             cell.textLabel?.text = catalogueInfo.credits ?? ""
+            cell.detailTextLabel?.text = nil
             cell.textLabel?.numberOfLines = 0
 
 
         case 5:
-            if indexPath.row == 0 {
-                cell.detailTextLabel?.text = "View on Oracc"
-                cell.detailTextLabel?.textColor = UIColor.blue
-                cell.selectionStyle = .default
-            } else {
-                cell.detailTextLabel?.text = "Dismiss"
-                cell.detailTextLabel?.textColor = UIColor.blue
-                cell.selectionStyle = .default
-            }
+           // if indexPath.row == 0 {
+                cell.textLabel?.text = "View on Oracc"
+//            } else {
+//                cell.textLabel?.text = "Dismiss"
+//            }
             
         default:
             return cell
         }
         return cell
+    }
+    
+    enum CellType: String {
+        case normal = "info"
+        case interactive = "interactive"
+    }
+    
+    func dequeueCell(type: CellType, indexPath: IndexPath) -> UITableViewCell{
+            return tableView.dequeueReusableCell(withIdentifier: type.rawValue, for: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
