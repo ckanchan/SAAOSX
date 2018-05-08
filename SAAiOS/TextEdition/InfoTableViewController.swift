@@ -108,12 +108,7 @@ class InfoTableViewController: UITableViewController {
 
 
         case 5:
-           // if indexPath.row == 0 {
                 cell.textLabel?.text = "View on Oracc"
-//            } else {
-//                cell.textLabel?.text = "Dismiss"
-//            }
-            
         default:
             return cell
         }

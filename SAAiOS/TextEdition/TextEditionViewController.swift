@@ -10,38 +10,130 @@ import UIKit
 import CDKSwiftOracc
 
 
-class TextEditionViewController: UIViewController, UITextViewDelegate {
-    @IBOutlet weak var stackView: UIStackView!
+class TextEditionViewController: UIViewController {
     
-    static let defaultFormattingPreferences: OraccTextEdition.FormattingPreferences = UIFont.defaultFont.makeDefaultPreferences()
+    //MARK:- Nested Helper Types
     
-
-    
-    var textItem: OraccCatalogEntry?
-    weak var parentController: ProjectListViewController?
-    weak var catalogue: CatalogueProvider?
-    
-    var textStrings: TextEditionStringContainer? {
-        didSet {
-            textStrings?.render(withPreferences: TextEditionViewController.defaultFormattingPreferences)
-        }
-    }
+    /// Simple enum for the four possible text displays
+    //TODO:- Possibly promote this to framework
     
     enum TextDisplay: Int {
         case Cuneiform, Transliteration, Normalisation, Translation
     }
     
+    /// Model for what the views are displaying
     enum DisplayState {
         case single(TextDisplay)
         case double(left: TextDisplay, right: TextDisplay)
     }
     
+    /// Default object specifying the fonts and formats for text.
+    static let defaultFormattingPreferences: OraccTextEdition.FormattingPreferences = UIFont.defaultFont.makeDefaultPreferences()
+    
+    
+    //MARK:- Instance Variables
+    @IBOutlet weak var stackView: UIStackView!
+    weak var parentController: ProjectListViewController?
+    weak var catalogue: CatalogueProvider?
     var displayState: DisplayState? = nil {
         didSet {
             refreshState()
         }
     }
     
+    var textItem: OraccCatalogEntry?
+    var textStrings: TextEditionStringContainer? {
+        didSet {
+            textStrings?.render(withPreferences: TextEditionViewController.defaultFormattingPreferences)
+        }
+    }
+    
+    var searchTerm: String? = nil
+    
+    //MARK:- Lifecycle methods
+    override func viewDidLoad() {
+        navigationItem.title = textItem?.title
+        stackView.distribution = .fillEqually
+        let leftColumn = UIStackView.makeTextStackView(textViewTag: 0, controlTag: 0)
+        let rightColumn = UIStackView.makeTextStackView(textViewTag: 1, controlTag: 1)
+        stackView.addArrangedSubview(leftColumn)
+        
+        guard let margins = leftColumn.superview?.layoutMarginsGuide else {return}
+        leftColumn.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        leftColumn.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        
+        stackView.addArrangedSubview(rightColumn)
+        
+        
+        configureStackViews()
+        initialiseToolbar()
+        addInfoButton()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setToolbarHidden(false, animated: false)
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    func configureStackViews() {
+        if self.stackView.arrangedSubviews.count == 1 {
+            guard let view = stackView.arrangedSubviews.first as? UIStackView else {return}
+            guard let textView = view.arrangedSubviews[0] as? UITextView else {return}
+            guard let segmentedControl = view.arrangedSubviews[1] as? UISegmentedControl else {return}
+            
+            textView.attributedText = textStrings?.normalisation
+            if let searchTerm = searchTerm {
+                highlightSearchTerm(searchTerm, in: textView)
+            }
+            segmentedControl.selectedSegmentIndex = 2
+            segmentedControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
+            self.displayState = DisplayState.single(.Normalisation)
+            
+            
+        } else if self.stackView.arrangedSubviews.count == 2 {
+            guard let leftView = stackView.arrangedSubviews[0] as? UIStackView else {return}
+            guard let rightView = stackView.arrangedSubviews[1] as? UIStackView else {return}
+            
+            guard let leftTextView = leftView.arrangedSubviews[0] as? UITextView else {return}
+            guard let leftControl =  leftView.arrangedSubviews[1] as? UISegmentedControl else {return}
+            leftTextView.attributedText = textStrings?.normalisation
+            if let searchTerm = searchTerm {
+                highlightSearchTerm(searchTerm, in: leftTextView)
+            }
+            
+            leftControl.selectedSegmentIndex = 2
+            leftControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
+            
+            
+            guard let rightTextView = rightView.arrangedSubviews[0] as? UITextView else {return}
+            guard let rightControl = rightView.arrangedSubviews[1] as? UISegmentedControl else {return}
+            rightTextView.text = textStrings?.translation
+            rightControl.selectedSegmentIndex = 3
+            rightControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
+            
+            self.displayState = DisplayState.double(left: .Normalisation,
+                                                    right: .Translation)
+            
+            
+            stackView.distribution = .fillEqually
+        }
+    }
+
+    func highlightSearchTerm(_ searchTerm: String, in textView: UITextView) {
+        textView.textStorage.enumerateAttribute(.oraccCitationForm, in: NSMakeRange(0, textView.textStorage.length), options: .longestEffectiveRangeNotRequired, using: {
+            value, range, stop in
+            guard let stringVal = value as? String else {return}
+            if searchTerm.lowercased() == stringVal.lowercased() {
+                guard range.length > 2 else {return}
+                let newRange = NSMakeRange(range.location, range.length - 1)
+                textView.textStorage.addAttributes([NSAttributedStringKey.backgroundColor: UIColor.yellow], range: newRange)
+            }
+        })
+    }
+    
+    //MARK:- Self Presentation methods
     func refreshState(leftOffSet: CGPoint? = nil, rightOffSet: CGPoint? = nil) {
         guard let state = self.displayState else {return}
         switch state {
@@ -80,47 +172,8 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    var searchTerm: String? = nil
     
-    func addInfoButton() {
-        let info = UIButton(type: .infoLight)
-        info.addTarget(self, action: #selector(presentInformation), for: UIControlEvents.touchUpInside)
-        let infoBarButton = UIBarButtonItem(customView: info)
-        navigationItem.rightBarButtonItem = infoBarButton
-    }
-    
-
-    
-    
-    
-    @objc func presentInformation() {
-        guard let catalogueInfo = self.textItem else {return}
-        guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
-        infoTableController.catalogueInfo = catalogueInfo
-        infoTableController.textEditionViewController = self
-        
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            infoTableController.modalPresentationStyle = .popover
-            present(infoTableController, animated: true)
-            let popoverController = infoTableController.popoverPresentationController
-            popoverController?.barButtonItem = self.navigationItem.rightBarButtonItem
-        } else {
-            navigationController?.pushViewController(infoTableController, animated: true)
-        }
-        
-        
-    }
-    
-    func makeNavigationButtons() -> (UIBarButtonItem, UIBarButtonItem) {
-        let left = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(navigate(_:)))
-        let right = UIBarButtonItem(title: ">", style: .plain, target: self, action: #selector(navigate(_:)))
-        
-        return (left, right)
-    }
-    
-    
-    // TODO :- Refactor grotesquely horrible navigation.
+    //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
         guard let catalogue = self.catalogue else { return }
         guard let id = self.textItem?.id else { return }
@@ -173,95 +226,8 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             }
         }
     }
-    
-    override func viewDidLoad() {
-        navigationItem.title = textItem?.title
-        stackView.distribution = .fillEqually
-        let leftColumn = UIStackView.makeTextStackView(textViewTag: 0, controlTag: 0)
-        let rightColumn = UIStackView.makeTextStackView(textViewTag: 1, controlTag: 1)
-        stackView.addArrangedSubview(leftColumn)
 
-        guard let margins = leftColumn.superview?.layoutMarginsGuide else {return}
-        leftColumn.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-        leftColumn.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
-        
-        stackView.addArrangedSubview(rightColumn)
-        
-        
-        configureStackViews()
-        initialiseToolbar()
-        addInfoButton()
-    
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.setToolbarHidden(false, animated: false)
-        navigationController?.hidesBarsOnSwipe = true
-    }
-    
-    func configureStackViews() {
-        if self.stackView.arrangedSubviews.count == 1 {
-            guard let view = stackView.arrangedSubviews.first as? UIStackView else {return}
-            guard let textView = view.arrangedSubviews[0] as? UITextView else {return}
-            guard let segmentedControl = view.arrangedSubviews[1] as? UISegmentedControl else {return}
-            
-            textView.attributedText = textStrings?.normalisation
-            if let searchTerm = searchTerm {
-                highlightSearchTerm(searchTerm, in: textView)
-            }
-            segmentedControl.selectedSegmentIndex = 2
-            segmentedControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
-           self.displayState = DisplayState.single(.Normalisation)
-            
-            
-        } else if self.stackView.arrangedSubviews.count == 2 {
-            guard let leftView = stackView.arrangedSubviews[0] as? UIStackView else {return}
-            guard let rightView = stackView.arrangedSubviews[1] as? UIStackView else {return}
-            
-            guard let leftTextView = leftView.arrangedSubviews[0] as? UITextView else {return}
-            guard let leftControl =  leftView.arrangedSubviews[1] as? UISegmentedControl else {return}
-            leftTextView.attributedText = textStrings?.normalisation
-            if let searchTerm = searchTerm {
-                highlightSearchTerm(searchTerm, in: leftTextView)
-            }
-            
-            leftControl.selectedSegmentIndex = 2
-            leftControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
-            
-            
-            guard let rightTextView = rightView.arrangedSubviews[0] as? UITextView else {return}
-            guard let rightControl = rightView.arrangedSubviews[1] as? UISegmentedControl else {return}
-            rightTextView.text = textStrings?.translation
-            rightControl.selectedSegmentIndex = 3
-            rightControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
-            
-            self.displayState = DisplayState.double(left: .Normalisation,
-                                                    right: .Translation)
-            
-            
-            stackView.distribution = .fillEqually
-        }
-    }
-    
-    func initialiseToolbar() {
-        let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: parentController, action: #selector(ProjectListViewController.showGlossary(_:)))
-        let (left, right) = makeNavigationButtons()
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        self.setToolbarItems([quickDefine, spacer, left, right], animated: true)
-    }
-    
-    
-    func configureToolBar(withText text: String) {
-        guard let quickDefineLabel = toolbarItems?.first else {return}
-        quickDefineLabel.title = text
-    }
-    
-    @objc func openInGlossary() {
-        
-    }
-    
-    
+
     @IBAction func changeText(_ sender: UISegmentedControl) {
         guard let displayState = self.displayState else {return}
         let newState: TextDisplay
@@ -296,55 +262,8 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             default: // Big error
                 return
             }
-            
-            
             self.displayState = newDisplayState
-            
         }
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        // All kinds of cryptic safety checks which need refactoring.
-        let selectedRange = textView.selectedRange
-        guard let textRange = textView.selectedTextRange else {return}
-        guard let text = textView.text(in: textRange) else {return}
-        guard  text != "" else { return }
-        
-        let selection = textView.attributedText.attributedSubstring(from: selectedRange)
-        let attributes = selection.attributes(at: 0, effectiveRange: nil)
-        let guideWord = attributes[.oraccGuideWord] as? String
-        let word = attributes[.oraccCitationForm] as? String
-        let sense = attributes[.oraccSense] as? String
-        let partOfSpeech = attributes[.partOfSpeech] as? String
-        let writtenForm = attributes[.writtenForm] as? String
-        
-        let detailString =  "\(word ?? ""): \(guideWord ?? ""), \(sense ?? "") \(partOfSpeech ?? "") \(writtenForm ?? "")"
-        
-        configureToolBar(withText: detailString)
-    }
-    
-    func viewOnline() {
-        guard let catalogueInfo = self.textItem else {return}
-        let textID = catalogueInfo.id
-        let projectPath = catalogueInfo.project
-        let url = URL(string: "http://oracc.org/\(projectPath)/\(textID)/html")!
-        
-        let webView = OnlineViewController()
-        webView.url = url
-        
-        self.navigationController?.pushViewController(webView, animated: true)
-    }
-    
-    func highlightSearchTerm(_ searchTerm: String, in textView: UITextView) {
-        textView.textStorage.enumerateAttribute(.oraccCitationForm, in: NSMakeRange(0, textView.textStorage.length), options: .longestEffectiveRangeNotRequired, using: {
-            value, range, stop in
-            guard let stringVal = value as? String else {return}
-            if searchTerm.lowercased() == stringVal.lowercased() {
-                guard range.length > 2 else {return}
-                let newRange = NSMakeRange(range.location, range.length - 1)
-                textView.textStorage.addAttributes([NSAttributedStringKey.backgroundColor: UIColor.yellow], range: newRange)
-            }
-        })
     }
     
     
@@ -388,6 +307,96 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
             
         }
     }
+
+}
+
+//MARK:- Outbound Methods
+extension TextEditionViewController {
+    func viewOnline() {
+        guard let catalogueInfo = self.textItem else {return}
+        let textID = catalogueInfo.id
+        let projectPath = catalogueInfo.project
+        let url = URL(string: "http://oracc.org/\(projectPath)/\(textID)/html")!
+        
+        let webView = OnlineViewController()
+        webView.url = url
+        
+        self.navigationController?.pushViewController(webView, animated: true)
+    }
+    
+    @objc func presentInformation() {
+        guard let catalogueInfo = self.textItem else {return}
+        guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
+        infoTableController.catalogueInfo = catalogueInfo
+        infoTableController.textEditionViewController = self
+        
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            infoTableController.modalPresentationStyle = .popover
+            present(infoTableController, animated: true)
+            let popoverController = infoTableController.popoverPresentationController
+            popoverController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        } else {
+            navigationController?.pushViewController(infoTableController, animated: true)
+        }
+    }
+}
+
+extension TextEditionViewController: UITextViewDelegate {
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        // All kinds of cryptic safety checks which need refactoring.
+        let selectedRange = textView.selectedRange
+        guard let textRange = textView.selectedTextRange else {return}
+        guard let text = textView.text(in: textRange) else {return}
+        guard  text != "" else { return }
+        
+        let selection = textView.attributedText.attributedSubstring(from: selectedRange)
+        let attributes = selection.attributes(at: 0, effectiveRange: nil)
+        let guideWord = attributes[.oraccGuideWord] as? String
+        let word = attributes[.oraccCitationForm] as? String
+        let sense = attributes[.oraccSense] as? String
+        let partOfSpeech = attributes[.partOfSpeech] as? String
+        let writtenForm = attributes[.writtenForm] as? String
+        
+        let detailString =  "\(word ?? ""): \(guideWord ?? ""), \(sense ?? "") \(partOfSpeech ?? "") \(writtenForm ?? "")"
+        
+        configureToolBar(withText: detailString)
+    }
+}
+
+
+// MARK :- Factory methods for UI components
+extension TextEditionViewController {
+    func addInfoButton() {
+        let info = UIButton(type: .infoLight)
+        info.addTarget(self, action: #selector(presentInformation), for: UIControlEvents.touchUpInside)
+        let infoBarButton = UIBarButtonItem(customView: info)
+        navigationItem.rightBarButtonItem = infoBarButton
+    }
+    
+    func makeNavigationButtons() -> (UIBarButtonItem, UIBarButtonItem) {
+        let left = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(navigate(_:)))
+        let right = UIBarButtonItem(title: ">", style: .plain, target: self, action: #selector(navigate(_:)))
+        
+        return (left, right)
+    }
+    
+    func initialiseToolbar() {
+        let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: parentController, action: #selector(ProjectListViewController.showGlossary(_:)))
+        let (left, right) = makeNavigationButtons()
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.setToolbarItems([quickDefine, spacer, left, right], animated: true)
+    }
+    
+    
+    func configureToolBar(withText text: String) {
+        guard let quickDefineLabel = toolbarItems?.first else {return}
+        quickDefineLabel.title = text
+    }
+}
+
+// MARK :- Restorable state methods
+extension TextEditionViewController {
     
     override func encodeRestorableState(with coder: NSCoder) {
         if let displayState = displayState {
@@ -424,9 +433,9 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         if let item = textItem {
             coder.encode(item.id, forKey: "id")
         }
-
-
-
+        
+        
+        
         
         super.encodeRestorableState(with: coder)
     }
@@ -441,7 +450,7 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         
         self.textStrings = textStrings
         self.textItem = catalogueEntry
-
+        
         
         switch coder.decodeBool(forKey: "isSingle") {
         case true:
@@ -469,5 +478,3 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         self.title = textItem?.title
     }
 }
-
-

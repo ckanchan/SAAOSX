@@ -12,10 +12,33 @@ import CDKSwiftOracc
 class GlossaryTableViewController: UITableViewController {
     var filteredGlossary: [(Int, String, String)] = []
     
+    lazy var prefetcher: Glossary = {
+        return Glossary()
+    }()
+    
+    var prefetchStore: [IndexPath: (String, String)] = [:]
+    
+    lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search glossary"
+        searchController.searchBar.addShortcuts()
+
+        
+        searchController.searchBar.scopeButtonTitles = ["Lemma", "English", "All"]
+        searchController.searchBar.selectedScopeButtonIndex = 2
+        
+        return searchController
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialiseSearchControllers()
+        navigationItem.searchController = self.searchController
+        definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
+    
 
     // MARK: - Table view data source
 
@@ -23,12 +46,14 @@ class GlossaryTableViewController: UITableViewController {
 //        return 0
 //    }
 
+    override func didReceiveMemoryWarning() {
+        prefetchStore.removeAll(keepingCapacity: false)
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if !searchBarIsEmpty() {
             return filteredGlossary.count
         }
-        
         return glossary.glossaryCount
     }
 
@@ -36,7 +61,6 @@ class GlossaryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        
         let citationForm: String
         let guideWord: String
         
@@ -45,12 +69,15 @@ class GlossaryTableViewController: UITableViewController {
             citationForm = cf
             guideWord = gw
         } else {
-            guard let (cf, gw) = glossary.labelsForRow(row: indexPath.row + 1) else {
+            if let (prefetchedCf, prefetchedGw) = prefetchStore[indexPath] {
+                citationForm = prefetchedCf
+                guideWord = prefetchedGw
+            } else if let (cf, gw) = glossary.labelsForRow(row: indexPath.row + 1)  {
+                citationForm = cf
+                guideWord = gw
+            } else {
                 return cell
             }
-            citationForm = cf
-            guideWord = gw
-            
         }
         
         cell.textLabel?.text = citationForm
@@ -83,19 +110,29 @@ class GlossaryTableViewController: UITableViewController {
         navigationController?.pushViewController(searchSetViewController, animated: true)
         
     }
-    
-    // MARK: - Search controller configuration
-    let searchController = UISearchController(searchResultsController: nil)
-    func initialiseSearchControllers() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search glossary"
-        searchController.searchBar.addShortcuts()
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        navigationItem.hidesSearchBarWhenScrolling = false
+}
+
+extension GlossaryTableViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard !self.isFiltering() else {return} // Prefetching is not needed with a search set
         
-        searchController.searchBar.scopeButtonTitles = ["Lemma", "English", "All"]
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            for indexPath in indexPaths {
+                guard self.prefetchStore[indexPath] == nil else { return }
+                guard let strings = self.prefetcher.labelsForRow(row: indexPath.row) else {return}
+                self.prefetchStore.updateValue(strings, forKey: indexPath)
+                }
+            }
+        }
+}
+
+
+//MARK:- Search controller configuration
+extension GlossaryTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let scope = SearchScope.init(rawValue: searchController.searchBar.selectedScopeButtonIndex)
+        
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
     
     enum SearchScope: Int {
@@ -125,13 +162,5 @@ class GlossaryTableViewController: UITableViewController {
     
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
-    }
-}
-
-extension GlossaryTableViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        let scope = SearchScope.init(rawValue: searchController.searchBar.selectedScopeButtonIndex)
-        
-        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
 }

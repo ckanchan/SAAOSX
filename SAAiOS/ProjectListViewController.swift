@@ -18,6 +18,18 @@ class ProjectListViewController: UITableViewController {
     var detailViewController: TextEditionViewController? = nil
     var filteredTexts: [OraccCatalogEntry] = []
     lazy var catalogue: CatalogueProvider = {return sqlite}()
+    
+    lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search texts"
+        searchController.searchBar.addShortcuts()
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        return searchController
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,11 +49,6 @@ class ProjectListViewController: UITableViewController {
         } else {
             self.title = catalogue.name
         }
-        
-        self.initialiseSearchControllers()
-        
-        
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +79,6 @@ class ProjectListViewController: UITableViewController {
 
 
     // MARK: - Segues
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -111,31 +117,7 @@ class ProjectListViewController: UITableViewController {
         
     }
 
-    // MARK: - Table View
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return filteredTexts.count
-        } else {
-            return catalogue.texts.count
-        }
-    }
-
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let textItem: OraccCatalogEntry
-        
-        if isFiltering() {
-            textItem = filteredTexts[indexPath.row]
-        } else {
-            textItem = catalogue.texts[indexPath.row]
-        }
-        
-        cell.textLabel?.text = textItem.displayName
-        cell.detailTextLabel?.text = textItem.title
-        return cell
-    }
     
     
     func getIndexPath(_ direction: Navigate) -> IndexPath? {
@@ -156,18 +138,38 @@ class ProjectListViewController: UITableViewController {
         
         tableView.selectRow(at: newIndexPath, animated: false, scrollPosition: .middle)
     }
-    
-    // MARK: - Search controller configuration
-    let searchController = UISearchController(searchResultsController: nil)
-    func initialiseSearchControllers() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search texts"
-        searchController.searchBar.addShortcuts()
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+}
+
+//MARK:- Table view methods
+extension ProjectListViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return filteredTexts.count
+        } else {
+            return catalogue.texts.count
+        }
     }
     
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let textItem: OraccCatalogEntry
+        
+        if isFiltering() {
+            textItem = filteredTexts[indexPath.row]
+        } else {
+            textItem = catalogue.texts[indexPath.row]
+        }
+        
+        cell.textLabel?.text = textItem.displayName
+        cell.detailTextLabel?.text = textItem.title
+        return cell
+    }
+}
+
+
+//MARK:- Search Controller methods
+extension ProjectListViewController: UISearchResultsUpdating {
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -183,7 +185,13 @@ class ProjectListViewController: UITableViewController {
         return searchController.isActive && !searchBarIsEmpty()
     }
     
-    
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
+//MARK:- Restorable State
+extension ProjectListViewController {
     override func encodeRestorableState(with coder: NSCoder) {
         if let indexPath = tableView.indexPathForSelectedRow {
             coder.encode(indexPath.section, forKey: "selectedSection")
@@ -199,12 +207,4 @@ class ProjectListViewController: UITableViewController {
         let section = coder.decodeInteger(forKey: "selectedSection")
         let indexPath = IndexPath(row: row, section: section)
         self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
-    }
-
-}
-
-extension ProjectListViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-    }
-}
+    }}
