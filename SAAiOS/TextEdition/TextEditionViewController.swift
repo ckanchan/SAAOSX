@@ -15,7 +15,11 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
     
     static let defaultFormattingPreferences: OraccTextEdition.FormattingPreferences = UIFont.defaultFont.makeDefaultPreferences()
     
+
+    
     var textItem: OraccCatalogEntry?
+    weak var parentController: ProjectListViewController?
+    weak var catalogue: CatalogueProvider?
     
     var textStrings: TextEditionStringContainer? {
         didSet {
@@ -85,6 +89,10 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         navigationItem.rightBarButtonItem = infoBarButton
     }
     
+
+    
+    
+    
     @objc func presentInformation() {
         guard let catalogueInfo = self.textItem else {return}
         guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
@@ -104,6 +112,68 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         
     }
     
+    func makeNavigationButtons() -> (UIBarButtonItem, UIBarButtonItem) {
+        let left = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(navigate(_:)))
+        let right = UIBarButtonItem(title: ">", style: .plain, target: self, action: #selector(navigate(_:)))
+        
+        return (left, right)
+    }
+    
+    
+    // TODO :- Refactor grotesquely horrible navigation.
+    @objc func navigate(_ sender: Any) {
+        guard let catalogue = self.catalogue else { return }
+        guard let id = self.textItem?.id else { return }
+        guard let currentRow = catalogue.texts.index(where: {$0.id == id}) else {return}
+        let nextRow: Int
+        var direction: Navigate? = nil
+        
+        if let button = sender as? UIBarButtonItem {
+            if button.title == "<" {
+                direction = .left
+            } else if button.title == ">" {
+                direction = .right
+            }
+        } else if let keyCommand = sender as? UIKeyCommand {
+            switch keyCommand.input {
+            case UIKeyInputLeftArrow:
+                direction = .left
+            case UIKeyInputRightArrow:
+                direction = .right
+            default:
+                return
+            }
+        }
+        
+        
+        if let direction = direction {
+            switch direction {
+            case .left:
+                nextRow = currentRow - 1
+                guard nextRow >= catalogue.texts.startIndex else {return}
+            case .right:
+                nextRow = currentRow + 1
+                guard nextRow < catalogue.texts.endIndex else {return}
+            }
+            
+            guard let nextEntry = catalogue.text(at: nextRow) else {return}
+            guard let strings = sqlite.getTextStrings(nextEntry.id) else {return}
+            
+            self.textStrings = strings
+            self.textItem = nextEntry
+            self.title = nextEntry.title
+            self.configureStackViews()
+            
+            if traitCollection.horizontalSizeClass == .regular {
+                if direction == .left {
+                    parentController?.navigate(.left)
+                } else {
+                    parentController?.navigate(.right)
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         navigationItem.title = textItem?.title
         stackView.distribution = .fillEqually
@@ -119,8 +189,9 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         
         
         configureStackViews()
-        configureToolBar(withText: "Quick define")
+        initialiseToolbar()
         addInfoButton()
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -173,16 +244,23 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    func initialiseToolbar() {
+        let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: parentController, action: #selector(ProjectListViewController.showGlossary(_:)))
+        let (left, right) = makeNavigationButtons()
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.setToolbarItems([quickDefine, spacer, left, right], animated: true)
+    }
+    
     
     func configureToolBar(withText text: String) {
-        let label = UILabel()
-        label.text = text
-        label.numberOfLines = 0
-        label.adjustsFontSizeToFitWidth = true
-        
-        let toolbarItem = UIBarButtonItem(customView: label)
-        self.setToolbarItems([toolbarItem], animated: true)
+        guard let quickDefineLabel = toolbarItems?.first else {return}
+        quickDefineLabel.title = text
     }
+    
+    @objc func openInGlossary() {
+        
+    }
+    
     
     @IBAction func changeText(_ sender: UISegmentedControl) {
         guard let displayState = self.displayState else {return}
@@ -391,4 +469,5 @@ class TextEditionViewController: UIViewController, UITextViewDelegate {
         self.title = textItem?.title
     }
 }
+
 

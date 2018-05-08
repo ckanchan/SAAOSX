@@ -9,6 +9,10 @@
 import UIKit
 import CDKSwiftOracc
 
+enum Navigate {
+    case left, right
+}
+
 class ProjectListViewController: UITableViewController {
 
     var detailViewController: TextEditionViewController? = nil
@@ -34,7 +38,6 @@ class ProjectListViewController: UITableViewController {
             self.title = catalogue.name
         }
         
-        
         self.initialiseSearchControllers()
         
         
@@ -46,8 +49,24 @@ class ProjectListViewController: UITableViewController {
         super.viewWillAppear(animated)
     }
     
-    @objc func showGlossary() {
-        guard let glossaryController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.Glossary) else {return}
+    @objc func showGlossary(_ sender: Any?) {
+        guard let glossaryController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.Glossary) as? GlossaryTableViewController else {return}
+        
+        if let quickDefinition = sender as? UIBarButtonItem {
+            if let text = quickDefinition.title {
+                if text != "Glossary" {
+                let cf = text.prefix(while: {$0 != ":"})
+                if !cf.isEmpty {
+                    glossaryController.searchController.isActive = true
+                    glossaryController.searchController.searchBar.text = String(cf)
+                    glossaryController.searchController.searchBar.selectedScopeButtonIndex = 0
+                    glossaryController.updateSearchResults(for: glossaryController.searchController)
+                    
+                    }
+                }
+            }
+        }
+        
         self.navigationController?.pushViewController(glossaryController, animated: true)
     }
 
@@ -57,29 +76,39 @@ class ProjectListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let catalogueEntry: OraccCatalogEntry
-                if isFiltering() {
-                    catalogueEntry = filteredTexts[indexPath.row]
-                } else {
-                    catalogueEntry = catalogue.texts[indexPath.row]
-                }
-                
-                guard let textStrings = sqlite.getTextStrings(catalogueEntry.id) else {return}
+                guard let (catalogueEntry, textStrings) = getTextViewData(for: indexPath) else {return}
                 let controller = (segue.destination as! UINavigationController).topViewController as! TextEditionViewController
                 controller.textItem = catalogueEntry
                 controller.textStrings = textStrings
-                
+                controller.catalogue = self.catalogue
+                controller.parentController = self
+
                 if catalogue.source == .search {
                     guard let catalogue = self.catalogue as? Catalogue else {return}
                     guard let textSearch = catalogue.catalogue as? TextSearchCollection else {return}
                     let searchTerm = textSearch.searchTerm
                     controller.searchTerm = searchTerm
                 }
-                
+
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.becomeFirstResponder()
             }
         }
+    }
+    
+    func getTextViewData(for indexPath: IndexPath) -> (OraccCatalogEntry, TextEditionStringContainer)? {
+        let catalogueEntry: OraccCatalogEntry
+        if isFiltering() {
+            catalogueEntry = filteredTexts[indexPath.row]
+        } else {
+            catalogueEntry = catalogue.texts[indexPath.row]
+        }
+        
+        guard let textStrings = sqlite.getTextStrings(catalogueEntry.id) else {return nil}
+        
+        return (catalogueEntry, textStrings)
+        
     }
 
     // MARK: - Table View
@@ -106,6 +135,26 @@ class ProjectListViewController: UITableViewController {
         cell.textLabel?.text = textItem.displayName
         cell.detailTextLabel?.text = textItem.title
         return cell
+    }
+    
+    
+    func getIndexPath(_ direction: Navigate) -> IndexPath? {
+        guard let selection = tableView.indexPathForSelectedRow else {return nil}
+        switch direction {
+        case .left:
+            return IndexPath(row: selection.row - 1, section: selection.section)
+            
+        case .right:
+            return IndexPath(row: selection.row + 1, section: selection.section)
+        }
+    }
+
+    
+    func navigate(_ direction: Navigate) {
+        guard let newIndexPath = getIndexPath(direction) else {return}
+        guard tableView.cellForRow(at: newIndexPath) != nil else {return}
+        
+        tableView.selectRow(at: newIndexPath, animated: false, scrollPosition: .middle)
     }
     
     // MARK: - Search controller configuration

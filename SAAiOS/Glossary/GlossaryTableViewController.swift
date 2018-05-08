@@ -93,16 +93,33 @@ class GlossaryTableViewController: UITableViewController {
         searchController.searchBar.addShortcuts()
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
         
-        
+        searchController.searchBar.scopeButtonTitles = ["Lemma", "English", "All"]
+    }
+    
+    enum SearchScope: Int {
+        case Lemma, English, All
     }
     
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        filteredGlossary = glossary.searchDatabase(searchText.lowercased())
+    func filterContentForSearchText(_ searchText: String, scope: SearchScope? = nil) {
+        let text: String
+        if let scope = scope {
+            switch scope {
+            case .Lemma:
+                text = "cf:\(searchText)"
+            default:
+                text = searchText
+            }
+        } else {
+            text = searchText
+        }
+        
+        filteredGlossary = glossary.searchDatabase(text.lowercased())
         tableView.reloadData()
     }
     
@@ -113,6 +130,8 @@ class GlossaryTableViewController: UITableViewController {
 
 extension GlossaryTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+        let scope = SearchScope.init(rawValue: searchController.searchBar.selectedScopeButtonIndex)
+        
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
 }
