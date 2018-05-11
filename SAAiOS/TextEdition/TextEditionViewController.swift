@@ -9,34 +9,27 @@
 import UIKit
 import CDKSwiftOracc
 
+enum TextDisplay: Int {
+    case Cuneiform = 0, Transliteration, Normalisation, Translation
+}
 
 class TextEditionViewController: UIViewController {
-    
-    //MARK:- Nested Helper Types
-    
-    /// Simple enum for the four possible text displays
-    //TODO:- Possibly promote this to framework
-    
-    enum TextDisplay: Int {
-        case Cuneiform, Transliteration, Normalisation, Translation
-    }
-    
     /// Model for what the views are displaying
     enum DisplayState {
         case single(TextDisplay)
         case double(left: TextDisplay, right: TextDisplay)
     }
     
+    @IBOutlet weak var primaryContainerView: UIView!
+    @IBOutlet weak var secondaryContainerView: UIView!
     
     //MARK:- Instance Variables
-    @IBOutlet weak var stackView: UIStackView!
     weak var parentController: ProjectListViewController?
     weak var catalogue: CatalogueProvider?
-    var displayState: DisplayState? = nil {
-        didSet {
-            refreshState()
-        }
-    }
+    var displayState: DisplayState? = nil
+    
+    weak var primaryPanel: TextPanelViewController!
+    weak var secondaryPanel: TextPanelViewController!
     
     var textItem: OraccCatalogEntry?
     var textStrings: TextEditionStringContainer? {
@@ -52,33 +45,21 @@ class TextEditionViewController: UIViewController {
     
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
-    
-        if let textItem = self.textItem {
-            let color: UIColor = darkMode ? .white : .black
-            navigationItem.titleView = titleLabel(for: textItem, color: color)
-        } else {
-            navigationItem.title = "Text"
-        }
-        stackView.distribution = .fillEqually
-        let leftColumn = UIStackView.makeTextStackView(textViewTag: 0, controlTag: 0)
-        let rightColumn = UIStackView.makeTextStackView(textViewTag: 1, controlTag: 1)
-        stackView.addArrangedSubview(leftColumn)
-        
-        guard let margins = leftColumn.superview?.layoutMarginsGuide else {return}
-        leftColumn.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-        leftColumn.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
-        
-        stackView.addArrangedSubview(rightColumn)
-        if darkMode {
-            self.view.backgroundColor = .black
-        }
-        
-        configureStackViews()
         initialiseToolbar()
         addInfoButton()
         registerThemeNotifications()
-
         
+        primaryPanel = childViewControllers.first as? TextPanelViewController
+        secondaryPanel = childViewControllers.last as? TextPanelViewController
+        
+        primaryPanel.delegate = self
+        primaryPanel.textDisplay = .Normalisation
+     
+        
+        secondaryPanel.delegate = self
+        secondaryPanel.textDisplay = .Translation
+
+        darkMode ? enableDarkMode() : disableDarkMode()
     }
     
     deinit {
@@ -105,103 +86,8 @@ class TextEditionViewController: UIViewController {
         navigationController?.setToolbarHidden(false, animated: false)
         navigationController?.hidesBarsOnSwipe = true
     }
-    
-    func configureStackViews() {
-        if self.stackView.arrangedSubviews.count == 1 {
-            guard let view = stackView.arrangedSubviews.first as? UIStackView else {return}
-            guard let textView = view.arrangedSubviews[0] as? UITextView else {return}
-            guard let segmentedControl = view.arrangedSubviews[1] as? UISegmentedControl else {return}
-            
-            textView.attributedText = textStrings?.normalisation
-            if let searchTerm = searchTerm {
-                highlightSearchTerm(searchTerm, in: textView)
-            }
-            segmentedControl.selectedSegmentIndex = 2
-            segmentedControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
-            self.displayState = DisplayState.single(.Normalisation)
-            
-            
-        } else if self.stackView.arrangedSubviews.count == 2 {
-            guard let leftView = stackView.arrangedSubviews[0] as? UIStackView else {return}
-            guard let rightView = stackView.arrangedSubviews[1] as? UIStackView else {return}
-            
-            guard let leftTextView = leftView.arrangedSubviews[0] as? UITextView else {return}
-            guard let leftControl =  leftView.arrangedSubviews[1] as? UISegmentedControl else {return}
-            leftTextView.attributedText = textStrings?.normalisation
-            if let searchTerm = searchTerm {
-                highlightSearchTerm(searchTerm, in: leftTextView)
-            }
-            
-            leftControl.selectedSegmentIndex = 2
-            leftControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
-            
-            
-            guard let rightTextView = rightView.arrangedSubviews[0] as? UITextView else {return}
-            guard let rightControl = rightView.arrangedSubviews[1] as? UISegmentedControl else {return}
-            rightTextView.text = textStrings?.translation
-            rightControl.selectedSegmentIndex = 3
-            rightControl.addTarget(self, action: #selector(changeText), for: .valueChanged)
-            
-            self.displayState = DisplayState.double(left: .Normalisation,
-                                                    right: .Translation)
-            
-            
-            stackView.distribution = .fillEqually
-        }
-    }
-
-    func highlightSearchTerm(_ searchTerm: String, in textView: UITextView) {
-        textView.textStorage.enumerateAttribute(.oraccCitationForm, in: NSMakeRange(0, textView.textStorage.length), options: .longestEffectiveRangeNotRequired, using: {
-            value, range, stop in
-            guard let stringVal = value as? String else {return}
-            if searchTerm.lowercased() == stringVal.lowercased() {
-                guard range.length > 2 else {return}
-                let newRange = NSMakeRange(range.location, range.length - 1)
-                textView.textStorage.addAttributes([NSAttributedStringKey.backgroundColor: UIColor.yellow, NSAttributedStringKey.foregroundColor: UIColor.black], range: newRange)
-            }
-        })
-    }
-    
-    //MARK:- Self Presentation methods
-    func refreshState(leftOffSet: CGPoint? = nil, rightOffSet: CGPoint? = nil) {
-        guard let state = self.displayState else {return}
-        switch state {
-        case .single(let textState):
-            guard let textView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
-            switchTextTo(textState, textView: textView)
-            
-            guard let control = self.stackView.subviews[0].subviews.last as? UISegmentedControl else {return}
-            control.selectedSegmentIndex = textState.rawValue
-            
-            if let offset = leftOffSet {
-                textView.setContentOffset(offset, animated: false)
-            }
-            
-        case .double(let left, let right):
-            guard let leftView = self.stackView.subviews[0].subviews.first as? UITextView else {return}
-            guard let rightView = self.stackView.subviews[1].subviews.first as? UITextView else {return}
-            
-            switchTextTo(left, textView: leftView)
-            switchTextTo(right, textView: rightView)
-            
-            guard let leftControl = self.stackView.subviews[0].subviews.last as? UISegmentedControl else {return}
-            guard let rightControl = self.stackView.subviews[1].subviews.last as? UISegmentedControl else {return}
-            
-            leftControl.selectedSegmentIndex = left.rawValue
-            rightControl.selectedSegmentIndex = right.rawValue
-            
-            if let offset = leftOffSet {
-                leftView.setContentOffset(offset, animated: false)
-            }
-            
-            if let offset = rightOffSet {
-                rightView.setContentOffset(offset, animated: false)
-            }
-        }
-    }
-    
-    
-    
+ 
+   
     //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
         guard let catalogue = self.catalogue else { return }
@@ -244,7 +130,6 @@ class TextEditionViewController: UIViewController {
             self.textStrings = strings
             self.textItem = nextEntry
             self.title = nextEntry.title
-            self.configureStackViews()
             
             if traitCollection.horizontalSizeClass == .regular {
                 if direction == .left {
@@ -295,45 +180,33 @@ class TextEditionViewController: UIViewController {
         }
     }
     
-    
-    func switchTextTo(_ text: TextDisplay, textView: UITextView) {
-        switch text {
+    func string(for textKind: TextDisplay) -> NSAttributedString {
+        let notAvailable = NSAttributedString(string: "Not available")
+        let textColor = darkMode ? UIColor.lightText : UIColor.darkText
+        
+        switch textKind {
         case .Cuneiform:
-            textView.text = textStrings?.cuneiform
-            textView.font = UIFont.cuneiformNA
-            textView.delegate = nil
+            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.cuneiformNA, .foregroundColor: textColor])
         case .Transliteration:
-            textView.attributedText = textStrings?.transliteration
-            textView.delegate = nil
+            return textStrings?.transliteration ?? notAvailable
         case .Normalisation:
-            textView.attributedText = textStrings?.normalisation
-            textView.delegate = self
-            if let searchTerm = searchTerm {
-                highlightSearchTerm(searchTerm, in: textView)
-            }
+            return textStrings?.normalisation ?? notAvailable
         case .Translation:
-            textView.font = UIFont.defaultFont
-            textView.text = textStrings?.translation
-            textView.delegate = nil
+            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font : UIFont.defaultFont, .foregroundColor: textColor])
+           
         }
     }
-    
+  
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        let leftColumn = stackView.arrangedSubviews[0]
-        let rightColumn = stackView.arrangedSubviews[1]
-        
         switch traitCollection.horizontalSizeClass {
         case .regular:
-            leftColumn.isHidden = false
-            rightColumn.isHidden = false
+            return
             
         default:
-            leftColumn.isHidden = false
-            rightColumn.isHidden = true
-            
+            return
         }
     }
 
@@ -371,55 +244,39 @@ extension TextEditionViewController {
     }
 }
 
-extension TextEditionViewController: UITextViewDelegate {
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        // All kinds of cryptic safety checks which need refactoring.
-        let selectedRange = textView.selectedRange
-        guard let textRange = textView.selectedTextRange else {return}
-        guard let text = textView.text(in: textRange) else {return}
-        guard  text != "" else { return }
-        
-        let selection = textView.attributedText.attributedSubstring(from: selectedRange)
-        let attributes = selection.attributes(at: 0, effectiveRange: nil)
-        let guideWord = attributes[.oraccGuideWord] as? String
-        let word = attributes[.oraccCitationForm] as? String
-        let sense = attributes[.oraccSense] as? String
-        let partOfSpeech = attributes[.partOfSpeech] as? String
-        let writtenForm = attributes[.writtenForm] as? String
-        
-        let detailString =  "\(word ?? ""): \(guideWord ?? ""), \(sense ?? "") \(partOfSpeech ?? "") \(writtenForm ?? "")"
-        
-        configureToolBar(withText: detailString)
-    }
-}
 
 extension TextEditionViewController: Themeable {
     func enableDarkMode() {
         view.backgroundColor = .black
-   
+        
         navigationController?.navigationBar.barStyle = .black
         navigationController?.toolbar.barStyle = .black
+        primaryPanel.enableDarkMode()
+        secondaryPanel.enableDarkMode()
+        
+
+        
+        if let textItem = textItem {
+            navigationItem.titleView = titleLabel(for: textItem, color: .lightText)
+        }
+        
         darkMode = true
         
-        stackView.subviews.forEach { view in
-            let stackView = view as! UIStackView
-            let textView = stackView.subviews[0] as! UITextView
-            textView.enableDarkMode()
-        }
     }
     
     func disableDarkMode() {
         view.backgroundColor = .white
-
         
         navigationController?.navigationBar.barStyle = .default
         navigationController?.toolbar.barStyle = .default
+        primaryPanel.disableDarkMode()
+        secondaryPanel.disableDarkMode()
         darkMode = false
         
-        stackView.subviews.forEach { view in
-            let stackView = view as! UIStackView
-            let textView = stackView.subviews[0] as! UITextView
-            textView.disableDarkMode()
+
+
+        if let textItem = textItem {
+            navigationItem.titleView = titleLabel(for: textItem, color: .darkText)
         }
     }
 }
@@ -465,24 +322,10 @@ extension TextEditionViewController {
                 coder.encode(true, forKey: "isSingle")
                 coder.encode(state.rawValue, forKey: "leftState")
                 coder.encode(-1, forKey: "rightState")
-                if let view = self.stackView.subviews[0].subviews.first as? UITextView {
-                    let position = view.contentOffset
-                    coder.encode(position, forKey: "leftOffset")
-                }
                 
             case .double(let left, let right):
                 coder.encode(left.rawValue, forKey: "leftState")
                 coder.encode(right.rawValue, forKey: "rightState")
-                if let view = self.stackView.subviews[0].subviews.first as? UITextView {
-                    let position = view.contentOffset
-                    coder.encode(position, forKey: "leftOffset")
-                }
-                if let view = self.stackView.subviews[1].subviews.first as? UITextView {
-                    let position = view.contentOffset
-                    coder.encode(position, forKey: "rightOffset")
-                }
-                
-                
             }
         }
         
@@ -494,10 +337,8 @@ extension TextEditionViewController {
             coder.encode(item.id, forKey: "id")
         }
         
-        
-        
-        
         super.encodeRestorableState(with: coder)
+            
     }
     
     override func decodeRestorableState(with coder: NSCoder) {
@@ -518,19 +359,12 @@ extension TextEditionViewController {
             let textDisplay = TextDisplay.init(rawValue: rawDisplay)!
             self.displayState = DisplayState.single(textDisplay)
             
-            let offSet = coder.decodeCGPoint(forKey: "leftOffset")
-            refreshState(leftOffSet: offSet, rightOffSet: nil)
-            
         case false:
             let rawLeftDisplay = coder.decodeInteger(forKey: "leftState")
             let rawRightDisplay = coder.decodeInteger(forKey: "rightState")
             let leftDisplay = TextDisplay.init(rawValue: rawLeftDisplay)!
             let rightDisplay = TextDisplay.init(rawValue: rawRightDisplay)!
             self.displayState = DisplayState.double(left: leftDisplay, right: rightDisplay)
-            
-            let leftOffset = coder.decodeCGPoint(forKey: "leftOffset")
-            let rightOffset = coder.decodeCGPoint(forKey: "rightOffset")
-            refreshState(leftOffSet: leftOffset, rightOffSet: rightOffset)
         }
     }
     
