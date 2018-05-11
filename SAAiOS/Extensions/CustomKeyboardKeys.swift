@@ -32,6 +32,10 @@ extension TextToolbarInput {
         return UIBarButtonItem(title: "ū", style: .plain, target: self, action: #selector(self.addText(_:)))
     }
     
+    var aleph: UIBarButtonItem {
+        return UIBarButtonItem(title: "ʾ", style: .plain, target: self, action: #selector(self.addText(_:)))
+    }
+    
     var ḫ: UIBarButtonItem {
         return UIBarButtonItem(title: "ḫ", style: .plain, target: self, action: #selector(self.addText(_:)))
     }
@@ -54,7 +58,7 @@ extension TextToolbarInput {
     
     func makeToolBar() -> UIToolbar {
         let toolbar = UIToolbar()
-        toolbar.setItems([ā, spacer, ē, spacer, ī, spacer, ū, spacer, ḫ, spacer, š, spacer, ṣ, spacer, ṭ], animated: false)
+        toolbar.setItems([ā, spacer, ē, spacer, ī, spacer, ū, spacer, aleph, spacer, ḫ, spacer, š, spacer, ṣ, spacer, ṭ], animated: false)
         toolbar.isUserInteractionEnabled = true
         toolbar.sizeToFit()
 
@@ -69,7 +73,7 @@ extension TextToolbarInput {
     
     func makeConsonantGroup() -> UIBarButtonItemGroup {
         let representative = UIBarButtonItem(title: "Consonants", style: .plain, target: nil, action: nil)
-        return UIBarButtonItemGroup(barButtonItems: [ḫ, š, ṣ, ṭ], representativeItem: representative)
+        return UIBarButtonItemGroup(barButtonItems: [aleph, ḫ, š, ṣ, ṭ], representativeItem: representative)
     }
     
     var barButtonGroups: [UIBarButtonItemGroup] {

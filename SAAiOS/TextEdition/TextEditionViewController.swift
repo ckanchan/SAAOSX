@@ -27,9 +27,6 @@ class TextEditionViewController: UIViewController {
         case double(left: TextDisplay, right: TextDisplay)
     }
     
-    /// Default object specifying the fonts and formats for text.
-    static let defaultFormattingPreferences: OraccTextEdition.FormattingPreferences = UIFont.defaultFont.makeDefaultPreferences()
-    
     
     //MARK:- Instance Variables
     @IBOutlet weak var stackView: UIStackView!
@@ -44,15 +41,24 @@ class TextEditionViewController: UIViewController {
     var textItem: OraccCatalogEntry?
     var textStrings: TextEditionStringContainer? {
         didSet {
-            textStrings?.render(withPreferences: TextEditionViewController.defaultFormattingPreferences)
+            textStrings?.render(withPreferences: ThemeController().themeFormatting)
         }
     }
     
     var searchTerm: String? = nil
+    lazy var darkMode: Bool = {
+        return ThemeController().themePreference == .dark ?  true : false
+    }()
     
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
-        navigationItem.title = textItem?.title
+    
+        if let textItem = self.textItem {
+            let color: UIColor = darkMode ? .white : .black
+            navigationItem.titleView = titleLabel(for: textItem, color: color)
+        } else {
+            navigationItem.title = "Text"
+        }
         stackView.distribution = .fillEqually
         let leftColumn = UIStackView.makeTextStackView(textViewTag: 0, controlTag: 0)
         let rightColumn = UIStackView.makeTextStackView(textViewTag: 1, controlTag: 1)
@@ -63,12 +69,35 @@ class TextEditionViewController: UIViewController {
         leftColumn.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
         
         stackView.addArrangedSubview(rightColumn)
-        
+        if darkMode {
+            self.view.backgroundColor = .black
+        }
         
         configureStackViews()
         initialiseToolbar()
         addInfoButton()
+        registerThemeNotifications()
+
         
+    }
+    
+    deinit {
+        deregisterThemeNotifications()
+    }
+    
+
+    func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
+        let label = UILabel()
+        label.backgroundColor = .clear
+        label.textColor = color
+        label.numberOfLines = 2
+        label.font = UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
+        label.textAlignment = .center
+        label.text = "\(item.title)\n\(item.displayName)"
+        label.minimumScaleFactor = CGFloat.init(0.25)
+        label.allowsDefaultTighteningForTruncation = true
+
+        return label
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,7 +157,7 @@ class TextEditionViewController: UIViewController {
             if searchTerm.lowercased() == stringVal.lowercased() {
                 guard range.length > 2 else {return}
                 let newRange = NSMakeRange(range.location, range.length - 1)
-                textView.textStorage.addAttributes([NSAttributedStringKey.backgroundColor: UIColor.yellow], range: newRange)
+                textView.textStorage.addAttributes([NSAttributedStringKey.backgroundColor: UIColor.yellow, NSAttributedStringKey.foregroundColor: UIColor.black], range: newRange)
             }
         })
     }
@@ -361,6 +390,37 @@ extension TextEditionViewController: UITextViewDelegate {
         let detailString =  "\(word ?? ""): \(guideWord ?? ""), \(sense ?? "") \(partOfSpeech ?? "") \(writtenForm ?? "")"
         
         configureToolBar(withText: detailString)
+    }
+}
+
+extension TextEditionViewController: Themeable {
+    func enableDarkMode() {
+        view.backgroundColor = .black
+   
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.toolbar.barStyle = .black
+        darkMode = true
+        
+        stackView.subviews.forEach { view in
+            let stackView = view as! UIStackView
+            let textView = stackView.subviews[0] as! UITextView
+            textView.enableDarkMode()
+        }
+    }
+    
+    func disableDarkMode() {
+        view.backgroundColor = .white
+
+        
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.toolbar.barStyle = .default
+        darkMode = false
+        
+        stackView.subviews.forEach { view in
+            let stackView = view as! UIStackView
+            let textView = stackView.subviews[0] as! UITextView
+            textView.disableDarkMode()
+        }
     }
 }
 

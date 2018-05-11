@@ -19,6 +19,14 @@ class ProjectListViewController: UITableViewController {
     var filteredTexts: [OraccCatalogEntry] = []
     lazy var catalogue: CatalogueProvider = {return sqlite}()
     
+    lazy var darkTheme: Bool = {
+        if ThemeController().themePreference == .dark {
+            return true
+        } else {
+            return false
+        }
+    }()
+    
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -49,6 +57,20 @@ class ProjectListViewController: UITableViewController {
         } else {
             self.title = catalogue.name
         }
+        
+        let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
+        
+        navigationItem.rightBarButtonItem = preferencesButton
+        self.registerThemeNotifications()
+    }
+    
+    deinit {
+        self.deregisterThemeNotifications()
+    }
+    
+    @objc func loadPreferences() {
+        guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.PreferencesViewController) else {return}
+        navigationController?.pushViewController(preferencesViewController, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -155,6 +177,12 @@ extension ProjectListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let textItem: OraccCatalogEntry
         
+        if darkTheme {
+            cell.enableDarkMode()
+        } else {
+            cell.disableDarkMode()
+        }
+        
         if isFiltering() {
             textItem = filteredTexts[indexPath.row]
         } else {
@@ -208,3 +236,25 @@ extension ProjectListViewController {
         let indexPath = IndexPath(row: row, section: section)
         self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
     }}
+
+extension ProjectListViewController: Themeable {
+    func enableDarkMode() {
+        view.window?.backgroundColor = UIColor.black
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.toolbar.barStyle = .black
+        
+        self.tableView.enableDarkMode()
+        self.tableView.visibleCells.forEach({$0.enableDarkMode()})
+        self.darkTheme = true
+    }
+    
+    func disableDarkMode() {
+        view.window?.backgroundColor = nil
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.toolbar.barStyle = .default
+        
+        self.tableView.disableDarkMode()
+        self.tableView.visibleCells.forEach({$0.disableDarkMode()})
+        self.darkTheme = false
+    }
+}

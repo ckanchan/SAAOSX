@@ -35,14 +35,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
 
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
         
+        let themeController = ThemeController()
+        themeController.change(theme: themeController.themePreference)
+        self.registerThemeNotifications()
         
         return true
+    }
+    
+    deinit {
+        deregisterThemeNotifications()
     }
     
 
@@ -93,5 +101,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return true
     }
 
+}
+
+extension AppDelegate: Themeable {
+    
+    func enableDarkMode() {
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    func disableDarkMode() {
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    var darkTheme: Bool {
+        switch ThemeController().themePreference {
+        case .dark:
+            return true
+        default:
+            return false
+        }
+    }
 }
 

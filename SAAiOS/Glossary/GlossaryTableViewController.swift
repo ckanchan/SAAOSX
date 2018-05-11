@@ -11,6 +11,9 @@ import CDKSwiftOracc
 
 class GlossaryTableViewController: UITableViewController {
     var filteredGlossary: [(Int, String, String)] = []
+    lazy var darkTheme: Bool = {
+        return appDelegate.darkTheme
+    }()
     
     lazy var prefetcher: Glossary = {
         return Glossary()
@@ -37,6 +40,14 @@ class GlossaryTableViewController: UITableViewController {
         navigationItem.searchController = self.searchController
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        
+        registerThemeNotifications()
+        
+    }
+    
+    deinit {
+        deregisterThemeNotifications()
     }
     
 
@@ -61,6 +72,13 @@ class GlossaryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        if darkTheme {
+            cell.enableDarkMode()
+        } else {
+            cell.disableDarkMode()
+        }
+        
         let citationForm: String
         let guideWord: String
         
@@ -100,7 +118,7 @@ class GlossaryTableViewController: UITableViewController {
         
         let sortedSet = searchSet.members.values.sorted(by: {$0.displayName < $1.displayName})
         
-        let searchSetViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.ProjectLIstViewController) as! ProjectListViewController
+        let searchSetViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.ProjectListViewController) as! ProjectListViewController
         
         let catalogue = Catalogue.init(catalogue: searchSet, sorted: sortedSet, source: .search)
         
@@ -163,4 +181,28 @@ extension GlossaryTableViewController: UISearchResultsUpdating {
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
+}
+
+extension GlossaryTableViewController: Themeable {
+    func enableDarkMode() {
+        view.window?.backgroundColor = UIColor.black
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.toolbar.barStyle = .black
+        
+        self.tableView.enableDarkMode()
+        self.darkTheme = true
+        self.tableView.visibleCells.forEach({$0.enableDarkMode()})
+    }
+    
+    func disableDarkMode() {
+        view.window?.backgroundColor = nil
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.toolbar.barStyle = .default
+        
+        self.tableView.disableDarkMode()
+        self.darkTheme = false
+        self.tableView.visibleCells.forEach({$0.disableDarkMode()})
+    }
+    
+    
 }

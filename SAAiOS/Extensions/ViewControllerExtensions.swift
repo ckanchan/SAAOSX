@@ -37,10 +37,14 @@ extension UIViewController {
             return "Glossary"
         }
         
-        static var ProjectLIstViewController: String {
+        static var ProjectListViewController: String {
             return "ProjectListViewController"
         }
+        
+        static var PreferencesViewController: String {
+            return "PreferencesViewController"
+        }
     }
-
 }
+
 
