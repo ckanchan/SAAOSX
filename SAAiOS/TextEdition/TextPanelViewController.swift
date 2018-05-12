@@ -26,6 +26,7 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        textView.delegate = self
     }
 
     func highlightSearchTerm(_ searchTerm: String?) {
@@ -61,13 +62,24 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
             let attributes = selection.attributes(at: 0, effectiveRange: nil)
             let guideWord = attributes[.oraccGuideWord] as? String
             let word = attributes[.oraccCitationForm] as? String
-            let sense = attributes[.oraccSense] as? String
-            let partOfSpeech = attributes[.partOfSpeech] as? String
-            let writtenForm = attributes[.writtenForm] as? String
-
-            //TODO:- nicely format this string
-            let detailString =  "\(word ?? ""): \(guideWord ?? ""), \(sense ?? "") \(partOfSpeech ?? "") \(writtenForm ?? "")"
-            delegate?.configureToolBar(withText: detailString)
+           // let sense = attributes[.oraccSense] as? String
+            
+            
+            if let citationForm = word {
+                guard !citationForm.isEmpty else {delegate?.configureToolBar(withAttributedText: NSAttributedString(string:"")); return}
+                
+                let italicWord = NSAttributedString(string: word ?? "", attributes: [NSAttributedStringKey.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)])
+                let boldGuideWord = NSAttributedString(string: guideWord ?? "", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)])
+                
+                let detail = NSMutableAttributedString(attributedString: italicWord)
+                detail.append(NSAttributedString(string: " "))
+                detail.append(boldGuideWord)
+                
+                
+                delegate?.configureToolBar(withAttributedText: detail)
+            } else {
+                delegate?.configureToolBar(withAttributedText: NSAttributedString(string:""))
+            }
         }
     }
 }

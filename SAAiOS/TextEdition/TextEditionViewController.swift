@@ -291,9 +291,20 @@ extension TextEditionViewController {
         self.setToolbarItems([quickDefine, spacer, left, right], animated: true)
     }
 
-    func configureToolBar(withText text: String) {
-        guard let quickDefineLabel = toolbarItems?.first else {return}
-        quickDefineLabel.title = text
+    func configureToolBar(withAttributedText text: NSAttributedString) {
+        let newLabel = UILabel()
+        
+        if darkMode {
+            let darkText: NSMutableAttributedString = NSMutableAttributedString(attributedString: text)
+            darkText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.orange], range: NSMakeRange(0, darkText.length))
+            newLabel.attributedText = darkText
+        } else {
+            newLabel.attributedText = text
+        }
+        
+        
+        let newToolbarItem = UIBarButtonItem(customView: newLabel)
+        toolbarItems![0] = newToolbarItem
     }
 }
 

@@ -101,21 +101,6 @@ extension Themeable {
 
 extension UIFont {
 
-    //TODO:- Delete this when CDKSwiftOracc is updated to expose UIFont extnesion as public
-    func getItalicFont() -> UIFont {
-        let fontDsc = self.fontDescriptor
-        let italicDsc = UIFontDescriptorSymbolicTraits.traitItalic
-        let italicfntDsc = fontDsc.withSymbolicTraits(italicDsc)
-        if let descriptor = italicfntDsc {
-            return UIFont(descriptor: descriptor, size: self.pointSize)
-        } else {
-            return UIFont.italicSystemFont(ofSize: self.pointSize)
-        }
-    }
-
-    var reducedFontSize: UIFont {
-        return UIFont(descriptor: self.fontDescriptor, size: self.pointSize / 2)
-    }
 
     func makeDarkPreferences() -> OraccTextEdition.FormattingPreferences {
         let noFormatting = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: UIFont.systemFontSize), NSAttributedStringKey.foregroundColor: UIColor.lightText]

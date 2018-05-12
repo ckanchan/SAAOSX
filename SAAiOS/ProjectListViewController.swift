@@ -47,26 +47,42 @@ class ProjectListViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? TextEditionViewController
         }
-
+        
         tableView.reloadData()
-
+        
+        
+        let notesButton = UIBarButtonItem(title: "Notes", style: .plain, target: self, action: #selector(loadNotes))
+        
         if self.catalogue.source != .search {
-        let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
-        self.setToolbarItems([glossaryButton], animated: false)
+            let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
+            self.setToolbarItems([notesButton, UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
         } else {
+            self.setToolbarItems([notesButton], animated: false)
             self.title = catalogue.name
         }
-
+        
+        
         let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
-
+        
         navigationItem.rightBarButtonItem = preferencesButton
         self.registerThemeNotifications()
     }
-
+    
     deinit {
         self.deregisterThemeNotifications()
     }
+    
+    @objc func loadNotes() {
+        guard let row = tableView.indexPathForSelectedRow?.row else {return}
+        guard let entry = sqlite.getEntryAt(row: row) else {return}
+        let id = entry.id
+        let notesViewController = NotesViewController()
+        notesViewController.id = id
+        darkTheme ? notesViewController.enableDarkMode() : notesViewController.disableDarkMode()
+        navigationController?.pushViewController(notesViewController, animated: true)
 
+    }
+    
     @objc func loadPreferences() {
         guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.PreferencesViewController) else {return}
         navigationController?.pushViewController(preferencesViewController, animated: true)

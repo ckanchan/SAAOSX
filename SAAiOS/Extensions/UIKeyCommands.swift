@@ -57,13 +57,17 @@ extension UISplitViewController {
     var translationRight: UIKeyCommand {
         return UIKeyCommand(input: "4", modifierFlags: .alternate, action: #selector(self.handleKeyCommand(_:)), discoverabilityTitle: "Show translation in secondary column")
     }
+    
+    var infoSidebarKey: UIKeyCommand {
+        return UIKeyCommand(input: "I", modifierFlags: .command, action: #selector(self.handleKeyCommand(_:)), discoverabilityTitle: "Show info")
+    }
 
     override open var keyCommands: [UIKeyCommand]? {
         switch traitCollection.horizontalSizeClass {
         case .regular:
-            return [leftKeyCommand, rightKeyCommand, cuneiformLeft, transliterationLeft, normalisationLeft, translationLeft, cuneiformRight, transliterationRight, normalisationRight, translationRight]
+            return [leftKeyCommand, rightKeyCommand, cuneiformLeft, transliterationLeft, normalisationLeft, translationLeft, cuneiformRight, transliterationRight, normalisationRight, translationRight, infoSidebarKey]
         default:
-            return [leftKeyCommand, rightKeyCommand, cuneiformLeft, transliterationLeft, normalisationLeft, translationLeft]
+            return [leftKeyCommand, rightKeyCommand, cuneiformLeft, transliterationLeft, normalisationLeft, translationLeft, infoSidebarKey]
 
         }
     }
@@ -116,10 +120,11 @@ extension TextEditionViewController: KeyCommandHandler {
                 self.navigate(keyCommand)
             case UIKeyInputRightArrow:
                 self.navigate(keyCommand)
+            case "I":
+                self.presentInformation()
             default:
                 return
             }
-
         default:
             return
         }

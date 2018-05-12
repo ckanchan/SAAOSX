@@ -1,3 +1,6 @@
-github "ckanchan/CDKOraccInterface" "9c000a2af07151e96e5f5d334c6a19a8287c85bd"
-github "ckanchan/CDKSwiftOracc" "eca7920b9e30671a5d423427faa124bd62107f8f"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json" "5.0.0"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAuthBinary.json" "5.0.0"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseFirestoreBinary.json" "5.0.0"
+github "ckanchan/CDKOraccInterface" "d73a6ff0d96cd1065dddceaf1c4027e730c7125a"
+github "ckanchan/CDKSwiftOracc" "527f14fb949a84701ae250ff063b9dd32d803cbc"
 github "stephencelis/SQLite.swift" "0.11.5"

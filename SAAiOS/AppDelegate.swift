@@ -8,6 +8,7 @@
 
 import UIKit
 import CDKSwiftOracc
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -42,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let themeController = ThemeController()
         themeController.change(theme: themeController.themePreference)
         self.registerThemeNotifications()
+        FirebaseApp.configure()
 
         return true
     }
