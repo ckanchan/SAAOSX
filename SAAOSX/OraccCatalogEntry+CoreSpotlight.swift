@@ -14,9 +14,8 @@ import CDKSwiftOracc
     import MobileCoreServices
 #endif
 
-
 extension OraccCatalogEntry {
-    
+
     /// Adds the catalogue entry to the system Spotlight database
     func indexItem() {
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
@@ -27,7 +26,7 @@ extension OraccCatalogEntry {
         attributeSet.theme = self.genre
         attributeSet.contentType = kUTTypeText as String
         attributeSet.kind = "Assyrian letter"
-        
+
         let item = CSSearchableItem(uniqueIdentifier: self.id, domainIdentifier: "com.ckprivate", attributeSet: attributeSet)
         CSSearchableIndex.default().indexSearchableItems([item]) { error in
             if let error = error {
@@ -35,14 +34,14 @@ extension OraccCatalogEntry {
             }
         }
     }
-    
+
     /// Removes the catalogue entry from the system Spotlight database
     func deindexItem() {
         CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.id]) {error in
             if let error = error {
                 print(error.localizedDescription)
             }
-            
+
         }
     }
 }

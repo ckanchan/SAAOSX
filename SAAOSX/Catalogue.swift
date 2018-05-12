@@ -17,21 +17,20 @@ public protocol CatalogueProvider: AnyObject {
     var count: Int { get }
     var texts: [OraccCatalogEntry] { get }
     var source: CatalogueSource { get }
-    
+
     func text(at row: Int) -> OraccCatalogEntry?
     func search(_ string: String) -> [OraccCatalogEntry]
 }
 
-
 public class Catalogue: CatalogueProvider {
     public func search(_ string: String) -> [OraccCatalogEntry] {
-        return texts.filter{$0.description.lowercased().contains(string.lowercased())}
+        return texts.filter {$0.description.lowercased().contains(string.lowercased())}
     }
-    
+
     public var count: Int {
         return texts.count
     }
-    
+
     public func text(at row: Int) -> OraccCatalogEntry? {
         return texts[row]
     }
@@ -39,8 +38,7 @@ public class Catalogue: CatalogueProvider {
     public let catalogue: TextSet
     public let texts: [OraccCatalogEntry]
     public let source: CatalogueSource
-    
-    
+
     public lazy var name = { return self.catalogue.title }()
     public init(catalogue: TextSet, sorted: [OraccCatalogEntry], source: CatalogueSource) {
         self.catalogue = catalogue

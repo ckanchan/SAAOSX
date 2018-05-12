@@ -8,39 +8,38 @@
 
 import Cocoa
 
-
 class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
     @IBOutlet weak var volumesBox: NSComboBox!
     @IBOutlet weak var loadingIndicator: NSProgressIndicator!
     @IBOutlet weak var searchField: NSSearchField!
     @IBOutlet weak var pinnedToggle: NSButton!
     @IBOutlet weak var connectionStatus: NSTextField!
-    
+
     @discardableResult static func new(catalogue: CatalogueProvider?) -> ProjectListWindowController {
         let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
-        let newWindow = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("ProjectListWindow")) as! ProjectListWindowController
+        let sceneIdentifier = NSStoryboard.SceneIdentifier("ProjectListWindow")
+        let newWindow = storyboard.instantiateController(withIdentifier: sceneIdentifier) as! ProjectListWindowController
         newWindow.projectViewController.catalogueProvider = catalogue
         newWindow.showWindow(nil)
         return newWindow
     }
-    
-    
+
     lazy var projectViewController: ProjectListViewController = {
         let splitView = self.contentViewController as! NSSplitViewController
         return splitView.childViewControllers.first! as! ProjectListViewController
     }()
-    
+
     var previousCatalogue: CatalogueProvider?
     var previousConnection: String?
-    
+
     override func windowDidLoad() {
         super.windowDidLoad()
     }
 
-    func setTitle(_ s: String) {
-        self.window?.title = s
+    func setTitle(_ title: String) {
+        self.window?.title = title
     }
-    
+
     func comboBoxSelectionDidChange(_ notification: Notification) {
         let box = notification.object as! NSComboBox
         let item = box.objectValueOfSelectedItem as! NSString
@@ -90,14 +89,14 @@ class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
         }
     }
 
-    @IBAction func performFindPanelAction(_ sender: Any){
+    @IBAction func performFindPanelAction(_ sender: Any) {
         searchField.selectText(nil)
     }
-    
+
     @IBAction func search(_ sender: NSSearchFieldCell) {
         projectViewController.search(sender)
     }
-    
+
     @IBAction func togglePinned(_ sender: NSButton) {
         if sender.state == .on {
             sender.state = .on
@@ -113,13 +112,12 @@ class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
                 previousConnection = nil
             } else {
                 projectViewController.loadCatalogue("saa01")
-            } 
+            }
         }
     }
-    
+
     func setConnectionStatus(to state: String) {
         connectionStatus.stringValue = state
     }
-    
-    
+
 }

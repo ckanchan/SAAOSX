@@ -20,20 +20,19 @@ class GlossaryEntryViewController: NSViewController {
             metadata.stringValue = "Headword: \(glossaryEntry?.headWord ?? ""), id: \(glossaryEntry?.id ?? "")"
         }
     }
-    
+
     @IBOutlet weak var citationForm: NSTextField!
     @IBOutlet weak var guideWord: NSTextField!
     @IBOutlet weak var forms: NSTextField!
     @IBOutlet weak var norms: NSTextField!
     @IBOutlet weak var senses: NSTextField!
     @IBOutlet weak var metadata: NSTextField!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
 }
 
 extension GlossaryEntry {
@@ -46,10 +45,10 @@ extension GlossaryEntry {
             }
             str.removeLast(2)
         }
-        
+
         return str
     }
-    
+
     func formattedSenses() -> String {
         var str = ""
         if let senses = self.senses {
@@ -59,8 +58,8 @@ extension GlossaryEntry {
             }
             str.removeLast(2)
         }
-        
+
         return str
     }
-    
+
 }

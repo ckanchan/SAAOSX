@@ -9,21 +9,20 @@
 import Cocoa
 
 class GlossarySplitViewController: NSSplitViewController {
-    weak var searchField: NSSearchField? = nil
-    
+    weak var searchField: NSSearchField?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
     @IBAction func glossarySearch(_ sender: NSSearchField) {
         let glossaryViewController = self.childViewControllers.first! as! GlossaryListViewController
         glossaryViewController.search(sender)
     }
-    
-    @IBAction func performFindPanelAction(_ sender: Any){
+
+    @IBAction func performFindPanelAction(_ sender: Any) {
         searchField?.selectText(nil)
     }
 
-    
 }

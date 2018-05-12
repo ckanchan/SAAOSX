@@ -16,43 +16,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     lazy var sqlDB: SQLiteCatalogue = {
         return SQLiteCatalogue()
         }()!
-    
+
     lazy var glossaryDB: Glossary = {
         return Glossary()
     }()
-    
-    
+
     var splitViewController: UISplitViewController {
         return window!.rootViewController as! UISplitViewController
     }
-    
+
     var navigationController: UINavigationController {
         return splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
     }
-    
+
     var detailNavigationController: UINavigationController {
      return self.splitViewController.viewControllers.last! as! UINavigationController
     }
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
-        
+
         let themeController = ThemeController()
         themeController.change(theme: themeController.themePreference)
         self.registerThemeNotifications()
-        
+
         return true
     }
-    
+
     deinit {
         deregisterThemeNotifications()
     }
-    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -75,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
+
     func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
         self.sqlDB = SQLiteCatalogue()!
         self.glossaryDB = Glossary()
@@ -83,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     // MARK: - Split view
 
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
         guard let topAsDetailController = secondaryAsNavController.topViewController as? TextEditionViewController else { return false }
         if topAsDetailController.textItem == nil {
@@ -92,11 +88,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         return false
     }
-    
+
     func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
         return true
     }
-    
+
     func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
         return true
     }
@@ -104,15 +100,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 }
 
 extension AppDelegate: Themeable {
-    
+
     func enableDarkMode() {
         UIApplication.shared.statusBarStyle = .lightContent
     }
-    
+
     func disableDarkMode() {
         UIApplication.shared.statusBarStyle = .default
     }
-    
+
     var darkTheme: Bool {
         switch ThemeController().themePreference {
         case .dark:
@@ -122,4 +118,3 @@ extension AppDelegate: Themeable {
         }
     }
 }
-

@@ -12,11 +12,11 @@ extension UIViewController {
     var appDelegate: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-    
+
     var sqlite: SQLiteCatalogue {
         return appDelegate.sqlDB
     }
-    
+
     var glossary: Glossary {
         return appDelegate.glossaryDB
     }
@@ -28,23 +28,21 @@ extension UIViewController {
         static var TextEditionViewController: String {
             return "TextEditionViewController"
         }
-        
+
         static var InfoTableViewController: String {
             return "InfoTableViewController"
         }
-        
+
         static var Glossary: String {
             return "Glossary"
         }
-        
+
         static var ProjectListViewController: String {
             return "ProjectListViewController"
         }
-        
+
         static var PreferencesViewController: String {
             return "PreferencesViewController"
         }
     }
 }
-
-

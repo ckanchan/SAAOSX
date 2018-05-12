@@ -14,13 +14,13 @@ class GlossaryTableViewController: UITableViewController {
     lazy var darkTheme: Bool = {
         return appDelegate.darkTheme
     }()
-    
+
     lazy var prefetcher: Glossary = {
         return Glossary()
     }()
-    
+
     var prefetchStore: [IndexPath: (String, String)] = [:]
-    
+
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -28,10 +28,9 @@ class GlossaryTableViewController: UITableViewController {
         searchController.searchBar.placeholder = "Search glossary"
         searchController.searchBar.addShortcuts()
 
-        
         searchController.searchBar.scopeButtonTitles = ["Lemma", "English", "All"]
         searchController.searchBar.selectedScopeButtonIndex = 2
-        
+
         return searchController
     }()
 
@@ -40,16 +39,14 @@ class GlossaryTableViewController: UITableViewController {
         navigationItem.searchController = self.searchController
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        
+
         registerThemeNotifications()
-        
+
     }
-    
+
     deinit {
         deregisterThemeNotifications()
     }
-    
 
     // MARK: - Table view data source
 
@@ -60,7 +57,7 @@ class GlossaryTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         prefetchStore.removeAll(keepingCapacity: false)
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if !searchBarIsEmpty() {
             return filteredGlossary.count
@@ -68,20 +65,19 @@ class GlossaryTableViewController: UITableViewController {
         return glossary.glossaryCount
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        
+
         if darkTheme {
             cell.enableDarkMode()
         } else {
             cell.disableDarkMode()
         }
-        
+
         let citationForm: String
         let guideWord: String
-        
+
         if !searchBarIsEmpty() {
             let (_, cf, gw) = filteredGlossary[indexPath.row]
             citationForm = cf
@@ -90,50 +86,50 @@ class GlossaryTableViewController: UITableViewController {
             if let (prefetchedCf, prefetchedGw) = prefetchStore[indexPath] {
                 citationForm = prefetchedCf
                 guideWord = prefetchedGw
-            } else if let (cf, gw) = glossary.labelsForRow(row: indexPath.row + 1)  {
+            } else if let (cf, gw) = glossary.labelsForRow(row: indexPath.row + 1) {
                 citationForm = cf
                 guideWord = gw
             } else {
                 return cell
             }
         }
-        
+
         cell.textLabel?.text = citationForm
         cell.detailTextLabel?.text = guideWord
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row: Int
-        
+
         if !searchBarIsEmpty() {
             (row, _, _) = filteredGlossary[indexPath.row]
         } else {
             row = indexPath.row + 1
         }
-        
+
         guard let glossaryEntry = glossary.entryForRow(row: row) else {return}
         guard let xisReferences = glossary.getXISReferences(glossaryEntry.headWord) else {return}
         let searchSet = sqlite.getSearchCollection(term: glossaryEntry.citationForm, references: xisReferences)
-        
+
         let sortedSet = searchSet.members.values.sorted(by: {$0.displayName < $1.displayName})
-        
+
         let searchSetViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.ProjectListViewController) as! ProjectListViewController
-        
+
         let catalogue = Catalogue.init(catalogue: searchSet, sorted: sortedSet, source: .search)
-        
+
         searchSetViewController.catalogue = catalogue
         searchSetViewController.tableView.reloadData()
-        
+
         navigationController?.pushViewController(searchSetViewController, animated: true)
-        
+
     }
 }
 
 extension GlossaryTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard !self.isFiltering() else {return} // Prefetching is not needed with a search set
-        
+
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             for indexPath in indexPaths {
                 guard self.prefetchStore[indexPath] == nil else { return }
@@ -144,23 +140,22 @@ extension GlossaryTableViewController: UITableViewDataSourcePrefetching {
         }
 }
 
-
-//MARK:- Search controller configuration
+// MARK: - Search controller configuration
 extension GlossaryTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let scope = SearchScope.init(rawValue: searchController.searchBar.selectedScopeButtonIndex)
-        
+
         filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
-    
+
     enum SearchScope: Int {
         case Lemma, English, All
     }
-    
+
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-    
+
     func filterContentForSearchText(_ searchText: String, scope: SearchScope? = nil) {
         let text: String
         if let scope = scope {
@@ -173,11 +168,11 @@ extension GlossaryTableViewController: UISearchResultsUpdating {
         } else {
             text = searchText
         }
-        
+
         filteredGlossary = glossary.searchDatabase(text.lowercased())
         tableView.reloadData()
     }
-    
+
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
@@ -188,21 +183,20 @@ extension GlossaryTableViewController: Themeable {
         view.window?.backgroundColor = UIColor.black
         navigationController?.navigationBar.barStyle = .black
         navigationController?.toolbar.barStyle = .black
-        
+
         self.tableView.enableDarkMode()
         self.darkTheme = true
         self.tableView.visibleCells.forEach({$0.enableDarkMode()})
     }
-    
+
     func disableDarkMode() {
         view.window?.backgroundColor = nil
         navigationController?.navigationBar.barStyle = .default
         navigationController?.toolbar.barStyle = .default
-        
+
         self.tableView.disableDarkMode()
         self.darkTheme = false
         self.tableView.visibleCells.forEach({$0.disableDarkMode()})
     }
-    
-    
+
 }

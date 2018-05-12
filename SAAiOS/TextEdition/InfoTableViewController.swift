@@ -15,7 +15,7 @@ class InfoTableViewController: UITableViewController {
     lazy var darkMode: Bool = {
         return ThemeController().themePreference == .dark ? true : false
     }()
-    
+
     static let sectionTitles = ["Basic Information",
                          "Text IDs",
                          "Archaeological Data",
@@ -23,39 +23,38 @@ class InfoTableViewController: UITableViewController {
                          "Credits",
                          "Options"
                          ]
-    
+
     static let basicInformation = ["Text Title",
                             "Chapter",
-                            "Ancient Author",
+                            "Ancient Author"
                             ]
-    
+
     static let textIDs = ["CDLI ID",
                    "Designation",
-                   "Museum Number",
+                   "Museum Number"
                    ]
-    
+
     static let archeologicalData = ["Genre",
                              "Material",
                              "Period",
-                             "Provenience",
+                             "Provenience"
                              ]
 
     static let publicationData = ["Primary publication",
                            "Publication history",
-                           "Notes",
+                           "Notes"
                            ]
 
     override func viewDidLoad() {
         darkMode ? enableDarkMode() : disableDarkMode()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.hidesBarsOnSwipe = false
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.setToolbarHidden(true, animated: false)
     }
-    
 
     // MARK: - Table view data source
 
@@ -80,35 +79,33 @@ class InfoTableViewController: UITableViewController {
         default:
             return 0
         }
-        
+
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return InfoTableViewController.sectionTitles[section]
-        
+
     }
-    
+
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UITableViewHeaderFooterView()
         if darkMode {
             headerView.contentView.backgroundColor = #colorLiteral(red: 0.1704869924, green: 0.1481106211, blue: 0, alpha: 1)
 
         }
-        
+
         return headerView
     }
-    
-    
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        
+
         if indexPath.section == 5 {
             cell = dequeueCell(type: .interactive, indexPath: indexPath)
         } else {
             cell = dequeueCell(type: .normal, indexPath: indexPath)
         }
-        
+
         switch indexPath.section {
         case 0:
             //Basic info
@@ -128,7 +125,6 @@ class InfoTableViewController: UITableViewController {
             cell.detailTextLabel?.text = nil
             cell.textLabel?.numberOfLines = 0
 
-
         case 5:
                 cell.textLabel?.text = "View on Oracc"
         default:
@@ -136,22 +132,22 @@ class InfoTableViewController: UITableViewController {
         }
         return cell
     }
-    
+
     enum CellType: String {
         case normal = "info"
         case interactive = "interactive"
     }
-    
-    func dequeueCell(type: CellType, indexPath: IndexPath) -> UITableViewCell{
+
+    func dequeueCell(type: CellType, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: type.rawValue, for: indexPath)
         darkMode ? cell.enableDarkMode() : cell.disableDarkMode()
-        
+
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let presentingVC = self.textEditionViewController else {return}
-        
+
         switch indexPath.section {
         case 5:
             if indexPath.row == 0 {
@@ -172,17 +168,14 @@ extension InfoTableViewController: Themeable {
         darkMode = true
         tableView.enableDarkMode()
     }
-    
+
     func disableDarkMode() {
         view.backgroundColor = .white
         darkMode = false
         tableView.disableDarkMode()
     }
-    
-    
+
 }
-
-
 
 extension UITableViewCell {
     func populateBasicInfo(for catalogueInfo: OraccCatalogEntry, at indexPath: IndexPath) {
@@ -200,7 +193,7 @@ extension UITableViewCell {
             return
         }
     }
-    
+
     func populateTextIDs(for catalogueInfo: OraccCatalogEntry, at indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
@@ -216,8 +209,8 @@ extension UITableViewCell {
             return
         }
     }
-    
-    func populateArchaeologicalData(for catalogueInfo: OraccCatalogEntry, at indexPath: IndexPath){
+
+    func populateArchaeologicalData(for catalogueInfo: OraccCatalogEntry, at indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
             self.textLabel?.text = InfoTableViewController.archeologicalData[0]
@@ -235,7 +228,7 @@ extension UITableViewCell {
             return
         }
     }
-    
+
     func populatePublicationData(for catalogueInfo: OraccCatalogEntry, at indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
@@ -252,5 +245,3 @@ extension UITableViewCell {
         }
     }
 }
-
-

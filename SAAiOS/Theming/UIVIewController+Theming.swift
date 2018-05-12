@@ -13,12 +13,12 @@ extension UITableViewCell: Themeable {
         textLabel?.textColor = .lightText
         detailTextLabel?.textColor = .lightText
         backgroundColor = .black
-        
+
         let colorView = UIView()
         colorView.backgroundColor = UIColor.darkGray
         selectedBackgroundView = colorView
     }
-    
+
     func disableDarkMode() {
         textLabel?.textColor = .darkText
         detailTextLabel?.textColor = .darkText
@@ -26,8 +26,7 @@ extension UITableViewCell: Themeable {
 
         selectedBackgroundView = nil
     }
-    
-    
+
 }
 
 extension UITableView: Themeable {
@@ -35,12 +34,11 @@ extension UITableView: Themeable {
         backgroundColor = .black
 
     }
-    
+
     func disableDarkMode() {
         backgroundColor = .white
     }
-    
-    
+
 }
 
 extension UITextView: Themeable {
@@ -48,7 +46,7 @@ extension UITextView: Themeable {
         backgroundColor = .black
         textColor = .lightText
     }
-    
+
     func disableDarkMode() {
         backgroundColor = .white
         textColor = .darkText

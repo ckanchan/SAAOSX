@@ -15,10 +15,10 @@ enum Navigate {
 
 class ProjectListViewController: UITableViewController {
 
-    var detailViewController: TextEditionViewController? = nil
+    var detailViewController: TextEditionViewController?
     var filteredTexts: [OraccCatalogEntry] = []
     lazy var catalogue: CatalogueProvider = {return sqlite}()
-    
+
     lazy var darkTheme: Bool = {
         if ThemeController().themePreference == .dark {
             return true
@@ -26,7 +26,7 @@ class ProjectListViewController: UITableViewController {
             return false
         }
     }()
-    
+
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -35,7 +35,7 @@ class ProjectListViewController: UITableViewController {
         searchController.searchBar.addShortcuts()
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
+
         return searchController
     }()
 
@@ -47,27 +47,26 @@ class ProjectListViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? TextEditionViewController
         }
-        
+
         tableView.reloadData()
-        
-        
+
         if self.catalogue.source != .search {
         let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
         self.setToolbarItems([glossaryButton], animated: false)
         } else {
             self.title = catalogue.name
         }
-        
+
         let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
-        
+
         navigationItem.rightBarButtonItem = preferencesButton
         self.registerThemeNotifications()
     }
-    
+
     deinit {
         self.deregisterThemeNotifications()
     }
-    
+
     @objc func loadPreferences() {
         guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.PreferencesViewController) else {return}
         navigationController?.pushViewController(preferencesViewController, animated: true)
@@ -77,10 +76,10 @@ class ProjectListViewController: UITableViewController {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
     }
-    
+
     @objc func showGlossary(_ sender: Any?) {
         guard let glossaryController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.Glossary) as? GlossaryTableViewController else {return}
-        
+
         if let quickDefinition = sender as? UIBarButtonItem {
             if let text = quickDefinition.title {
                 if text != "Glossary" {
@@ -90,15 +89,14 @@ class ProjectListViewController: UITableViewController {
                     glossaryController.searchController.searchBar.text = String(cf)
                     glossaryController.searchController.searchBar.selectedScopeButtonIndex = 0
                     glossaryController.updateSearchResults(for: glossaryController.searchController)
-                    
+
                     }
                 }
             }
         }
-        
+
         self.navigationController?.pushViewController(glossaryController, animated: true)
     }
-
 
     // MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -124,7 +122,7 @@ class ProjectListViewController: UITableViewController {
             }
         }
     }
-    
+
     func getTextViewData(for indexPath: IndexPath) -> (OraccCatalogEntry, TextEditionStringContainer)? {
         let catalogueEntry: OraccCatalogEntry
         if isFiltering() {
@@ -132,37 +130,33 @@ class ProjectListViewController: UITableViewController {
         } else {
             catalogueEntry = catalogue.texts[indexPath.row]
         }
-        
+
         guard let textStrings = sqlite.getTextStrings(catalogueEntry.id) else {return nil}
-        
+
         return (catalogueEntry, textStrings)
-        
+
     }
 
-
-    
-    
     func getIndexPath(_ direction: Navigate) -> IndexPath? {
         guard let selection = tableView.indexPathForSelectedRow else {return nil}
         switch direction {
         case .left:
             return IndexPath(row: selection.row - 1, section: selection.section)
-            
+
         case .right:
             return IndexPath(row: selection.row + 1, section: selection.section)
         }
     }
 
-    
     func navigate(_ direction: Navigate) {
         guard let newIndexPath = getIndexPath(direction) else {return}
         guard tableView.cellForRow(at: newIndexPath) != nil else {return}
-        
+
         tableView.selectRow(at: newIndexPath, animated: false, scrollPosition: .middle)
     }
 }
 
-//MARK:- Table view methods
+// MARK: - Table view methods
 extension ProjectListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
@@ -171,64 +165,62 @@ extension ProjectListViewController {
             return catalogue.texts.count
         }
     }
-    
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let textItem: OraccCatalogEntry
-        
+
         if darkTheme {
             cell.enableDarkMode()
         } else {
             cell.disableDarkMode()
         }
-        
+
         if isFiltering() {
             textItem = filteredTexts[indexPath.row]
         } else {
             textItem = catalogue.texts[indexPath.row]
         }
-        
+
         cell.textLabel?.text = textItem.displayName
         cell.detailTextLabel?.text = textItem.title
         return cell
     }
 }
 
-
-//MARK:- Search Controller methods
+// MARK: - Search Controller methods
 extension ProjectListViewController: UISearchResultsUpdating {
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-    
+
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         filteredTexts = catalogue.texts.filter {
             $0.description.lowercased().contains(searchText.lowercased()
             )}
         tableView.reloadData()
     }
-    
+
     func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
     }
-    
+
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
 
-//MARK:- Restorable State
+// MARK: - Restorable State
 extension ProjectListViewController {
     override func encodeRestorableState(with coder: NSCoder) {
         if let indexPath = tableView.indexPathForSelectedRow {
             coder.encode(indexPath.section, forKey: "selectedSection")
             coder.encode(indexPath.row, forKey: "selectedRow")
         }
-        
+
         super.encodeRestorableState(with: coder)
     }
-    
+
     override func decodeRestorableState(with coder: NSCoder) {
         defer {super.decodeRestorableState(with: coder)}
         let row = coder.decodeInteger(forKey: "selectedRow")
@@ -242,17 +234,17 @@ extension ProjectListViewController: Themeable {
         view.window?.backgroundColor = UIColor.black
         navigationController?.navigationBar.barStyle = .black
         navigationController?.toolbar.barStyle = .black
-        
+
         self.tableView.enableDarkMode()
         self.tableView.visibleCells.forEach({$0.enableDarkMode()})
         self.darkTheme = true
     }
-    
+
     func disableDarkMode() {
         view.window?.backgroundColor = nil
         navigationController?.navigationBar.barStyle = .default
         navigationController?.toolbar.barStyle = .default
-        
+
         self.tableView.disableDarkMode()
         self.tableView.visibleCells.forEach({$0.disableDarkMode()})
         self.darkTheme = false

@@ -10,23 +10,22 @@ import Cocoa
 import CDKSwiftOracc
 import CDKOraccInterface
 
-
 extension NSViewController {
     var appDelegate: AppDelegate {
         return NSApplication.shared.delegate! as! AppDelegate
     }
-    
+
     var oracc: OraccInterface {
         return appDelegate.oraccInterface
     }
-    
+
     var bookmarks: Bookmarks {
         return appDelegate.bookmarks
     }
-    
+
     var glossary: Glossary {
         return appDelegate.glossary
     }
-    
+
     var sqlite: SQLiteCatalogue? {return appDelegate.sqlite}
 }

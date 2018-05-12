@@ -19,53 +19,51 @@ class TextEditionViewController: UIViewController {
         case single(TextDisplay)
         case double(left: TextDisplay, right: TextDisplay)
     }
-    
+
     @IBOutlet weak var primaryContainerView: UIView!
     @IBOutlet weak var secondaryContainerView: UIView!
-    
-    //MARK:- Instance Variables
+
+    // MARK: - Instance Variables
     weak var parentController: ProjectListViewController?
     weak var catalogue: CatalogueProvider?
-    var displayState: DisplayState? = nil
-    
+    var displayState: DisplayState?
+
     weak var primaryPanel: TextPanelViewController!
     weak var secondaryPanel: TextPanelViewController!
-    
+
     var textItem: OraccCatalogEntry?
     var textStrings: TextEditionStringContainer? {
         didSet {
             textStrings?.render(withPreferences: ThemeController().themeFormatting)
         }
     }
-    
-    var searchTerm: String? = nil
+
+    var searchTerm: String?
     lazy var darkMode: Bool = {
         return ThemeController().themePreference == .dark ?  true : false
     }()
-    
-    //MARK:- Lifecycle methods
+
+    // MARK: - Lifecycle methods
     override func viewDidLoad() {
         initialiseToolbar()
         addInfoButton()
         registerThemeNotifications()
-        
+
         primaryPanel = childViewControllers.first as? TextPanelViewController
         secondaryPanel = childViewControllers.last as? TextPanelViewController
-        
+
         primaryPanel.delegate = self
         primaryPanel.textDisplay = .Normalisation
-     
-        
+
         secondaryPanel.delegate = self
         secondaryPanel.textDisplay = .Translation
 
         darkMode ? enableDarkMode() : disableDarkMode()
     }
-    
+
     deinit {
         deregisterThemeNotifications()
     }
-    
 
     func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
         let label = UILabel()
@@ -80,14 +78,13 @@ class TextEditionViewController: UIViewController {
 
         return label
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.setToolbarHidden(false, animated: false)
         navigationController?.hidesBarsOnSwipe = true
     }
- 
-   
+
     //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
         guard let catalogue = self.catalogue else { return }
@@ -95,7 +92,7 @@ class TextEditionViewController: UIViewController {
         guard let currentRow = catalogue.texts.index(where: {$0.id == id}) else {return}
         let nextRow: Int
         var direction: Navigate? = nil
-        
+
         if let button = sender as? UIBarButtonItem {
             if button.title == "<" {
                 direction = .left
@@ -112,8 +109,7 @@ class TextEditionViewController: UIViewController {
                 return
             }
         }
-        
-        
+
         if let direction = direction {
             switch direction {
             case .left:
@@ -123,14 +119,14 @@ class TextEditionViewController: UIViewController {
                 nextRow = currentRow + 1
                 guard nextRow < catalogue.texts.endIndex else {return}
             }
-            
+
             guard let nextEntry = catalogue.text(at: nextRow) else {return}
             guard let strings = sqlite.getTextStrings(nextEntry.id) else {return}
-            
+
             self.textStrings = strings
             self.textItem = nextEntry
             self.title = nextEntry.title
-            
+
             if traitCollection.horizontalSizeClass == .regular {
                 if direction == .left {
                     parentController?.navigate(.left)
@@ -140,7 +136,6 @@ class TextEditionViewController: UIViewController {
             }
         }
     }
-
 
     @IBAction func changeText(_ sender: UISegmentedControl) {
         guard let displayState = self.displayState else {return}
@@ -157,33 +152,32 @@ class TextEditionViewController: UIViewController {
         default:
             newState = .Normalisation
         }
-        
-        
+
         switch displayState {
-        case .single(_):
+        case .single:
             self.displayState = DisplayState.single(newState)
-            
+
         case .double(let leftDisplay, let rightDisplay):
             let newDisplayState: DisplayState
-            
+
             switch sender.tag {
             case 0: // Changing the left display's text
                 newDisplayState = DisplayState.double(left: newState, right: rightDisplay)
-                
+
             case 1: // Changing the right display's text
                 newDisplayState = DisplayState.double(left: leftDisplay, right: newState)
-                
+
             default: // Big error
                 return
             }
             self.displayState = newDisplayState
         }
     }
-    
+
     func string(for textKind: TextDisplay) -> NSAttributedString {
         let notAvailable = NSAttributedString(string: "Not available")
         let textColor = darkMode ? UIColor.lightText : UIColor.darkText
-        
+
         switch textKind {
         case .Cuneiform:
             return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.cuneiformNA, .foregroundColor: textColor])
@@ -192,19 +186,18 @@ class TextEditionViewController: UIViewController {
         case .Normalisation:
             return textStrings?.normalisation ?? notAvailable
         case .Translation:
-            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font : UIFont.defaultFont, .foregroundColor: textColor])
-           
+            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.defaultFont, .foregroundColor: textColor])
+
         }
     }
-  
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
+
         switch traitCollection.horizontalSizeClass {
         case .regular:
             return
-            
+
         default:
             return
         }
@@ -212,27 +205,26 @@ class TextEditionViewController: UIViewController {
 
 }
 
-//MARK:- Outbound Methods
+// MARK: - Outbound Methods
 extension TextEditionViewController {
     func viewOnline() {
         guard let catalogueInfo = self.textItem else {return}
         let textID = catalogueInfo.id
         let projectPath = catalogueInfo.project
         let url = URL(string: "http://oracc.org/\(projectPath)/\(textID)/html")!
-        
+
         let webView = OnlineViewController()
         webView.url = url
-        
+
         self.navigationController?.pushViewController(webView, animated: true)
     }
-    
+
     @objc func presentInformation() {
         guard let catalogueInfo = self.textItem else {return}
         guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
         infoTableController.catalogueInfo = catalogueInfo
         infoTableController.textEditionViewController = self
-        
-        
+
         if UIDevice.current.userInterfaceIdiom == .pad {
             infoTableController.modalPresentationStyle = .popover
             present(infoTableController, animated: true)
@@ -244,43 +236,37 @@ extension TextEditionViewController {
     }
 }
 
-
 extension TextEditionViewController: Themeable {
     func enableDarkMode() {
         view.backgroundColor = .black
-        
+
         navigationController?.navigationBar.barStyle = .black
         navigationController?.toolbar.barStyle = .black
         primaryPanel.enableDarkMode()
         secondaryPanel.enableDarkMode()
-        
 
-        
         if let textItem = textItem {
             navigationItem.titleView = titleLabel(for: textItem, color: .lightText)
         }
-        
+
         darkMode = true
-        
+
     }
-    
+
     func disableDarkMode() {
         view.backgroundColor = .white
-        
+
         navigationController?.navigationBar.barStyle = .default
         navigationController?.toolbar.barStyle = .default
         primaryPanel.disableDarkMode()
         secondaryPanel.disableDarkMode()
         darkMode = false
-        
-
 
         if let textItem = textItem {
             navigationItem.titleView = titleLabel(for: textItem, color: .darkText)
         }
     }
 }
-
 
 // MARK :- Factory methods for UI components
 extension TextEditionViewController {
@@ -290,22 +276,21 @@ extension TextEditionViewController {
         let infoBarButton = UIBarButtonItem(customView: info)
         navigationItem.rightBarButtonItem = infoBarButton
     }
-    
+
     func makeNavigationButtons() -> (UIBarButtonItem, UIBarButtonItem) {
         let left = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(navigate(_:)))
         let right = UIBarButtonItem(title: ">", style: .plain, target: self, action: #selector(navigate(_:)))
-        
+
         return (left, right)
     }
-    
+
     func initialiseToolbar() {
         let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: parentController, action: #selector(ProjectListViewController.showGlossary(_:)))
         let (left, right) = makeNavigationButtons()
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         self.setToolbarItems([quickDefine, spacer, left, right], animated: true)
     }
-    
-    
+
     func configureToolBar(withText text: String) {
         guard let quickDefineLabel = toolbarItems?.first else {return}
         quickDefineLabel.title = text
@@ -314,7 +299,7 @@ extension TextEditionViewController {
 
 // MARK :- Restorable state methods
 extension TextEditionViewController {
-    
+
     override func encodeRestorableState(with coder: NSCoder) {
         if let displayState = displayState {
             switch displayState {
@@ -322,43 +307,42 @@ extension TextEditionViewController {
                 coder.encode(true, forKey: "isSingle")
                 coder.encode(state.rawValue, forKey: "leftState")
                 coder.encode(-1, forKey: "rightState")
-                
+
             case .double(let left, let right):
                 coder.encode(left.rawValue, forKey: "leftState")
                 coder.encode(right.rawValue, forKey: "rightState")
             }
         }
-        
+
         if let searchTerm = searchTerm {
             coder.encode(searchTerm, forKey: "searchTerm")
         }
-        
+
         if let item = textItem {
             coder.encode(item.id, forKey: "id")
         }
-        
+
         super.encodeRestorableState(with: coder)
-            
+
     }
-    
+
     override func decodeRestorableState(with coder: NSCoder) {
         defer {super.decodeRestorableState(with: coder)}
-        
+
         guard UIApplication.shared.delegate != nil else {return}
         guard let key = coder.decodeObject(forKey: "id") as? NSString else {return}
         guard let catalogueEntry = sqlite.texts.first(where: {$0.id == key as String}) else {return}
         guard let textStrings = sqlite.getTextStrings(key as String) else {return}
-        
+
         self.textStrings = textStrings
         self.textItem = catalogueEntry
-        
-        
+
         switch coder.decodeBool(forKey: "isSingle") {
         case true:
             let rawDisplay = coder.decodeInteger(forKey: "leftState")
             let textDisplay = TextDisplay.init(rawValue: rawDisplay)!
             self.displayState = DisplayState.single(textDisplay)
-            
+
         case false:
             let rawLeftDisplay = coder.decodeInteger(forKey: "leftState")
             let rawRightDisplay = coder.decodeInteger(forKey: "rightState")
@@ -367,7 +351,7 @@ extension TextEditionViewController {
             self.displayState = DisplayState.double(left: leftDisplay, right: rightDisplay)
         }
     }
-    
+
     override func applicationFinishedRestoringState() {
         self.title = textItem?.title
     }

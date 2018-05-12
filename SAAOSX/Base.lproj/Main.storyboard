@@ -988,10 +988,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="Credits" destination="ggL-SB-JZ8" id="2Es-Fu-dkk"/>
                         <outlet property="ancientAuthor" destination="8QN-jo-LK7" id="kkt-iZ-Nqz"/>
                         <outlet property="archData" destination="N9M-kB-WBc" id="2uc-PH-iWH"/>
                         <outlet property="chapterTitle" destination="3d5-oV-XuB" id="EQ6-Ct-71H"/>
+                        <outlet property="credits" destination="ggL-SB-JZ8" id="2Es-Fu-dkk"/>
                         <outlet property="pubData" destination="8T8-le-nd4" id="QQs-JM-LKe"/>
                         <outlet property="textIDs" destination="PBu-M4-1TI" id="dGR-2z-Pe9"/>
                         <outlet property="textTitle" destination="lTa-A5-aZU" id="gyW-pO-97i"/>
@@ -1099,7 +1099,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" drawsBackground="NO" id="cKc-LG-d6l">
                             <rect key="frame" x="1" y="1" width="448" height="298"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="KRf-I8-eBB">
                                     <rect key="frame" x="0.0" y="0.0" width="448" height="298"/>
@@ -1306,7 +1306,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" wantsLayer="YES" drawsBackground="NO" id="qpV-Xd-ZWm">
                             <rect key="frame" x="0.0" y="0.0" width="450" height="553"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="Okb-rf-nPV">
                                     <rect key="frame" x="0.0" y="0.0" width="509" height="553"/>

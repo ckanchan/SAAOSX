@@ -10,10 +10,10 @@ import Cocoa
 
 class InfoViewController: NSViewController {
     @IBOutlet weak var infoLabel: NSTextField!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
 }

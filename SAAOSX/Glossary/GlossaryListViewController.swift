@@ -14,11 +14,10 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
     var filteredGlossary: [(Int, String, String)] = []
     var searchBarIsEmpty: Bool = true
     var definitionViewController: GlossaryEntryViewController?
-    
+
     override func viewDidAppear() {
         glossaryTableView.doubleAction = #selector(getSearchSet(_:))
     }
-    
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         if !searchBarIsEmpty {
@@ -26,10 +25,10 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
         }
         return glossary.glossaryCount
     }
-    
+
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else {return nil}
-        
+
         let citationForm: String
         let guideWord: String
 
@@ -52,13 +51,13 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
         default:
             break
         }
-        
+
         return view
     }
-    
+
     func tableViewSelectionDidChange(_ notification: Notification) {
         let glossaryEntry: GlossaryEntry
-        
+
         if !searchBarIsEmpty {
             let rowID = filteredGlossary[glossaryTableView.selectedRow].0
             guard let ge = glossary.entryForRow(row: rowID) else {return}
@@ -67,20 +66,17 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
             guard let ge = glossary.entryForRow(row: glossaryTableView.selectedRow + 1) else { return }
             glossaryEntry = ge
         }
-        
+
         if let definitionViewController = definitionViewController {
             definitionViewController.glossaryEntry = glossaryEntry
         }
     }
-    
-    
-    
-    
+
     // MARK :- Search functions
     func filterContentForSearchText(_ searchText: String) {
         filteredGlossary = glossary.searchDatabase(searchText.lowercased())
     }
-    
+
     @IBAction func search(_ sender: NSSearchField) {
         if !sender.stringValue.isEmpty {
             searchBarIsEmpty = false
@@ -91,19 +87,18 @@ class GlossaryListViewController: NSViewController, NSTableViewDataSource, NSTab
             glossaryTableView.reloadData()
         }
     }
-    
+
     @IBAction func getSearchSet(_ sender: Any) {
         guard let entry = definitionViewController?.glossaryEntry else { return }
         guard let references = glossary.getXISReferences(entry.headWord) else {return}
         guard let collection = sqlite?.getSearchCollection(term: entry.citationForm, references: references) else {return}
-        
+
         let sorted = collection.members.values.sorted(by: {lhs, rhs in lhs.displayName < rhs.displayName})
-        
+
         let catalogue = Catalogue(catalogue: collection, sorted: sorted, source: .search)
-        
+
         let resultsWindow = ProjectListWindowController.new(catalogue: catalogue)
         resultsWindow.showWindow(sender)
     }
-    
-    
+
 }

@@ -18,7 +18,6 @@ extension UIStackView {
             return textView
         }()
 
-
         let control: UISegmentedControl = {
             let segments = ["Cuneiform", "Transliteration", "Normalisation", "Translation"]
             let segmentedControl = UISegmentedControl(items: segments)

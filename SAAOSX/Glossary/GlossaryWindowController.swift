@@ -13,19 +13,19 @@ class GlossaryWindowController: NSWindowController {
 
     @discardableResult static func new(_ sender: Any) -> GlossaryWindowController? {
         let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
-        
+
         guard let glossaryWindow = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("GlossaryWindow")) as? GlossaryWindowController else {return nil}
         guard let splitViewController = glossaryWindow.contentViewController as? GlossarySplitViewController else {return nil}
-        
+
         splitViewController.searchField = glossaryWindow.searchField
         guard let glossaryListViewController = splitViewController.childViewControllers.first as? GlossaryListViewController else {return nil}
-        
+
         glossaryListViewController.definitionViewController = splitViewController.childViewControllers.last as? GlossaryEntryViewController
         glossaryWindow.window?.title = "Glossary"
         glossaryWindow.showWindow(sender)
         return glossaryWindow
     }
-    
+
     @objc static func searchField(_ sender: NSMenuItem) {
         let searchString = "cf:\(sender.title)"
         if let window = NSApp.windows.first(where: {$0.title == "Glossary"}) {
@@ -35,7 +35,7 @@ class GlossaryWindowController: NSWindowController {
             vw.performFindPanelAction(sender)
             let glvc = vw.childViewControllers.first as! GlossaryListViewController
             glvc.search(vw.searchField!)
-            
+
             guard glvc.glossaryTableView.numberOfRows != 0 else {return}
             let idx = IndexSet([0])
             glvc.glossaryTableView.selectRowIndexes(idx, byExtendingSelection: false)
@@ -45,7 +45,7 @@ class GlossaryWindowController: NSWindowController {
             window?.window?.makeKeyAndOrderFront(sender)
             let glvc = window?.contentViewController?.childViewControllers.first as! GlossaryListViewController
             glvc.search(window!.searchField)
-            
+
             guard glvc.glossaryTableView.numberOfRows != 0 else {return}
             let idx = IndexSet([0])
             glvc.glossaryTableView.selectRowIndexes(idx, byExtendingSelection: false)

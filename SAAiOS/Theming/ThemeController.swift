@@ -18,7 +18,7 @@ class ThemeController {
     enum Theme: Int {
         case standard, dark
     }
-    
+
     var themePreference: Theme {
         didSet {
             UserDefaults.standard.set(themePreference.rawValue, forKey: PreferenceKey.Theme.rawValue)
@@ -30,7 +30,7 @@ class ThemeController {
             }
         }
     }
-    
+
     var themeFormatting: OraccTextEdition.FormattingPreferences {
         switch self.themePreference {
         case .standard:
@@ -39,8 +39,7 @@ class ThemeController {
             return UIFont.defaultFont.makeDarkPreferences()
         }
     }
-    
-    
+
     func change(theme: Theme) {
         switch theme {
         case .standard:
@@ -57,12 +56,10 @@ class ThemeController {
             UITextView.appearance().backgroundColor = .white
             UITextView.appearance().textColor = UIColor.darkText
 
-
-            
             self.themePreference = .standard
-            
+
         case .dark:
-          
+
             UIView.appearance().tintColor = #colorLiteral(red: 1, green: 0.224928888, blue: 0, alpha: 1)
 
             UITextField.appearance().keyboardAppearance = .dark
@@ -75,22 +72,20 @@ class ThemeController {
             UITextView.appearance().backgroundColor = UIColor.black
             UITextView.appearance().textColor = UIColor.lightText
 
-           
-            
             self.themePreference = .dark
         }
     }
-    
+
     init() {
         self.themePreference = Theme.init(rawValue: UserDefaults.standard.integer(forKey: PreferenceKey.Theme.rawValue)) ?? Theme.standard
     }
-    
+
 }
 
 @objc protocol Themeable: AnyObject {
     func enableDarkMode()
     func disableDarkMode()
-    
+
 }
 
 extension Themeable {
@@ -98,15 +93,14 @@ extension Themeable {
         NotificationCenter.default.addObserver(self, selector: #selector(enableDarkMode), name: .darkModeEnabled, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(disableDarkMode), name: .darkModeDisabled, object: nil)
     }
-    
+
     func deregisterThemeNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
 }
 
-
 extension UIFont {
-    
+
     //TODO:- Delete this when CDKSwiftOracc is updated to expose UIFont extnesion as public
     func getItalicFont() -> UIFont {
         let fontDsc = self.fontDescriptor
@@ -118,11 +112,11 @@ extension UIFont {
             return UIFont.italicSystemFont(ofSize: self.pointSize)
         }
     }
-    
+
     var reducedFontSize: UIFont {
         return UIFont(descriptor: self.fontDescriptor, size: self.pointSize / 2)
     }
-    
+
     func makeDarkPreferences() -> OraccTextEdition.FormattingPreferences {
         let noFormatting = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: UIFont.systemFontSize), NSAttributedStringKey.foregroundColor: UIColor.lightText]
         let italicFormatting: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: self.getItalicFont(), NSAttributedStringKey.foregroundColor: UIColor.lightText]
@@ -130,10 +124,10 @@ extension UIFont {
                                                                    NSAttributedStringKey.font: self.reducedFontSize,
                                                                    NSAttributedStringKey.foregroundColor: UIColor.lightText]
         let damagedFormatting: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: self.getItalicFont(), NSAttributedStringKey.foregroundColor: UIColor.gray]
-        
+
         let editorialFormatting: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.smallSystemFontSize, weight: UIFont.Weight.regular), NSAttributedStringKey.foregroundColor: UIColor.lightText]
         let editorialBoldFormatting: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.smallSystemFontSize, weight: UIFont.Weight.bold), NSAttributedStringKey.foregroundColor: UIColor.lightText]
-        
+
         return OraccTextEdition.FormattingPreferences(editorial: editorialFormatting, editorialBold: editorialBoldFormatting, italic: italicFormatting, superscript: superscriptFormatting, damaged: damagedFormatting, none: noFormatting)
     }
 }

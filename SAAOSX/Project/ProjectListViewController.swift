@@ -11,14 +11,13 @@ import CDKSwiftOracc
 import CDKOraccInterface
 
 class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, BookmarkDisplaying {
-    
+
     func refreshTableView() {
         self.catalogueEntryView.reloadData()
     }
-    
 
     @IBOutlet weak var catalogueEntryView: NSTableView!
-    
+
     lazy var projectList: [CDKOraccProject] = {
         if let result = try? oracc.getOraccProjects() {
             return result
@@ -26,17 +25,16 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             return []
         }
     }()
-    
+
     lazy var windowController: ProjectListWindowController = {
         return self.view.window?.windowController as! ProjectListWindowController
     }()
-    
+
     lazy var infoSidebar: InfoSideBarViewController = {
         let split = self.parent! as! NSSplitViewController
         return split.childViewControllers.last! as! InfoSideBarViewController
     }()
-    
-    
+
     var catalogueProvider: CatalogueProvider? {
         didSet {
             DispatchQueue.main.async {
@@ -49,60 +47,57 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                     }
                 } else {
                     self.windowController.setConnectionStatus(to: "disconnected")
-                } 
+                }
             }
         }
     }
 
-    var selectedText: OraccCatalogEntry? = nil
+    var selectedText: OraccCatalogEntry?
 
-    
     override func viewDidAppear() {
         NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: Bookmarks.Update, object: nil)
         catalogueEntryView.doubleAction = #selector(doubleClickLoadText(_:))
-        
+
         // If the window is being duplicated, then use a previously existing catalogue to save memory.
         guard self.catalogueProvider == nil else {
             windowController.setTitle(catalogueProvider?.name ?? "SAAoSX")
             catalogueEntryView.reloadData()
             return
         }
-        
+
         // Otherwise load a default catalogue
         loadCatalogue("sqlite")
         windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
-
     }
     
-    override func viewWillDisappear() {
+    deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
-    
-    func loadCatalogue(_ s: String) {
+    func loadCatalogue(_ catalogueStr: String) {
         self.windowController.loadingIndicator.startAnimation(nil)
-        
-        if s == "pins" {
+
+        if catalogueStr == "pins" {
             self.catalogueProvider = bookmarks
             self.catalogueEntryView.reloadData()
             self.windowController.loadingIndicator.stopAnimation(nil)
             self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
             return
         }
-        
-        if s == "sqlite" {
+
+        if catalogueStr == "sqlite" {
             self.catalogueProvider = self.sqlite
             self.catalogueEntryView.reloadData()
             self.windowController.loadingIndicator.stopAnimation(nil)
             return
         }
-        
+
         DispatchQueue.global(qos: .userInitiated).async {
             self.searchBarIsEmpty = true
             self.selectedText = nil
             self.filteredTexts = []
-            
-            guard let cat = self.projectList.first(where: {$0.pathname.contains(s)})
+
+            guard let cat = self.projectList.first(where: {$0.pathname.contains(catalogueStr)})
                 else {
                     DispatchQueue.main.async {
                         self.windowController.setConnectionStatus(to: "disconnected")
@@ -111,11 +106,11 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                     }
                     return
             }
-            
+
             do {
                 let catalogue = try self.oracc.loadCatalogue(cat)
                 var texts = Array(catalogue.members.values)
-                texts.sort{$0.displayName < $1.displayName}
+                texts.sort {$0.displayName < $1.displayName}
                 let controller = Catalogue(catalogue: catalogue, sorted: texts, source: .online)
                 self.catalogueProvider = controller
                 DispatchQueue.main.async {
@@ -134,17 +129,17 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             }
         }
     }
-    
+
     func numberOfRows(in tableView: NSTableView) -> Int {
         if !searchBarIsEmpty {
             return filteredTexts.count
         }
         return catalogueProvider?.count ?? 0
     }
-    
+
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let vw = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else { return nil }
-        
+
         let text: OraccCatalogEntry
         if !searchBarIsEmpty {
             text = filteredTexts[row]
@@ -152,7 +147,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             guard let txt = catalogueProvider?.text(at: row) else { return nil }
             text = txt
         }
-        
+
         if tableColumn?.identifier.rawValue == "saaNumber" {
             vw.textField?.stringValue = text.displayName
         } else if tableColumn?.identifier.rawValue == "title"{
@@ -160,7 +155,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         } else if tableColumn?.identifier.rawValue == "sender" {
             vw.textField?.stringValue = text.ancientAuthor ?? "(unassigned)"
         }
-        
+
         if let pinned = bookmarks.contains(textID: text.id) {
             if pinned {
                 vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
@@ -170,14 +165,13 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         }
         return vw
     }
-    
+
     public func setCatalogueProvider(_ provider: CatalogueProvider) {
         self.catalogueProvider = provider
         catalogueEntryView.reloadData()
     }
 
-    
-    func openTextWindow(_ textEntry: OraccCatalogEntry){
+    func openTextWindow(_ textEntry: OraccCatalogEntry) {
         guard let catalogueSource = self.catalogueProvider?.source else { return }
         switch catalogueSource {
         case .bookmarks:
@@ -186,18 +180,18 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
-            
+
         case .search:
             guard let sqlite = self.sqlite else {return}
             guard let catalogue = self.catalogueProvider as? Catalogue else {return}
             guard let textSearchCollection = catalogue.catalogue as? TextSearchCollection else { return }
-            
+
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, searchTerm: textSearchCollection.searchTerm)
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
             }
-            
+
         case .sqlite:
             guard let sqlite = self.sqlite else {return}
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
@@ -230,12 +224,12 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                     }
                 }
             }
-            
+
         case .local:
             break
         }
     }
-    
+
     func tableViewSelectionDidChange(_ notification: Notification) {
         if !searchBarIsEmpty {
             selectedText = filteredTexts[catalogueEntryView.selectedRow]
@@ -243,12 +237,12 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             guard let txt = catalogueProvider?.text(at: catalogueEntryView.selectedRow) else { return  }
             selectedText = txt
         }
-        
+
         if let selectedText = selectedText {
             infoSidebar.setLabels(selectedText)
         }
     }
-    
+
     override func keyDown(with event: NSEvent) {
         if event.keyCode == 36 || event.keyCode == 76 {
             if let text = selectedText {
@@ -259,32 +253,27 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             super.keyDown(with: event)
         }
     }
-    
-    
-    
-    @objc func doubleClickLoadText(_ sender: Any){
+
+    @objc func doubleClickLoadText(_ sender: Any) {
         if let text = selectedText {
             windowController.loadingIndicator.startAnimation(nil)
             openTextWindow(text)
         }
     }
-    
-    
 
     // MARK :- Search functions
     var filteredTexts: [OraccCatalogEntry] = []
     var searchBarIsEmpty: Bool = true
-    
-    
-    func filterContentForSearchText(_ searchText: String){
+
+    func filterContentForSearchText(_ searchText: String) {
         filteredTexts = catalogueProvider?.search(searchText) ?? []
     }
-    
+
     @IBAction func search(_ sender: NSSearchFieldCell) {
         search(sender.stringValue)
     }
-    
-    func search(_ str: String){
+
+    func search(_ str: String) {
         if !str.isEmpty {
             searchBarIsEmpty = false
             filterContentForSearchText(str)
@@ -294,12 +283,12 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             catalogueEntryView.reloadData()
         }
     }
-    
+
     @IBAction func viewOnline(_ sender: Any) {
         if let text = selectedText {
             var baseURL = URL(string: "http://oracc.org")!
-            
-            if text.project.contains("Geography of Knowledge"){
+
+            if text.project.contains("Geography of Knowledge") {
                 baseURL.appendPathComponent("cams/gkab")
             } else {
             baseURL.appendPathComponent(text.project)
@@ -312,8 +301,8 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
     @IBAction func newProjectListWindow(_ sender: Any) {
         ProjectListWindowController.new(catalogue: self.catalogueProvider)
     }
-    
-    @IBAction func newDocument(_ sender: Any){
+
+    @IBAction func newDocument(_ sender: Any) {
         newProjectListWindow(self)
     }
 
