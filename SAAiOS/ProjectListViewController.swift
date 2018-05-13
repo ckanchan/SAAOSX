@@ -76,8 +76,23 @@ class ProjectListViewController: UITableViewController {
         guard let row = tableView.indexPathForSelectedRow?.row else {return}
         guard let entry = sqlite.getEntryAt(row: row) else {return}
         let id = entry.id
-        let notesViewController = NotesViewController()
-        notesViewController.id = id
+        
+        guard let user = self.userManager.user else {
+            let alert = UIAlertController(title: "Not logged in", message: "Log in to save and sync notes", preferredStyle: .alert)
+            let signIn = UIAlertAction(title: "Log in", style: .default){ [unowned self] alert in
+                guard let controller = self.userManager.signIn() else {return}
+                self.present(controller, animated: true)
+            }
+            
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            alert.addAction(signIn)
+            alert.addAction(cancel)
+            self.present(alert, animated: true)
+            return
+        }
+        
+        let notesViewController = NotesViewController.new(id: id, for: user)
+        
         darkTheme ? notesViewController.enableDarkMode() : notesViewController.disableDarkMode()
         navigationController?.pushViewController(notesViewController, animated: true)
 

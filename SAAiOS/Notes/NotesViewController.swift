@@ -7,9 +7,19 @@
 //
 
 import UIKit
+import Firebase
 
 class NotesViewController: UIViewController, UITextViewDelegate {
-    lazy var notesDBController = DatabaseController()
+    
+    @discardableResult static func new(id: String, for user: User) -> NotesViewController {
+        let dbController = DatabaseController(for: user)
+        let notesViewController = NotesViewController()
+        notesViewController.notesDBController = dbController
+        notesViewController.id = id
+        return notesViewController
+    }
+    
+    var notesDBController: DatabaseController!
     lazy var textView = { return UITextView() }()
     var id: String = "" {
         didSet {
@@ -30,8 +40,9 @@ class NotesViewController: UIViewController, UITextViewDelegate {
     }
     
     func getNotes() {
+        guard let notesDBController = self.notesDBController else {return}
         DispatchQueue.global().async { [unowned self] in
-            self.notesDBController.getNotes(for: self.id){ note in
+            notesDBController.getNotes(for: self.id){ note in
                 DispatchQueue.main.async {
                     self.textView.text = note.notes.joined(separator: "\n")
                 }
@@ -40,6 +51,7 @@ class NotesViewController: UIViewController, UITextViewDelegate {
     }
     
     func setNotes(){
+        guard let notesDBController = self.notesDBController else {return}
         let note = Note(id: self.id, notes: [textView.text])
         notesDBController.set(note: note)
     }

@@ -1,7 +1,0 @@
-github "ckanchan/CDKSwiftOracc" "master"
-github "ckanchan/CDKOraccInterface" "master"
-github "stephencelis/SQLite.swift" ~> 0.11.5
-
-binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json"
-binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAuthBinary.json"
-binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseFirestoreBinary.json"

@@ -20,6 +20,10 @@ extension UIViewController {
     var glossary: Glossary {
         return appDelegate.glossaryDB
     }
+    
+    var userManager: UserManager {
+        return appDelegate.userManager
+    }
 }
 
 // Storyboard IDs

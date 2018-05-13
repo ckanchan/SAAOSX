@@ -35,13 +35,14 @@ struct Note {
 
 struct DatabaseController {
     let db = Firestore.firestore()
+    let user: User
     
     func set(note: Note) {
-        db.collection("Notes").document("\(note.id)").setData(note.firebaseData)
+        db.collection(user.uid).document("\(note.id)").setData(note.firebaseData)
     }
     
     func getNotes(for textID: String, completionHandler: @escaping (Note) -> Void) {
-        let docRef = db.collection("Notes").document(textID)
+        let docRef = db.collection(user.uid).document(textID)
         
         docRef.getDocument{(document, error) in
             if let document = document, document.exists {
@@ -51,6 +52,10 @@ struct DatabaseController {
             }
         }
         
+    }
+    
+    init(for user: User){
+        self.user = user
     }
 }
 

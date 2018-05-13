@@ -5,4 +5,5 @@ SAAOSX/SAAO_CompleteGlossary.sqlite3
 SAAOSX.xcodeproj/xcuserdata/Chaitanya.xcuserdatad/**
 .idea/
 .swiftlint.yml
+Pods/
 GoogleService-Info.plist
