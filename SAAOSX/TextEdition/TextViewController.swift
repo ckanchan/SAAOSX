@@ -9,7 +9,7 @@
 import Cocoa
 import CDKSwiftOracc
 
-class TextViewController: NSViewController, NSTextViewDelegate {
+class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplaying {
 
     public enum Navigate {
         case left, right
@@ -27,7 +27,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     var catalogueEntry: OraccCatalogEntry! {
         didSet {
             guard let cat = catalogueEntry else {return}
-            self.saved = self.bookmarks.contains(textID: cat.id)
+            self.saved = self.bookmarks.contains(textID: cat.id.description)
 
             guard self.windowController != nil else {return}
             guard splitViewController == nil else {return}
@@ -53,6 +53,23 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
 
     lazy var fontManager = {return NSFontManager.shared}()
+    
+    lazy var notesManager: FirebaseTextNoteManager? = {
+        guard let user = self.user.user else {return nil}
+        return FirebaseTextNoteManager(for: user, textID: catalogueEntry.id, delegate: self)
+        }()
+    
+    var note: Note? {
+        didSet {
+            if note != nil {
+                highlightAnnotations(in: self.textView)
+            }
+        }
+    }
+    
+    func noteDidChange(_ note: Note) {
+        self.note = note
+    }
 
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -61,8 +78,49 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         textView.delegate = self
 
         self.textView.usesFontPanel = true
+        if let listener = self.notesManager?.listener {
+            print("Initialised listener, handle \(listener)")
+        } else {
+            print("Some listener error occured")
+        }
     }
-
+    
+    override func viewWillDisappear() {
+        self.notesManager = nil
+    }
+    
+    
+    func highlightAnnotations(in textView: NSTextView) {
+        guard let note = self.note else {return}
+        let annotations = note.annotations.keys.description
+        textView.textStorage?.enumerateAttribute(.reference, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
+            value, range, _ in
+            guard let stringVal = value as? String else {return}
+            if annotations.contains(stringVal) {
+                guard range.length > 2 else {return}
+                let newRange = NSRange(location: range.location, length: range.length - 1)
+                textView.textStorage?.addAttributes(
+                    [NSAttributedStringKey.backgroundColor: NSColor.systemPink,
+                     NSAttributedStringKey.toolTip: note.annotations[NodeReference(stringLiteral: stringVal)]?.annotation ?? ""
+                     ],
+                    range: newRange)
+                
+            }
+        })
+    }
+    
+    func highlightSearchTerm(_ searchTerm: String, in textView: NSTextView) {
+        textView.textStorage?.enumerateAttribute(.oraccCitationForm, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
+            value, range, _ in
+            guard let stringVal = value as? String else {return}
+            if searchTerm.lowercased() == stringVal.lowercased() {
+                guard range.length > 2 else {return}
+                let newRange = NSRange(location: range.location, length: range.length - 1)
+                textView.textStorage?.addAttributes([NSAttributedStringKey.backgroundColor: NSColor.systemYellow], range: newRange)
+            }
+        })
+    }
+    
     @IBAction func setText(_ sender: Any) {
         guard let stringContainer = self.stringContainer else {return}
         switch self.textSelected.selectedSegment {
@@ -75,19 +133,11 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             textView.textStorage?.setAttributedString(stringContainer.transliteration)
         case 2:
             textView.textStorage?.setAttributedString(stringContainer.normalisation)
+            highlightAnnotations(in: textView)
             if let searchTerm = searchTerm {
-                textView.textStorage?.enumerateAttribute(.oraccCitationForm, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
-                    value, range, _ in
-                    guard let stringVal = value as? String else {return}
-                    if searchTerm.lowercased() == stringVal.lowercased() {
-                        guard range.length > 2 else {return}
-                        let newRange = NSRange(location: range.location, length: range.length - 1)
-                        textView.textStorage?.addAttributes([NSAttributedStringKey.backgroundColor: NSColor.systemYellow], range: newRange)
-                    }
-
-                })
+                highlightSearchTerm(searchTerm, in: textView)
             }
-
+            
         case 3:
             textView.string = stringContainer.translation
             textView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
@@ -118,7 +168,9 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         guard let infoWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("infoWindow")) as? NSWindowController else {return}
         guard let infoView = infoWindow.contentViewController as? InfoViewController else {return}
 
+        infoView.textId = self.catalogueEntry.id
         infoView.infoLabel.stringValue = self.catalogueEntry.description
+        
         infoWindow.showWindow(nil)
     }
 
@@ -153,27 +205,57 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
         let menu = NSMenu(title: "Text")
         let str = view.attributedString()
-        let words = str.attributes(at: charIndex, effectiveRange: nil)
+        let metadata = str.attributes(at: charIndex, effectiveRange: nil)
+        guard let citationForm = metadata[.oraccCitationForm] as? String,
+            let transliteration = metadata[.writtenForm] as? String,
+            let reference = metadata[.reference] as? String,
+            let translation = metadata[.instanceTranslation] as? String else {return nil}
+        
+        menu.addItem(withTitle: citationForm, action: #selector(lookUpInGlossaryWindow), keyEquivalent: "")
+        menu.addItem(withTitle: transliteration, action: nil, keyEquivalent: "")
+        menu.addItem(withTitle: translation, action: nil, keyEquivalent: "")
 
-        if let citationForm = words[.oraccCitationForm] as? String {
-            menu.addItem(withTitle: citationForm, action: #selector(lookUpInGlossaryWindow), keyEquivalent: "")
-        }
-
-        if let guideWord = words[.oraccGuideWord] as? String {
-            menu.addItem(withTitle: guideWord, action: nil, keyEquivalent: "")
-        }
-
-        if let sense = words[.oraccSense] as? String {
-            menu.addItem(withTitle: sense, action: nil, keyEquivalent: "")
-        }
-
-        guard menu.items.count > 0 else { return nil }
-
+        let contextRange = view.selectionRange(forProposedRange: NSMakeRange(charIndex, 0), granularity: .selectByParagraph)
+        let contextStr = str.attributedSubstring(from: contextRange).string
+        
+        let menuMetadata: [NSAttributedStringKey: String] = [.oraccCitationForm: citationForm,
+                                                             .writtenForm: transliteration,
+                                                             .instanceTranslation: translation,
+                                                             .reference: reference,
+                                                             .referenceContext: contextStr]
+        
+        
+        let annotationItem = NSMenuItem(title: "Add annotation", action: #selector(newAnnotationWindow), keyEquivalent: "")
+        
+        let annotatedTitle = NSAttributedString(string: "Add annotation",
+                                                        attributes: menuMetadata)
+        
+        annotationItem.attributedTitle = annotatedTitle
+        
+        menu.addItem(annotationItem)
+        
         return menu
     }
 
     @objc func lookUpInGlossaryWindow(_ sender: NSMenuItem) {
         GlossaryWindowController.searchField(sender)
+    }
+    
+    @objc func newAnnotationWindow(_ sender: NSMenuItem) {
+        guard let metadata = sender.attributedTitle?.attributes(at: 0, effectiveRange: nil) else {return}
+        
+        guard let citationForm = metadata[.oraccCitationForm] as? String,
+            let transliteration = metadata[.writtenForm] as? String,
+            let translation = metadata[.instanceTranslation] as? String,
+            let context = metadata[.referenceContext] as? String,
+            let reference = metadata[.reference] as? String else {return}
+        
+        let nodeReference = NodeReference.init(stringLiteral: reference)
+        guard let window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, user: user, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context) else {return}
+        
+        window.showWindow(self)
+        guard let annotationVc = window.contentViewController as? AnnotationPopupController else {return}
+        annotationVc.textField.becomeFirstResponder()
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
@@ -200,7 +282,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     @IBAction func viewOnline(_ sender: Any) {
         var baseURL = URL(string: "http://oracc.org")!
         baseURL.appendPathComponent(catalogueEntry.project)
-        baseURL.appendPathComponent(catalogueEntry.id)
+        baseURL.appendPathComponent(catalogueEntry.id.description)
         baseURL.appendPathComponent("html")
         NSWorkspace.shared.open(baseURL)
     }
@@ -246,7 +328,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     @IBAction func bookmark(_ sender: NSButton) {
         guard let str = self.stringContainer else {return}
 
-        if let alreadySaved = self.bookmarks.contains(textID: self.catalogueEntry.id) {
+        if let alreadySaved = self.bookmarks.contains(textID: self.catalogueEntry.id.description) {
             if alreadySaved {
                 self.bookmarks.remove(entry: self.catalogueEntry)
                 sender.state = .off

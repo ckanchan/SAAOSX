@@ -10,6 +10,8 @@ import Cocoa
 import CDKSwiftOracc
 import CoreSpotlight
 import CDKOraccInterface
+import FirebaseCore
+import FirebaseDatabase
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -30,9 +32,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
 
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
+    lazy var userManager: UserManager = {
+        return UserManager()
+    }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+        FirebaseApp.configure()
+
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -133,6 +140,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func openFromDatabase(withID id: String) -> Bool {
         guard let sqliteDB = self.sqlite else {return false}
+        let id = TextID.init(stringLiteral: id)
         if let entry = sqliteDB.getEntryFor(id: id) {
             if let strings = sqliteDB.getTextStrings(id) {
                 TextWindowController.new(entry, strings: strings, catalogue: sqliteDB)
@@ -169,9 +177,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 window = TextWindowController.new(first, strings: strings, catalogue: sqlite)
 
             case "id":
-                let id = url.lastPathComponent.uppercased()
-                guard id.count == 7 else {return}
-                guard "PQX".contains(id.prefix(1)) else {return}
+                let idString = url.lastPathComponent.uppercased()
+                guard idString.count == 7 else {return}
+                guard "PQX".contains(idString.prefix(1)) else {return}
+                let id = TextID.init(stringLiteral: idString)
 
                 guard let result = sqlite.getEntryFor(id: id) else {return}
                 guard let strings = sqlite.getTextStrings(id) else {return}

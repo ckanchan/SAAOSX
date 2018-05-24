@@ -13,7 +13,9 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var textPreferenceSwitch: NSSegmentedControl!
     @IBOutlet weak var temporaryFileLabel: NSTextField!
     @IBOutlet weak var providerSwitch: NSSegmentedControl!
-
+    @IBOutlet weak var signedInLabel: NSTextField!
+    @IBOutlet weak var signInButton: NSButton!
+    
     lazy var defaults: UserDefaultsController = {
         return UserDefaultsController()
     }()
@@ -53,6 +55,13 @@ class PreferencesViewController: NSViewController {
         } else {
             providerSwitch.selectedSegment = 0
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setSignInLabels), name: .SignedIn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setSignInLabels), name: .SignedOut, object: nil)
+    }
+    
+    override func viewWillAppear() {
+        setSignInLabels()
     }
 
     @IBAction func temporaryFileClear(_ sender: Any) {
@@ -78,5 +87,36 @@ class PreferencesViewController: NSViewController {
             appDelegate.setOraccInterface(to: .Oracc)
         }
     }
-
+    
+    @IBAction func sync(_ sender: NSButton) {
+        if user.user == nil {
+            if user.oauthCredentials == nil {
+                self.credentialPrompt()
+            }
+            
+            user.signIn()            
+        } else {
+            user.signOut()
+        }
+    }
+    
+    @objc func setSignInLabels() {
+        if let userName = user.user?.email {
+            signedInLabel.stringValue = userName
+            signInButton.title = "Sign out"
+        } else {
+            signedInLabel.stringValue = "Not signed in"
+            signInButton.title = "Sign in with Google"
+        }
+    }
+    
+    func credentialPrompt() {
+        guard let credentialWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier.init("OAuthCredentialWindow")) as? NSWindowController else {return}
+        
+        guard let window = credentialWindow.window else {return}
+        NSApplication.shared.runModal(for: window)
+        
+    }
+    
+    
 }

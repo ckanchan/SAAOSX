@@ -156,7 +156,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             vw.textField?.stringValue = text.ancientAuthor ?? "(unassigned)"
         }
 
-        if let pinned = bookmarks.contains(textID: text.id) {
+        if let pinned = bookmarks.contains(textID: text.id.description) {
             if pinned {
                 vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
             } else {
@@ -175,7 +175,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         guard let catalogueSource = self.catalogueProvider?.source else { return }
         switch catalogueSource {
         case .bookmarks:
-            if let stringContainer = bookmarks.getTextStrings(textEntry.id) {
+            if let stringContainer = bookmarks.getTextStrings(textEntry.id.description) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
                 self.windowController.loadingIndicator.stopAnimation(nil)
                 return
@@ -293,7 +293,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             } else {
             baseURL.appendPathComponent(text.project)
             }
-            baseURL.appendPathComponent(text.id)
+            baseURL.appendPathComponent(text.id.description)
             NSWorkspace.shared.open(baseURL)
         }
     }

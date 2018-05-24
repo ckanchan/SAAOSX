@@ -117,7 +117,7 @@ public class Bookmarks: CatalogueProvider {
 
         do {
             try db.run(Bookmarks.bookmarks.insert(
-                Bookmarks.id <- entry.id,
+                Bookmarks.id <- entry.id.description,
                 Bookmarks.displayName <- entry.displayName,
                 Bookmarks.title <- entry.title,
                 Bookmarks.ancientAuthor <- entry.ancientAuthor,
@@ -219,7 +219,7 @@ public class Bookmarks: CatalogueProvider {
     }
 
     public func remove(entry: OraccCatalogEntry) {
-        let query = Bookmarks.bookmarks.select(rowid).filter(Bookmarks.id == entry.id)
+        let query = Bookmarks.bookmarks.select(rowid).filter(Bookmarks.id == entry.id.description)
 
         guard let r = try? db.pluck(query) else {return}
         guard let row = r else {return}

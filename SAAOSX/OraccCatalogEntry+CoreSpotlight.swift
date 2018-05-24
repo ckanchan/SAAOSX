@@ -20,14 +20,14 @@ extension OraccCatalogEntry {
     func indexItem() {
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
         attributeSet.title = self.displayName
-        attributeSet.identifier = self.id
+        attributeSet.identifier = self.id.description
         attributeSet.contentDescription = self.title
         attributeSet.displayName = "\(self.displayName)\t\(self.title)"
         attributeSet.theme = self.genre
         attributeSet.contentType = kUTTypeText as String
         attributeSet.kind = "Assyrian letter"
 
-        let item = CSSearchableItem(uniqueIdentifier: self.id, domainIdentifier: "com.ckprivate", attributeSet: attributeSet)
+        let item = CSSearchableItem(uniqueIdentifier: self.id.description, domainIdentifier: "com.ckprivate", attributeSet: attributeSet)
         CSSearchableIndex.default().indexSearchableItems([item]) { error in
             if let error = error {
                 print(error.localizedDescription)
@@ -37,7 +37,7 @@ extension OraccCatalogEntry {
 
     /// Removes the catalogue entry from the system Spotlight database
     func deindexItem() {
-        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.id]) {error in
+        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.id.description]) {error in
             if let error = error {
                 print(error.localizedDescription)
             }

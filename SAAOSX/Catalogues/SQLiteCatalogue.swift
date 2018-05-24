@@ -85,10 +85,12 @@ class SQLiteCatalogue: CatalogueProvider {
     public func getSearchCollection(term: String, references: [String]) -> TextSearchCollection {
         var results = [OraccCatalogEntry?]()
         for reference in references {
-            results.append(self.getEntryFor(id: String(reference.prefix(while: {$0 != "."}))))
+            let stringID = String(reference.prefix(while: {$0 != "."}))
+            let textID = TextID.init(stringLiteral: stringID)
+            results.append(self.getEntryFor(id: textID))
         }
 
-        var members = [String: OraccCatalogEntry]()
+        var members = [TextID: OraccCatalogEntry]()
         for result in results.compactMap({$0}) {
             members[result.id] = result
         }
@@ -101,16 +103,16 @@ class SQLiteCatalogue: CatalogueProvider {
         return texts[row]
     }
 
-    func getEntryFor(id cdliID: String) -> OraccCatalogEntry? {
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid == cdliID)
+    func getEntryFor(id cdliID: TextID) -> OraccCatalogEntry? {
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid == cdliID.description)
 
         guard let r = try? db.pluck(query) else {return nil}
         guard let row = r else {return nil}
         return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], credits: row[credits])
     }
 
-    func getTextStrings(_ textId: String) -> TextEditionStringContainer? {
-        let query = textTable.select(textStrings).filter(textid == textId)
+    func getTextStrings(_ textId: TextID) -> TextEditionStringContainer? {
+        let query = textTable.select(textStrings).filter(textid == textId.description)
 
         guard let encodedStringRow = try? db.pluck(query) else {return nil}
         guard let row = encodedStringRow else {return nil}

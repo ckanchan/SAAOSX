@@ -1,4 +1,5 @@
 PODS:
+  - AppAuth (0.92.0)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -14,7 +15,7 @@ PODS:
   - CDKOraccInterface (0.0.1):
     - CDKSwiftOracc
     - ZIPFoundation
-  - CDKSwiftOracc (0.4.1)
+  - CDKSwiftOracc (0.4.2)
   - FBSDKCoreKit (4.33.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.33.0):
@@ -154,16 +155,21 @@ PODS:
   - ZIPFoundation (0.9.6)
 
 DEPENDENCIES:
+  - AppAuth
   - CDKOraccInterface
   - CDKSwiftOracc
   - Firebase/Auth
   - Firebase/Core
-  - Firebase/Firestore
+  - Firebase/Database
+  - FirebaseAuth
+  - FirebaseCore
+  - FirebaseDatabase
   - FirebaseUI
   - SQLite.swift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AppAuth
     - Bolts
     - BoringSSL
     - CDKOraccInterface
@@ -197,10 +203,11 @@ SPEC REPOS:
     - ZIPFoundation
 
 SPEC CHECKSUMS:
+  AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL: 60dd24df4af296bf41d78e5841dbb95d75f88c0d
   CDKOraccInterface: 49e79c98332e2e24d822f659e6032a84a382120a
-  CDKSwiftOracc: 3c2fee3665f3f1b94f7da8d4fed4a55707a15302
+  CDKSwiftOracc: d469672380103dc08a4bc7847662261ecdf023f9
   FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
   FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
   Firebase: 4bd804448ab2596794698773d41520a0af101e65
@@ -229,6 +236,6 @@ SPEC CHECKSUMS:
   TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
   ZIPFoundation: 68c35eb2637c21abe56dc60b3277636443bc1501
 
-PODFILE CHECKSUM: 63475ac62a95c5770e9c743b65a3b0efbdcec77b
+PODFILE CHECKSUM: 6233c94e202dd444a73cc08377acffc92010f00c
 
 COCOAPODS: 1.5.2

@@ -28,4 +28,8 @@ extension NSViewController {
     }
 
     var sqlite: SQLiteCatalogue? {return appDelegate.sqlite}
+    
+    var user: UserManager {
+        return appDelegate.userManager
+    }
 }

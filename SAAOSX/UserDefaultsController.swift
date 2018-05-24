@@ -11,6 +11,7 @@ import Foundation
 enum PreferenceKey: String {
     case textWindowNumber
     case useGithub
+    case userTags
 }
 
 class UserDefaultsController {
@@ -25,6 +26,11 @@ class UserDefaultsController {
     var useGithub: Bool {
         return defaults.bool(forKey: PreferenceKey.useGithub.rawValue)
     }
+    
+    var userTags: Set<String> {
+        let tags = defaults.array(forKey: PreferenceKey.userTags.rawValue) as? [String] ?? []
+        return Set(tags)
+    }
 
     func saveTextPreference(_ number: Int) {
         defaults.set(number, forKey: PreferenceKey.textWindowNumber.rawValue)
@@ -34,6 +40,11 @@ class UserDefaultsController {
         if isGithub {
             defaults.set(isGithub, forKey: PreferenceKey.useGithub.rawValue)
         }
+    }
+    
+    func saveTags(_ tags: Set<String>) {
+        let tags = Array(tags)
+        defaults.set(tags, forKey: PreferenceKey.userTags.rawValue)
     }
 
 }

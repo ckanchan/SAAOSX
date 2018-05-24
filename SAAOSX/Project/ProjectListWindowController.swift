@@ -23,6 +23,7 @@ class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
         newWindow.showWindow(nil)
         return newWindow
     }
+    
 
     lazy var projectViewController: ProjectListViewController = {
         let splitView = self.contentViewController as! NSSplitViewController
