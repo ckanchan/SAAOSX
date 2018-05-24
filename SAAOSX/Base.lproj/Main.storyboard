@@ -73,6 +73,16 @@
                                                 <action selector="newProjectListWindow:" target="Ady-hI-5gd" id="cgB-Ou-WVd"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="New Glossary Window" keyEquivalent="G" id="rtl-ow-cAU">
+                                            <connections>
+                                                <action selector="newGlossaryWindow:" target="Voe-Tx-rLC" id="TZa-aJ-I2p"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Notes Window" keyEquivalent="A" id="Kbq-FZ-PWH">
+                                            <connections>
+                                                <action selector="newNotesWindow:" target="Ady-hI-5gd" id="VLE-hH-89m"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="openDocument:" target="Ady-hI-5gd" id="bVn-NM-KNZ"/>

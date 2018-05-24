@@ -16,7 +16,10 @@ class OAuthIDFrameworkPrompt: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        guard let infoURL = Bundle.main.url(forResource: "OAuthInfo", withExtension: "rtf") else {return}
+        guard let rtfData = try? Data(contentsOf: infoURL) else {return}
+        guard let infoStr = NSAttributedString(rtf: rtfData, documentAttributes: nil) else {return}
+        infoLabel.attributedStringValue = infoStr
     }
     
     @IBAction func save(_ sender: Any) {
