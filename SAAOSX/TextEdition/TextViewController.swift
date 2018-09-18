@@ -104,8 +104,8 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
                 guard range.length > 2 else {return}
                 let newRange = NSRange(location: range.location, length: range.length - 1)
                 textView.textStorage?.addAttributes(
-                    [NSAttributedStringKey.backgroundColor: NSColor.systemPink,
-                     NSAttributedStringKey.toolTip: note.annotations[NodeReference(stringLiteral: stringVal)]?.annotation ?? ""
+                    [NSAttributedString.Key.backgroundColor: NSColor.systemPink,
+                     NSAttributedString.Key.toolTip: note.annotations[NodeReference(stringLiteral: stringVal)]?.annotation ?? ""
                      ],
                     range: newRange)
                 
@@ -120,7 +120,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             if searchTerm.lowercased() == stringVal.lowercased() {
                 guard range.length > 2 else {return}
                 let newRange = NSRange(location: range.location, length: range.length - 1)
-                textView.textStorage?.addAttributes([NSAttributedStringKey.backgroundColor: NSColor.systemYellow], range: newRange)
+                textView.textStorage?.addAttributes([NSAttributedString.Key.backgroundColor: NSColor.systemYellow], range: newRange)
             }
         })
     }
@@ -150,7 +150,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         }
     }
 
-    @IBAction override func changeFont(_ sender: Any?) {
+    @IBAction func changeFont(_ sender: Any?) {
         guard let sender = sender as? NSFontManager else {return}
         let newFont: NSFont
         if let oldFont = self.textView.font {
@@ -169,7 +169,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     }
 
     @IBAction func showInfoView(_ sender: Any) {
-        guard let infoWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("infoWindow")) as? NSWindowController else {return}
+        guard let infoWindow = storyboard?.instantiateController(withIdentifier: "infoWindow") as? NSWindowController else {return}
         guard let infoView = infoWindow.contentViewController as? InfoViewController else {return}
 
         infoView.textId = self.catalogueEntry.id
@@ -224,7 +224,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         let contextRange = view.selectionRange(forProposedRange: NSMakeRange(charIndex, 0), granularity: .selectByParagraph)
         let contextStr = str.attributedSubstring(from: contextRange).string
         
-        let menuMetadata: [NSAttributedStringKey: String] = [.oraccCitationForm: citationForm,
+        let menuMetadata: [NSAttributedString.Key: String] = [.oraccCitationForm: citationForm,
                                                              .writtenForm: transliteration,
                                                              .instanceTranslation: translation,
                                                              .reference: reference,
@@ -277,7 +277,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             guard let selectedText = textView.textStorage?.attributedSubstring(from: range) else {return}
 
             let attrs = selectedText.attributes(at: 0, effectiveRange: nil)
-            let guideWord = attrs[NSAttributedStringKey.oraccGuideWord] as? String
+            let guideWord = attrs[NSAttributedString.Key.oraccGuideWord] as? String
             definitionView.stringValue = guideWord ?? ""
 
         default:

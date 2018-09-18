@@ -21,9 +21,9 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
 
         switch panes {
         case 0:
-            let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "TextEdition"), bundle: Bundle.main)
+            let storyboard = NSStoryboard.init(name: "TextEdition", bundle: Bundle.main)
 
-            guard let textWindow = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("textWindow")) as? TextWindowController else { return nil}
+            guard let textWindow = storyboard.instantiateController(withIdentifier: "textWindow") as? TextWindowController else { return nil}
             guard let textView = textWindow.contentViewController as? TextViewController else { return nil}
 
             if let strings = strings {
@@ -44,10 +44,10 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
             return textWindow
 
         case 1:
-            let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "TextEdition"), bundle: Bundle.main)
-            guard let window = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("SplitTextWindow")) as? TextWindowController else { return nil}
+            let storyboard = NSStoryboard.init(name: "TextEdition", bundle: Bundle.main)
+            guard let window = storyboard.instantiateController(withIdentifier: "SplitTextWindow") as? TextWindowController else { return nil}
             guard let splitTextViewController = window.contentViewController as? NSSplitViewController else { return nil}
-            guard let controllers = splitTextViewController.childViewControllers as? [TextViewController] else {return nil}
+            guard let controllers = splitTextViewController.children as? [TextViewController] else {return nil}
 
             let stringContainer: TextEditionStringContainer
             if let str = strings {
@@ -90,7 +90,7 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
     }()
 
     lazy var quickSearchResultsViewController: QuickSearchResultsViewController = {
-        let qsr = storyboard?.instantiateController(withIdentifier: .init("QuickSearchResultsViewController")) as! QuickSearchResultsViewController
+        let qsr = storyboard?.instantiateController(withIdentifier: "QuickSearchResultsViewController") as! QuickSearchResultsViewController
         qsr.catalogueController = textViewController.first?.catalogue
         qsr.textWindow = self
         self.textViewController.forEach { qsr.textViewController.addPointer(Unmanaged.passUnretained($0).toOpaque()) }

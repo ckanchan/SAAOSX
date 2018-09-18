@@ -55,7 +55,7 @@ class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplay
     }
     
     
-    override func controlTextDidEndEditing(_ obj: Notification) {
+    func controlTextDidEndEditing(_ obj: Notification) {
         //TODO: - write note level set code
         guard let textId = self.textId else {return}
         

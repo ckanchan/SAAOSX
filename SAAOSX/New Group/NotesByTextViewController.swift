@@ -34,8 +34,7 @@ class NotesByTextViewController: NSViewController, NoteDisplaying {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.noteStore = parent! as! NoteStore
-        
+        self.noteStore = (parent as! NoteStore)
     }
     
 }

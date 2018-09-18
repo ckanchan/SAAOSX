@@ -85,7 +85,7 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
             loadNewText(text)
         } else {
             print("No text available")
-            let window = storyboard?.instantiateController(withIdentifier: .init("alert")) as! NSWindowController
+            let window = storyboard?.instantiateController(withIdentifier: "alert") as! NSWindowController
             window.showWindow(nil)
         }
     }

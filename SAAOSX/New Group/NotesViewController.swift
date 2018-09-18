@@ -22,11 +22,11 @@ protocol NoteDisplaying: AnyObject {
 
 class NotesTabViewController: NSTabViewController, NoteStore {
     @discardableResult static func new(for user: User) -> NotesTabViewController? {
-        let storyboard = NSStoryboard.init(name: NSStoryboard.Name("Notes"), bundle: Bundle.main)
-        guard let wc = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("NotesWindowController")) as? NSWindowController else {return nil}
+        let storyboard = NSStoryboard.init(name: "Notes", bundle: Bundle.main)
+        guard let wc = storyboard.instantiateController(withIdentifier: "NotesWindowController") as? NSWindowController else {return nil}
         guard let splitView = wc.contentViewController as? NSSplitViewController else {return nil}
-        guard let notesViewController = splitView.childViewControllers[0] as? NotesTabViewController else {return nil}
-        guard let annotationsViewController = splitView.childViewControllers[1] as? AnnotationsViewController else {return nil}
+        guard let notesViewController = splitView.children[0] as? NotesTabViewController else {return nil}
+        guard let annotationsViewController = splitView.children[1] as? AnnotationsViewController else {return nil}
         let notesManager = FirebaseGlobalNotesManager(for: user)
         notesViewController.notesManager = notesManager
         notesManager.delegate = notesViewController
@@ -46,7 +46,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     
     var notes: [Note] = [] {
         didSet {
-            childViewControllers
+            children
                 .compactMap{$0 as? NoteDisplaying}
                 .forEach{$0.refreshTable()}
         }

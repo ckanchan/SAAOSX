@@ -17,7 +17,7 @@ class GlossarySplitViewController: NSSplitViewController {
     }
 
     @IBAction func glossarySearch(_ sender: NSSearchField) {
-        let glossaryViewController = self.childViewControllers.first! as! GlossaryListViewController
+        let glossaryViewController = self.children.first! as! GlossaryListViewController
         glossaryViewController.search(sender)
     }
 

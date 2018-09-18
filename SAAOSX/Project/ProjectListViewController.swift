@@ -32,7 +32,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
 
     lazy var infoSidebar: InfoSideBarViewController = {
         let split = self.parent! as! NSSplitViewController
-        return split.childViewControllers.last! as! InfoSideBarViewController
+        return split.children.last! as! InfoSideBarViewController
     }()
 
     var catalogueProvider: CatalogueProvider? {

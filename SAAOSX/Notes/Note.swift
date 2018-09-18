@@ -21,8 +21,8 @@ extension String {
     }
 }
 
-extension NSAttributedStringKey {
-    static var referenceContext = NSAttributedStringKey.init("referenceContext")
+extension NSAttributedString.Key {
+    static var referenceContext = NSAttributedString.Key.init("referenceContext")
 }
 
 

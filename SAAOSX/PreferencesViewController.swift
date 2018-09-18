@@ -111,7 +111,7 @@ class PreferencesViewController: NSViewController {
     }
     
     func credentialPrompt() {
-        guard let credentialWindow = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier.init("OAuthCredentialWindow")) as? NSWindowController else {return}
+        guard let credentialWindow = storyboard?.instantiateController(withIdentifier: "OAuthCredentialWindow") as? NSWindowController else {return}
         
         guard let window = credentialWindow.window else {return}
         NSApplication.shared.runModal(for: window)

@@ -16,8 +16,8 @@ class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
     @IBOutlet weak var connectionStatus: NSTextField!
 
     @discardableResult static func new(catalogue: CatalogueProvider?) -> ProjectListWindowController {
-        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
-        let sceneIdentifier = NSStoryboard.SceneIdentifier("ProjectListWindow")
+        let storyboard = NSStoryboard(name: "Main", bundle: Bundle.main)
+        let sceneIdentifier = "ProjectListWindow"
         let newWindow = storyboard.instantiateController(withIdentifier: sceneIdentifier) as! ProjectListWindowController
         newWindow.projectViewController.catalogueProvider = catalogue
         newWindow.showWindow(nil)
@@ -27,7 +27,7 @@ class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
 
     lazy var projectViewController: ProjectListViewController = {
         let splitView = self.contentViewController as! NSSplitViewController
-        return splitView.childViewControllers.first! as! ProjectListViewController
+        return splitView.children.first! as! ProjectListViewController
     }()
 
     var previousCatalogue: CatalogueProvider?

@@ -14,8 +14,8 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
     static func new(textID: TextID, node: NodeReference, user: UserManager, transliteration: String, normalisation: String, translation: String, context: String) -> NSWindowController? {
         guard let user = user.user else {return nil}
         
-        let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "TextEdition"), bundle: Bundle.main)
-        guard let window = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("AnnotationViewController")) as? NSWindowController else {return nil}
+        let storyboard = NSStoryboard.init(name: "TextEdition", bundle: Bundle.main)
+        guard let window = storyboard.instantiateController(withIdentifier: "AnnotationViewController") as? NSWindowController else {return nil}
         
         
         guard let vc =  window.contentViewController as? AnnotationPopupController else { return nil }

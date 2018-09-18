@@ -81,9 +81,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.windows.first(where: {$0.title == "Preferences"})?.makeKeyAndOrderFront(nil)
             return
         }
-        let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "Preferences"), bundle: Bundle.main)
+        let storyboard = NSStoryboard.init(name: "Preferences", bundle: Bundle.main)
 
-        guard let newWindow = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("Preferences")) as? NSWindowController else {return}
+        guard let newWindow = storyboard.instantiateController(withIdentifier: "Preferences") as? NSWindowController else {return}
         newWindow.showWindow(sender)
 
     }
@@ -131,7 +131,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         _ = alert.runModal()
     }
 
-    func application(_ application: NSApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]) -> Void) -> Bool {
+    func application(_ application: NSApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([NSUserActivityRestoring]) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
             if let cdliID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
                 if let result = self.bookmarks.contains(textID: cdliID) {

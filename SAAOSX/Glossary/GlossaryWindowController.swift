@@ -12,15 +12,15 @@ class GlossaryWindowController: NSWindowController {
     @IBOutlet weak var searchField: NSSearchField!
 
     @discardableResult static func new(_ sender: Any) -> GlossaryWindowController? {
-        let storyboard = NSStoryboard.init(name: NSStoryboard.Name(rawValue: "Main"), bundle: Bundle.main)
+        let storyboard = NSStoryboard.init(name: "Main", bundle: Bundle.main)
 
-        guard let glossaryWindow = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("GlossaryWindow")) as? GlossaryWindowController else {return nil}
+        guard let glossaryWindow = storyboard.instantiateController(withIdentifier: "GlossaryWindow") as? GlossaryWindowController else {return nil}
         guard let splitViewController = glossaryWindow.contentViewController as? GlossarySplitViewController else {return nil}
 
         splitViewController.searchField = glossaryWindow.searchField
-        guard let glossaryListViewController = splitViewController.childViewControllers.first as? GlossaryListViewController else {return nil}
+        guard let glossaryListViewController = splitViewController.children.first as? GlossaryListViewController else {return nil}
 
-        glossaryListViewController.definitionViewController = splitViewController.childViewControllers.last as? GlossaryEntryViewController
+        glossaryListViewController.definitionViewController = splitViewController.children.last as? GlossaryEntryViewController
         glossaryWindow.window?.title = "Glossary"
         glossaryWindow.showWindow(sender)
         return glossaryWindow
@@ -33,7 +33,7 @@ class GlossaryWindowController: NSWindowController {
             vw.searchField?.stringValue = searchString
             window.makeKeyAndOrderFront(sender)
             vw.performFindPanelAction(sender)
-            let glvc = vw.childViewControllers.first as! GlossaryListViewController
+            let glvc = vw.children.first as! GlossaryListViewController
             glvc.search(vw.searchField!)
 
             guard glvc.glossaryTableView.numberOfRows != 0 else {return}
@@ -43,7 +43,7 @@ class GlossaryWindowController: NSWindowController {
             let window = GlossaryWindowController.new(self)
             window?.searchField.stringValue = searchString
             window?.window?.makeKeyAndOrderFront(sender)
-            let glvc = window?.contentViewController?.childViewControllers.first as! GlossaryListViewController
+            let glvc = window?.contentViewController?.children.first as! GlossaryListViewController
             glvc.search(window!.searchField)
 
             guard glvc.glossaryTableView.numberOfRows != 0 else {return}
