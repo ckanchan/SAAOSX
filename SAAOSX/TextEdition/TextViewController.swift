@@ -55,9 +55,13 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     lazy var fontManager = {return NSFontManager.shared}()
     
     lazy var notesManager: FirebaseTextNoteManager? = {
+        return getNotesManager()
+        }()
+    
+    func getNotesManager() -> FirebaseTextNoteManager? {
         guard let user = self.user.user else {return nil}
         return FirebaseTextNoteManager(for: user, textID: catalogueEntry.id, delegate: self)
-        }()
+    }
     
     var note: Note? {
         didSet {
@@ -181,8 +185,10 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     func loadText(entry: OraccCatalogEntry) -> Bool {
         if let text = sqlite?.getTextStrings(entry.id) {
             catalogueEntry = entry
+            notesManager = getNotesManager()
             text.render(withPreferences: TextWindowController.defaultformattingPreferences)
             stringContainer = text
+            
             setText(self)
             windowController?.window?.title = "\(entry.displayName): \(entry.title)"
             windowController?.catalogueSearch.stringValue = entry.title

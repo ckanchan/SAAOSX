@@ -342,8 +342,9 @@ extension TextEditionViewController {
 
         guard UIApplication.shared.delegate != nil else {return}
         guard let key = coder.decodeObject(forKey: "id") as? NSString else {return}
-        guard let catalogueEntry = sqlite.texts.first(where: {$0.id == key as String}) else {return}
-        guard let textStrings = sqlite.getTextStrings(key as String) else {return}
+        let textID = TextID.init(stringLiteral: key as String)
+        guard let catalogueEntry = sqlite.texts.first(where: {$0.id == textID}) else {return}
+        guard let textStrings = sqlite.getTextStrings(textID) else {return}
 
         self.textStrings = textStrings
         self.textItem = catalogueEntry

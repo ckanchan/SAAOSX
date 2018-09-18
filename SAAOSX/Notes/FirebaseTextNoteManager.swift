@@ -48,6 +48,7 @@ class FirebaseTextNoteManager {
         self.user = user
         self.textID = textID
         self.delegate = delegate
+        print("Initialised listener at \(listener)")
     }
     
     deinit {

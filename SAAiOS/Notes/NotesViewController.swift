@@ -8,24 +8,19 @@
 
 import UIKit
 import Firebase
+import CDKSwiftOracc
 
 class NotesViewController: UIViewController, UITextViewDelegate {
     
-    @discardableResult static func new(id: String, for user: User) -> NotesViewController {
-        let dbController = DatabaseController(for: user)
+    @discardableResult static func new(id: TextID, for user: User) -> NotesViewController {
         let notesViewController = NotesViewController()
+        let dbController = FirebaseTextNoteManager(for: user, textID: id, delegate: notesViewController)
         notesViewController.notesDBController = dbController
-        notesViewController.id = id
         return notesViewController
     }
     
-    var notesDBController: DatabaseController!
+    var notesDBController: FirebaseTextNoteManager!
     lazy var textView = { return UITextView() }()
-    var id: String = "" {
-        didSet {
-            self.getNotes()
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,25 +34,22 @@ class NotesViewController: UIViewController, UITextViewDelegate {
         deregisterThemeNotifications()
     }
     
-    func getNotes() {
-        guard let notesDBController = self.notesDBController else {return}
-        DispatchQueue.global().async { [unowned self] in
-            notesDBController.getNotes(for: self.id){ note in
-                DispatchQueue.main.async {
-                    self.textView.text = note.notes.joined(separator: "\n")
-                }
-            }
-        }
-    }
     
+    // WARNING this has an empty annotations dictionary!
     func setNotes(){
         guard let notesDBController = self.notesDBController else {return}
-        let note = Note(id: self.id, notes: [textView.text])
+        let note = Note(id: notesDBController.textID, notes: textView.text, annotations: [:])
         notesDBController.set(note: note)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         self.setNotes()
+    }
+}
+
+extension NotesViewController: TextNoteDisplaying {
+    func noteDidChange(_ note: Note) {
+        self.textView.text = note.notes
     }
 }
 
@@ -69,6 +61,5 @@ extension NotesViewController: Themeable {
     func disableDarkMode() {
         textView.disableDarkMode()
     }
-    
     
 }

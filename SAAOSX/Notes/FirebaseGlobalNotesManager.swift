@@ -13,16 +13,18 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
 
-protocol GlobalNoteShowing: AnyObject {
+protocol NoteDelegate: AnyObject {
     func noteAdded(_ note: Note)
     func noteRemoved(_ textID: TextID)
     func noteChanged(_ note: Note)
+    
+    func searchResultsUpdated(_ notes: [Note])
 }
 
 class FirebaseGlobalNotesManager {
     private let db = Database.database().reference()
     private let user: User
-    weak var delegate: GlobalNoteShowing?
+    weak var delegate: NoteDelegate?
     
     lazy var noteAddedListener: DatabaseHandle = {
         return db.child("users").child(user.uid).observe(.childAdded) { [weak self] snapshot in
@@ -50,6 +52,14 @@ class FirebaseGlobalNotesManager {
         }
     }()
     
+    private var searchListener: DatabaseHandle? {
+        didSet {
+            if let oldValue = oldValue {
+                db.removeObserver(withHandle: oldValue)
+            }
+        }
+    }
+    
     func getAllNotes(then performCompletion: @escaping ([TextID: Note]) -> Void) {
         db.child("users").child(user.uid).observeSingleEvent(of: .value) {snapshot in
             guard let rawData = snapshot.value else {return}
@@ -69,8 +79,23 @@ class FirebaseGlobalNotesManager {
         }
     }
     
+    func searchDatabase(for citationForm: String) {
+        //let query = db.child("users").child(user.uid).queryOrdered(byChild: "annotations/normalisation").queryEqual(toValue: "\(citationForm)")
+        
+        let query = db.child("users").child(user.uid).queryOrdered(byChild: "normalisation").queryEqual(toValue: citationForm.lowercased())
+        self.searchListener = query.observe(.value) { snapshot in
+            print(snapshot)
+        }
+    }
+    
+    func endSearch() {
+        self.searchListener = nil
+    }
+    
+    
     init(for user: User) {
         self.user = user
+        self.searchListener = nil
         print("Initialised listeners \(self.noteAddedListener)\(self.noteDeletedListener)\(self.noteChangedListener)")
     }
     
@@ -78,5 +103,8 @@ class FirebaseGlobalNotesManager {
         db.removeObserver(withHandle: noteAddedListener)
         db.removeObserver(withHandle: noteDeletedListener)
         db.removeObserver(withHandle: noteChangedListener)
+        if let searchHandle = searchListener {
+            db.removeObserver(withHandle: searchHandle)
+        }
     }
 }

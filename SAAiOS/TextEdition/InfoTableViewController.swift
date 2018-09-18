@@ -198,7 +198,7 @@ extension UITableViewCell {
         switch indexPath.row {
         case 0:
             self.textLabel?.text = InfoTableViewController.textIDs[0]
-            self.detailTextLabel?.text = catalogueInfo.id
+            self.detailTextLabel?.text = catalogueInfo.id.description
         case 1:
             self.textLabel?.text = InfoTableViewController.textIDs[1]
             self.detailTextLabel?.text = catalogueInfo.displayName

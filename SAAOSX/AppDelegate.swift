@@ -69,7 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func newNotesWindow(_ sender: Any){
         guard let user = userManager.user else {return}
-        guard let notesViewController = NotesViewController.new(for: user) else {return}
+        guard let notesViewController = NotesTabViewController.new(for: user) else {return}
         notesViewController.view.window?.makeKeyAndOrderFront(self)
         
     }

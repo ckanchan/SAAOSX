@@ -37,7 +37,7 @@ class SQLiteCatalogue: CatalogueProvider {
     let credits = Expression<String?>("credits")
 
     // A place to encode TextEditionStringContainer with NSCoding
-     let textStrings = Expression<Data>("Text")
+    let textStrings = Expression<Data>("Text")
 
     let textTable = Table("texts")
 
