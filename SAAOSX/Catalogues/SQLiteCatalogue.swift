@@ -35,6 +35,11 @@ class SQLiteCatalogue: CatalogueProvider {
     let publicationHistory = Expression<String?>("publication_history")
     let notes = Expression<String?>("notes")
     let credits = Expression<String?>("credits")
+    
+    //Location data
+    let pleiadesID = Expression<Int?>("pleiades_id")
+    let pleiadesCoordinateX = Expression<Double?>("pleiades_coordinate_x")
+    let pleiadesCoordinateY = Expression<Double?>("pleiades_coordinate_y")
 
     // A place to encode TextEditionStringContainer with NSCoding
     let textStrings = Expression<Data>("Text")
@@ -49,6 +54,18 @@ class SQLiteCatalogue: CatalogueProvider {
         self.getCatalogueEntries() ?? []
     }()
 
+    
+    func rowToEntry(_ row: Row) -> OraccCatalogEntry {
+        let coordinate: (Double, Double)?
+        if let x = row[pleiadesCoordinateX], let y = row[pleiadesCoordinateY] {
+            coordinate = (x, y)
+        } else {
+            coordinate = nil
+        }
+        
+        return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], pleiadesID: row[pleiadesID], pleiadesCoordinate: coordinate, credits: row[credits])
+    }
+    
     func text(at row: Int) -> OraccCatalogEntry? {
         return getEntryAt(row: row)
     }
@@ -58,8 +75,7 @@ class SQLiteCatalogue: CatalogueProvider {
         let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid.like(searchString) || displayName.like(searchString) || title.like(searchString) || ancientAuthor.like(searchString))
 
         if let rows = try? db.prepare(query) {
-            let entries = rows.map { row in return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], credits: row[credits])}
-            return entries
+            return rows.map(rowToEntry)
         } else {
             return []
         }
@@ -74,12 +90,10 @@ class SQLiteCatalogue: CatalogueProvider {
     var name: String = "Database"
 
     public func getCatalogueEntries() -> [OraccCatalogEntry]? {
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits)
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY, credits)
 
         guard let rows = try? db.prepare(query) else { return nil }
-        let entries = rows.map { row in return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], credits: row[credits])}
-
-        return entries
+        return rows.map(rowToEntry)
     }
 
     public func getSearchCollection(term: String, references: [String]) -> TextSearchCollection {
@@ -108,7 +122,7 @@ class SQLiteCatalogue: CatalogueProvider {
 
         guard let r = try? db.pluck(query) else {return nil}
         guard let row = r else {return nil}
-        return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], credits: row[credits])
+        return rowToEntry(row)
     }
 
     func getTextStrings(_ textId: TextID) -> TextEditionStringContainer? {
