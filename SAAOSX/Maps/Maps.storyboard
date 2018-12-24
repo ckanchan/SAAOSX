@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.MapKitIBPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="DOv-2D-5A5">
+            <objects>
+                <windowController storyboardIdentifier="MapWindowController" id="l1D-Ko-jZg" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="GLJ-fw-rTR">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="480" height="270"/>
+                        <value key="maxSize" type="size" width="480" height="270"/>
+                        <connections>
+                            <outlet property="delegate" destination="l1D-Ko-jZg" id="oEE-m5-zeZ"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="xcs-RV-vRe" kind="relationship" relationship="window.shadowedContentViewController" id="7gd-Gm-rat"/>
+                    </connections>
+                </windowController>
+                <customObject id="hJZ-fn-CiP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="98" y="109"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="2hY-JJ-V9E">
+            <objects>
+                <viewController storyboardIdentifier="MapViewController" id="xcs-RV-vRe" customClass="MapViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="wMv-Td-0d5">
+                        <rect key="frame" x="0.0" y="0.0" width="688" height="216"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WVY-vh-Pvy">
+                                <rect key="frame" x="414" y="191" width="268" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="HvS-f7-U12"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="Location" id="PWY-tq-f3e">
+                                    <font key="font" metaFont="titleBar"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="tpa-fZ-eb0">
+                                <rect key="frame" x="8" y="8" width="400" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="400" id="Mgn-w7-VZW"/>
+                                    <constraint firstAttribute="height" constant="200" id="cLe-rX-77K"/>
+                                </constraints>
+                            </mapView>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wda-s7-sEn">
+                                <rect key="frame" x="416" y="8" width="264" height="175"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zGd-nb-GL8">
+                                    <rect key="frame" x="0.0" y="0.0" width="264" height="175"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="TCI-6g-rMz">
+                                            <rect key="frame" x="0.0" y="0.0" width="264" height="175"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="264" height="175"/>
+                                            <size key="maxSize" width="264" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="NuS-VZ-yR7">
+                                    <rect key="frame" x="248" y="0.0" width="16" height="175"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="WVY-vh-Pvy" firstAttribute="leading" secondItem="tpa-fZ-eb0" secondAttribute="trailing" constant="8" id="LL9-na-eWV"/>
+                            <constraint firstItem="wda-s7-sEn" firstAttribute="top" secondItem="WVY-vh-Pvy" secondAttribute="bottom" constant="8" id="Mkz-jl-D30"/>
+                            <constraint firstAttribute="trailing" secondItem="wda-s7-sEn" secondAttribute="trailing" constant="8" id="T2v-EG-CHp"/>
+                            <constraint firstItem="WVY-vh-Pvy" firstAttribute="top" secondItem="wMv-Td-0d5" secondAttribute="top" constant="8" id="Tyb-P8-g9D"/>
+                            <constraint firstAttribute="trailing" secondItem="WVY-vh-Pvy" secondAttribute="trailing" constant="8" id="YAd-KI-tpC"/>
+                            <constraint firstAttribute="bottom" secondItem="wda-s7-sEn" secondAttribute="bottom" constant="8" id="YTc-Zn-wCg"/>
+                            <constraint firstAttribute="bottom" secondItem="tpa-fZ-eb0" secondAttribute="bottom" constant="8" id="af8-TJ-VpH"/>
+                            <constraint firstItem="tpa-fZ-eb0" firstAttribute="leading" secondItem="wMv-Td-0d5" secondAttribute="leading" constant="8" id="lGF-Ac-9pT"/>
+                            <constraint firstItem="tpa-fZ-eb0" firstAttribute="top" secondItem="wMv-Td-0d5" secondAttribute="top" constant="8" id="qNW-j8-V7E"/>
+                            <constraint firstItem="wda-s7-sEn" firstAttribute="leading" secondItem="tpa-fZ-eb0" secondAttribute="trailing" constant="8" id="riP-ak-ru9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="tpa-fZ-eb0" id="MwN-eb-6f1"/>
+                        <outlet property="siteDescription" destination="TCI-6g-rMz" id="6ZM-QE-NCf"/>
+                        <outlet property="siteTitle" destination="WVY-vh-Pvy" id="8ez-Hd-W2r"/>
+                    </connections>
+                </viewController>
+                <customObject id="bQf-DC-x7g" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="790" y="244"/>
+        </scene>
+    </scenes>
+</document>
