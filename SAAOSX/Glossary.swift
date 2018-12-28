@@ -93,6 +93,14 @@ public class Glossary {
 
         return referenceStrings
     }
+    
+    public func getNameForId(_ idToQuery: String) -> String? {
+        let query = entries.select(guideWord).filter(id == idToQuery)
+        guard let r = try? db.pluck(query) else {return nil}
+        guard let row = r else {return nil}
+        guard let guideWord = row[guideWord] else {return nil}
+        return guideWord
+    }
 
     public init() {
 

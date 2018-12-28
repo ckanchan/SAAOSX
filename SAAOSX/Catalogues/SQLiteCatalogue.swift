@@ -139,8 +139,7 @@ class SQLiteCatalogue: CatalogueProvider {
     }
 
     init? () {
-        guard let bundle = Bundle.main.resourceURL else {return nil}
-        let url = bundle.appendingPathComponent("SAA_Lemmatised").appendingPathExtension("sqlite3").path
+        guard let url = Bundle.main.url(forResource: "SAA_Lemmatised", withExtension: "sqlite3")?.path else {return nil}
         do {
             let connection = try Connection(url, readonly: true)
             self.db = connection
