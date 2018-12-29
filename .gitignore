@@ -1,9 +1,7 @@
-Carthage
-SAAOSX/SAA_Lemmatised.sqlite3
-SAAOSX/old_SAA_Lemmatised.sqlite3
-SAAOSX/SAAO_CompleteGlossary.sqlite3
-SAAOSX.xcodeproj/xcuserdata/Chaitanya.xcuserdatad/**
-.idea/
+Resources/SAA_Lemmatised.sqlite3
+Resources/SAAO_CompleteGlossary.sqlite3
+SAAOSX.xcodeproj/xcuserdata/**
+SAAOSX.xcworkspace
 .swiftlint.yml
 Pods/
 GoogleService-Info.plist
