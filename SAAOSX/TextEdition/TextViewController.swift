@@ -350,7 +350,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     }
 
     @IBAction func showMapView(_ sender: NSButton) {
-        MapViewController.new(forText: self.catalogueEntry)
+        return
     }
-    
 }

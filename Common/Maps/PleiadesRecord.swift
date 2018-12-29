@@ -1,41 +1,14 @@
 //
-//  GeoJSON.swift
+//  PleiadesRecord.swift
 //  SAAOSX
 //
-//  Created by Chaitanya Kanchan on 22/12/2018.
+//  Created by Chaitanya Kanchan on 29/12/2018.
 //  Copyright © 2018 Chaitanya Kanchan. All rights reserved.
 //
 
 import Foundation
 
-class GeoJSON: Codable {
-    enum GeoJSONType: String, Codable {
-        case Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature, FeatureCollection
-    }
-    
-    let type: GeoJSONType
-    let boundingBox: [Double]?
-    let features: [GeoJSON]?
-    
-    let geometry: GeoJSON?
-    let coordinates: [Double]?
-    
-    init(type: String, boundingBox: [Double]?, features: [GeoJSON]?, geometry: GeoJSON?, coordinates: [Double]?) {
-        self.type = GeoJSONType(rawValue: type)! //This cannot fail
-        self.boundingBox = boundingBox
-        self.features = features
-        self.geometry = geometry
-        self.coordinates = coordinates
-    }
-}
-
-extension GeoJSON {
-    enum CodingKeys: String, CodingKey {
-        case type, boundingBox = "bbox", features, geometry, coordinates
-    }
-}
-
-class PleaidesRecord: GeoJSON {
+class PleiadesRecord: GeoJSON {
     let title: String
     let description: String
     let representativePoint: (Double, Double)?
@@ -66,11 +39,18 @@ class PleaidesRecord: GeoJSON {
     }
 }
 
-extension PleaidesRecord {
+extension PleiadesRecord {
     enum PleiadesCodingKeys: String, CodingKey {
         case title, description, representativePoint = "reprPoint"
     }
 }
 
-extension PleaidesRecord: CustomStringConvertible {
+extension PleiadesRecord {
+    static func lookupInPleiades(id: Int) -> PleiadesRecord? {
+        guard let url = URL(string: "https://pleiades.stoa.org/places/\(id)/json") else {return nil}
+        guard let data = try? Data.init(contentsOf: url) else {return nil}
+        let decoder = JSONDecoder()
+        guard let geoJSON = try? decoder.decode(PleiadesRecord.self, from: data) else {return nil}
+        return geoJSON
+    }
 }

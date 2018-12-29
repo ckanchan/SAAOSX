@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -847,6 +847,20 @@
                                         </textFieldCell>
                                     </textField>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="3B25C490-3040-47F3-A198-5009E40A5456" label="Map" paletteLabel="Map" sizingBehavior="auto" id="4HP-CZ-NHQ">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="iON-Fu-pbl">
+                                        <rect key="frame" x="0.0" y="14" width="52" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Map" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cNH-RJ-qLN">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="map:" target="Oky-zY-oP4" id="3Nk-gs-hxx"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="0AB-AE-w49"/>
@@ -855,6 +869,7 @@
                                 <toolbarItem reference="YKp-LQ-yUV"/>
                                 <toolbarItem reference="yOX-DE-SdU"/>
                                 <toolbarItem reference="DzS-B7-0fp"/>
+                                <toolbarItem reference="4HP-CZ-NHQ"/>
                                 <toolbarItem reference="zvu-uU-qaU"/>
                                 <toolbarItem reference="NTd-7m-9xm"/>
                                 <toolbarItem reference="iVB-HI-pWB"/>
