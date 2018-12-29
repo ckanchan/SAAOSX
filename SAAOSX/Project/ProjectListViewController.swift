@@ -10,7 +10,7 @@ import Cocoa
 import CDKSwiftOracc
 import CDKOraccInterface
 
-class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, BookmarkDisplaying {
+class ProjectListViewController: NSViewController, BookmarkDisplaying {
 
     func refreshTableView() {
         self.catalogueEntryView.reloadData()
@@ -130,42 +130,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         }
     }
 
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        if !searchBarIsEmpty {
-            return filteredTexts.count
-        }
-        return catalogueProvider?.count ?? 0
-    }
-
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let vw = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else { return nil }
-
-        let text: OraccCatalogEntry
-        if !searchBarIsEmpty {
-            text = filteredTexts[row]
-        } else {
-            guard let txt = catalogueProvider?.text(at: row) else { return nil }
-            text = txt
-        }
-
-        if tableColumn?.identifier.rawValue == "saaNumber" {
-            vw.textField?.stringValue = text.displayName
-        } else if tableColumn?.identifier.rawValue == "title"{
-            vw.textField?.stringValue = text.title
-        } else if tableColumn?.identifier.rawValue == "sender" {
-            vw.textField?.stringValue = text.ancientAuthor ?? "(unassigned)"
-        }
-
-        if let pinned = bookmarks.contains(textID: text.id.description) {
-            if pinned {
-                vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
-            } else {
-                vw.textField?.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-            }
-        }
-        return vw
-    }
-
+   
     public func setCatalogueProvider(_ provider: CatalogueProvider) {
         self.catalogueProvider = provider
         catalogueEntryView.reloadData()
@@ -211,12 +176,11 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
                 } else {
                     DispatchQueue.main.async {
                         self.windowController.loadingIndicator.stopAnimation(nil)
-                        let alert = NSAlert()
-                        alert.messageText = "No text available"
-                        alert.informativeText = "Edition for \(textEntry.title) not available"
-                        alert.addButton(withTitle: "OK")
-                        alert.addButton(withTitle: "Try online")
-                        alert.alertStyle = .warning
+                        let alert = NSAlert.createWarning(
+                            messageText: "No text available",
+                            informativeText: "Edition for \(textEntry.title) not available",
+                            button1Text: "OK",
+                            button2Text: "Try Online")
                         let response = alert.runModal()
                         if response == NSApplication.ModalResponse.alertSecondButtonReturn {
                             self.viewOnline(self)
@@ -230,18 +194,7 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
         }
     }
 
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        if !searchBarIsEmpty {
-            selectedText = filteredTexts[catalogueEntryView.selectedRow]
-        } else {
-            guard let txt = catalogueProvider?.text(at: catalogueEntryView.selectedRow) else { return  }
-            selectedText = txt
-        }
 
-        if let selectedText = selectedText {
-            infoSidebar.setLabels(selectedText)
-        }
-    }
 
     override func keyDown(with event: NSEvent) {
         if event.keyCode == 36 || event.keyCode == 76 {
@@ -283,31 +236,100 @@ class ProjectListViewController: NSViewController, NSTableViewDelegate, NSTableV
             catalogueEntryView.reloadData()
         }
     }
+}
 
+extension ProjectListViewController: NSTableViewDataSource, NSTableViewDelegate {
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        if !searchBarIsEmpty {
+            return filteredTexts.count
+        }
+        return catalogueProvider?.count ?? 0
+    }
+    
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let vw = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else { return nil }
+        
+        let text: OraccCatalogEntry
+        if !searchBarIsEmpty {
+            text = filteredTexts[row]
+        } else {
+            guard let txt = catalogueProvider?.text(at: row) else { return nil }
+            text = txt
+        }
+        
+        if tableColumn?.identifier.rawValue == "saaNumber" {
+            vw.textField?.stringValue = text.displayName
+        } else if tableColumn?.identifier.rawValue == "title"{
+            vw.textField?.stringValue = text.title
+        } else if tableColumn?.identifier.rawValue == "sender" {
+            vw.textField?.stringValue = text.ancientAuthor ?? "(unassigned)"
+        }
+        
+        if let pinned = bookmarks.contains(textID: text.id.description) {
+            if pinned {
+                vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+            } else {
+                vw.textField?.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+            }
+        }
+        return vw
+    }
+
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        if !searchBarIsEmpty {
+            selectedText = filteredTexts[catalogueEntryView.selectedRow]
+        } else {
+            guard let txt = catalogueProvider?.text(at: catalogueEntryView.selectedRow) else { return  }
+            selectedText = txt
+        }
+        
+        if let selectedText = selectedText {
+            infoSidebar.setLabels(selectedText)
+        }
+    }
+}
+
+// MARK:- Toolbar Control Methods
+extension ProjectListViewController {
     @IBAction func viewOnline(_ sender: Any) {
         if let text = selectedText {
             var baseURL = URL(string: "http://oracc.org")!
-
+            
             if text.project.contains("Geography of Knowledge") {
                 baseURL.appendPathComponent("cams/gkab")
             } else {
-            baseURL.appendPathComponent(text.project)
+                baseURL.appendPathComponent(text.project)
             }
             baseURL.appendPathComponent(text.id.description)
             NSWorkspace.shared.open(baseURL)
         }
     }
-
+    
     @IBAction func newProjectListWindow(_ sender: Any) {
         ProjectListWindowController.new(catalogue: self.catalogueProvider)
     }
-
+    
     @IBAction func newDocument(_ sender: Any) {
         newProjectListWindow(self)
     }
-
+    
     @IBAction func glossary(_ sender: Any) {
         GlossaryWindowController.new(self)
-
+    }
+    @IBAction func map(_ sender: Any) {
+        guard let url = Bundle.main.url(forResource: "qpn_pleiades", withExtension: "json") else {return}
+        guard let locationDictionary = AncientLocation.getListOfPlaces(from: url) else {return}
+        
+        let ancientMap = AncientMap(locationDictionary: locationDictionary)
+        self.windowController.loadingIndicator.startAnimation(nil)
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            ancientMap.getPleiadesPlaces(then: {places in
+                DispatchQueue.main.async {
+                    MapViewController.new(forMap: ancientMap)
+                    self?.windowController.loadingIndicator.stopAnimation(nil)
+                }
+            })
+        }
     }
 }
