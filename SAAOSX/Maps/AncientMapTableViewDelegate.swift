@@ -11,6 +11,7 @@ import Cocoa
 class AncientMapTableViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSource {
     var ancientMap: AncientMap
     weak var tableView: NSTableView?
+    weak var mapDelegate: AncientMapViewDelegate?
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         return ancientMap.siteCount
@@ -40,10 +41,17 @@ class AncientMapTableViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDat
         
     }
     
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        guard let row = tableView?.selectedRow else { return }
+        guard let (qpnID, _) = ancientMap.getLocationAtIndex(row) else { return }
+        mapDelegate?.selectAnnotation(qpnID: qpnID)
+    }
     
     
-    init(map: AncientMap, tableView: NSTableView) {
+    
+    init(map: AncientMap, tableView: NSTableView, mapViewDelegate: AncientMapViewDelegate?) {
         self.ancientMap = map
         self.tableView = tableView
+        self.mapDelegate = mapViewDelegate
     }
 }

@@ -37,6 +37,12 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
         return annotationView
     }
     
+    func selectAnnotation(qpnID: String) {
+        guard let location = ancientMap.getLocationForQpnID(qpnID) else {return}
+        guard let annotation = mapView?.annotations.first(where: {$0.coordinate == location.coordinate}) else {return}
+        mapView?.selectAnnotation(annotation, animated: true)
+    }
+    
     func updateAnnotations(with places: [String: AncientLocation]) {
         let annotations = Array(places.values)
         guard let mapView = self.mapView else {return}
@@ -50,7 +56,6 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
         super.init()
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(self.ancientMap.locations)
-//        self.ancientMap.getPleiadesPlaces(then: updateAnnotations)
     }
 
 }

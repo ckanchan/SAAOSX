@@ -33,7 +33,7 @@ class MapViewController: NSViewController {
         
         mapViewController.mapView.delegate = mapViewController.ancientMapDelegate
         
-        mapViewController.ancientMapTableViewDelegate = AncientMapTableViewDelegate(map: map, tableView: mapViewController.siteTableView)
+        mapViewController.ancientMapTableViewDelegate = AncientMapTableViewDelegate(map: map, tableView: mapViewController.siteTableView, mapViewDelegate: mapViewController.ancientMapDelegate)
         mapViewController.siteTableView.dataSource = mapViewController.ancientMapTableViewDelegate
         mapViewController.siteTableView.delegate = mapViewController.ancientMapTableViewDelegate
 

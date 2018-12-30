@@ -29,6 +29,10 @@ class AncientMap {
         
     }
     
+    func getLocationForQpnID(_ qpnID: String) -> AncientLocation? {
+        return locationDictionary[qpnID]
+    }
+    
     func getPleiadesPlaces(then callback: @escaping ([String: AncientLocation]) -> Void) {
         DispatchQueue.global().async { [weak self] in
             guard let strongSelf = self else {return}

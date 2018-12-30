@@ -69,6 +69,7 @@
 		5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
+		54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */; };
 		54A7851F20A8689F0005B7D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */; };
 		54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
 		54A9521B204058D60042E1BA /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
@@ -189,6 +190,7 @@
 		5498CAE6204EAF63004C774A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5498CAE8204EAF63004C774A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
+		54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
 		54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		54A95216204058D60042E1BA /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
 		54A95217204058D60042E1BA /* Catalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalogue.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 				546D462021CFB6730012C1EE /* AncientLocation.swift */,
 				5435F30221CE5771000A1FC8 /* GeoJSON.swift */,
 				54D3B4E221D7ED0E00F836E2 /* PleiadesRecord.swift */,
+				54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -911,6 +914,7 @@
 				5471EF7320B1F4AB00EE1B73 /* AnnotationPopupController.swift in Sources */,
 				547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */,
 				54A9521D204058D60042E1BA /* Glossary.swift in Sources */,
+				54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */,
 				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */,
