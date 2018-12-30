@@ -350,6 +350,35 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     }
 
     @IBAction func showMapView(_ sender: NSButton) {
-        return
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let placeNames = self?.stringContainer?.getLocationNamesInText() else {return}
+            
+            guard let url = Bundle.main.url(forResource: "qpn_pleiades", withExtension: "json") else {return}
+            guard let locationDictionary = AncientLocation.getListOfPlaces(from: url) else {return}
+            
+            var placesDictionary = [String: AncientLocation]()
+            placeNames.forEach {name in
+                guard let place = locationDictionary.first(where: {(_, location) in
+                    guard let title = location.title else {return false}
+                    return title == name
+                }) else {return}
+                
+                placesDictionary[place.key] = place.value
+            }
+            
+            if let pleiadesID = self?.catalogueEntry.pleiadesID,
+                let record = PleiadesRecord.lookupInPleiades(id: pleiadesID),
+                let (longitude, latitude) = record.representativePoint {
+                let letterExcavationSite = AncientLocation(latitude: latitude, longitude: longitude, title: record.title, subtitle: record.description)
+                placesDictionary["excavationSite"] = letterExcavationSite
+                
+            }
+                
+            let ancientMap = AncientMap(locationDictionary: placesDictionary)
+            DispatchQueue.main.async {
+                MapViewController.new(forMap: ancientMap)
+            }
+        }
     }
 }
+

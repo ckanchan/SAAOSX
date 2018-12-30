@@ -70,6 +70,7 @@
 		5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
 		54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */; };
+		54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */; };
 		54A7851F20A8689F0005B7D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */; };
 		54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
 		54A9521B204058D60042E1BA /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
@@ -191,6 +192,7 @@
 		5498CAE8204EAF63004C774A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
+		54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextEditionStringContainer+MapFunctions.swift"; sourceTree = "<group>"; };
 		54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		54A95216204058D60042E1BA /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
 		54A95217204058D60042E1BA /* Catalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalogue.swift; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 			isa = PBXGroup;
 			children = (
 				54D3B4E421D7F0F100F836E2 /* NSAlertExtensions.swift */,
+				54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */,
 				54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */,
 			);
 			path = Extensions;
@@ -907,6 +910,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				543DC34B20B69C530019FF1E /* OAuthIDFrameworkPrompt.swift in Sources */,
+				54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */,
 				54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */,
 				54F1C42120A9F4BB009F31C0 /* FirebaseTextNoteManager.swift in Sources */,
 				547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */,

@@ -72,6 +72,7 @@ class AncientLocation: NSObject, MKAnnotation {
             if let pleiadesIDStr = reference.pleiadesId {
                 if let pleiadesID = Int(pleiadesIDStr) {
                     let ancientLocation = AncientLocation(latitude: latitude, longitude: longitude, pleiadesID: pleiadesID)
+                    ancientLocation.title = reference.akkadian
                     placeDictionary[reference.oraccGlossaryId] = ancientLocation
                 } else {
                     let ancientLocation = AncientLocation(latitude: latitude, longitude: longitude, title: reference.akkadian, subtitle: "")

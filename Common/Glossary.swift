@@ -101,6 +101,13 @@ public class Glossary {
         guard let guideWord = row[guideWord] else {return nil}
         return guideWord
     }
+    
+    public func getIDforName(_ nameToQuery: String) -> String? {
+        let query = entries.select(id).filter(citationForm == nameToQuery)
+        guard let r = try? db.pluck(query) else {return nil}
+        guard let row = r else {return nil}
+        return row[id]
+    }
 
     public init() {
 
