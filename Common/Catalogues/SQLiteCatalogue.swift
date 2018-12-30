@@ -72,7 +72,7 @@ class SQLiteCatalogue: CatalogueProvider {
 
     func search(_ string: String) -> [OraccCatalogEntry] {
         let searchString = "%\(string)%"
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid.like(searchString) || displayName.like(searchString) || title.like(searchString) || ancientAuthor.like(searchString))
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY).filter(textid.like(searchString) || displayName.like(searchString) || title.like(searchString) || ancientAuthor.like(searchString))
 
         if let rows = try? db.prepare(query) {
             return rows.map(rowToEntry)

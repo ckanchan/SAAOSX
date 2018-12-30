@@ -21,7 +21,7 @@ class AncientMap {
     }
     
     func getLocationAtIndex(_ index: Int) -> (String, AncientLocation)? {
-        guard index < siteCount else {return nil}
+        guard index < siteCount, index > -1 else {return nil}
         let startIndex = locationDictionary.startIndex
         let returnIndex = locationDictionary.index(startIndex, offsetBy: index)
         let value = locationDictionary[returnIndex]
@@ -40,6 +40,7 @@ class AncientMap {
                 _ = $0.getPleiadesRecord()
             }
             DispatchQueue.main.async {
+
                 callback(strongSelf.locationDictionary)
             }
         }
