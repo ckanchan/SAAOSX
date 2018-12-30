@@ -13,6 +13,7 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
     
     let ancientMap: AncientMap
     weak var mapView: MKMapView?
+    weak var mapViewController: MapViewController?
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "AncientLocation"
@@ -30,11 +31,15 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
             textView.string = annotation.title ?? ""
             textView.sizeToFit()
             view.leftCalloutAccessoryView = textView
-            view.rightCalloutAccessoryView = NSButton(title: "More", target: nil, action: nil)
             
             annotationView = view
         }
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation as? AncientLocation else {return}
+        mapViewController?.setInfo(locationName: annotation.title ?? "", locationDescription: annotation.subtitle ?? "No description available")
     }
     
     func selectAnnotation(qpnID: String) {
@@ -50,8 +55,9 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
         mapView.addAnnotations(annotations)
     }
     
-    init(mapView: MKMapView, ancientMap: AncientMap) {
+    init(mapView: MKMapView, mapViewController: MapViewController, ancientMap: AncientMap) {
         self.mapView = mapView
+        self.mapViewController = mapViewController
         self.ancientMap = ancientMap
         super.init()
         mapView.removeAnnotations(mapView.annotations)

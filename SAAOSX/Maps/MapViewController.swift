@@ -1,5 +1,5 @@
 //
-//  GazetteerViewController.swift
+//  MapViewController.swift
 //  SAAOSX
 //
 //  Created by Chaitanya Kanchan on 24/12/2018.
@@ -19,9 +19,9 @@ class MapViewController: NSViewController {
     var ancientMapDelegate: AncientMapViewDelegate?
     var ancientMapTableViewDelegate: AncientMapTableViewDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
+    func setInfo(locationName: String, locationDescription: String) {
+        self.siteTitle.stringValue = locationName
+        self.siteDescription.string = locationDescription
     }
     
     @discardableResult static func new(forMap map: AncientMap) -> MapViewController?  {
@@ -29,7 +29,7 @@ class MapViewController: NSViewController {
         guard let mapWindow = storyboard.instantiateController(withIdentifier: "GazetteerViewController") as? NSWindowController else {return nil}
         guard let mapViewController = mapWindow.contentViewController as? MapViewController else {return nil}
         
-        mapViewController.ancientMapDelegate = AncientMapViewDelegate(mapView: mapViewController.mapView, ancientMap: map)
+        mapViewController.ancientMapDelegate = AncientMapViewDelegate(mapView: mapViewController.mapView, mapViewController: mapViewController, ancientMap: map)
         
         mapViewController.mapView.delegate = mapViewController.ancientMapDelegate
         
