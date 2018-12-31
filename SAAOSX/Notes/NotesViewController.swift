@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import FirebaseAuth
 
 import CDKSwiftOracc
 
@@ -21,7 +20,7 @@ protocol NoteDisplaying: AnyObject {
 }
 
 class NotesTabViewController: NSTabViewController, NoteStore {
-    @discardableResult static func new(for user: User) -> NotesTabViewController? {
+    @discardableResult static func new() -> NotesTabViewController? {
         let storyboard = NSStoryboard.init(name: "Notes", bundle: Bundle.main)
         guard let wc = storyboard.instantiateController(withIdentifier: "NotesWindowController") as? NSWindowController else {return nil}
         guard let splitView = wc.contentViewController as? NSSplitViewController else {return nil}

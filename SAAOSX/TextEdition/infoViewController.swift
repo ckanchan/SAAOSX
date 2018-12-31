@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import FirebaseAuth
 import CDKSwiftOracc
 
 class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplaying {

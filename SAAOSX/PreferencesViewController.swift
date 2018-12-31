@@ -53,9 +53,6 @@ class PreferencesViewController: NSViewController {
         } else {
             providerSwitch.selectedSegment = 0
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(setSignInLabels), name: .SignedIn, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(setSignInLabels), name: .SignedOut, object: nil)
     }
 
     @IBAction func temporaryFileClear(_ sender: Any) {

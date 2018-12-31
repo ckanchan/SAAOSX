@@ -10,8 +10,6 @@ import Cocoa
 import CDKSwiftOracc
 import CoreSpotlight
 import CDKOraccInterface
-import FirebaseCore
-import FirebaseDatabase
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -32,14 +30,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
 
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
-    lazy var userManager: UserManager = {
-        return UserManager()
-    }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
-        FirebaseApp.configure()
-
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -68,8 +61,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func newNotesWindow(_ sender: Any){
-        guard let user = userManager.user else {return}
-        guard let notesViewController = NotesTabViewController.new(for: user) else {return}
+        //TODO :- Check User is signed in?
+        guard let notesViewController = NotesTabViewController.new() else {return}
         notesViewController.view.window?.makeKeyAndOrderFront(self)
         
     }
