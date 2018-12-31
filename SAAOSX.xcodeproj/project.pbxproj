@@ -23,7 +23,6 @@
 		5439770E20A43A4B002072AE /* ThemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770D20A43A4B002072AE /* ThemeController.swift */; };
 		543DC34820B6787A0019FF1E /* UserTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DC34720B6787A0019FF1E /* UserTags.swift */; };
 		543DC34920B6787A0019FF1E /* UserTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DC34720B6787A0019FF1E /* UserTags.swift */; };
-		543DC34B20B69C530019FF1E /* OAuthIDFrameworkPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DC34A20B69C530019FF1E /* OAuthIDFrameworkPrompt.swift */; };
 		543DC34D20B6A2FF0019FF1E /* OAuthInfo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 543DC34C20B6A2FF0019FF1E /* OAuthInfo.rtf */; };
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
@@ -147,7 +146,6 @@
 		5439770B20A421E6002072AE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		5439770D20A43A4B002072AE /* ThemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeController.swift; sourceTree = "<group>"; };
 		543DC34720B6787A0019FF1E /* UserTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTags.swift; sourceTree = "<group>"; };
-		543DC34A20B69C530019FF1E /* OAuthIDFrameworkPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthIDFrameworkPrompt.swift; sourceTree = "<group>"; };
 		543DC34C20B6A2FF0019FF1E /* OAuthInfo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = OAuthInfo.rtf; sourceTree = "<group>"; };
 		544138D92004D27A00A64CB2 /* SAAOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -340,7 +338,6 @@
 				54D3B4E621D7F2D700F836E2 /* Extensions */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
 				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
-				543DC34A20B69C530019FF1E /* OAuthIDFrameworkPrompt.swift */,
 				5491DD4C21CD381100B49B7D /* Maps */,
 				54737B3920387C450030F71D /* Project */,
 				54737B3820387C0E0030F71D /* TextEdition */,
@@ -454,8 +451,7 @@
 				54CD208A20B73ABF0008B69D /* Annotation.swift */,
 				54CD208B20B73ABF0008B69D /* Annotation.xib */,
 			);
-			name = Notes;
-			path = "New Group";
+			path = Notes;
 			sourceTree = "<group>";
 		};
 		548C57D120A1C4CE008E8C1F /* Extensions */ = {
@@ -909,7 +905,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				543DC34B20B69C530019FF1E /* OAuthIDFrameworkPrompt.swift in Sources */,
 				54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */,
 				54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */,
 				54F1C42120A9F4BB009F31C0 /* FirebaseTextNoteManager.swift in Sources */,
