@@ -9,11 +9,6 @@ target 'SAAiOS' do
   pod 'CDKOraccInterface'
   pod "SQLite.swift"
   
-  pod "Firebase/Core"
-  pod "Firebase/Auth"
-  pod "Firebase/Database"
-  pod "FirebaseUI"
-  
 end
 
 target 'SAAOSX' do
@@ -26,10 +21,6 @@ target 'SAAOSX' do
   pod 'CDKSwiftOracc'
   pod 'CDKOraccInterface'
   pod 'SQLite.swift'
-  pod 'FirebaseCore'
-  pod 'FirebaseAuth'
-  pod 'FirebaseDatabase'
-  pod 'AppAuth'
   
   target 'SAAOSXTests' do
     inherit! :search_paths

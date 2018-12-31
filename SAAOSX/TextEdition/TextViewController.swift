@@ -51,17 +51,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         }()
 
     lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
-
-    lazy var fontManager = {return NSFontManager.shared}()
     
-    lazy var notesManager: FirebaseTextNoteManager? = {
-        return getNotesManager()
-        }()
-    
-    func getNotesManager() -> FirebaseTextNoteManager? {
-        guard let user = self.user.user else {return nil}
-        return FirebaseTextNoteManager(for: user, textID: catalogueEntry.id, delegate: self)
-    }
     
     var note: Note? {
         didSet {
@@ -82,15 +72,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         textView.delegate = self
 
         self.textView.usesFontPanel = true
-        if let listener = self.notesManager?.listener {
-            print("Initialised listener, handle \(listener)")
-        } else {
-            print("Some listener error occured")
-        }
-    }
-    
-    override func viewWillDisappear() {
-        self.notesManager = nil
     }
     
     
@@ -132,7 +113,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             let cuneiformNA = NSFont(name: "CuneiformNAOutline-Medium", size: NSFont.systemFontSize) ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
             textView.string = stringContainer.cuneiform
             textView.font = cuneiformNA
-            fontManager.setSelectedFont(cuneiformNA, isMultiple: false)
         case 1:
             textView.textStorage?.setAttributedString(stringContainer.transliteration)
         case 2:
@@ -185,7 +165,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     func loadText(entry: OraccCatalogEntry) -> Bool {
         if let text = sqlite?.getTextStrings(entry.id) {
             catalogueEntry = entry
-            notesManager = getNotesManager()
             text.render(withPreferences: TextWindowController.defaultformattingPreferences)
             stringContainer = text
             
@@ -257,7 +236,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             let reference = metadata[.reference] as? String else {return}
         
         let nodeReference = NodeReference.init(stringLiteral: reference)
-        guard let window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, user: user, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context) else {return}
+        guard let window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context) else {return}
         
         window.showWindow(self)
         guard let annotationVc = window.contentViewController as? AnnotationPopupController else {return}
@@ -265,7 +244,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
-        fontManager.target = self
         switch self.textSelected.selectedSegment {
         case 2:
             //transliteration

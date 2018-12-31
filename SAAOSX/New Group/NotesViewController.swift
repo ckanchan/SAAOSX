@@ -27,22 +27,12 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         guard let splitView = wc.contentViewController as? NSSplitViewController else {return nil}
         guard let notesViewController = splitView.children[0] as? NotesTabViewController else {return nil}
         guard let annotationsViewController = splitView.children[1] as? AnnotationsViewController else {return nil}
-        let notesManager = FirebaseGlobalNotesManager(for: user)
-        notesViewController.notesManager = notesManager
-        notesManager.delegate = notesViewController
         
         notesViewController.annotationsViewController = annotationsViewController
         
         return notesViewController
     }
 
-    var notesManager: FirebaseGlobalNotesManager! {
-        didSet {
-            notesManager.getAllNotes { notes in
-                self.notes =  notes.values.sorted {$0.id.description < $1.id.description}
-            }
-        }
-    }
     
     var notes: [Note] = [] {
         didSet {
@@ -60,7 +50,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     
     @objc func search(_ sender: NSSearchField) {
         let searchText = sender.stringValue.lowercased()
-        notesManager.searchDatabase(for: searchText)
+        //TODO: - Search function
     }
     
     @objc func searchLocal(_ sender: NSSearchField) {

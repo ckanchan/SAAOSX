@@ -1154,7 +1154,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSX;
@@ -1173,7 +1173,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSX;
@@ -1230,11 +1230,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2018.SAAiOS;
+				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.saaios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.0;
@@ -1250,11 +1250,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E5EXHV7YGE;
+				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2018.SAAiOS;
+				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.saaios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.0;

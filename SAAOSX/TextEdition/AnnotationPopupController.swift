@@ -11,8 +11,7 @@ import CDKSwiftOracc
 
 
 class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
-    static func new(textID: TextID, node: NodeReference, user: UserManager, transliteration: String, normalisation: String, translation: String, context: String) -> NSWindowController? {
-        guard let user = user.user else {return nil}
+    static func new(textID: TextID, node: NodeReference, transliteration: String, normalisation: String, translation: String, context: String) -> NSWindowController? {
         
         let storyboard = NSStoryboard.init(name: "TextEdition", bundle: Bundle.main)
         guard let window = storyboard.instantiateController(withIdentifier: "AnnotationViewController") as? NSWindowController else {return nil}
@@ -26,26 +25,12 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
         vc.context = context
         vc.tagField.delegate = vc
 
-        
-        let annotationManager = FirebaseAnnotationManager(for: user, textID: textID, node: node, delegate: vc)
-        let tagManager = FirebaseTagManager(for: user, delegate: vc)
-        
-        vc.annotationManager = annotationManager
-        vc.tagManager = tagManager
+
         
         return window
     }
     
     
-    var annotationManager: FirebaseAnnotationManager! {
-        didSet {
-            if annotationManager != nil {
-                self.textField.isEditable = true
-            }
-        }
-    }
-    
-    var tagManager: FirebaseTagManager!
     var userTagSet: UserTags = UserTags(tags: [])
     
     
@@ -72,10 +57,6 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
     }
     
     
-    override func viewWillDisappear() {
-        self.annotationManager = nil
-    }
-    
     @IBOutlet weak var detailLabel: NSTextField!
     @IBOutlet weak var textField: NSTextField!
     @IBOutlet weak var tagField: NSTokenField!
@@ -85,8 +66,6 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
         guard let reference = nodeReference else {return}
         guard let (transliteration, normalisation, translation) = annotationMetadata else {return}
         let context = self.context ?? ""
-        guard let annotationManager = self.annotationManager else {return}
-        guard let tagManager = self.tagManager else {return}
         let tokens = tagField.objectValue as? [String] ?? []
         let annotationTags = Set(tokens.map{$0.lowercased()})
         let userTagSet = self.userTagSet.tags.union(annotationTags)
@@ -94,8 +73,11 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
         
         DispatchQueue.global().async {
             let newAnnotation = Note.Annotation(nodeReference: reference, transliteration: transliteration, normalisation: normalisation, translation: translation, annotation: annotation, context: context, tags: annotationTags)
-            annotationManager.set(annotation: newAnnotation)
-            tagManager.set(tags: newUserTags)
+
+            // TODO:- Add annotations to cloud store
+            // TODO:- Update list of global tags if changed
+
+
             
         }
         view.window?.close()

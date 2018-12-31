@@ -15,22 +15,8 @@ class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplay
     @IBOutlet weak var notesField: NSTextField!
     @IBOutlet weak var annotationsView: NSTableView!
     
-    var textId: TextID? {
-        didSet {
-            if let user = self.user.user, let textID = self.textId {
-                self.notesManager = FirebaseTextNoteManager(for: user, textID: textID, delegate: self)
-                self.notesField.delegate = self
-                self.notesField.isEditable = true
-            }
-        }
-    }
+    var textId: TextID?
     
-    var notesManager: FirebaseTextNoteManager? {
-        didSet {
-            guard let nm = notesManager else {return}
-            print(nm.listener)
-        }
-    }
     var annotations = [NodeReference: Note.Annotation]() {
         didSet {
             annotationsView.reloadData()
@@ -39,14 +25,8 @@ class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplay
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let user = self.user.user, let textID = self.textId {
-            self.notesManager = FirebaseTextNoteManager(for: user, textID: textID, delegate: self)
-            self.notesField.isEditable = true
-            self.notesField.delegate = self
-        } else {
             self.notesField.isEditable = false
             self.notesField.stringValue = "Sign in to save notes"
-        }
     }
     
     func noteDidChange(_ note: Note) {
@@ -60,7 +40,8 @@ class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplay
         guard let textId = self.textId else {return}
         
         let newNote = Note(id: textId, notes: notesField.stringValue, annotations: annotations)
-        notesManager?.set(note: newNote)
+
+        //TODO: - Update note code
     }
 }
 
