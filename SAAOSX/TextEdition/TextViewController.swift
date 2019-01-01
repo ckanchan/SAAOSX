@@ -23,7 +23,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     var searchTerm: String?
     var catalogue: CatalogueProvider?
     var stringContainer: TextEditionStringContainer?
-    var splitViewController: NSSplitViewController?
+    weak var splitViewController: NSSplitViewController?
     var catalogueEntry: OraccCatalogEntry! {
         didSet {
             guard let cat = catalogueEntry else {return}
@@ -50,7 +50,9 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         return catalogue?.texts.index(where: {$0.id == self.catalogueEntry.id})
         }()
 
-    lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
+    var windowController: TextWindowController? {
+        return self.view.window?.windowController as? TextWindowController
+    }
 
     lazy var fontManager = {return NSFontManager.shared}()
     
