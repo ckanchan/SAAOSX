@@ -8,10 +8,17 @@
 
 import Foundation
 
-struct UserTags: Codable {
-    var tags: Set<String>
+typealias Tag = String
+
+struct UserTags: Codable, Equatable {
+    var tags: Set<Tag>
 }
 
+extension UserTags {
+    init(_ tags: [Tag]) {
+        self.tags = Set(tags)
+    }
+}
 
 protocol TagDisplaying: AnyObject {
     func tagsDidChange(_ tags: UserTags)

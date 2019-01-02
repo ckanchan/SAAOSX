@@ -21,18 +21,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }()
 
-    lazy var glossary: Glossary = {
-        return Glossary()
-    }()
-
-    lazy var bookmarks: Bookmarks = {
-        return try! Bookmarks()
-    }()
-
+    lazy var glossary: Glossary = { return Glossary() }()
+    lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
+    lazy var cloudKitDB: CloudKitNotes = { return CloudKitNotes() }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+        
+        cloudKitDB.userStatusDidChange()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

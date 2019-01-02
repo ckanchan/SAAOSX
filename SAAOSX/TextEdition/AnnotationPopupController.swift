@@ -31,7 +31,9 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
     }
     
     
-    var userTagSet: UserTags = UserTags(tags: [])
+    lazy var userTagSet: UserTags = {
+        return cloudKitDB.userTags
+    }()
     
     
     var textID: TextID!
@@ -45,14 +47,14 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
         }
     }
     
-    var annotation: Note.Annotation? {
+    var annotation: Annotation? {
         didSet {
             guard let annotation = self.annotation else {return}
             self.textField.stringValue = annotation.annotation
         }
     }
 
-    func annotationDidChange(_ annotation: Note.Annotation) {
+    func annotationDidChange(_ annotation: Annotation) {
         self.annotation = annotation
     }
     
@@ -71,15 +73,18 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
         let userTagSet = self.userTagSet.tags.union(annotationTags)
         let newUserTags = UserTags(tags: userTagSet)
         
-        DispatchQueue.global().async {
-            let newAnnotation = Note.Annotation(nodeReference: reference, transliteration: transliteration, normalisation: normalisation, translation: translation, annotation: annotation, context: context, tags: annotationTags)
-
-            // TODO:- Add annotations to cloud store
-            // TODO:- Update list of global tags if changed
-
-
-            
+        
+        let newAnnotation = Annotation(nodeReference: reference, transliteration: transliteration, normalisation: normalisation, translation: translation, annotation: annotation, context: context, tags: annotationTags)
+        
+        // TODO:- Add annotations to cloud store
+        cloudKitDB.saveAnnotation(newAnnotation)
+        
+        // TODO:- Update list of global tags if changed
+        if newUserTags != cloudKitDB.userTags {
+            cloudKitDB.userTags = newUserTags
         }
+
+        
         view.window?.close()
     }
 }

@@ -362,14 +362,14 @@
             <objects>
                 <viewController storyboardIdentifier="infoViewController" id="6h1-TS-2Vf" customClass="InfoViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="28E-Xe-eSg">
-                        <rect key="frame" x="0.0" y="0.0" width="696" height="440"/>
+                        <rect key="frame" x="0.0" y="0.0" width="734" height="440"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="sheet" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="XjY-HB-KSD">
-                                <rect key="frame" x="0.0" y="0.0" width="696" height="440"/>
+                                <rect key="frame" x="0.0" y="0.0" width="734" height="440"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UBb-6w-jZ5">
-                                        <rect key="frame" x="20" y="20" width="656" height="400"/>
+                                        <rect key="frame" x="20" y="20" width="694" height="400"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="l9F-qA-ma8">
                                                 <rect key="frame" x="-2" y="0.0" width="204" height="400"/>
@@ -384,7 +384,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wwx-dY-Hgu">
-                                                <rect key="frame" x="208" y="0.0" width="200" height="400"/>
+                                                <rect key="frame" x="208" y="0.0" width="238" height="400"/>
                                                 <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="woi-fD-qIf">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -392,12 +392,12 @@
                                                 </textFieldCell>
                                             </textField>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFn-yk-rNS">
-                                                <rect key="frame" x="416" y="0.0" width="240" height="400"/>
+                                                <rect key="frame" x="454" y="0.0" width="240" height="400"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Vub-UU-jkx">
                                                     <rect key="frame" x="1" y="0.0" width="238" height="399"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="Aan-sr-TF8" viewBased="YES" id="CZd-SN-SII">
+                                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="Aan-sr-TF8" viewBased="YES" id="CZd-SN-SII">
                                                             <rect key="frame" x="0.0" y="0.0" width="238" height="376"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -496,7 +496,6 @@
                                         <constraints>
                                             <constraint firstItem="Wwx-dY-Hgu" firstAttribute="top" secondItem="UBb-6w-jZ5" secondAttribute="top" id="2Zo-iC-2Te"/>
                                             <constraint firstItem="nFn-yk-rNS" firstAttribute="top" secondItem="Wwx-dY-Hgu" secondAttribute="top" id="5Ul-Xj-deF"/>
-                                            <constraint firstItem="Wwx-dY-Hgu" firstAttribute="width" secondItem="l9F-qA-ma8" secondAttribute="width" id="KKq-ZA-4vF"/>
                                             <constraint firstItem="l9F-qA-ma8" firstAttribute="height" secondItem="Wwx-dY-Hgu" secondAttribute="height" id="Waz-Ae-7Ca"/>
                                             <constraint firstItem="nFn-yk-rNS" firstAttribute="height" secondItem="Wwx-dY-Hgu" secondAttribute="height" id="YBq-ui-SPi"/>
                                             <constraint firstAttribute="bottom" secondItem="Wwx-dY-Hgu" secondAttribute="bottom" id="ajt-GT-XsR"/>
@@ -538,7 +537,7 @@
                 </viewController>
                 <customObject id="rBD-Ru-cqN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1263" y="491"/>
+            <point key="canvasLocation" x="1351" y="491"/>
         </scene>
         <!--Annotation Popup Controller-->
         <scene sceneID="cXs-qu-giQ">

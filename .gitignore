@@ -1,7 +1,4 @@
-Resources/SAA_Lemmatised.sqlite3
-Resources/SAAO_CompleteGlossary.sqlite3
 SAAOSX.xcodeproj/xcuserdata/**
 SAAOSX.xcworkspace
 .swiftlint.yml
 Pods/
-GoogleService-Info.plist

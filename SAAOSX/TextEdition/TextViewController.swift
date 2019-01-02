@@ -9,21 +9,21 @@
 import Cocoa
 import CDKSwiftOracc
 
-class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplaying {
+class TextViewController: NSViewController, NSTextViewDelegate {
 
     public enum Navigate {
         case left, right
     }
 
     @IBOutlet weak var textSelected: NSSegmentedControl!
-    @IBOutlet var textView: NSTextView!
+    @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var definitionView: NSTextField!
-    @IBOutlet var textMenu: NSMenu!
+    @IBOutlet weak var textMenu: NSMenu!
 
     var searchTerm: String?
     var catalogue: CatalogueProvider?
     var stringContainer: TextEditionStringContainer?
-    var splitViewController: NSSplitViewController?
+    weak var splitViewController: NSSplitViewController?
     var catalogueEntry: OraccCatalogEntry! {
         didSet {
             guard let cat = catalogueEntry else {return}
@@ -50,47 +50,47 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         return catalogue?.texts.index(where: {$0.id == self.catalogueEntry.id})
         }()
 
-    lazy var windowController = {return self.view.window?.windowController as? TextWindowController}()
-    
-    
-    var note: Note? {
-        didSet {
-            if note != nil {
-                highlightAnnotations(in: self.textView)
-            }
-        }
+    var windowController: TextWindowController? {
+        return self.view.window?.windowController as? TextWindowController
     }
     
-    func noteDidChange(_ note: Note) {
-        self.note = note
-    }
 
     override func viewWillAppear() {
         super.viewWillAppear()
         self.title = catalogueEntry?.title ?? "Text Edition"
         setText(self)
         textView.delegate = self
-
-        self.textView.usesFontPanel = true
     }
     
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        guard let windowController = self.windowController else {return}
+        windowController.textViewController.removeAll()
+    }
     
     func highlightAnnotations(in textView: NSTextView) {
-        guard let note = self.note else {return}
-        let annotations = note.annotations.keys.description
-        textView.textStorage?.enumerateAttribute(.reference, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
-            value, range, _ in
-            guard let stringVal = value as? String else {return}
-            if annotations.contains(stringVal) {
-                guard range.length > 2 else {return}
-                let newRange = NSRange(location: range.location, length: range.length - 1)
-                textView.textStorage?.addAttributes(
-                    [NSAttributedString.Key.backgroundColor: NSColor.systemPink,
-                     NSAttributedString.Key.toolTip: note.annotations[NodeReference(stringLiteral: stringVal)]?.annotation ?? ""
-                     ],
-                    range: newRange)
-                
-            }
+        var annotations = [String: Annotation]()
+
+        cloudKitDB.retrieveAnnotations(
+            forTextID: catalogueEntry.id,
+            forRetrievedAnnotation: ({annotations[$0.nodeReference.description] = $0}),
+            onCompletion: { [weak textView = self.textView] _ in
+                DispatchQueue.main.async {
+                    guard let textView = textView else {return}
+                    textView.textStorage?.enumerateAttribute(.reference, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
+                        value, range, _ in
+                        guard let stringVal = value as? String else {return}
+                        if let annotation = annotations[stringVal] {
+                            guard range.length > 2 else {return}
+                            let newRange = NSRange(location: range.location, length: range.length - 1)
+                            textView.textStorage?.addAttributes(
+                                [NSAttributedString.Key.backgroundColor: NSColor.systemPink,
+                                 NSAttributedString.Key.toolTip: annotation.annotation
+                                ],
+                                range: newRange)
+                        }
+                    })
+                }
         })
     }
     
@@ -130,18 +130,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         }
     }
 
-    @IBAction func changeFont(_ sender: Any?) {
-        guard let sender = sender as? NSFontManager else {return}
-        let newFont: NSFont
-        if let oldFont = self.textView.font {
-            newFont = sender.convert(oldFont)
-        } else {
-            newFont = sender.selectedFont ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
-        }
-
-        //self.stringContainer?.render(withPreferences: newFont.makeDefaultPreferences())
-        self.textView.setFont(newFont, range: NSRange(location: 0, length: self.textView.string.utf16.count))
-    }
 
     // MARK :- Toolbar Control Methods
     @IBAction func newTextWindow(_ sender: Any) {
@@ -152,7 +140,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         guard let infoWindow = storyboard?.instantiateController(withIdentifier: "infoWindow") as? NSWindowController else {return}
         guard let infoView = infoWindow.contentViewController as? InfoViewController else {return}
 
-        infoView.textId = self.catalogueEntry.id
+        infoView.textID = self.catalogueEntry.id
         infoView.infoLabel.stringValue = self.catalogueEntry.description
         
         infoWindow.showWindow(nil)

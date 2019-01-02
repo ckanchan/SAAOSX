@@ -16,7 +16,7 @@ class AnnotationsViewController: NSViewController {
         }
     }
     
-    var annotations: [Note.Annotation]? = nil {
+    var annotations: [Annotation]? = nil {
         didSet {
             if self.annotations != nil {
                 annotationView.reloadData()
@@ -44,7 +44,7 @@ extension AnnotationsViewController: NSCollectionViewDataSource {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "Annotation"), for: indexPath)
         
         if let annotations = self.annotations {
-            guard let annotationView = item as? Annotation else {return item}
+            guard let annotationView = item as? AnnotationItem else {return item}
             let annotation = annotations[indexPath.item]
             annotationView.annotation = annotation
             

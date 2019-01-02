@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-
 import CDKSwiftOracc
 
 protocol NoteStore: AnyObject {
@@ -44,7 +43,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     weak var annotationsViewController: AnnotationsViewController!
     
     func setAnnotations(for note: Note) {
-        annotationsViewController.annotations = Array(note.annotations.values)
+        //TODO: - Reimplement
     }
     
     @objc func search(_ sender: NSSearchField) {
@@ -53,14 +52,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     }
     
     @objc func searchLocal(_ sender: NSSearchField) {
-        let searchText = sender.stringValue.lowercased()
-        let annotations: [Note.Annotation] = self.notes.reduce([Note.Annotation]()){ array, note in
-            let subannotations = Array(note.annotations.values)
-            return array + subannotations
-        }
-        let results = annotations.filter{$0.normalisation == searchText}
-        
-        annotationsViewController.annotations = results
+        //TODO :- Reimplement local search through annotations.
     }
 }
 

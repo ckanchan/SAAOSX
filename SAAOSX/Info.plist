@@ -66,7 +66,7 @@
 			<key>UTTypeDescription</key>
 			<string>Oracc Text Edition String Container</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.ckprivate.2018.oracc.stringcontainer</string>
+			<string>me.chaidk.oracc.stringcontainer</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

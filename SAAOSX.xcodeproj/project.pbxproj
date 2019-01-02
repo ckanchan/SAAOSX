@@ -11,8 +11,12 @@
 		5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124120A5F47000666489 /* UIVIewController+Theming.swift */; };
 		5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124320A6173D00666489 /* TextPanelViewController.swift */; };
 		541378E321DA5BB7003A4481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 541378E221DA5BB7003A4481 /* CloudKit.framework */; };
+		541378E521DA6263003A4481 /* NoteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteDatabase.swift */; };
+		541378E621DA627C003A4481 /* NoteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteDatabase.swift */; };
+		541378E821DA7BA7003A4481 /* CloudKitNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E721DA7BA7003A4481 /* CloudKitNotes.swift */; };
+		541378EA21DAAFE0003A4481 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E921DAAFE0003A4481 /* Annotation.swift */; };
 		5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0A200F71C7001EE385 /* TextViewController.swift */; };
-		5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* infoViewController.swift */; };
+		5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* InfoViewController.swift */; };
 		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
@@ -47,8 +51,6 @@
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
 		5484CE9D20B6C4AE002A3809 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5484CE9C20B6C4AE002A3809 /* Notes.storyboard */; };
 		5484CEA120B6C5DE002A3809 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484CEA020B6C5DE002A3809 /* NotesViewController.swift */; };
-		5484CEA320B72385002A3809 /* FirebaseGlobalNotesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484CEA220B72385002A3809 /* FirebaseGlobalNotesManager.swift */; };
-		5484CEA420B72385002A3809 /* FirebaseGlobalNotesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484CEA220B72385002A3809 /* FirebaseGlobalNotesManager.swift */; };
 		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
 		548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */; };
 		5491DD4E21CD385100B49B7D /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5491DD4D21CD385100B49B7D /* Maps.storyboard */; };
@@ -77,16 +79,16 @@
 		54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AEE982203A02D800A81B97 /* TextEdition.storyboard */; };
 		54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */; };
 		54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B721D698BB00F00F39 /* AncientMap.swift */; };
+		54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
 		54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C91A7F2017A8C0001AA675 /* Preferences.storyboard */; };
 		54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A812017AAB0001AA675 /* PreferencesViewController.swift */; };
 		54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A832017AB9F001AA675 /* UserDefaultsController.swift */; };
 		54C91A882017C743001AA675 /* TextWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A872017C743001AA675 /* TextWindowController.swift */; };
 		54C9843620A75E7B0026C5AA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843520A75E7B0026C5AA /* libc++.tbd */; };
 		54C9843820A75E880026C5AA /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843720A75E880026C5AA /* libicucore.tbd */; };
-		54C9843A20A760860026C5AA /* FirebaseTextNoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9843920A760860026C5AA /* FirebaseTextNoteManager.swift */; };
 		54C9845020A767930026C5AA /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9844F20A767930026C5AA /* NotesViewController.swift */; };
-		54CD208C20B73ABF0008B69D /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CD208A20B73ABF0008B69D /* Annotation.swift */; };
-		54CD208D20B73ABF0008B69D /* Annotation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54CD208B20B73ABF0008B69D /* Annotation.xib */; };
+		54CD208C20B73ABF0008B69D /* AnnotationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CD208A20B73ABF0008B69D /* AnnotationItem.swift */; };
+		54CD208D20B73ABF0008B69D /* AnnotationItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54CD208B20B73ABF0008B69D /* AnnotationItem.xib */; };
 		54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */; };
 		54D3B4DE21D7B5A800F836E2 /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E021D7BBE000F836E2 /* AncientMapTableViewDelegate.swift */; };
@@ -94,7 +96,6 @@
 		54D3B4E521D7F0F100F836E2 /* NSAlertExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E421D7F0F100F836E2 /* NSAlertExtensions.swift */; };
 		54D9CD092019C974005498A3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 54D9CD082019C974005498A3 /* Credits.rtf */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
-		54F1C42120A9F4BB009F31C0 /* FirebaseTextNoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9843920A760860026C5AA /* FirebaseTextNoteManager.swift */; };
 		54F1C42320A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
 		54F1C42420A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
 		54F1C42520A9F524009F31C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */; };
@@ -135,8 +136,11 @@
 		5407124120A5F47000666489 /* UIVIewController+Theming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Theming.swift"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
 		541378E221DA5BB7003A4481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		541378E421DA6263003A4481 /* NoteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDatabase.swift; sourceTree = "<group>"; };
+		541378E721DA7BA7003A4481 /* CloudKitNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitNotes.swift; sourceTree = "<group>"; };
+		541378E921DAAFE0003A4481 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
-		5418DF0E200FD62A001EE385 /* infoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infoViewController.swift; sourceTree = "<group>"; };
+		5418DF0E200FD62A001EE385 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+CoreSpotlight.swift"; sourceTree = "<group>"; };
 		54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
 		5435F30221CE5771000A1FC8 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
@@ -173,7 +177,6 @@
 		547BE627201345830001B8BF /* GlossaryEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryEntryViewController.swift; sourceTree = "<group>"; };
 		5484CE9C20B6C4AE002A3809 /* Notes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notes.storyboard; sourceTree = "<group>"; };
 		5484CEA020B6C5DE002A3809 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
-		5484CEA220B72385002A3809 /* FirebaseGlobalNotesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGlobalNotesManager.swift; sourceTree = "<group>"; };
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
 		548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommands.swift; sourceTree = "<group>"; };
 		5491DD4D21CD385100B49B7D /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
@@ -197,16 +200,16 @@
 		54AEE982203A02D800A81B97 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMapViewDelegate.swift; sourceTree = "<group>"; };
 		54B3C1B721D698BB00F00F39 /* AncientMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMap.swift; sourceTree = "<group>"; };
+		54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Conversions.swift"; sourceTree = "<group>"; };
 		54C91A7F2017A8C0001AA675 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		54C91A812017AAB0001AA675 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		54C91A832017AB9F001AA675 /* UserDefaultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		54C91A872017C743001AA675 /* TextWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWindowController.swift; sourceTree = "<group>"; };
 		54C9843520A75E7B0026C5AA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		54C9843720A75E880026C5AA /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libicucore.tbd; sourceTree = DEVELOPER_DIR; };
-		54C9843920A760860026C5AA /* FirebaseTextNoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTextNoteManager.swift; sourceTree = "<group>"; };
 		54C9844F20A767930026C5AA /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
-		54CD208A20B73ABF0008B69D /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
-		54CD208B20B73ABF0008B69D /* Annotation.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Annotation.xib; sourceTree = "<group>"; };
+		54CD208A20B73ABF0008B69D /* AnnotationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationItem.swift; sourceTree = "<group>"; };
+		54CD208B20B73ABF0008B69D /* AnnotationItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnotationItem.xib; sourceTree = "<group>"; };
 		54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardKeys.swift; sourceTree = "<group>"; };
 		54D3B4E021D7BBE000F836E2 /* AncientMapTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMapTableViewDelegate.swift; sourceTree = "<group>"; };
 		54D3B4E221D7ED0E00F836E2 /* PleiadesRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PleiadesRecord.swift; sourceTree = "<group>"; };
@@ -298,9 +301,11 @@
 		543DC34620B676DA0019FF1E /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				54C9843920A760860026C5AA /* FirebaseTextNoteManager.swift */,
-				5484CEA220B72385002A3809 /* FirebaseGlobalNotesManager.swift */,
 				54F1C42220A9F4D1009F31C0 /* Note.swift */,
+				541378E921DAAFE0003A4481 /* Annotation.swift */,
+				541378E721DA7BA7003A4481 /* CloudKitNotes.swift */,
+				54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */,
+				541378E421DA6263003A4481 /* NoteDatabase.swift */,
 				543DC34720B6787A0019FF1E /* UserTags.swift */,
 			);
 			path = Notes;
@@ -410,7 +415,7 @@
 				54C91A872017C743001AA675 /* TextWindowController.swift */,
 				5418DF0A200F71C7001EE385 /* TextViewController.swift */,
 				54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */,
-				5418DF0E200FD62A001EE385 /* infoViewController.swift */,
+				5418DF0E200FD62A001EE385 /* InfoViewController.swift */,
 			);
 			path = TextEdition;
 			sourceTree = "<group>";
@@ -446,8 +451,8 @@
 				5466120B20B9D58800FEF2D5 /* NotesByTagViewController.swift */,
 				5466120D20B9D59500FEF2D5 /* NotesByLemmaViewController.swift */,
 				5466120F20B9D9B600FEF2D5 /* AnnotationsViewController.swift */,
-				54CD208A20B73ABF0008B69D /* Annotation.swift */,
-				54CD208B20B73ABF0008B69D /* Annotation.xib */,
+				54CD208A20B73ABF0008B69D /* AnnotationItem.swift */,
+				54CD208B20B73ABF0008B69D /* AnnotationItem.xib */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -694,7 +699,7 @@
 				544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */,
 				544138E42004D27A00A64CB2 /* Main.storyboard in Resources */,
 				5491DD4E21CD385100B49B7D /* Maps.storyboard in Resources */,
-				54CD208D20B73ABF0008B69D /* Annotation.xib in Resources */,
+				54CD208D20B73ABF0008B69D /* AnnotationItem.xib in Resources */,
 				5447AE2B21D421B800EDD45F /* qpn_pleiades.json in Resources */,
 				54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */,
 				54D9CD092019C974005498A3 /* Credits.rtf in Resources */,
@@ -840,31 +845,33 @@
 			files = (
 				54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */,
 				54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */,
-				54F1C42120A9F4BB009F31C0 /* FirebaseTextNoteManager.swift in Sources */,
 				547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */,
 				54FE04EA21D141F5000214E5 /* MapViewController.swift in Sources */,
 				5471EF7320B1F4AB00EE1B73 /* AnnotationPopupController.swift in Sources */,
+				541378E821DA7BA7003A4481 /* CloudKitNotes.swift in Sources */,
 				547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */,
 				54A9521D204058D60042E1BA /* Glossary.swift in Sources */,
 				54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */,
+				541378E521DA6263003A4481 /* NoteDatabase.swift in Sources */,
 				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
-				5418DF0F200FD62A001EE385 /* infoViewController.swift in Sources */,
+				5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */,
 				54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */,
 				54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */,
+				541378EA21DAAFE0003A4481 /* Annotation.swift in Sources */,
 				54F1C42320A9F4D1009F31C0 /* Note.swift in Sources */,
 				5466120A20B9D56B00FEF2D5 /* NotesByTextViewController.swift in Sources */,
+				54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */,
 				54C91A882017C743001AA675 /* TextWindowController.swift in Sources */,
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
 				54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */,
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
-				54CD208C20B73ABF0008B69D /* Annotation.swift in Sources */,
+				54CD208C20B73ABF0008B69D /* AnnotationItem.swift in Sources */,
 				544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
 				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
 				5466121020B9D9B600FEF2D5 /* AnnotationsViewController.swift in Sources */,
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
-				5484CEA320B72385002A3809 /* FirebaseGlobalNotesManager.swift in Sources */,
 				54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */,
 				546D462121CFB6730012C1EE /* AncientLocation.swift in Sources */,
 				547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */,
@@ -904,6 +911,7 @@
 				5439770E20A43A4B002072AE /* ThemeController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
 				5463D28C20A782B8002B368A /* UserManager.swift in Sources */,
+				541378E621DA627C003A4481 /* NoteDatabase.swift in Sources */,
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
 				5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */,
@@ -915,11 +923,9 @@
 				5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */,
 				5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */,
 				54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */,
-				5484CEA420B72385002A3809 /* FirebaseGlobalNotesManager.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
 				54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
-				54C9843A20A760860026C5AA /* FirebaseTextNoteManager.swift in Sources */,
 				5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
