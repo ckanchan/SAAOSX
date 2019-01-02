@@ -9,14 +9,14 @@
 import Cocoa
 import CDKSwiftOracc
 
-class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplaying {
+class InfoViewController: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var infoLabel: NSTextField!
     @IBOutlet weak var notesField: NSTextField!
     @IBOutlet weak var annotationsView: NSTableView!
     
     var textId: TextID?
     
-    var annotations = [NodeReference: Note.Annotation]() {
+    var annotations = [NodeReference: Annotation]() {
         didSet {
             annotationsView.reloadData()
         }
@@ -24,13 +24,11 @@ class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplay
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.notesField.delegate = self
+        if !cloudKitDB.userIsLoggedIn {
             self.notesField.isEditable = false
             self.notesField.stringValue = "Sign in to save notes"
-    }
-    
-    func noteDidChange(_ note: Note) {
-        self.notesField.stringValue = note.notes
-        self.annotations = note.annotations
+        }
     }
     
     
@@ -38,9 +36,11 @@ class InfoViewController: NSViewController, NSTextFieldDelegate, TextNoteDisplay
         //TODO: - write note level set code
         guard let textId = self.textId else {return}
         
-        let newNote = Note(id: textId, notes: notesField.stringValue, annotations: annotations)
+        let newNote = Note(id: textId, notes: notesField.stringValue)
 
         //TODO: - Update note code
+        cloudKitDB.saveNote(newNote)
+        
     }
 }
 

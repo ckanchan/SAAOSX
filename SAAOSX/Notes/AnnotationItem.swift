@@ -9,7 +9,7 @@
 import Cocoa
 import CDKSwiftOracc
 
-class Annotation: NSCollectionViewItem {
+class AnnotationItem: NSCollectionViewItem {
     @IBOutlet weak var normalisationLabel: NSTextField!
     @IBOutlet weak var transliterationLabel: NSTextField!
     @IBOutlet weak var contextLabel: NSTextField!
@@ -17,7 +17,7 @@ class Annotation: NSCollectionViewItem {
     @IBOutlet var annotationView: NSTextView!
     @IBOutlet weak var textLinkButton: NSButton!
     
-    var annotation: Note.Annotation! {
+    var annotation: Annotation! {
         didSet {
             normalisationLabel.stringValue = annotation.normalisation
             transliterationLabel.stringValue = annotation.transliteration
