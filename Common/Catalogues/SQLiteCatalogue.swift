@@ -118,7 +118,7 @@ class SQLiteCatalogue: CatalogueProvider {
     }
 
     func getEntryFor(id cdliID: TextID) -> OraccCatalogEntry? {
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid == cdliID.description)
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY, credits).filter(textid == cdliID.description)
 
         guard let r = try? db.pluck(query) else {return nil}
         guard let row = r else {return nil}
