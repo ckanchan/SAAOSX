@@ -1,5 +1,5 @@
 PODS:
-  - CDKOraccInterface (0.0.1):
+  - CDKOraccInterface (0.0.2):
     - CDKSwiftOracc
     - ZIPFoundation
   - CDKSwiftOracc (0.5.7)
@@ -21,11 +21,11 @@ SPEC REPOS:
     - ZIPFoundation
 
 SPEC CHECKSUMS:
-  CDKOraccInterface: 49e79c98332e2e24d822f659e6032a84a382120a
+  CDKOraccInterface: 32b056d3b317785df939e7b4e4b16ec683f434a4
   CDKSwiftOracc: 3fc4196cb03791b5a04b0e08bb7e98ef2ade5b4f
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
   ZIPFoundation: 68c35eb2637c21abe56dc60b3277636443bc1501
 
 PODFILE CHECKSUM: 164ad5eeeb2ecf35038fffdf90ab6a3ad4ff6a6b
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.2

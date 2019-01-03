@@ -19,21 +19,22 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
     @IBOutlet weak var catalogueEntryView: NSTableView!
 
     lazy var projectList: [CDKOraccProject] = {
-        if let result = try? oracc.getOraccProjects() {
-            return result
-        } else {
+        do {
+            return try oracc.getOraccProjects()
+        } catch {
+            print(error.localizedDescription)
             return []
         }
     }()
 
-    lazy var windowController: ProjectListWindowController = {
+    var windowController: ProjectListWindowController {
         return self.view.window?.windowController as! ProjectListWindowController
-    }()
+    }
 
-    lazy var infoSidebar: InfoSideBarViewController = {
+    var infoSidebar: InfoSideBarViewController {
         let split = self.parent! as! NSSplitViewController
         return split.children.last! as! InfoSideBarViewController
-    }()
+    }
 
     var catalogueProvider: CatalogueProvider? {
         didSet {

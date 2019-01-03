@@ -98,7 +98,6 @@
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54F1C42320A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
 		54F1C42420A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
-		54F1C42520A9F524009F31C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */; };
 		54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */; };
 		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
 		54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */; };
@@ -694,7 +693,6 @@
 			files = (
 				54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */,
 				5484CE9D20B6C4AE002A3809 /* Notes.storyboard in Resources */,
-				54F1C42520A9F524009F31C0 /* GoogleService-Info.plist in Resources */,
 				549832FB209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
 				544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */,
 				544138E42004D27A00A64CB2 /* Main.storyboard in Resources */,
@@ -740,7 +738,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SAAiOS/Pods-SAAiOS-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SAAiOS/Pods-SAAiOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CDKOraccInterface-iOS/CDKOraccInterface.framework",
 				"${BUILT_PRODUCTS_DIR}/CDKSwiftOracc-iOS/CDKSwiftOracc.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift-iOS/SQLite.framework",
@@ -755,7 +753,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAAiOS/Pods-SAAiOS-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SAAiOS/Pods-SAAiOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		65C2ACDB9326581E86DAB424 /* [CP] Check Pods Manifest.lock */ = {
@@ -800,7 +798,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SAAOSX/Pods-SAAOSX-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SAAOSX/Pods-SAAOSX-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CDKOraccInterface-macOS/CDKOraccInterface.framework",
 				"${BUILT_PRODUCTS_DIR}/CDKSwiftOracc-macOS/CDKSwiftOracc.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift-macOS/SQLite.framework",
@@ -815,7 +813,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAAOSX/Pods-SAAOSX-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SAAOSX/Pods-SAAOSX-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCACBCDA4947268DEADF6D2D /* [CP] Check Pods Manifest.lock */ = {
