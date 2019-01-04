@@ -98,6 +98,30 @@ class CloudKitNotes {
         save(record)
     }
     
+    func retrieveAllNotes(completionHandler: @escaping (([Note]) -> Void)) {
+        guard userIsLoggedIn else {return}
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: CKRecord.RecordTypes.Note, predicate: predicate)
+        let operation = CKQueryOperation(query: query)
+        
+        var notes = [Note]()
+        operation.recordFetchedBlock = { record in
+            guard let note = record.toNote() else {return}
+            notes.append(note)
+        }
+        
+        operation.queryCompletionBlock = { _, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            DispatchQueue.main.async {
+                completionHandler(notes)
+            }
+        }
+        
+        CKContainer.default().privateCloudDatabase.add(operation)
+    }
+    
     func retrieveNotes(forTextID textID: TextID,
                        forRetrievedNote performTask: @escaping((Note) -> Void),
                        onCompletion: @escaping((CKQueryOperation.Cursor?) -> Void)) {

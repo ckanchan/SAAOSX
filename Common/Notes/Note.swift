@@ -10,7 +10,7 @@ import Foundation
 import CDKSwiftOracc
 
 extension NSAttributedString.Key {
-    static var referenceContext = NSAttributedString.Key.init("referenceContext")
+    static var referenceContext = NSAttributedString.Key("referenceContext")
 }
 
 struct Note: Codable {

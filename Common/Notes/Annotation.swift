@@ -21,7 +21,7 @@ struct Annotation: Codable {
     var tags: Set<Tag>
     
     
-    init(nodeReference: NodeReference, transliteration: String, normalisation: String, translation: String, annotation: String, context: String, tags: Set<String>) {
+    init(nodeReference: NodeReference, transliteration: String, normalisation: String, translation: String, annotation: String, context: String, tags: Set<Tag>) {
         self.nodeReference = nodeReference
         self.transliteration = transliteration
         self.normalisation = normalisation
@@ -34,4 +34,8 @@ struct Annotation: Codable {
 
 protocol SingleAnnotationDisplaying: AnyObject {
     func annotationDidChange(_ annotation: Annotation)
+}
+
+protocol AnnotationsDisplaying: AnyObject {
+    func annotationsWereUpdated()
 }

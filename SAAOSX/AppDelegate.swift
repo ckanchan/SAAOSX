@@ -59,7 +59,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func newNotesWindow(_ sender: Any){
         //TODO :- Check User is signed in?
-        guard let notesViewController = NotesTabViewController.new() else {return}
+        guard cloudKitDB.userIsLoggedIn,
+            let notesViewController = NotesTabViewController.new() else {return}
         notesViewController.view.window?.makeKeyAndOrderFront(self)
         
     }

@@ -11,7 +11,7 @@ import CDKSwiftOracc
 
 protocol NoteStore: AnyObject {
     var notes: [Note] {get}
-    func setAnnotations(for note: Note)
+    func setAnnotations(for textID: TextID)
 }
 
 protocol NoteDisplaying: AnyObject {
@@ -27,6 +27,9 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         guard let annotationsViewController = splitView.children[1] as? AnnotationsViewController else {return nil}
         
         notesViewController.annotationsViewController = annotationsViewController
+        notesViewController.cloudKitDB.retrieveAllNotes(completionHandler: {[weak notesViewController ] notes in
+            notesViewController?.notes = notes
+        })
         
         return notesViewController
     }
@@ -42,7 +45,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     
     weak var annotationsViewController: AnnotationsViewController!
     
-    func setAnnotations(for note: Note) {
+    func setAnnotations(for note: TextID) {
         //TODO: - Reimplement
     }
     

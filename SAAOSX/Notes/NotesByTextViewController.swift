@@ -27,7 +27,7 @@ class NotesByTextViewController: NSViewController, NoteDisplaying {
     var currentlySelectedIndex: Int? = nil {
         didSet {
             if let idx = currentlySelectedIndex {
-                noteStore.setAnnotations(for: notes[idx])
+                return
             }
         }
     }

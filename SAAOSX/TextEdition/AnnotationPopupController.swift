@@ -9,28 +9,7 @@
 import Cocoa
 import CDKSwiftOracc
 
-
 class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
-    static func new(textID: TextID, node: NodeReference, transliteration: String, normalisation: String, translation: String, context: String) -> NSWindowController? {
-        
-        let storyboard = NSStoryboard.init(name: "TextEdition", bundle: Bundle.main)
-        guard let window = storyboard.instantiateController(withIdentifier: "AnnotationViewController") as? NSWindowController else {return nil}
-        
-        
-        guard let vc =  window.contentViewController as? AnnotationPopupController else { return nil }
-
-        vc.textID = textID
-        vc.nodeReference = node
-        vc.annotationMetadata = (transliteration, normalisation, translation)
-        vc.context = context
-        vc.tagField.delegate = vc
-
-
-        
-        return window
-    }
-    
-    
     lazy var userTagSet: UserTags = {
         return cloudKitDB.userTags
     }()
@@ -38,6 +17,7 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
     
     var textID: TextID!
     var nodeReference: NodeReference!
+    var annotationManager: TextAnnotationManager!
     var annotationMetadata: (transliteration: String, normalisation: String, translation: String)!
 
     var context: String? {
@@ -76,16 +56,35 @@ class AnnotationPopupController: NSViewController, SingleAnnotationDisplaying {
         
         let newAnnotation = Annotation(nodeReference: reference, transliteration: transliteration, normalisation: normalisation, translation: translation, annotation: annotation, context: context, tags: annotationTags)
         
-        // TODO:- Add annotations to cloud store
-        cloudKitDB.saveAnnotation(newAnnotation)
+        annotationManager.updateAnnotation(newAnnotation)
         
-        // TODO:- Update list of global tags if changed
         if newUserTags != cloudKitDB.userTags {
             cloudKitDB.userTags = newUserTags
         }
-
         
         view.window?.close()
+    }
+}
+
+extension AnnotationPopupController {
+    static func new(textID: TextID, node: NodeReference, transliteration: String, normalisation: String, translation: String, context: String, annotationManager: TextAnnotationManager) -> NSWindowController? {
+        let storyboard = NSStoryboard(name: "TextEdition", bundle: Bundle.main)
+        guard let window = storyboard.instantiateController(withIdentifier: "AnnotationViewController") as? NSWindowController else {return nil}
+        guard let vc =  window.contentViewController as? AnnotationPopupController else { return nil }
+        vc.textID = textID
+        vc.nodeReference = node
+        vc.annotationMetadata = (transliteration, normalisation, translation)
+        vc.context = context
+        vc.tagField.delegate = vc
+        vc.annotationManager = annotationManager
+        return window
+    }
+    
+    static func new(withAnnotation annotation: Annotation, annotationManager: TextAnnotationManager) -> NSWindowController? {
+        guard let windowController = AnnotationPopupController.new(textID: annotation.nodeReference.base, node: annotation.nodeReference, transliteration: annotation.transliteration, normalisation: annotation.normalisation, translation: annotation.translation, context: annotation.context, annotationManager: annotationManager),
+            let annotationViewController = windowController.contentViewController as? AnnotationPopupController else {return nil}
+        annotationViewController.annotation = annotation
+        return windowController
     }
 }
 
@@ -99,6 +98,4 @@ extension AnnotationPopupController: NSTokenFieldDelegate {
     func tokenField(_ tokenField: NSTokenField, completionsForSubstring substring: String, indexOfToken tokenIndex: Int, indexOfSelectedItem selectedIndex: UnsafeMutablePointer<Int>?) -> [Any]? {
         return userTagSet.tags.filter{$0.lowercased().contains(substring.lowercased())}
     }
-    
-
 }
