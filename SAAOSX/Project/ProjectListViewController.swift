@@ -10,14 +10,17 @@ import Cocoa
 import CDKSwiftOracc
 import CDKOraccInterface
 
-class ProjectListViewController: NSViewController, BookmarkDisplaying {
-
-    func refreshTableView() {
-        self.catalogueEntryView.reloadData()
-    }
+class ProjectListViewController: NSViewController {
 
     @IBOutlet weak var catalogueEntryView: NSTableView!
-
+    unowned var splitViewController: NSSplitViewController {
+        return self.parent! as! NSSplitViewController
+    }
+    
+    unowned var infoSidebar: InfoSideBarViewController {
+        return splitViewController.children.last! as! InfoSideBarViewController
+    }
+    
     lazy var projectList: [CDKOraccProject] = {
         do {
             return try oracc.getOraccProjects()
@@ -27,33 +30,30 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
         }
     }()
 
-    var windowController: ProjectListWindowController {
-        return self.view.window?.windowController as! ProjectListWindowController
+    weak var windowController: ProjectListWindowController? {
+        return self.view.window?.windowController as? ProjectListWindowController
     }
-
-    var infoSidebar: InfoSideBarViewController {
-        let split = self.parent! as! NSSplitViewController
-        return split.children.last! as! InfoSideBarViewController
-    }
-
+    
     var catalogueProvider: CatalogueProvider? {
         didSet {
-            DispatchQueue.main.async {
-                if let source = self.catalogueProvider?.source {
+            DispatchQueue.main.async { [weak self] in
+                guard let projectListViewController = self else {return}
+                if let source = projectListViewController.catalogueProvider?.source {
                     switch source {
                     case .search:
-                        self.windowController.setConnectionStatus(to: self.catalogueProvider?.name ?? "Search Results")
+                        projectListViewController.windowController?.setConnectionStatus(to: projectListViewController.catalogueProvider?.name ?? "Search Results")
                     case .sqlite, .online, .bookmarks, .local:
-                        self.windowController.setConnectionStatus(to: "\(source.rawValue) \(self.catalogueProvider?.name ?? "")")
+                        projectListViewController.windowController?.setConnectionStatus(to: "\(source.rawValue) \(projectListViewController.catalogueProvider?.name ?? "")")
                     }
                 } else {
-                    self.windowController.setConnectionStatus(to: "disconnected")
+                    projectListViewController.windowController?.setConnectionStatus(to: "disconnected")
                 }
             }
         }
     }
-
     var selectedText: OraccCatalogEntry?
+    var filteredTexts: [OraccCatalogEntry] = []
+    var searchBarIsEmpty: Bool = true
 
     override func viewDidAppear() {
         NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: Bookmarks.Update, object: nil)
@@ -61,35 +61,38 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
 
         // If the window is being duplicated, then use a previously existing catalogue to save memory.
         guard self.catalogueProvider == nil else {
-            windowController.setTitle(catalogueProvider?.name ?? "SAAoSX")
+            windowController?.setTitle(catalogueProvider?.name ?? "SAAoSX")
             catalogueEntryView.reloadData()
             return
         }
 
         // Otherwise load a default catalogue
         loadCatalogue("sqlite")
-        windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
+        windowController?.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
     }
     
-    deinit {
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
         NotificationCenter.default.removeObserver(self)
+
     }
+    
 
     func loadCatalogue(_ catalogueStr: String) {
-        self.windowController.loadingIndicator.startAnimation(nil)
+        self.windowController?.loadingIndicator.startAnimation(nil)
 
         if catalogueStr == "pins" {
             self.catalogueProvider = bookmarks
             self.catalogueEntryView.reloadData()
-            self.windowController.loadingIndicator.stopAnimation(nil)
-            self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
+            self.windowController?.loadingIndicator.stopAnimation(nil)
+            self.windowController?.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
             return
         }
 
         if catalogueStr == "sqlite" {
             self.catalogueProvider = self.sqlite
             self.catalogueEntryView.reloadData()
-            self.windowController.loadingIndicator.stopAnimation(nil)
+            self.windowController?.loadingIndicator.stopAnimation(nil)
             return
         }
 
@@ -101,8 +104,8 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
             guard let cat = self.projectList.first(where: {$0.pathname.contains(catalogueStr)})
                 else {
                     DispatchQueue.main.async {
-                        self.windowController.setConnectionStatus(to: "disconnected")
-                        self.windowController.pinnedToggle.state = .on
+                        self.windowController?.setConnectionStatus(to: "disconnected")
+                        self.windowController?.pinnedToggle.state = .on
                         self.loadCatalogue("saa01")
                     }
                     return
@@ -116,16 +119,16 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
                 self.catalogueProvider = controller
                 DispatchQueue.main.async {
                     self.catalogueEntryView.reloadData()
-                    self.windowController.loadingIndicator.stopAnimation(nil)
-                    self.windowController.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
-                    self.windowController.setConnectionStatus(to: "connected")
+                    self.windowController?.loadingIndicator.stopAnimation(nil)
+                    self.windowController?.setTitle(self.catalogueProvider?.name ?? "SAAoSX")
+                    self.windowController?.setConnectionStatus(to: "connected")
                 }
             } catch {
                 print(error)
                 DispatchQueue.main.async {
                     self.loadCatalogue("pins")
-                    self.windowController.setConnectionStatus(to: "disconnected")
-                    self.windowController.pinnedToggle.state = .on
+                    self.windowController?.setConnectionStatus(to: "disconnected")
+                    self.windowController?.pinnedToggle.state = .on
                 }
             }
         }
@@ -143,7 +146,7 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
         case .bookmarks:
             if let stringContainer = bookmarks.getTextStrings(textEntry.id.description) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
-                self.windowController.loadingIndicator.stopAnimation(nil)
+                self.windowController?.loadingIndicator.stopAnimation(nil)
                 return
             }
 
@@ -154,7 +157,7 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
 
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider, searchTerm: textSearchCollection.searchTerm)
-                self.windowController.loadingIndicator.stopAnimation(nil)
+                self.windowController?.loadingIndicator.stopAnimation(nil)
                 return
             }
 
@@ -162,7 +165,7 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
             guard let sqlite = self.sqlite else {return}
             if let stringContainer = sqlite.getTextStrings(textEntry.id) {
                 TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
-                self.windowController.loadingIndicator.stopAnimation(nil)
+                self.windowController?.loadingIndicator.stopAnimation(nil)
                 return
             }
 
@@ -172,11 +175,11 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
                     let stringContainer = TextEditionStringContainer(textEdition)
                     DispatchQueue.main.async {
                         TextWindowController.new(textEntry, strings: stringContainer, catalogue: self.catalogueProvider)
-                        self.windowController.loadingIndicator.stopAnimation(nil)
+                        self.windowController?.loadingIndicator.stopAnimation(nil)
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.windowController.loadingIndicator.stopAnimation(nil)
+                        self.windowController?.loadingIndicator.stopAnimation(nil)
                         let alert = NSAlert.createWarning(
                             messageText: "No text available",
                             informativeText: "Edition for \(textEntry.title) not available",
@@ -200,7 +203,7 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
     override func keyDown(with event: NSEvent) {
         if event.keyCode == 36 || event.keyCode == 76 {
             if let text = selectedText {
-                windowController.loadingIndicator.startAnimation(nil)
+                windowController?.loadingIndicator.startAnimation(nil)
                 openTextWindow(text)
             }
         } else {
@@ -210,14 +213,12 @@ class ProjectListViewController: NSViewController, BookmarkDisplaying {
 
     @objc func doubleClickLoadText(_ sender: Any) {
         if let text = selectedText {
-            windowController.loadingIndicator.startAnimation(nil)
+            windowController?.loadingIndicator.startAnimation(nil)
             openTextWindow(text)
         }
     }
 
     // MARK :- Search functions
-    var filteredTexts: [OraccCatalogEntry] = []
-    var searchBarIsEmpty: Bool = true
 
     func filterContentForSearchText(_ searchText: String) {
         filteredTexts = catalogueProvider?.search(searchText) ?? []
@@ -322,15 +323,21 @@ extension ProjectListViewController {
         guard let locationDictionary = AncientLocation.getListOfPlaces(from: url) else {return}
         
         let ancientMap = AncientMap(locationDictionary: locationDictionary)
-        self.windowController.loadingIndicator.startAnimation(nil)
+        self.windowController?.loadingIndicator.startAnimation(nil)
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             ancientMap.getPleiadesPlaces(then: {places in
                 DispatchQueue.main.async {
                     MapViewController.new(forMap: ancientMap)
-                    self?.windowController.loadingIndicator.stopAnimation(nil)
+                    self?.windowController?.loadingIndicator.stopAnimation(nil)
                 }
             })
         }
+    }
+}
+
+extension ProjectListViewController: BookmarkDisplaying {
+    func refreshTableView() {
+        self.catalogueEntryView.reloadData()
     }
 }
