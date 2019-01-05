@@ -10,7 +10,7 @@ import Foundation
 import SQLite
 import CDKSwiftOracc
 
-class SQLiteCatalogue: CatalogueProvider {
+final class SQLiteCatalogue: CatalogueProvider {
     let source: CatalogueSource = .sqlite
 
     let textid = Expression<String>("textid")

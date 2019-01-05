@@ -15,7 +15,7 @@ import SQLite
 }
 
 /// Responsible for saving and loading bookmarked texts to the SQLite store.
-public class Bookmarks: CatalogueProvider {
+final public class Bookmarks: CatalogueProvider {
     public var source: CatalogueSource = .bookmarks
 
     public lazy var texts: [OraccCatalogEntry] = {

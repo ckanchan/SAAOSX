@@ -9,7 +9,7 @@ import Foundation
 import CDKSwiftOracc
 
 /// A class that caches the strings of an `OraccTextEdition`
-public class TextEditionStringContainer: NSCoding {
+final public class TextEditionStringContainer: NSCoding {
 
     public lazy var cuneiform: String = {
         return self.textEdition?.cuneiform ?? "No edition available"

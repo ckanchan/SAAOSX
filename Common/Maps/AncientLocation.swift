@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import CDKSwiftOracc
 
-class AncientLocation: NSObject, MKAnnotation {
+final class AncientLocation: NSObject, MKAnnotation {
     private(set) var pleiadesRecord: PleiadesRecord?
     
     private(set) var pleiadesID: Int?

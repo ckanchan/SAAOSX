@@ -10,7 +10,7 @@ import Foundation
 import SQLite
 import CDKSwiftOracc
 
-class NoteDatabase {
+final class NoteDatabase {
     
     //Database schema
     let textid = Expression<String>("textid")

@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class AncientMap {
+final class AncientMap {
     private var locationDictionary: [String: AncientLocation]
     
     var siteCount: Int {

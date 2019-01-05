@@ -10,7 +10,7 @@ import Foundation
 import CDKSwiftOracc
 import CloudKit
 
-class TextAnnotationManager {
+final class TextAnnotationManager {
     let cloudKitDB: CloudKitNotes
     let textID: TextID
     var annotationDelegate: AnnotationsDisplaying?

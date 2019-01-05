@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PleiadesRecord: GeoJSON {
+final class PleiadesRecord: GeoJSON {
     let title: String
     let description: String
     let representativePoint: (Double, Double)?
