@@ -2,7 +2,7 @@ PODS:
   - CDKOraccInterface (0.0.2):
     - CDKSwiftOracc
     - ZIPFoundation
-  - CDKSwiftOracc (0.5.7)
+  - CDKSwiftOracc (0.6.0)
   - SQLite.swift (0.11.5):
     - SQLite.swift/standard (= 0.11.5)
   - SQLite.swift/standard (0.11.5)
@@ -22,7 +22,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   CDKOraccInterface: 32b056d3b317785df939e7b4e4b16ec683f434a4
-  CDKSwiftOracc: 3fc4196cb03791b5a04b0e08bb7e98ef2ade5b4f
+  CDKSwiftOracc: 5146e0a9cc4bf83a9afceeef0f80b4b52d111bea
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
   ZIPFoundation: 68c35eb2637c21abe56dc60b3277636443bc1501
 
