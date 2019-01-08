@@ -154,7 +154,7 @@
 		5439770B20A421E6002072AE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		5439770D20A43A4B002072AE /* ThemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeController.swift; sourceTree = "<group>"; };
 		543DC34720B6787A0019FF1E /* UserTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTags.swift; sourceTree = "<group>"; };
-		544138D92004D27A00A64CB2 /* SAAOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		544138D92004D27A00A64CB2 /* SAAo-SX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SAAo-SX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		544138E32004D27A00A64CB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -337,7 +337,7 @@
 		544138DA2004D27A00A64CB2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				544138D92004D27A00A64CB2 /* SAAOSX.app */,
+				544138D92004D27A00A64CB2 /* SAAo-SX.app */,
 				544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */,
 				5498CAD8204EAF63004C774A /* SAAiOS.app */,
 			);
@@ -577,9 +577,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		544138D82004D27A00A64CB2 /* SAAOSX */ = {
+		544138D82004D27A00A64CB2 /* SAAo-SX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 544138F42004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAOSX" */;
+			buildConfigurationList = 544138F42004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAo-SX" */;
 			buildPhases = (
 				A02C04175A59B4AE38E9F74B /* [CP] Check Pods Manifest.lock */,
 				544138D62004D27A00A64CB2 /* Frameworks */,
@@ -592,9 +592,9 @@
 			);
 			dependencies = (
 			);
-			name = SAAOSX;
+			name = "SAAo-SX";
 			productName = SAAOSX;
-			productReference = 544138D92004D27A00A64CB2 /* SAAOSX.app */;
+			productReference = 544138D92004D27A00A64CB2 /* SAAo-SX.app */;
 			productType = "com.apple.product-type.application";
 		};
 		544138EA2004D27A00A64CB2 /* SAAOSXTests */ = {
@@ -688,7 +688,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				544138D82004D27A00A64CB2 /* SAAOSX */,
+				544138D82004D27A00A64CB2 /* SAAo-SX */,
 				544138EA2004D27A00A64CB2 /* SAAOSXTests */,
 				5498CAD7204EAF63004C774A /* SAAiOS */,
 			);
@@ -945,7 +945,7 @@
 /* Begin PBXTargetDependency section */
 		544138ED2004D27A00A64CB2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 544138D82004D27A00A64CB2 /* SAAOSX */;
+			target = 544138D82004D27A00A64CB2 /* SAAo-SX */;
 			targetProxy = 544138EC2004D27A00A64CB2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1102,7 +1102,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.SAAOSX;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -1123,7 +1123,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.SAAOSX;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -1223,7 +1223,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		544138F42004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAOSX" */ = {
+		544138F42004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAo-SX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				544138F52004D27A00A64CB2 /* Debug */,
