@@ -1,4 +1,4 @@
-State Archives of Assyria JSON Viewer for macOS
+SAAo-SX: State Archives of Assyria Reader for macOS
 Oracc.org material used under Creative Commons Attribution Share-Alike license 
 3.0 
 https://creativecommons.org/licenses/by-sa/3.0/legalcode
@@ -114,6 +114,10 @@ Lemmatised by Mikko Luukko, 2012, as part of the AHRC-funded research project
 the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; 
 University College London). The annotated edition is released under the 
 Creative Commons Attribution Share-Alike license 3.0.
+
+Pleiades Map Information
+Used under Creative Commons Attribution 3.0 License (cc-by).
+See https://pleiades.stoa.org/credits for details of all contributors.
 
 Open Source Software
 
@@ -255,7 +259,7 @@ Font Software without prior written authorization from Tavmjong Bah. For
 further information, contact: tavmjong @ free . fr.
 
 CuneiformNAOutline Medium
-Copyright (c) 2008 by Seve Tinney. All rights reserved.
+Copyright (c) 2008 by Steve Tinney. All rights reserved.
 Original Metafont and Type 1 fonts by Karel Piska at fzu.cz (retrieved from 
 www-hep2.fzu.cz/~piska/cuneiform.html); converted to Unicode/TrueType by Steve 
 Tinney

@@ -12,11 +12,13 @@ final class PleiadesRecord: GeoJSON {
     let title: String
     let description: String
     let representativePoint: (Double, Double)?
+    let rights: String
     
-    init(type: String, boundingBox: [Double]?, features: [GeoJSON]?, geometry: GeoJSON?, coordinates: [Double]?, title: String, description: String, representativePoint: (Double, Double)?) {
+    init(type: String, boundingBox: [Double]?, features: [GeoJSON]?, geometry: GeoJSON?, coordinates: [Double]?, title: String, description: String, representativePoint: (Double, Double)?, rights: String) {
         self.title = title
         self.description = description
         self.representativePoint = representativePoint
+        self.rights = rights
         super.init(type: type, boundingBox: boundingBox, features: features, geometry: geometry, coordinates: coordinates)
     }
     
@@ -24,6 +26,7 @@ final class PleiadesRecord: GeoJSON {
         let container = try decoder.container(keyedBy: PleiadesCodingKeys.self)
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)
+        self.rights = try container.decode(String.self, forKey: .rights)
         
         if let representativePointArray = try container.decodeIfPresent([Double].self, forKey: .representativePoint) {
             if representativePointArray.count == 2 {
@@ -41,7 +44,7 @@ final class PleiadesRecord: GeoJSON {
 
 extension PleiadesRecord {
     enum PleiadesCodingKeys: String, CodingKey {
-        case title, description, representativePoint = "reprPoint"
+        case title, description, representativePoint = "reprPoint", rights
     }
 }
 
