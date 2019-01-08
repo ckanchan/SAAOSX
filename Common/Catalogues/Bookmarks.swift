@@ -16,7 +16,7 @@ import SQLite
 
 /// Responsible for saving and loading bookmarked texts to the SQLite store.
 final public class Bookmarks: CatalogueProvider {
-    public var source: CatalogueSource = .bookmarks
+    public let source: CatalogueSource = .bookmarks
 
     public lazy var texts: [OraccCatalogEntry] = {
         return self.getCatalogueEntries() ?? []
@@ -131,11 +131,6 @@ final public class Bookmarks: CatalogueProvider {
         entry.indexItem()
         postNotification()
 
-//        if tableViews.count != 0 {
-//            tableViews.allObjects.forEach {
-//                $0.refreshTableView()
-//            }
-//        }
 
     }
 

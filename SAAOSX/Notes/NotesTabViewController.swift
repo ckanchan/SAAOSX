@@ -1,5 +1,5 @@
 //
-//  NotesViewController.swift
+//  NotesTabViewController.swift
 //  SAAOSX
 //
 //  Created by Chaitanya Kanchan on 24/05/2018.
@@ -20,18 +20,18 @@ protocol NoteDisplaying: AnyObject {
 
 class NotesTabViewController: NSTabViewController, NoteStore {
     @discardableResult static func new() -> NotesTabViewController? {
-        let storyboard = NSStoryboard.init(name: "Notes", bundle: Bundle.main)
+        let storyboard = NSStoryboard(name: "Notes", bundle: Bundle.main)
         guard let wc = storyboard.instantiateController(withIdentifier: "NotesWindowController") as? NSWindowController else {return nil}
         guard let splitView = wc.contentViewController as? NSSplitViewController else {return nil}
-        guard let notesViewController = splitView.children[0] as? NotesTabViewController else {return nil}
+        guard let notesTabViewController = splitView.children[0] as? NotesTabViewController else {return nil}
         guard let annotationsViewController = splitView.children[1] as? AnnotationsViewController else {return nil}
         
-        notesViewController.annotationsViewController = annotationsViewController
-        notesViewController.cloudKitDB.retrieveAllNotes(completionHandler: {[weak notesViewController ] notes in
-            notesViewController?.notes = notes
+        notesTabViewController.annotationsViewController = annotationsViewController
+        notesTabViewController.cloudKitDB.retrieveAllNotes(completionHandler: {[weak notesTabViewController ] notes in
+            notesTabViewController?.notes = Array(notes.values)
         })
         
-        return notesViewController
+        return notesTabViewController
     }
 
     
@@ -45,17 +45,16 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     
     weak var annotationsViewController: AnnotationsViewController!
     
+    // This method displays annotations in the right half of the table view controller.
     func setAnnotations(for note: TextID) {
-        //TODO: - Reimplement
+        let annotations = cloudKitDB.retrieveAnnotations(forTextID: note)
+        annotationsViewController.annotations = annotations
+        
     }
     
     @objc func search(_ sender: NSSearchField) {
         let searchText = sender.stringValue.lowercased()
-        //TODO: - Search function
-    }
-    
-    @objc func searchLocal(_ sender: NSSearchField) {
-        //TODO :- Reimplement local search through annotations.
+
     }
 }
 

@@ -46,3 +46,28 @@ extension CKRecord {
             tags: Set(tags))
     }
 }
+
+extension Note {
+    func toCKRecord() -> CKRecord {
+        let record = CKRecord(recordType: CKRecord.RecordTypes.Note)
+        record["textID"] = self.id.description
+        record["notes"] = self.notes
+        return record
+    }
+}
+
+extension Annotation {
+    func toCKRecord() -> CKRecord {
+        let record = CKRecord(recordType: CKRecord.RecordTypes.Annotation)
+        record["textID"] = self.nodeReference.base.description
+        record["nodeReference"] = self.nodeReference.description
+        record["transliteration"] = self.transliteration
+        record["normalisation"] = self.normalisation
+        record["translation"] = self.translation
+        record["context"] = self.context
+        record["annotation"] = self.annotation
+        record["tags"] = Array(self.tags)
+        
+        return record
+    }
+}

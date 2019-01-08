@@ -13,7 +13,7 @@ import CloudKit
 final class TextAnnotationManager {
     let cloudKitDB: CloudKitNotes
     let textID: TextID
-    var annotationDelegate: AnnotationsDisplaying?
+    weak var annotationDelegate: AnnotationsDisplaying?
     var userTagSet: UserTags
     var annotations: [NodeReference: Annotation] = [:]
     
@@ -23,16 +23,11 @@ final class TextAnnotationManager {
     }
     
     func updateAnnotations() {
-        var annotations = [Annotation]()
-        cloudKitDB.retrieveAnnotations(
-            forTextID: textID,
-            forRetrievedAnnotation: {annotations.append($0)},
-            onCompletion: {[weak self] _ in
-                annotations.forEach { annotation in
-                    self?.annotations[annotation.nodeReference] = annotation
-                    self?.annotationDelegate?.annotationsWereUpdated()
-                }
-        })
+        let annotations = cloudKitDB.retrieveAnnotations(forTextID: textID)
+        annotations.forEach { annotation in
+            self.annotations[annotation.nodeReference] = annotation
+        }
+        self.annotationDelegate?.annotationsWereUpdated()
     }
     
     func updateAnnotation(_ annotation: Annotation) {

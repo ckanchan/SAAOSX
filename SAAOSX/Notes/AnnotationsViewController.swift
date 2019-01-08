@@ -41,7 +41,7 @@ extension AnnotationsViewController: NSCollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "Annotation"), for: indexPath)
+        let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "AnnotationItem"), for: indexPath)
         
         if let annotations = self.annotations {
             guard let annotationView = item as? AnnotationItem else {return item}

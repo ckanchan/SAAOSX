@@ -11,12 +11,14 @@
 		5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124120A5F47000666489 /* UIVIewController+Theming.swift */; };
 		5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124320A6173D00666489 /* TextPanelViewController.swift */; };
 		541378E321DA5BB7003A4481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 541378E221DA5BB7003A4481 /* CloudKit.framework */; };
-		541378E521DA6263003A4481 /* NoteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteDatabase.swift */; };
-		541378E621DA627C003A4481 /* NoteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteDatabase.swift */; };
+		541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteSQLDatabase.swift */; };
+		541378E621DA627C003A4481 /* NoteSQLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteSQLDatabase.swift */; };
 		541378E821DA7BA7003A4481 /* CloudKitNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E721DA7BA7003A4481 /* CloudKitNotes.swift */; };
 		541378EA21DAAFE0003A4481 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E921DAAFE0003A4481 /* Annotation.swift */; };
 		5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0A200F71C7001EE385 /* TextViewController.swift */; };
 		5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* InfoViewController.swift */; };
+		5420145B21E22DDE00ABCB70 /* CloudKitPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */; };
+		5420145D21E22DE600ABCB70 /* CloudKitPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145C21E22DE600ABCB70 /* CloudKitPull.swift */; };
 		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
@@ -50,7 +52,7 @@
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
 		5484CE9D20B6C4AE002A3809 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5484CE9C20B6C4AE002A3809 /* Notes.storyboard */; };
-		5484CEA120B6C5DE002A3809 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484CEA020B6C5DE002A3809 /* NotesViewController.swift */; };
+		5484CEA120B6C5DE002A3809 /* NotesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484CEA020B6C5DE002A3809 /* NotesTabViewController.swift */; };
 		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
 		548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */; };
 		5491DD4E21CD385100B49B7D /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5491DD4D21CD385100B49B7D /* Maps.storyboard */; };
@@ -136,11 +138,13 @@
 		5407124120A5F47000666489 /* UIVIewController+Theming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Theming.swift"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
 		541378E221DA5BB7003A4481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		541378E421DA6263003A4481 /* NoteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDatabase.swift; sourceTree = "<group>"; };
+		541378E421DA6263003A4481 /* NoteSQLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLDatabase.swift; sourceTree = "<group>"; };
 		541378E721DA7BA7003A4481 /* CloudKitNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitNotes.swift; sourceTree = "<group>"; };
 		541378E921DAAFE0003A4481 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		5418DF0E200FD62A001EE385 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitPush.swift; sourceTree = "<group>"; };
+		5420145C21E22DE600ABCB70 /* CloudKitPull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitPull.swift; sourceTree = "<group>"; };
 		5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+CoreSpotlight.swift"; sourceTree = "<group>"; };
 		54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
 		5435F30221CE5771000A1FC8 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
@@ -176,7 +180,7 @@
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
 		547BE627201345830001B8BF /* GlossaryEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryEntryViewController.swift; sourceTree = "<group>"; };
 		5484CE9C20B6C4AE002A3809 /* Notes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notes.storyboard; sourceTree = "<group>"; };
-		5484CEA020B6C5DE002A3809 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		5484CEA020B6C5DE002A3809 /* NotesTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTabViewController.swift; sourceTree = "<group>"; };
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
 		548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommands.swift; sourceTree = "<group>"; };
 		5491DD4D21CD385100B49B7D /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
@@ -306,8 +310,10 @@
 				54C9DE9521DF936800014049 /* TextAnnotationManager.swift */,
 				541378E921DAAFE0003A4481 /* Annotation.swift */,
 				541378E721DA7BA7003A4481 /* CloudKitNotes.swift */,
+				5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */,
+				5420145C21E22DE600ABCB70 /* CloudKitPull.swift */,
 				54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */,
-				541378E421DA6263003A4481 /* NoteDatabase.swift */,
+				541378E421DA6263003A4481 /* NoteSQLDatabase.swift */,
 				543DC34720B6787A0019FF1E /* UserTags.swift */,
 			);
 			path = Notes;
@@ -448,7 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				5484CE9C20B6C4AE002A3809 /* Notes.storyboard */,
-				5484CEA020B6C5DE002A3809 /* NotesViewController.swift */,
+				5484CEA020B6C5DE002A3809 /* NotesTabViewController.swift */,
 				5466120920B9D56B00FEF2D5 /* NotesByTextViewController.swift */,
 				5466120B20B9D58800FEF2D5 /* NotesByTagViewController.swift */,
 				5466120D20B9D59500FEF2D5 /* NotesByLemmaViewController.swift */,
@@ -854,7 +860,7 @@
 				547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */,
 				54A9521D204058D60042E1BA /* Glossary.swift in Sources */,
 				54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */,
-				541378E521DA6263003A4481 /* NoteDatabase.swift in Sources */,
+				541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */,
 				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */,
@@ -867,11 +873,13 @@
 				54C91A882017C743001AA675 /* TextWindowController.swift in Sources */,
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
 				54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */,
+				5420145D21E22DE600ABCB70 /* CloudKitPull.swift in Sources */,
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
 				54CD208C20B73ABF0008B69D /* AnnotationItem.swift in Sources */,
 				544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
 				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
+				5420145B21E22DDE00ABCB70 /* CloudKitPush.swift in Sources */,
 				5466121020B9D9B600FEF2D5 /* AnnotationsViewController.swift in Sources */,
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
 				54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */,
@@ -883,7 +891,7 @@
 				543DC34820B6787A0019FF1E /* UserTags.swift in Sources */,
 				5435F30321CE5771000A1FC8 /* GeoJSON.swift in Sources */,
 				5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */,
-				5484CEA120B6C5DE002A3809 /* NotesViewController.swift in Sources */,
+				5484CEA120B6C5DE002A3809 /* NotesTabViewController.swift in Sources */,
 				5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
 				54D3B4E321D7ED0E00F836E2 /* PleiadesRecord.swift in Sources */,
 				5466120E20B9D59500FEF2D5 /* NotesByLemmaViewController.swift in Sources */,
@@ -913,7 +921,7 @@
 				5439770E20A43A4B002072AE /* ThemeController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
 				5463D28C20A782B8002B368A /* UserManager.swift in Sources */,
-				541378E621DA627C003A4481 /* NoteDatabase.swift in Sources */,
+				541378E621DA627C003A4481 /* NoteSQLDatabase.swift in Sources */,
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
 				5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */,

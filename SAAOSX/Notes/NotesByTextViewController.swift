@@ -19,15 +19,12 @@ class NotesByTextViewController: NSViewController, NoteDisplaying {
             tableView.delegate = self
         }
     }
-    weak var noteStore: NoteStore!
-    var notes: [Note] {
-        return self.noteStore.notes
-    }
     
+    weak var noteStore: NoteStore!
     var currentlySelectedIndex: Int? = nil {
         didSet {
             if let idx = currentlySelectedIndex {
-                return
+                noteStore.setAnnotations(for: noteStore.notes[idx].id)
             }
         }
     }
@@ -41,12 +38,12 @@ class NotesByTextViewController: NSViewController, NoteDisplaying {
 
 extension NotesByTextViewController: NSTableViewDataSource, NSTableViewDelegate {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return notes.count
+        return noteStore.notes.count
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else {return nil}
-        let note = notes[row]
+        let note = noteStore.notes[row]
         
         if tableColumn?.identifier.rawValue == "id" {
             view.textField?.stringValue = note.id.description
@@ -67,7 +64,7 @@ extension NotesByTextViewController: NSTableViewDataSource, NSTableViewDelegate 
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         guard tableView.selectedRow != -1,
-            tableView.selectedRow < notes.count else {
+            tableView.selectedRow < noteStore.notes.count else {
                 self.currentlySelectedIndex = nil
                 return
         }
