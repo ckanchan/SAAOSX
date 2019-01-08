@@ -13,23 +13,14 @@ import CDKOraccInterface
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    lazy var oraccInterface: OraccInterface = {
-        if UserDefaults.standard.bool(forKey: PreferenceKey.useGithub.rawValue) {
-            return try! OraccGithubToSwiftInterface()
-        } else {
-            return OraccToSwiftInterface()
-        }
-    }()
+    lazy var oraccInterface: OraccInterface = {return try! OraccGithubToSwiftInterface()}()
 
     lazy var glossary: Glossary = { return Glossary() }()
     lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
-    lazy var cloudKitDB: CloudKitNotes = { return CloudKitNotes() }()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
-        
-        cloudKitDB.userStatusDidChange()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -57,13 +48,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         GlossaryWindowController.new(self)
     }
     
-    @IBAction func newNotesWindow(_ sender: Any){
-        //TODO :- Check User is signed in?
-        guard cloudKitDB.userIsLoggedIn,
-            let notesViewController = NotesTabViewController.new() else {return}
-        notesViewController.view.window?.makeKeyAndOrderFront(self)
-        
-    }
 
     @IBAction func openPreferencesWindow(_ sender: Any) {
         if NSApp.windows.contains(where: {

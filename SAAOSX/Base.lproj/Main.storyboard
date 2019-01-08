@@ -79,11 +79,6 @@
                                                 <action selector="newGlossaryWindow:" target="Voe-Tx-rLC" id="TZa-aJ-I2p"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Notes Window" keyEquivalent="A" id="Kbq-FZ-PWH">
-                                            <connections>
-                                                <action selector="newNotesWindow:" target="Ady-hI-5gd" id="VLE-hH-89m"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
                                                 <action selector="openDocument:" target="Ady-hI-5gd" id="bVn-NM-KNZ"/>
@@ -703,7 +698,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SAAOSX" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SAAo_SX" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -712,7 +707,7 @@
         <!--Project Window-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController storyboardIdentifier="ProjectListWindow" id="B8D-0N-5wS" userLabel="Project Window" customClass="ProjectListWindowController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="ProjectListWindow" id="B8D-0N-5wS" userLabel="Project Window" customClass="ProjectListWindowController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -921,7 +916,7 @@
         <!--Info Side Bar View Controller-->
         <scene sceneID="Ybp-ZM-fLo">
             <objects>
-                <viewController id="ovm-oE-p86" customClass="InfoSideBarViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ovm-oE-p86" customClass="InfoSideBarViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="dVb-f2-cgE">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="398"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1030,7 +1025,7 @@
         <!--Glossary Window-->
         <scene sceneID="aHO-2K-bV2">
             <objects>
-                <windowController storyboardIdentifier="GlossaryWindow" id="rTP-aJ-cld" userLabel="Glossary Window" customClass="GlossaryWindowController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="GlossaryWindow" id="rTP-aJ-cld" userLabel="Glossary Window" customClass="GlossaryWindowController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Glossary" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titleVisibility="hidden" id="6zq-6O-zmA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -1093,7 +1088,7 @@
         <!--Glossary Split View Controller-->
         <scene sceneID="4PH-mT-yVp">
             <objects>
-                <splitViewController id="6DB-pu-ROG" customClass="GlossarySplitViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController id="6DB-pu-ROG" customClass="GlossarySplitViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem holdingPriority="255" behavior="contentList" id="R4t-Uc-KoN"/>
                         <splitViewItem canCollapse="YES" holdingPriority="260" behavior="sidebar" id="NVD-wX-dQI"/>
@@ -1119,7 +1114,7 @@
         <scene sceneID="uFd-Aa-wO9">
             <objects>
                 <customObject id="9Iv-xJ-d3h" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="GlossaryListViewController" id="jwJ-qE-281" customClass="GlossaryListViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GlossaryListViewController" id="jwJ-qE-281" customClass="GlossaryListViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <scrollView key="view" wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="PNV-Ql-ADW">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1229,7 +1224,7 @@
         <!--Glossary Entry View Controller-->
         <scene sceneID="ziM-xr-pPv">
             <objects>
-                <viewController id="MCb-b4-p2O" customClass="GlossaryEntryViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="MCb-b4-p2O" customClass="GlossaryEntryViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="J62-pO-2aF">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1326,7 +1321,7 @@
         <!--Project List View Controller-->
         <scene sceneID="yDH-KC-7na">
             <objects>
-                <viewController id="lUe-tl-xSr" customClass="ProjectListViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="lUe-tl-xSr" customClass="ProjectListViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <scrollView key="view" wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="DBy-XK-62h">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="553"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

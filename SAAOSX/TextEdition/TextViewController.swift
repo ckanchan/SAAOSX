@@ -27,7 +27,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     var catalogueEntry: OraccCatalogEntry! {
         didSet {
             guard let cat = catalogueEntry else {return}
-            self.annotationsManager = TextAnnotationManager(cloudKitDB: cloudKitDB, textID: catalogueEntry.id, annotationDelegate: self)
             self.saved = self.bookmarks.contains(textID: cat.id.description)
 
             guard self.windowController != nil else {return}
@@ -45,15 +44,12 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             }
         }
     }
-    var annotationsManager: TextAnnotationManager?
     
     lazy var currentIdx: Int? = {
         return catalogue?.texts.index(where: {$0.id == self.catalogueEntry.id})
         }()
 
-    var windowController: TextWindowController? {
-        return self.view.window?.windowController as? TextWindowController
-    }
+    var windowController: TextWindowController?
     
 
     override func viewWillAppear() {
@@ -61,30 +57,13 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         self.title = catalogueEntry?.title ?? "Text Edition"
         setText(self)
         textView.delegate = self
-//        self.retrieveAnnotations()
     }
     
     override func viewDidDisappear() {
         super.viewDidDisappear()
         guard let windowController = self.windowController else {return}
         windowController.textViewController.removeAll()
-    }
-    
-    
-    func highlightAnnotations(in textView: NSTextView, annotations: [String: Annotation]) {
-        textView.textStorage?.enumerateAttribute(.reference, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
-            value, range, _ in
-            guard let stringVal = value as? String else {return}
-            if let annotation = annotations[stringVal] {
-                guard range.length > 2 else {return}
-                let newRange = NSRange(location: range.location, length: range.length - 1)
-                textView.textStorage?.addAttributes(
-                    [NSAttributedString.Key.backgroundColor: NSColor.systemPink,
-                     NSAttributedString.Key.toolTip: annotation.annotation
-                    ],
-                    range: newRange)
-            }
-        })
+        self.windowController = nil
     }
     
     func highlightSearchTerm(_ searchTerm: String, in textView: NSTextView) {
@@ -110,7 +89,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             textView.textStorage?.setAttributedString(stringContainer.transliteration)
         case 2:
             textView.textStorage?.setAttributedString(stringContainer.normalisation)
-            annotationsWereUpdated()
             if let searchTerm = searchTerm {
                 highlightSearchTerm(searchTerm, in: textView)
             }
@@ -174,61 +152,16 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         let metadata = str.attributes(at: charIndex, effectiveRange: nil)
         guard let citationForm = metadata[.oraccCitationForm] as? String,
             let transliteration = metadata[.writtenForm] as? String,
-            let reference = metadata[.reference] as? String,
             let translation = metadata[.instanceTranslation] as? String else {return nil}
         
         menu.addItem(withTitle: citationForm, action: #selector(lookUpInGlossaryWindow), keyEquivalent: "")
         menu.addItem(withTitle: transliteration, action: nil, keyEquivalent: "")
         menu.addItem(withTitle: translation, action: nil, keyEquivalent: "")
-
-        let contextRange = view.selectionRange(forProposedRange: NSMakeRange(charIndex, 0), granularity: .selectByParagraph)
-        let contextStr = str.attributedSubstring(from: contextRange).string
-        
-        let menuMetadata: [NSAttributedString.Key: String] = [.oraccCitationForm: citationForm,
-                                                             .writtenForm: transliteration,
-                                                             .instanceTranslation: translation,
-                                                             .reference: reference,
-                                                             .referenceContext: contextStr]
-        
-        
-        let annotationItem = NSMenuItem(title: "Add annotation", action: #selector(newAnnotationWindow), keyEquivalent: "")
-        
-        let annotatedTitle = NSAttributedString(string: "Add annotation",
-                                                        attributes: menuMetadata)
-        
-        annotationItem.attributedTitle = annotatedTitle
-        
-        menu.addItem(annotationItem)
-        
         return menu
     }
 
     @objc func lookUpInGlossaryWindow(_ sender: NSMenuItem) {
         GlossaryWindowController.searchField(sender)
-    }
-    
-    @objc func newAnnotationWindow(_ sender: NSMenuItem) {
-        let window: NSWindowController?
-        
-        guard let metadata = sender.attributedTitle?.attributes(at: 0, effectiveRange: nil) else {return}
-        guard let reference = metadata[.reference] as? String else {return}
-        guard let annotationManager = self.annotationsManager else {return}
-        
-        if let annotation = self.annotationsManager?.annotationForReference(reference) {
-            window = AnnotationPopupController.new(withAnnotation: annotation, annotationManager: annotationManager)
-        } else {
-            guard let citationForm = metadata[.oraccCitationForm] as? String,
-                let transliteration = metadata[.writtenForm] as? String,
-                let translation = metadata[.instanceTranslation] as? String,
-                let context = metadata[.referenceContext] as? String,
-                let reference = metadata[.reference] as? String else {return}
-            
-            let nodeReference = NodeReference(stringLiteral: reference)
-            window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context, annotationManager: annotationManager)
-        }
-        window?.showWindow(self)
-        guard let annotationVc = window?.contentViewController as? AnnotationPopupController else {return}
-        annotationVc.textField.becomeFirstResponder()
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
@@ -349,19 +282,6 @@ extension TextViewController {
             DispatchQueue.main.async {
                 MapViewController.new(forMap: ancientMap)
             }
-        }
-    }
-}
-extension TextViewController: AnnotationsDisplaying {
-    func annotationsWereUpdated() {
-        guard let annotations = annotationsManager?.annotations else {return}
-        var strAnnotations = [String: Annotation]()
-        annotations.forEach{
-            strAnnotations[$0.key.description] = $0.value
-        }
-        DispatchQueue.main.async { [weak self] in
-            guard let vc = self else {return}
-            vc.highlightAnnotations(in: vc.textView, annotations: strAnnotations)
         }
     }
 }

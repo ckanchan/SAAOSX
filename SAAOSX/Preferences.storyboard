@@ -30,7 +30,7 @@
         <!--Preferences View Controller-->
         <scene sceneID="m7d-si-xbf">
             <objects>
-                <viewController id="ZSR-3X-mrH" customClass="PreferencesViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZSR-3X-mrH" customClass="PreferencesViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="WH1-Db-kfR">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -76,29 +76,6 @@
                                     <action selector="temporaryFileClear:" target="ZSR-3X-mrH" id="HoH-qN-oJY"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8A-If-Oca">
-                                <rect key="frame" x="66" y="141" width="115" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Resource Provider" id="apB-ZR-LTN">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DWA-SY-oTQ">
-                                <rect key="frame" x="234" y="137" width="158" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="swX-Yt-IFl">
-                                    <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment label="Oracc.org" width="76"/>
-                                        <segment label="Github" width="76" selected="YES" tag="1"/>
-                                    </segments>
-                                </segmentedCell>
-                                <connections>
-                                    <action selector="setProviderDefault:" target="ZSR-3X-mrH" id="gaO-DK-yaN"/>
-                                </connections>
-                            </segmentedControl>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Dxm-wI-lwv" firstAttribute="centerY" secondItem="Hp3-jN-7SW" secondAttribute="centerY" id="XFu-hL-fSm"/>
@@ -108,7 +85,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="providerSwitch" destination="DWA-SY-oTQ" id="2Aw-vy-gYw"/>
                         <outlet property="temporaryFileLabel" destination="hgs-c3-Txu" id="bcE-yu-TYj"/>
                         <outlet property="textPreferenceSwitch" destination="Hp3-jN-7SW" id="5w3-W2-8bj"/>
                     </connections>
