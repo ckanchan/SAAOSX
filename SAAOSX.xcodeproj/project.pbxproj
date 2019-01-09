@@ -78,6 +78,7 @@
 		54D3B4E321D7ED0E00F836E2 /* PleiadesRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E221D7ED0E00F836E2 /* PleiadesRecord.swift */; };
 		54D3B4E521D7F0F100F836E2 /* NSAlertExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E421D7F0F100F836E2 /* NSAlertExtensions.swift */; };
 		54D9CD092019C974005498A3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 54D9CD082019C974005498A3 /* Credits.rtf */; };
+		54E207DC21E60038004663C7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54E207DB21E60038004663C7 /* MapKit.framework */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */; };
 		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
@@ -182,6 +183,7 @@
 		54D9CD082019C974005498A3 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAOSX.entitlements; sourceTree = "<group>"; };
 		54E207DA21E552D4004663C7 /* SAAo-SX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SAAo-SX.entitlements"; sourceTree = "<group>"; };
+		54E207DB21E60038004663C7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSideBarViewController.swift; sourceTree = "<group>"; };
 		54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
 		54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54E207DC21E60038004663C7 /* MapKit.framework in Frameworks */,
 				3A3CD737F91C1A503267C73E /* Pods_SAAOSX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +324,7 @@
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				54E207DB21E60038004663C7 /* MapKit.framework */,
 				54C9843720A75E880026C5AA /* libicucore.tbd */,
 				54C9843520A75E7B0026C5AA /* libc++.tbd */,
 				E3A104D471EB3B0390AFEBD8 /* Pods_SAAOSX.framework */,
@@ -576,6 +580,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
+							com.apple.Maps.Mac = {
 								enabled = 1;
 							};
 							com.apple.Push = {
