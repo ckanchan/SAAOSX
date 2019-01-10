@@ -50,14 +50,10 @@ class ProjectListViewController: UITableViewController {
         
         tableView.reloadData()
         
-        
-        let notesButton = UIBarButtonItem(title: "Notes", style: .plain, target: self, action: #selector(loadNotes))
-        
         if self.catalogue.source != .search {
             let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
-            self.setToolbarItems([notesButton, UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
+            self.setToolbarItems([glossaryButton], animated: false)
         } else {
-            self.setToolbarItems([notesButton], animated: false)
             self.title = catalogue.name
         }
         
@@ -72,31 +68,6 @@ class ProjectListViewController: UITableViewController {
         self.deregisterThemeNotifications()
     }
     
-    @objc func loadNotes() {
-        guard let row = tableView.indexPathForSelectedRow?.row else {return}
-        guard let entry = sqlite.getEntryAt(row: row) else {return}
-        let id = entry.id
-        
-        guard let user = self.userManager.user else {
-            let alert = UIAlertController(title: "Not logged in", message: "Log in to save and sync notes", preferredStyle: .alert)
-            let signIn = UIAlertAction(title: "Log in", style: .default){ [unowned self] alert in
-                guard let controller = self.userManager.signIn() else {return}
-                self.present(controller, animated: true)
-            }
-            
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-            alert.addAction(signIn)
-            alert.addAction(cancel)
-            self.present(alert, animated: true)
-            return
-        }
-        
-        let notesViewController = NotesViewController.new(id: id, for: user)
-        
-        darkTheme ? notesViewController.enableDarkMode() : notesViewController.disableDarkMode()
-        navigationController?.pushViewController(notesViewController, animated: true)
-
-    }
     
     @objc func loadPreferences() {
         guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.PreferencesViewController) else {return}

@@ -109,10 +109,11 @@ extension UIFont {
                                                                    NSAttributedStringKey.font: self.reducedFontSize,
                                                                    NSAttributedStringKey.foregroundColor: UIColor.lightText]
         let damagedFormatting: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: self.getItalicFont(), NSAttributedStringKey.foregroundColor: UIColor.gray]
+        let damagedLogogram: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: UIFont.systemFontSize), NSAttributedStringKey.foregroundColor: UIColor.gray]
 
         let editorialFormatting: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.smallSystemFontSize, weight: UIFont.Weight.regular), NSAttributedStringKey.foregroundColor: UIColor.lightText]
         let editorialBoldFormatting: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.smallSystemFontSize, weight: UIFont.Weight.bold), NSAttributedStringKey.foregroundColor: UIColor.lightText]
 
-        return OraccTextEdition.FormattingPreferences(editorial: editorialFormatting, editorialBold: editorialBoldFormatting, italic: italicFormatting, superscript: superscriptFormatting, damaged: damagedFormatting, none: noFormatting)
+        return OraccTextEdition.FormattingPreferences(editorial: editorialFormatting, editorialBold: editorialBoldFormatting, italic: italicFormatting, superscript: superscriptFormatting, damaged: damagedFormatting, damagedLogogram: damagedLogogram, none: noFormatting)
     }
 }

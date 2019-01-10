@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,27 +53,27 @@
                                 <exclude reference="qZd-cU-bNl"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="5Wj-Bt-OtS"/>
-                                <exclude reference="Efo-eb-NB6"/>
-                                <exclude reference="Eki-XP-3uC"/>
-                                <exclude reference="gIS-Gz-ZaE"/>
-                                <exclude reference="xSY-de-yjB"/>
-                                <exclude reference="Kxv-Mk-4pE"/>
-                                <exclude reference="pC6-yy-qRm"/>
                                 <exclude reference="6n3-ZV-xAs"/>
                                 <exclude reference="Lkf-Lu-cFD"/>
                                 <exclude reference="WOA-VC-M5b"/>
                                 <exclude reference="e8f-NW-tNd"/>
                                 <exclude reference="qUO-NL-DhN"/>
                                 <exclude reference="rBg-Sf-IPD"/>
+                                <exclude reference="Kxv-Mk-4pE"/>
+                                <exclude reference="pC6-yy-qRm"/>
+                                <exclude reference="5Wj-Bt-OtS"/>
+                                <exclude reference="Efo-eb-NB6"/>
+                                <exclude reference="Eki-XP-3uC"/>
+                                <exclude reference="gIS-Gz-ZaE"/>
+                                <exclude reference="xSY-de-yjB"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="constraints">
-                                <include reference="pC6-yy-qRm"/>
                                 <include reference="6n3-ZV-xAs"/>
                                 <include reference="Lkf-Lu-cFD"/>
                                 <include reference="qUO-NL-DhN"/>
+                                <include reference="pC6-yy-qRm"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
@@ -81,15 +81,15 @@
                                 <include reference="qZd-cU-bNl"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="WOA-VC-M5b"/>
+                                <include reference="e8f-NW-tNd"/>
+                                <include reference="rBg-Sf-IPD"/>
+                                <include reference="Kxv-Mk-4pE"/>
                                 <include reference="5Wj-Bt-OtS"/>
                                 <include reference="Efo-eb-NB6"/>
                                 <include reference="Eki-XP-3uC"/>
                                 <include reference="gIS-Gz-ZaE"/>
                                 <include reference="xSY-de-yjB"/>
-                                <include reference="Kxv-Mk-4pE"/>
-                                <include reference="WOA-VC-M5b"/>
-                                <include reference="e8f-NW-tNd"/>
-                                <include reference="rBg-Sf-IPD"/>
                             </mask>
                         </variation>
                     </view>

@@ -8,24 +8,14 @@
 
 import UIKit
 import CDKSwiftOracc
-import Firebase
-import FirebaseUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    lazy var sqlDB: SQLiteCatalogue = {
-        return SQLiteCatalogue()
-        }()!
+    lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue() }()!
 
-    lazy var glossaryDB: Glossary = {
-        return Glossary()
-    }()
-    
-    lazy var userManager: UserManager = {
-        return UserManager()
-    }()
+    lazy var glossaryDB: Glossary = { return Glossary() }()
 
     var splitViewController: UISplitViewController {
         return window!.rootViewController as! UISplitViewController
@@ -48,8 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let themeController = ThemeController()
         themeController.change(theme: themeController.themePreference)
         self.registerThemeNotifications()
-        FirebaseApp.configure()
-
         return true
     }
 
@@ -57,15 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         deregisterThemeNotifications()
     }
 
-    func application(_ app: UIApplication, open url: URL,
-                     options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
-        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
-            return true
-        }
-        // other URL handling goes here.
-        return false
-    }
 
     func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
         self.sqlDB = SQLiteCatalogue()!

@@ -7,12 +7,10 @@
 //
 
 import UIKit
-import FirebaseUI
 
 class PreferencesViewController: UITableViewController {
     @IBOutlet weak var themeStandard: UITableViewCell!
     @IBOutlet weak var themeDark: UITableViewCell!
-    @IBOutlet weak var signIn: UITableViewCell!
     
     
     var themeController = ThemeController()
@@ -24,22 +22,8 @@ class PreferencesViewController: UITableViewController {
 
     override func viewDidLoad() {
         registerThemeNotifications()
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshUser), name: .userChange, object: nil)
-        refreshUser()
     }
     
-    @objc func refreshUser() {
-        if let user = userManager.user {
-            signIn.textLabel?.text = user.displayName
-            signIn.detailTextLabel?.text = user.providerID
-        } else {
-            signIn.textLabel?.text = "Not logged in"
-        }
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 
     func showPreferences() {
         switch themeController.themePreference {
@@ -49,23 +33,6 @@ class PreferencesViewController: UITableViewController {
         case .dark:
             themeDark.accessoryType = .checkmark
             themeStandard.accessoryType = .none
-        }
-    }
-    
-    func toggleUser() {
-        if userManager.user == nil {
-            guard let viewController = userManager.signIn() else { return }
-            present(viewController, animated: true){ [weak self] in
-                guard self?.userManager.user != nil else {
-                    let alert = UIAlertController(title: "Error signing in", message: "An error occurred", preferredStyle: .alert)
-                    let done = UIAlertAction(title: "OK", style: .default)
-                    alert.addAction(done)
-                    self?.present(alert, animated: true)
-                    return
-                }
-            }
-        } else {
-            userManager.signOut()
         }
     }
 
@@ -79,14 +46,6 @@ class PreferencesViewController: UITableViewController {
             case 1: //Dark
                 themeController.change(theme: .dark)
                 tableView.deselectRow(at: indexPath, animated: true)
-            default:
-                return
-            }
-            
-        case 1: //Sign In Section
-            switch indexPath.row {
-            case 0:
-                toggleUser()
             default:
                 return
             }

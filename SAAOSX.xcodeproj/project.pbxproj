@@ -27,7 +27,6 @@
 		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
 		5447AE2B21D421B800EDD45F /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
-		5463D28C20A782B8002B368A /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5463D28B20A782B7002B368A /* UserManager.swift */; };
 		54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */; };
 		54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */; };
 		54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */; };
@@ -57,7 +56,6 @@
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
 		54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */; };
 		54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */; };
-		54A7851F20A8689F0005B7D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */; };
 		54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
 		54A9521B204058D60042E1BA /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
 		54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* Bookmarks.swift */; };
@@ -71,7 +69,6 @@
 		54C91A882017C743001AA675 /* TextWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A872017C743001AA675 /* TextWindowController.swift */; };
 		54C9843620A75E7B0026C5AA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843520A75E7B0026C5AA /* libc++.tbd */; };
 		54C9843820A75E880026C5AA /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843720A75E880026C5AA /* libicucore.tbd */; };
-		54C9845020A767930026C5AA /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9844F20A767930026C5AA /* NotesViewController.swift */; };
 		54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */; };
 		54D3B4DE21D7B5A800F836E2 /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E021D7BBE000F836E2 /* AncientMapTableViewDelegate.swift */; };
@@ -136,7 +133,6 @@
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5447AE2A21D421B800EDD45F /* qpn_pleiades.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = qpn_pleiades.json; sourceTree = "<group>"; };
 		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
-		5463D28B20A782B7002B368A /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineViewController.swift; sourceTree = "<group>"; };
@@ -161,7 +157,6 @@
 		5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
 		54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextEditionStringContainer+MapFunctions.swift"; sourceTree = "<group>"; };
-		54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		54A95216204058D60042E1BA /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
 		54A95217204058D60042E1BA /* Catalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalogue.swift; sourceTree = "<group>"; };
 		54A95218204058D60042E1BA /* Bookmarks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
@@ -175,7 +170,6 @@
 		54C91A872017C743001AA675 /* TextWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWindowController.swift; sourceTree = "<group>"; };
 		54C9843520A75E7B0026C5AA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		54C9843720A75E880026C5AA /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libicucore.tbd; sourceTree = DEVELOPER_DIR; };
-		54C9844F20A767930026C5AA /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardKeys.swift; sourceTree = "<group>"; };
 		54D3B4E021D7BBE000F836E2 /* AncientMapTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMapTableViewDelegate.swift; sourceTree = "<group>"; };
 		54D3B4E221D7ED0E00F836E2 /* PleiadesRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PleiadesRecord.swift; sourceTree = "<group>"; };
@@ -334,14 +328,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5463D28A20A782AB002B368A /* User */ = {
-			isa = PBXGroup;
-			children = (
-				5463D28B20A782B7002B368A /* UserManager.swift */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
 		54657A5D20A0C0FC00FAC8E3 /* Glossary */ = {
 			isa = PBXGroup;
 			children = (
@@ -420,8 +406,6 @@
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
-				5463D28A20A782AB002B368A /* User */,
-				54C9844E20A767790026C5AA /* Notes */,
 				5407124020A5F45D00666489 /* Theming */,
 				5439770A20A421B0002072AE /* Preferences */,
 				548C57D120A1C4CE008E8C1F /* Extensions */,
@@ -432,7 +416,6 @@
 				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
-				54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */,
 				5498CAE8204EAF63004C774A /* Info.plist */,
 			);
 			path = SAAiOS;
@@ -448,14 +431,6 @@
 				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		54C9844E20A767790026C5AA /* Notes */ = {
-			isa = PBXGroup;
-			children = (
-				54C9844F20A767930026C5AA /* NotesViewController.swift */,
-			);
-			path = Notes;
 			sourceTree = "<group>";
 		};
 		54D3B4DD21D7B56D00F836E2 /* Resources */ = {
@@ -657,7 +632,6 @@
 			files = (
 				5498CAE7204EAF63004C774A /* LaunchScreen.storyboard in Resources */,
 				54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */,
-				54A7851F20A8689F0005B7D6 /* GoogleService-Info.plist in Resources */,
 				543709AB209F9D8C00CE41F7 /* DejaVuSans.ttf in Resources */,
 				5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */,
 				549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
@@ -828,12 +802,10 @@
 			files = (
 				54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */,
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
-				54C9845020A767930026C5AA /* NotesViewController.swift in Sources */,
 				5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */,
 				54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */,
 				5439770E20A43A4B002072AE /* ThemeController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
-				5463D28C20A782B8002B368A /* UserManager.swift in Sources */,
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
 				5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */,
