@@ -20,6 +20,7 @@ class OnlineViewController: UIViewController, WKUIDelegate {
         view = webView
     }
 
+    #warning("Do something to notify the user if oracc.org is down.")
     override func viewDidLoad() {
         let request = URLRequest(url: url)
         webView.load(request)

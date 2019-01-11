@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3A3CD737F91C1A503267C73E /* Pods_SAAOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A104D471EB3B0390AFEBD8 /* Pods_SAAOSX.framework */; };
-		5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124120A5F47000666489 /* UIVIewController+Theming.swift */; };
 		5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124320A6173D00666489 /* TextPanelViewController.swift */; };
 		5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0A200F71C7001EE385 /* TextViewController.swift */; };
 		5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* InfoViewController.swift */; };
@@ -20,7 +19,6 @@
 		543709AC209F9D8C00CE41F7 /* CuneiformNA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */; };
 		543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */; };
 		5439770C20A421E6002072AE /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770B20A421E6002072AE /* PreferencesViewController.swift */; };
-		5439770E20A43A4B002072AE /* ThemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770D20A43A4B002072AE /* ThemeController.swift */; };
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
@@ -111,7 +109,6 @@
 /* Begin PBXFileReference section */
 		118CFB55773AAAD4E108D905 /* Pods-SAAiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAiOS/Pods-SAAiOS.release.xcconfig"; sourceTree = "<group>"; };
 		123BAD5C6459052D7F0CE21A /* Pods-SAAOSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAOSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAOSX/Pods-SAAOSX.debug.xcconfig"; sourceTree = "<group>"; };
-		5407124120A5F47000666489 /* UIVIewController+Theming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Theming.swift"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		5418DF0E200FD62A001EE385 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
@@ -122,7 +119,6 @@
 		543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CuneiformNA.ttf; sourceTree = "<group>"; };
 		543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
 		5439770B20A421E6002072AE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
-		5439770D20A43A4B002072AE /* ThemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeController.swift; sourceTree = "<group>"; };
 		544138D92004D27A00A64CB2 /* SAAo-SX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SAAo-SX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,7 +142,7 @@
 		548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommands.swift; sourceTree = "<group>"; };
 		5491DD4D21CD385100B49B7D /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
 		549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAA_Lemmatised.sqlite3; sourceTree = "<group>"; };
-		5498CAD8204EAF63004C774A /* SAAiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5498CAD8204EAF63004C774A /* SAAi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5498CADA204EAF63004C774A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5498CADC204EAF63004C774A /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
 		5498CADE204EAF63004C774A /* TextEditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditionViewController.swift; sourceTree = "<group>"; };
@@ -223,15 +219,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5407124020A5F45D00666489 /* Theming */ = {
-			isa = PBXGroup;
-			children = (
-				5439770D20A43A4B002072AE /* ThemeController.swift */,
-				5407124120A5F47000666489 /* UIVIewController+Theming.swift */,
-			);
-			path = Theming;
-			sourceTree = "<group>";
-		};
 		543709A8209F9D4100CE41F7 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,7 +267,7 @@
 			children = (
 				544138D92004D27A00A64CB2 /* SAAo-SX.app */,
 				544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */,
-				5498CAD8204EAF63004C774A /* SAAiOS.app */,
+				5498CAD8204EAF63004C774A /* SAAi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -406,7 +393,6 @@
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
-				5407124020A5F45D00666489 /* Theming */,
 				5439770A20A421B0002072AE /* Preferences */,
 				548C57D120A1C4CE008E8C1F /* Extensions */,
 				54657A5D20A0C0FC00FAC8E3 /* Glossary */,
@@ -520,9 +506,9 @@
 			productReference = 544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5498CAD7204EAF63004C774A /* SAAiOS */ = {
+		5498CAD7204EAF63004C774A /* SAAi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAiOS" */;
+			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAi" */;
 			buildPhases = (
 				FCACBCDA4947268DEADF6D2D /* [CP] Check Pods Manifest.lock */,
 				5498CAD4204EAF63004C774A /* Sources */,
@@ -534,9 +520,9 @@
 			);
 			dependencies = (
 			);
-			name = SAAiOS;
+			name = SAAi;
 			productName = SAAiOS;
-			productReference = 5498CAD8204EAF63004C774A /* SAAiOS.app */;
+			productReference = 5498CAD8204EAF63004C774A /* SAAi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -597,7 +583,7 @@
 			targets = (
 				544138D82004D27A00A64CB2 /* SAAo-SX */,
 				544138EA2004D27A00A64CB2 /* SAAOSXTests */,
-				5498CAD7204EAF63004C774A /* SAAiOS */,
+				5498CAD7204EAF63004C774A /* SAAi */,
 			);
 		};
 /* End PBXProject section */
@@ -804,11 +790,9 @@
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
 				5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */,
 				54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */,
-				5439770E20A43A4B002072AE /* ThemeController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
-				5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */,
 				548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */,
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
 				5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */,
@@ -1124,7 +1108,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAiOS" */ = {
+		5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5498CAE9204EAF63004C774A /* Debug */,

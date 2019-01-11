@@ -22,7 +22,8 @@ class TextEditionViewController: UIViewController {
 
     @IBOutlet weak var primaryContainerView: UIView!
     @IBOutlet weak var secondaryContainerView: UIView!
-
+    @IBOutlet weak var stackView: UIStackView!
+    
     // MARK: - Instance Variables
     weak var parentController: ProjectListViewController?
     weak var catalogue: CatalogueProvider?
@@ -34,35 +35,30 @@ class TextEditionViewController: UIViewController {
     var textItem: OraccCatalogEntry?
     var textStrings: TextEditionStringContainer? {
         didSet {
-            textStrings?.render(withPreferences: ThemeController().themeFormatting)
+            textStrings?.render(withPreferences: UIFont.systemFont(ofSize: UIFont.systemFontSize).makeDefaultPreferences())
         }
     }
 
     var searchTerm: String?
-    lazy var darkMode: Bool = {
-        return ThemeController().themePreference == .dark ?  true : false
-    }()
-
+    
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         initialiseToolbar()
         addInfoButton()
-        registerThemeNotifications()
 
         primaryPanel = childViewControllers.first as? TextPanelViewController
         secondaryPanel = childViewControllers.last as? TextPanelViewController
-
+        
         primaryPanel.delegate = self
         primaryPanel.textDisplay = .Normalisation
-
-        secondaryPanel.delegate = self
-        secondaryPanel.textDisplay = .Translation
-
-        darkMode ? enableDarkMode() : disableDarkMode()
-    }
-
-    deinit {
-        deregisterThemeNotifications()
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            let view = stackView.arrangedSubviews[stackView.arrangedSubviews.count - 1]
+            stackView.removeArrangedSubview(view)
+        } else {
+            secondaryPanel.delegate = self
+            secondaryPanel.textDisplay = .Translation
+        }
     }
 
     func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
@@ -176,30 +172,17 @@ class TextEditionViewController: UIViewController {
 
     func string(for textKind: TextDisplay) -> NSAttributedString {
         let notAvailable = NSAttributedString(string: "Not available")
-        let textColor = darkMode ? UIColor.lightText : UIColor.darkText
 
         switch textKind {
         case .Cuneiform:
-            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.cuneiformNA, .foregroundColor: textColor])
+            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.cuneiformNA])
         case .Transliteration:
             return textStrings?.transliteration ?? notAvailable
         case .Normalisation:
             return textStrings?.normalisation ?? notAvailable
         case .Translation:
-            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.defaultFont, .foregroundColor: textColor])
+            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.defaultFont])
 
-        }
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        switch traitCollection.horizontalSizeClass {
-        case .regular:
-            return
-
-        default:
-            return
         }
     }
 
@@ -224,6 +207,7 @@ extension TextEditionViewController {
         guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
         infoTableController.catalogueInfo = catalogueInfo
         infoTableController.textEditionViewController = self
+        infoTableController.tableView.delegate = infoTableController
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             infoTableController.modalPresentationStyle = .popover
@@ -236,37 +220,6 @@ extension TextEditionViewController {
     }
 }
 
-extension TextEditionViewController: Themeable {
-    func enableDarkMode() {
-        view.backgroundColor = .black
-
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.toolbar.barStyle = .black
-        primaryPanel.enableDarkMode()
-        secondaryPanel.enableDarkMode()
-
-        if let textItem = textItem {
-            navigationItem.titleView = titleLabel(for: textItem, color: .lightText)
-        }
-
-        darkMode = true
-
-    }
-
-    func disableDarkMode() {
-        view.backgroundColor = .white
-
-        navigationController?.navigationBar.barStyle = .default
-        navigationController?.toolbar.barStyle = .default
-        primaryPanel.disableDarkMode()
-        secondaryPanel.disableDarkMode()
-        darkMode = false
-
-        if let textItem = textItem {
-            navigationItem.titleView = titleLabel(for: textItem, color: .darkText)
-        }
-    }
-}
 
 // MARK :- Factory methods for UI components
 extension TextEditionViewController {
@@ -293,14 +246,7 @@ extension TextEditionViewController {
 
     func configureToolBar(withAttributedText text: NSAttributedString) {
         let newLabel = UILabel()
-        
-        if darkMode {
-            let darkText: NSMutableAttributedString = NSMutableAttributedString(attributedString: text)
-            darkText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.orange], range: NSMakeRange(0, darkText.length))
-            newLabel.attributedText = darkText
-        } else {
-            newLabel.attributedText = text
-        }
+        newLabel.attributedText = text
         
         
         let newToolbarItem = UIBarButtonItem(customView: newLabel)
