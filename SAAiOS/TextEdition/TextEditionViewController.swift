@@ -14,25 +14,21 @@ enum TextDisplay: Int {
 }
 
 class TextEditionViewController: UIViewController {
-    /// Model for what the views are displaying
-    enum DisplayState {
-        case single(TextDisplay)
-        case double(left: TextDisplay, right: TextDisplay)
-    }
-
-    @IBOutlet weak var primaryContainerView: UIView!
-    @IBOutlet weak var secondaryContainerView: UIView!
     @IBOutlet weak var stackView: UIStackView!
     
     // MARK: - Instance Variables
     weak var parentController: ProjectListViewController?
     weak var catalogue: CatalogueProvider?
-    var displayState: DisplayState?
 
-    weak var primaryPanel: TextPanelViewController!
-    weak var secondaryPanel: TextPanelViewController!
+    var primaryPanel: TextPanelViewController!
+    var secondaryPanel: TextPanelViewController!
 
-    var textItem: OraccCatalogEntry?
+    var textItem: OraccCatalogEntry? {
+        didSet {
+            guard let textItem = self.textItem else {return}
+            navigationItem.titleView = titleLabel(for: textItem, color: UIColor.darkText)
+        }
+    }
     var textStrings: TextEditionStringContainer? {
         didSet {
             textStrings?.render(withPreferences: UIFont.systemFont(ofSize: UIFont.systemFontSize).makeDefaultPreferences())
@@ -45,20 +41,15 @@ class TextEditionViewController: UIViewController {
     override func viewDidLoad() {
         initialiseToolbar()
         addInfoButton()
-
-        primaryPanel = childViewControllers.first as? TextPanelViewController
-        secondaryPanel = childViewControllers.last as? TextPanelViewController
         
-        primaryPanel.delegate = self
-        primaryPanel.textDisplay = .Normalisation
+        primaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Normalisation)
+        secondaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Translation)
         
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            let view = stackView.arrangedSubviews[stackView.arrangedSubviews.count - 1]
-            stackView.removeArrangedSubview(view)
-        } else {
-            secondaryPanel.delegate = self
-            secondaryPanel.textDisplay = .Translation
-        }
+        primaryPanel.loadViewIfNeeded()
+        secondaryPanel.loadViewIfNeeded()
+        stackView.addArrangedSubview(primaryPanel.view)
+        stackView.addArrangedSubview(secondaryPanel.view)
+        
     }
 
     func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
@@ -69,7 +60,7 @@ class TextEditionViewController: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
         label.textAlignment = .center
         label.text = "\(item.title)\n\(item.displayName)"
-        label.minimumScaleFactor = CGFloat.init(0.25)
+        label.minimumScaleFactor = CGFloat(0.25)
         label.allowsDefaultTighteningForTruncation = true
 
         return label
@@ -83,17 +74,21 @@ class TextEditionViewController: UIViewController {
 
     //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
-        guard let catalogue = self.catalogue else { return }
-        guard let id = self.textItem?.id else { return }
-        guard let currentRow = catalogue.texts.index(where: {$0.id == id}) else {return}
+        guard let catalogue = self.catalogue,
+            let id = self.textItem?.id,
+            let currentRow = catalogue.texts.index(where: {$0.id == id}) else {return}
+        
         let nextRow: Int
-        var direction: Navigate? = nil
-
+        var direction: Navigate
+        
         if let button = sender as? UIBarButtonItem {
-            if button.title == "<" {
+            switch button.title {
+            case .some("<"):
                 direction = .left
-            } else if button.title == ">" {
+            case .some(">"):
                 direction = .right
+            default:
+                return
             }
         } else if let keyCommand = sender as? UIKeyCommand {
             switch keyCommand.input {
@@ -104,69 +99,36 @@ class TextEditionViewController: UIViewController {
             default:
                 return
             }
+        } else {
+            return
         }
-
-        if let direction = direction {
-            switch direction {
-            case .left:
-                nextRow = currentRow - 1
-                guard nextRow >= catalogue.texts.startIndex else {return}
-            case .right:
-                nextRow = currentRow + 1
-                guard nextRow < catalogue.texts.endIndex else {return}
-            }
-
-            guard let nextEntry = catalogue.text(at: nextRow) else {return}
-            guard let strings = sqlite.getTextStrings(nextEntry.id) else {return}
-
-            self.textStrings = strings
-            self.textItem = nextEntry
-            self.title = nextEntry.title
-
-            if traitCollection.horizontalSizeClass == .regular {
-                if direction == .left {
-                    parentController?.navigate(.left)
-                } else {
-                    parentController?.navigate(.right)
-                }
-            }
+        
+        switch direction {
+        case .left:
+            nextRow = currentRow - 1
+            guard nextRow >= catalogue.texts.startIndex else {return}
+        case .right:
+            nextRow = currentRow + 1
+            guard nextRow < catalogue.texts.endIndex else {return}
         }
-    }
+        
+        guard let nextEntry = catalogue.text(at: nextRow),
+            let strings = sqlite.getTextStrings(nextEntry.id) else {return}
+        
+        self.textStrings = strings
+        self.textItem = nextEntry
+        self.title = nextEntry.title
+        self.primaryPanel?.changeText(display: .Normalisation, scrollToTop: true)
 
-    @IBAction func changeText(_ sender: UISegmentedControl) {
-        guard let displayState = self.displayState else {return}
-        let newState: TextDisplay
-        switch sender.selectedSegmentIndex {
-        case 0:
-            newState = .Cuneiform
-        case 1:
-            newState = .Transliteration
-        case 2:
-            newState = .Normalisation
-        case 3:
-            newState = .Translation
-        default:
-            newState = .Normalisation
-        }
+        self.secondaryPanel?.changeText(display: .Translation, scrollToTop: true)
 
-        switch displayState {
-        case .single:
-            self.displayState = DisplayState.single(newState)
-
-        case .double(let leftDisplay, let rightDisplay):
-            let newDisplayState: DisplayState
-
-            switch sender.tag {
-            case 0: // Changing the left display's text
-                newDisplayState = DisplayState.double(left: newState, right: rightDisplay)
-
-            case 1: // Changing the right display's text
-                newDisplayState = DisplayState.double(left: leftDisplay, right: newState)
-
-            default: // Big error
-                return
+        
+        if traitCollection.horizontalSizeClass == .regular {
+            if direction == .left {
+                parentController?.navigate(.left)
+            } else {
+                parentController?.navigate(.right)
             }
-            self.displayState = newDisplayState
         }
     }
 
@@ -238,7 +200,7 @@ extension TextEditionViewController {
     }
 
     func initialiseToolbar() {
-        let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: parentController, action: #selector(ProjectListViewController.showGlossary(_:)))
+        let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: nil, action: nil)
         let (left, right) = makeNavigationButtons()
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         self.setToolbarItems([quickDefine, spacer, left, right], animated: true)
@@ -251,66 +213,5 @@ extension TextEditionViewController {
         
         let newToolbarItem = UIBarButtonItem(customView: newLabel)
         toolbarItems![0] = newToolbarItem
-    }
-}
-
-// MARK :- Restorable state methods
-extension TextEditionViewController {
-
-    override func encodeRestorableState(with coder: NSCoder) {
-        if let displayState = displayState {
-            switch displayState {
-            case .single(let state):
-                coder.encode(true, forKey: "isSingle")
-                coder.encode(state.rawValue, forKey: "leftState")
-                coder.encode(-1, forKey: "rightState")
-
-            case .double(let left, let right):
-                coder.encode(left.rawValue, forKey: "leftState")
-                coder.encode(right.rawValue, forKey: "rightState")
-            }
-        }
-
-        if let searchTerm = searchTerm {
-            coder.encode(searchTerm, forKey: "searchTerm")
-        }
-
-        if let item = textItem {
-            coder.encode(item.id, forKey: "id")
-        }
-
-        super.encodeRestorableState(with: coder)
-
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        defer {super.decodeRestorableState(with: coder)}
-
-        guard UIApplication.shared.delegate != nil else {return}
-        guard let key = coder.decodeObject(forKey: "id") as? NSString else {return}
-        let textID = TextID.init(stringLiteral: key as String)
-        guard let catalogueEntry = sqlite.texts.first(where: {$0.id == textID}) else {return}
-        guard let textStrings = sqlite.getTextStrings(textID) else {return}
-
-        self.textStrings = textStrings
-        self.textItem = catalogueEntry
-
-        switch coder.decodeBool(forKey: "isSingle") {
-        case true:
-            let rawDisplay = coder.decodeInteger(forKey: "leftState")
-            let textDisplay = TextDisplay.init(rawValue: rawDisplay)!
-            self.displayState = DisplayState.single(textDisplay)
-
-        case false:
-            let rawLeftDisplay = coder.decodeInteger(forKey: "leftState")
-            let rawRightDisplay = coder.decodeInteger(forKey: "rightState")
-            let leftDisplay = TextDisplay.init(rawValue: rawLeftDisplay)!
-            let rightDisplay = TextDisplay.init(rawValue: rawRightDisplay)!
-            self.displayState = DisplayState.double(left: leftDisplay, right: rightDisplay)
-        }
-    }
-
-    override func applicationFinishedRestoringState() {
-        self.title = textItem?.title
     }
 }

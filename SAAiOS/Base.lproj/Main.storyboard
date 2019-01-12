@@ -12,7 +12,7 @@
         <!--SAAiOS-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <navigationController storyboardIdentifier="MasterNavigationController" title="SAAiOS" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="RMx-3f-FxP" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MasterNavigationController" title="SAAiOS" toolbarHidden="NO" id="RMx-3f-FxP" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="20" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -32,7 +32,7 @@
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
-                <splitViewController storyboardIdentifier="MainSplitView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H1p-Uh-vWS" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="MainSplitView" id="H1p-Uh-vWS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <connections>
                         <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
@@ -46,15 +46,750 @@
         <!--Preferences-->
         <scene sceneID="kdu-s0-DOg">
             <objects>
-                <tableViewController storyboardIdentifier="PreferencesViewController" title="Preferences" id="nwZ-9k-MxC" customClass="PreferencesViewController" customModule="SAAi" customModuleProvider="target" sceneMemberID="viewController"/>
+                <tableViewController storyboardIdentifier="PreferencesViewController" title="Preferences" id="nwZ-9k-MxC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="obo-j8-yn7">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <sections>
+                            <tableViewSection headerTitle="About" id="c0R-wP-uRW">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="GKk-4f-CEt" style="IBUITableViewCellStyleDefault" id="ZVM-XS-FG9">
+                                        <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZVM-XS-FG9" id="Hmp-Zi-HcD">
+                                            <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GKk-4f-CEt">
+                                                    <rect key="frame" x="20" y="0.0" width="984" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment>
+                                                            <string key="content">SAA-i: State Archives of Assyria Reader Lite for iPad
+
+
+Oracc.org material used under Creative Commons Attribution Share-Alike license 3.0 
+</string>
+                                                            <attributes>
+                                                                <font key="NSFont" size="12" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="https://creativecommons.org/licenses/by-sa/3.0/legalcode">
+                                                            <attributes>
+                                                                <font key="NSFont" size="12" name="Helvetica-Bold"/>
+                                                                <url key="NSLink" string="https://creativecommons.org/licenses/by-sa/3.0/legalcode"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <string key="content" base64-UTF8="YES">
+Cgo
+</string>
+                                                            <attributes>
+                                                                <font key="NSFont" size="12" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="Text Copyrights">
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <string key="content">
+
+SAA 1
+Copyright Simo Parpola and the Neo-Assyrian Text Corpus Project, 1987. Lemmatised by Mikko Luukko, 2009-11, as part of the AHRC-funded research project “Mechanisms of Communication in an Ancient Empire: The Correspondence between the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; University College London). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.</string>
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <string key="content" base64-UTF8="YES">
+Cgo
+</string>
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <mutableString key="content">SAA 2
+Copyright Simo Parpola and Kazuko Watanabe and the Neo-Assyrian Text Corpus Project, 1988. Lemmatised by Mikko Luukko, 2016, as part of the research programme of the Alexander von Humboldt Chair in the Ancient History of the Near and Middle East at LMU Munich (Karen Radner, Humboldt Professorship 2015). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 5
+Copyright Giovanni B. Lanfranchi and Simo Parpola and the Neo-Assyrian Text Corpus Project, 1990. Lemmatised by Mikko Luukko, 2009-11, as part of the AHRC-funded research project “Mechanisms of Communication in an Ancient Empire: The Correspondence between the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; University College London). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 8
+Copyright Hermann Hunger and the Neo-Assyrian Text Corpus Project, 1992. Lemmatised by Mikko Luukko, 2016-17, as part of the research programme of the Alexander von Humboldt Chair in the Ancient History of the Near and Middle East at LMU Munich (Karen Radner, Humboldt Professorship 2015). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 10
+Copyright Simo Parpola and the Neo-Assyrian Text Corpus Project, 1993. Lemmatised by Mikko Luukko, 2016, as part of the research programme of the Alexander von Humboldt Chair in the Ancient History of the Near and Middle East at LMU Munich (Karen Radner, Humboldt Professorship 2015). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 13
+Copyright Steven W Cole, Peter Machinist, and the Neo-Assyrian Text Corpus Project, 1998. Lemmatised by Mikko Luukko and Silvie Zamazalová, 2011-13, as part of the AHRC-funded research project “Mechanisms of Communication in an Ancient Empire: The Correspondence between the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; University College London). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 15
+Copyright Andreas Fuchs and Simo Parpola and the Neo-Assyrian Text Corpus Project, 2001. Lemmatised by Mikko Luukko, 2009-11, as part of the AHRC-funded research project “Mechanisms of Communication in an Ancient Empire: The Correspondence between the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; University College London). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 16
+Copyright Mikko Luukko and Greta Van Buylaere and the Neo-Assyrian Text Corpus Project, 2002. Lemmatised by Mikko Luukko, 2012, as part of the AHRC-funded research project “Mechanisms of Communication in an Ancient Empire: The Correspondence between the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; University College London). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 17
+Copyright Manfried Dietrich and the Neo-Assyrian Text Corpus Project, 2003. Lemmatised by Mikko Luukko, 2009-11, as part of the AHRC-funded research project “Mechanisms of Communication in an Ancient Empire: The Correspondence between the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; University College London). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 18
+Copyright Frances Reynolds and the Neo-Assyrian Text Corpus Project, 2003. Lemmatised by Mikko Luukko, 2015-16, as part of the research programme of the Alexander von Humboldt Chair in the Ancient History of the Near and Middle East at LMU Munich (Karen Radner, Humboldt Professorship 2015). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+SAA 19
+Copyright Mikko Luukko and the Neo-Assyrian Text Corpus Project, 2012. Lemmatised by Mikko Luukko, 2012, as part of the AHRC-funded research project “Mechanisms of Communication in an Ancient Empire: The Correspondence between the King of Assyria and his Magnates in the 8th Century BC” (AH/F016581/1; University College London). The annotated edition is released under the Creative Commons Attribution Share-Alike license 3.0.
+
+
+</mutableString>
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="Open Source Software">
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="84">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="112">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="140">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="168">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="196">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="224">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="252">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="280">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="308">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="336">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <string key="content">
+
+ZIPFoundation
+</string>
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="84">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="112">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="140">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="168">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="196">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="224">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="252">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="280">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="308">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="336">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <mutableString key="content">
+MIT License
+Copyright (c) 2017 Thomas Zoechling
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+SQLite.swift
+MIT License
+Copyright (c) 2014-2015 Stephen Celis (&lt;stephen@stephencelis.com&gt;)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+</mutableString>
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <string key="content">Fonts
+</string>
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28.299999237060547">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56.650001525878906">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="85">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="113.34999847412109">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="121">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="141.69999694824219">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="170.05000305175781">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="198.39999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="226.75">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="255.10000610351562">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="283.45001220703125">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="311.79998779296875">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="340.14999389648438">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment>
+                                                            <mutableString key="content">DejaVu Fonts — License
+
+Fonts are © Bitstream (see below). DejaVu changes are in public domain. Explanation of copyright is on Gnome page on Bitstream Vera fonts. Glyphs imported from Arev fonts are © Tavmjung Bah (see below)
+
+Bitstream Vera Fonts Copyright
+
+Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream Vera is a trademark of Bitstream, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of the fonts accompanying this license ("Fonts") and associated documentation files (the "Font Software"), to reproduce and distribute the Font Software, including without limitation the rights to use, copy, merge, publish, distribute, and/or sell copies of the Font Software, and to permit persons to whom the Font Software is furnished to do so, subject to the following conditions:
+
+The above copyright and trademark notices and this permission notice shall be included in all copies of one or more of the Font Software typefaces.
+The Font Software may be modified, altered, or added to, and in particular the designs of glyphs or characters in the Fonts may be modified and additional glyphs or characters may be added to the Fonts, only if the fonts are renamed to names not containing either the words "Bitstream" or the word "Vera".
+This License becomes null and void to the extent applicable to Fonts or Font Software that has been modified and is distributed under the "Bitstream Vera" names.
+
+The Font Software may be sold as part of a larger software package but no copy of one or more of the Font Software typefaces may be sold by itself.
+
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL BITSTREAM OR THE GNOME FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
+
+Except as contained in this notice, the names of Gnome, the Gnome Foundation, and Bitstream Inc., shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Font Software without prior written authorization from the Gnome Foundation or Bitstream Inc., respectively. For further information, contact: fonts at gnome dot org.
+
+Arev Fonts Copyright
+
+Original text
+
+Copyright (c) 2006 by Tavmjong Bah. All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of the fonts accompanying this license ("Fonts") and associated documentation files (the "Font Software"), to reproduce and distribute the modifications to the Bitstream Vera Font Software, including without limitation the rights to use, copy, merge, publish, distribute, and/or sell copies of the Font Software, and to permit persons to whom the Font Software is furnished to do so, subject to the following conditions:
+
+The above copyright and trademark notices and this permission notice shall be included in all copies of one or more of the Font Software typefaces.
+
+The Font Software may be modified, altered, or added to, and in particular the designs of glyphs or characters in the Fonts may be modified and additional glyphs or characters may be added to the Fonts, only if the fonts are renamed to names not containing either the words "Tavmjong Bah" or the word "Arev".
+
+This License becomes null and void to the extent applicable to Fonts or Font Software that has been modified and is distributed under the "Tavmjong Bah Arev" names.
+
+The Font Software may be sold as part of a larger software package but no copy of one or more of the Font Software typefaces may be sold by itself.
+
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL TAVMJONG BAH BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
+
+Except as contained in this notice, the name of Tavmjong Bah shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Font Software without prior written authorization from Tavmjong Bah. For further information, contact: tavmjong @ free . fr.
+
+CuneiformNAOutline Medium
+Copyright (c) 2008 by Steve Tinney. All rights reserved.
+Original Metafont and Type 1 fonts by Karel Piska at fzu.cz (retrieved from www-hep2.fzu.cz/~piska/cuneiform.html); converted to Unicode/TrueType by Steve Tinney
+Released under the SIL open font license.
+
+SIL OPEN FONT LICENSE
+
+Version 1.1 - 26 February 2007
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide development of collaborative font projects, to support the font creation efforts of academic and linguistic communities, and to provide a free and open framework in which fonts may be shared and improved in partnership with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and redistributed freely as long as they are not sold by themselves. The fonts, including any derivative works, can be bundled, embedded, redistributed and/or sold with any software provided that any reserved names are not used by derivative works. The fonts and derivatives, however, cannot be released under any other type of license. The requirement for fonts to remain under this license does not apply to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright Holder(s) under this license and clearly marked as such. This may include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting, or substituting — in part or in whole — any of the components of the Original Version, by changing formats or by porting the Font Software to a new environment.
+
+"Author" refers to any designer, engineer, programmer, technical writer or other person who contributed to the Font Software.
+
+PERMISSION &amp; CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining a copy of the Font Software, to use, study, copy, merge, embed, modify, redistribute, and sell modified and unmodified copies of the Font Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components, in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled, redistributed and/or sold with any software, provided that each copy contains the above copyright notice and this license. These can be included either as stand-alone text files, human-readable headers or in the appropriate machine-readable metadata fields within text or binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font Name(s) unless explicit written permission is granted by the corresponding Copyright Holder. This restriction only applies to the primary font name as presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font Software shall not be used to promote, endorse or advertise any Modified Version, except to acknowledge the contribution(s) of the Copyright Holder(s) and the Author(s) or with their explicit written permission.
+
+5) The Font Software, modified or unmodified, in part or in whole, must be distributed entirely under this license, and must not be distributed under any other license. The requirement for fonts to remain under this license does not apply to any document created using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
+
+</mutableString>
+                                                            <attributes>
+                                                                <font key="NSFont" size="10" name="Helvetica"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="84">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="112">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="140">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="168">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="196">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="224">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="252">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="280">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="308">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="336">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="nwZ-9k-MxC" id="HRr-kl-1e2"/>
+                            <outlet property="delegate" destination="nwZ-9k-MxC" id="twE-Ic-1kK"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5NW-9G-e7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1131" y="415"/>
+            <point key="canvasLocation" x="-856" y="386"/>
         </scene>
         <!--SAAiOS-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController storyboardIdentifier="ProjectListViewController" title="SAAiOS" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="ProjectListViewController" customModule="SAAi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProjectListViewController" title="SAAiOS" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="ProjectListViewController" customModule="SAAi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="718"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -104,7 +839,7 @@
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
             <objects>
-                <navigationController storyboardIdentifier="detailNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="vC3-pB-5Vb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="detailNavigationController" toolbarHidden="NO" id="vC3-pB-5Vb" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
                         <rect key="frame" x="0.0" y="20" width="703.5" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -173,7 +908,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M3t-dw-SEF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1286" y="110"/>
+            <point key="canvasLocation" x="1337" y="-630"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

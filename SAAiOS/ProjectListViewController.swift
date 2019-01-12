@@ -99,8 +99,8 @@ class ProjectListViewController: UITableViewController {
                 controller.parentController = self
 
                 if catalogue.source == .search {
-                    guard let catalogue = self.catalogue as? Catalogue else {return}
-                    guard let textSearch = catalogue.catalogue as? TextSearchCollection else {return}
+                    guard let catalogue = self.catalogue as? Catalogue,
+                        let textSearch = catalogue.catalogue as? TextSearchCollection else {return}
                     let searchTerm = textSearch.searchTerm
                     controller.searchTerm = searchTerm
                 }
@@ -190,26 +190,6 @@ extension ProjectListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
-    }
-}
-
-// MARK: - Restorable State
-extension ProjectListViewController {
-    override func encodeRestorableState(with coder: NSCoder) {
-        if let indexPath = tableView.indexPathForSelectedRow {
-            coder.encode(indexPath.section, forKey: "selectedSection")
-            coder.encode(indexPath.row, forKey: "selectedRow")
-        }
-
-        super.encodeRestorableState(with: coder)
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        defer {super.decodeRestorableState(with: coder)}
-        let row = coder.decodeInteger(forKey: "selectedRow")
-        let section = coder.decodeInteger(forKey: "selectedSection")
-        let indexPath = IndexPath(row: row, section: section)
-        self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
     }
 }
 

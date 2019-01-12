@@ -86,31 +86,19 @@ extension TextEditionViewController: KeyCommandHandler {
         if "1234".contains(input) {
             guard let inputValue = Int(input) else {return}
             guard let newTextDisplay = TextDisplay.init(rawValue: inputValue - 1) else {return}
-            guard let displayState = self.displayState else {return}
-            let newDisplayState: DisplayState
 
             switch keyCommand.modifierFlags {
+                
+                // Switch the left panel to the new txt display
             case .command:
-                switch displayState {
-                case .single:
-                    newDisplayState = .single(newTextDisplay)
-                case .double(left: _, right: let right):
-                    newDisplayState = .double(left: newTextDisplay, right: right)
-                }
+                self.primaryPanel.changeText(display: newTextDisplay, scrollToTop: false)
 
             case .alternate:
-                switch displayState {
-                case .single:
-                    return
-                case .double(left: let left, right: _):
-                    newDisplayState = .double(left: left, right: newTextDisplay)
-                }
+                self.secondaryPanel.changeText(display: newTextDisplay, scrollToTop: false)
 
             default:
                 return
             }
-
-            self.displayState = newDisplayState
         }
 
         switch keyCommand.modifierFlags {

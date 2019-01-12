@@ -13,20 +13,12 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     weak var delegate: TextEditionViewController?
 
-    var textDisplay: TextDisplay! {
-        didSet {
-            guard let newString = delegate?.string(for: textDisplay) else {return}
-            textView.attributedText = newString
-            if textDisplay == .Normalisation {
-                highlightSearchTerm(delegate?.searchTerm)
-            }
-            segmentedControl.selectedSegmentIndex = textDisplay.rawValue
-        }
-    }
+    var textDisplay: TextDisplay!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
+        changeText(display: self.textDisplay ?? .Normalisation, scrollToTop: true)
     }
 
     func highlightSearchTerm(_ searchTerm: String?) {
@@ -42,11 +34,23 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
             }
         })
     }
+    
+    
+    func changeText(display: TextDisplay, scrollToTop: Bool) {
+        guard let newString = delegate?.string(for: display) else {return}
+        textView.attributedText = newString
+        scrollToTop ? textView.scrollRangeToVisible(NSMakeRange(0, 0)) : ()
+        scrollToTop ? textView.setContentOffset(.zero, animated: true): ()
+        
+        if textDisplay == .Normalisation {
+            highlightSearchTerm(delegate?.searchTerm)
+        }
+        segmentedControl.selectedSegmentIndex = display.rawValue
+    }
 
     @IBAction func changeText(_ sender: UISegmentedControl) {
         guard let newText = TextDisplay.init(rawValue: sender.selectedSegmentIndex) else {return}
-
-        self.textDisplay = newText
+        changeText(display: newText, scrollToTop: false)
     }
 
     func textViewDidChangeSelection(_ textView: UITextView) {
@@ -81,5 +85,15 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
                 delegate?.configureToolBar(withAttributedText: NSAttributedString(string:""))
             }
         }
+    }
+}
+
+extension TextPanelViewController {
+    static func new(delegate: TextEditionViewController, textDisplay: TextDisplay) -> TextPanelViewController? {
+        let storyboard = UIStoryboard(name: "TextEdition", bundle: nil)
+        guard let textPanelVC = storyboard.instantiateViewController(withIdentifier: "TextPanelViewController") as? TextPanelViewController else {return nil}
+        textPanelVC.delegate = delegate
+        textPanelVC.textDisplay = textDisplay
+        return textPanelVC
     }
 }

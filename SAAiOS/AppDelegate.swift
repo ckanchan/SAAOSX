@@ -35,13 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
 
+        UIView.appearance().tintColor = UIColor.purple
+        
         return true
     }
 
-    func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
-        self.sqlDB = SQLiteCatalogue()!
-        self.glossaryDB = Glossary()
-    }
 
     // MARK: - Split view
 
@@ -53,14 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             return true
         }
         return false
-    }
-
-    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
-        return true
-    }
-
-    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        return true
     }
 
 }
