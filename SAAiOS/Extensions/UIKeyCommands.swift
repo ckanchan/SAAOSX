@@ -94,7 +94,8 @@ extension TextEditionViewController: KeyCommandHandler {
                 self.primaryPanel.changeText(display: newTextDisplay, scrollToTop: false)
 
             case .alternate:
-                self.secondaryPanel.changeText(display: newTextDisplay, scrollToTop: false)
+                guard let secondaryPanel = self.secondaryPanel else {return}
+                secondaryPanel.changeText(display: newTextDisplay, scrollToTop: false)
 
             default:
                 return

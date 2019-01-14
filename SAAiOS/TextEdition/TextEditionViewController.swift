@@ -14,14 +14,14 @@ enum TextDisplay: Int {
 }
 
 class TextEditionViewController: UIViewController {
-    @IBOutlet weak var stackView: UIStackView!
+    var stackView: UIStackView!
     
     // MARK: - Instance Variables
     weak var parentController: ProjectListViewController?
     weak var catalogue: CatalogueProvider?
 
     var primaryPanel: TextPanelViewController!
-    var secondaryPanel: TextPanelViewController!
+    var secondaryPanel: TextPanelViewController?
 
     var textItem: OraccCatalogEntry? {
         didSet {
@@ -38,18 +38,56 @@ class TextEditionViewController: UIViewController {
     var searchTerm: String?
     
     // MARK: - Lifecycle methods
+    override func loadView() {
+        let stackView = UIStackView(frame: .zero)
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        self.view = stackView
+        self.stackView = stackView
+    }
+    
     override func viewDidLoad() {
         initialiseToolbar()
         addInfoButton()
-        
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        switch traitCollection.horizontalSizeClass {
+        case .compact:
+            addPrimaryPanel()
+        case .regular:
+            addPrimaryPanel()
+            addSecondaryPanel()
+        case .unspecified:
+            addPrimaryPanel()
+        }
+    }
+    
+    func addPrimaryPanel() {
+        guard self.primaryPanel == nil else {return}
         primaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Normalisation)
-        secondaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Translation)
-        
+        self.addChildViewController(primaryPanel)
         primaryPanel.loadViewIfNeeded()
-        secondaryPanel.loadViewIfNeeded()
         stackView.addArrangedSubview(primaryPanel.view)
-        stackView.addArrangedSubview(secondaryPanel.view)
-        
+        primaryPanel.didMove(toParentViewController: self)
+    }
+    
+    func addSecondaryPanel() {
+        guard self.secondaryPanel == nil else {return}
+        secondaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Translation)
+        self.addChildViewController(secondaryPanel!)
+        secondaryPanel!.loadViewIfNeeded()
+        stackView.addArrangedSubview(secondaryPanel!.view)
+        secondaryPanel?.didMove(toParentViewController: self)
+    }
+    
+    func removeSecondaryPanelIfExists() {
+        guard let secondaryPanel = self.secondaryPanel else {return}
+        secondaryPanel.willMove(toParentViewController: nil)
+        stackView.removeArrangedSubview(secondaryPanel.view)
+        secondaryPanel.removeFromParentViewController()
+        self.secondaryPanel = nil
     }
 
     func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
@@ -166,12 +204,13 @@ extension TextEditionViewController {
 
     @objc func presentInformation() {
         guard let catalogueInfo = self.textItem else {return}
-        guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
+        let storyboard = UIStoryboard(name: "TextEdition", bundle: nil)
+        guard let infoTableController = storyboard.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
         infoTableController.catalogueInfo = catalogueInfo
         infoTableController.textEditionViewController = self
         infoTableController.tableView.delegate = infoTableController
 
-        if UIDevice.current.userInterfaceIdiom == .pad {
+        if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
             infoTableController.modalPresentationStyle = .popover
             present(infoTableController, animated: true)
             let popoverController = infoTableController.popoverPresentationController
