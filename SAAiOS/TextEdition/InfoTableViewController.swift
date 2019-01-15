@@ -12,9 +12,6 @@ import CDKSwiftOracc
 class InfoTableViewController: UITableViewController {
     var catalogueInfo: OraccCatalogEntry!
     weak var textEditionViewController: TextEditionViewController?
-    lazy var darkMode: Bool = {
-        return ThemeController().themePreference == .dark ? true : false
-    }()
 
     static let sectionTitles = ["Basic Information",
                          "Text IDs",
@@ -44,10 +41,6 @@ class InfoTableViewController: UITableViewController {
                            "Publication history",
                            "Notes"
                            ]
-
-    override func viewDidLoad() {
-        darkMode ? enableDarkMode() : disableDarkMode()
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -89,11 +82,6 @@ class InfoTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UITableViewHeaderFooterView()
-        if darkMode {
-            headerView.contentView.backgroundColor = #colorLiteral(red: 0.1704869924, green: 0.1481106211, blue: 0, alpha: 1)
-
-        }
-
         return headerView
     }
 
@@ -140,8 +128,6 @@ class InfoTableViewController: UITableViewController {
 
     func dequeueCell(type: CellType, indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: type.rawValue, for: indexPath)
-        darkMode ? cell.enableDarkMode() : cell.disableDarkMode()
-
         return cell
     }
 
@@ -160,21 +146,6 @@ class InfoTableViewController: UITableViewController {
             return
         }
     }
-}
-
-extension InfoTableViewController: Themeable {
-    func enableDarkMode() {
-        view.backgroundColor = .black
-        darkMode = true
-        tableView.enableDarkMode()
-    }
-
-    func disableDarkMode() {
-        view.backgroundColor = .white
-        darkMode = false
-        tableView.disableDarkMode()
-    }
-
 }
 
 extension UITableViewCell {

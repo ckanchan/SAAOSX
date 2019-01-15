@@ -18,15 +18,6 @@ class ProjectListViewController: UITableViewController {
     var detailViewController: TextEditionViewController?
     var filteredTexts: [OraccCatalogEntry] = []
     lazy var catalogue: CatalogueProvider = {return sqlite}()
-
-    lazy var darkTheme: Bool = {
-        if ThemeController().themePreference == .dark {
-            return true
-        } else {
-            return false
-        }
-    }()
-
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -50,52 +41,14 @@ class ProjectListViewController: UITableViewController {
         
         tableView.reloadData()
         
-        
-        let notesButton = UIBarButtonItem(title: "Notes", style: .plain, target: self, action: #selector(loadNotes))
-        
         if self.catalogue.source != .search {
             let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
-            self.setToolbarItems([notesButton, UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
-        } else {
-            self.setToolbarItems([notesButton], animated: false)
-            self.title = catalogue.name
+            self.setToolbarItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
         }
-        
         
         let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
         
         navigationItem.rightBarButtonItem = preferencesButton
-        self.registerThemeNotifications()
-    }
-    
-    deinit {
-        self.deregisterThemeNotifications()
-    }
-    
-    @objc func loadNotes() {
-        guard let row = tableView.indexPathForSelectedRow?.row else {return}
-        guard let entry = sqlite.getEntryAt(row: row) else {return}
-        let id = entry.id
-        
-        guard let user = self.userManager.user else {
-            let alert = UIAlertController(title: "Not logged in", message: "Log in to save and sync notes", preferredStyle: .alert)
-            let signIn = UIAlertAction(title: "Log in", style: .default){ [unowned self] alert in
-                guard let controller = self.userManager.signIn() else {return}
-                self.present(controller, animated: true)
-            }
-            
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-            alert.addAction(signIn)
-            alert.addAction(cancel)
-            self.present(alert, animated: true)
-            return
-        }
-        
-        let notesViewController = NotesViewController.new(id: id, for: user)
-        
-        darkTheme ? notesViewController.enableDarkMode() : notesViewController.disableDarkMode()
-        navigationController?.pushViewController(notesViewController, animated: true)
-
     }
     
     @objc func loadPreferences() {
@@ -200,13 +153,6 @@ extension ProjectListViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let textItem: OraccCatalogEntry
-
-        if darkTheme {
-            cell.enableDarkMode()
-        } else {
-            cell.disableDarkMode()
-        }
-
         if isFiltering() {
             textItem = filteredTexts[indexPath.row]
         } else {
@@ -238,46 +184,5 @@ extension ProjectListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
-    }
-}
-
-// MARK: - Restorable State
-extension ProjectListViewController {
-    override func encodeRestorableState(with coder: NSCoder) {
-        if let indexPath = tableView.indexPathForSelectedRow {
-            coder.encode(indexPath.section, forKey: "selectedSection")
-            coder.encode(indexPath.row, forKey: "selectedRow")
-        }
-
-        super.encodeRestorableState(with: coder)
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        defer {super.decodeRestorableState(with: coder)}
-        let row = coder.decodeInteger(forKey: "selectedRow")
-        let section = coder.decodeInteger(forKey: "selectedSection")
-        let indexPath = IndexPath(row: row, section: section)
-        self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
-    }}
-
-extension ProjectListViewController: Themeable {
-    func enableDarkMode() {
-        view.window?.backgroundColor = UIColor.black
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.toolbar.barStyle = .black
-
-        self.tableView.enableDarkMode()
-        self.tableView.visibleCells.forEach({$0.enableDarkMode()})
-        self.darkTheme = true
-    }
-
-    func disableDarkMode() {
-        view.window?.backgroundColor = nil
-        navigationController?.navigationBar.barStyle = .default
-        navigationController?.toolbar.barStyle = .default
-
-        self.tableView.disableDarkMode()
-        self.tableView.visibleCells.forEach({$0.disableDarkMode()})
-        self.darkTheme = false
     }
 }

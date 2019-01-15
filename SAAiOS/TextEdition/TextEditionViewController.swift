@@ -34,20 +34,16 @@ class TextEditionViewController: UIViewController {
     var textItem: OraccCatalogEntry?
     var textStrings: TextEditionStringContainer? {
         didSet {
-            textStrings?.render(withPreferences: ThemeController().themeFormatting)
+            textStrings?.render(withPreferences: UIFont.systemFont(ofSize: UIFont.systemFontSize).makeDefaultPreferences())
         }
     }
 
     var searchTerm: String?
-    lazy var darkMode: Bool = {
-        return ThemeController().themePreference == .dark ?  true : false
-    }()
 
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         initialiseToolbar()
         addInfoButton()
-        registerThemeNotifications()
 
         primaryPanel = childViewControllers.first as? TextPanelViewController
         secondaryPanel = childViewControllers.last as? TextPanelViewController
@@ -58,12 +54,8 @@ class TextEditionViewController: UIViewController {
         secondaryPanel.delegate = self
         secondaryPanel.textDisplay = .Translation
 
-        darkMode ? enableDarkMode() : disableDarkMode()
     }
 
-    deinit {
-        deregisterThemeNotifications()
-    }
 
     func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
         let label = UILabel()
@@ -174,9 +166,10 @@ class TextEditionViewController: UIViewController {
         }
     }
 
+    #warning("Text rendering is inconsistent")
     func string(for textKind: TextDisplay) -> NSAttributedString {
         let notAvailable = NSAttributedString(string: "Not available")
-        let textColor = darkMode ? UIColor.lightText : UIColor.darkText
+        let textColor = UIColor.darkText
 
         switch textKind {
         case .Cuneiform:
@@ -236,38 +229,6 @@ extension TextEditionViewController {
     }
 }
 
-extension TextEditionViewController: Themeable {
-    func enableDarkMode() {
-        view.backgroundColor = .black
-
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.toolbar.barStyle = .black
-        primaryPanel.enableDarkMode()
-        secondaryPanel.enableDarkMode()
-
-        if let textItem = textItem {
-            navigationItem.titleView = titleLabel(for: textItem, color: .lightText)
-        }
-
-        darkMode = true
-
-    }
-
-    func disableDarkMode() {
-        view.backgroundColor = .white
-
-        navigationController?.navigationBar.barStyle = .default
-        navigationController?.toolbar.barStyle = .default
-        primaryPanel.disableDarkMode()
-        secondaryPanel.disableDarkMode()
-        darkMode = false
-
-        if let textItem = textItem {
-            navigationItem.titleView = titleLabel(for: textItem, color: .darkText)
-        }
-    }
-}
-
 // MARK :- Factory methods for UI components
 extension TextEditionViewController {
     func addInfoButton() {
@@ -293,78 +254,8 @@ extension TextEditionViewController {
 
     func configureToolBar(withAttributedText text: NSAttributedString) {
         let newLabel = UILabel()
-        
-        if darkMode {
-            let darkText: NSMutableAttributedString = NSMutableAttributedString(attributedString: text)
-            darkText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.orange], range: NSMakeRange(0, darkText.length))
-            newLabel.attributedText = darkText
-        } else {
-            newLabel.attributedText = text
-        }
-        
-        
+        newLabel.attributedText = text
         let newToolbarItem = UIBarButtonItem(customView: newLabel)
         toolbarItems![0] = newToolbarItem
-    }
-}
-
-// MARK :- Restorable state methods
-extension TextEditionViewController {
-
-    override func encodeRestorableState(with coder: NSCoder) {
-        if let displayState = displayState {
-            switch displayState {
-            case .single(let state):
-                coder.encode(true, forKey: "isSingle")
-                coder.encode(state.rawValue, forKey: "leftState")
-                coder.encode(-1, forKey: "rightState")
-
-            case .double(let left, let right):
-                coder.encode(left.rawValue, forKey: "leftState")
-                coder.encode(right.rawValue, forKey: "rightState")
-            }
-        }
-
-        if let searchTerm = searchTerm {
-            coder.encode(searchTerm, forKey: "searchTerm")
-        }
-
-        if let item = textItem {
-            coder.encode(item.id, forKey: "id")
-        }
-
-        super.encodeRestorableState(with: coder)
-
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        defer {super.decodeRestorableState(with: coder)}
-
-        guard UIApplication.shared.delegate != nil else {return}
-        guard let key = coder.decodeObject(forKey: "id") as? NSString else {return}
-        let textID = TextID.init(stringLiteral: key as String)
-        guard let catalogueEntry = sqlite.texts.first(where: {$0.id == textID}) else {return}
-        guard let textStrings = sqlite.getTextStrings(textID) else {return}
-
-        self.textStrings = textStrings
-        self.textItem = catalogueEntry
-
-        switch coder.decodeBool(forKey: "isSingle") {
-        case true:
-            let rawDisplay = coder.decodeInteger(forKey: "leftState")
-            let textDisplay = TextDisplay.init(rawValue: rawDisplay)!
-            self.displayState = DisplayState.single(textDisplay)
-
-        case false:
-            let rawLeftDisplay = coder.decodeInteger(forKey: "leftState")
-            let rawRightDisplay = coder.decodeInteger(forKey: "rightState")
-            let leftDisplay = TextDisplay.init(rawValue: rawLeftDisplay)!
-            let rightDisplay = TextDisplay.init(rawValue: rawRightDisplay)!
-            self.displayState = DisplayState.double(left: leftDisplay, right: rightDisplay)
-        }
-    }
-
-    override func applicationFinishedRestoringState() {
-        self.title = textItem?.title
     }
 }

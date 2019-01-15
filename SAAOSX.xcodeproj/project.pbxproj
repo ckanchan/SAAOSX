@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3A3CD737F91C1A503267C73E /* Pods_SAAOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A104D471EB3B0390AFEBD8 /* Pods_SAAOSX.framework */; };
-		5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124120A5F47000666489 /* UIVIewController+Theming.swift */; };
+		54041CE921EE6E09006EAF8D /* TextAnnotationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9DE9521DF936800014049 /* TextAnnotationManager.swift */; };
+		54041CEA21EE6E10006EAF8D /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E921DAAFE0003A4481 /* Annotation.swift */; };
+		54041CEB21EE6E19006EAF8D /* CloudKitNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E721DA7BA7003A4481 /* CloudKitNotes.swift */; };
+		54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */; };
+		54041CED21EE6E19006EAF8D /* CloudKitPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145C21E22DE600ABCB70 /* CloudKitPull.swift */; };
+		54041CEE21EE6E19006EAF8D /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
 		5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124320A6173D00666489 /* TextPanelViewController.swift */; };
 		541378E321DA5BB7003A4481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 541378E221DA5BB7003A4481 /* CloudKit.framework */; };
 		541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteSQLDatabase.swift */; };
@@ -27,7 +32,6 @@
 		543709AC209F9D8C00CE41F7 /* CuneiformNA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */; };
 		543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */; };
 		5439770C20A421E6002072AE /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770B20A421E6002072AE /* PreferencesViewController.swift */; };
-		5439770E20A43A4B002072AE /* ThemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770D20A43A4B002072AE /* ThemeController.swift */; };
 		543DC34820B6787A0019FF1E /* UserTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DC34720B6787A0019FF1E /* UserTags.swift */; };
 		543DC34920B6787A0019FF1E /* UserTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DC34720B6787A0019FF1E /* UserTags.swift */; };
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
@@ -36,7 +40,6 @@
 		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
 		5447AE2B21D421B800EDD45F /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
-		5463D28C20A782B8002B368A /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5463D28B20A782B7002B368A /* UserManager.swift */; };
 		54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */; };
 		54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */; };
 		54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */; };
@@ -73,7 +76,6 @@
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
 		54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */; };
 		54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */; };
-		54A7851F20A8689F0005B7D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */; };
 		54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
 		54A9521B204058D60042E1BA /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95217204058D60042E1BA /* Catalogue.swift */; };
 		54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95218204058D60042E1BA /* Bookmarks.swift */; };
@@ -88,7 +90,6 @@
 		54C91A882017C743001AA675 /* TextWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A872017C743001AA675 /* TextWindowController.swift */; };
 		54C9843620A75E7B0026C5AA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843520A75E7B0026C5AA /* libc++.tbd */; };
 		54C9843820A75E880026C5AA /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843720A75E880026C5AA /* libicucore.tbd */; };
-		54C9845020A767930026C5AA /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9844F20A767930026C5AA /* NotesViewController.swift */; };
 		54C9DE9621DF936800014049 /* TextAnnotationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9DE9521DF936800014049 /* TextAnnotationManager.swift */; };
 		54CD208C20B73ABF0008B69D /* AnnotationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CD208A20B73ABF0008B69D /* AnnotationItem.swift */; };
 		54CD208D20B73ABF0008B69D /* AnnotationItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54CD208B20B73ABF0008B69D /* AnnotationItem.xib */; };
@@ -135,7 +136,6 @@
 /* Begin PBXFileReference section */
 		118CFB55773AAAD4E108D905 /* Pods-SAAiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAiOS/Pods-SAAiOS.release.xcconfig"; sourceTree = "<group>"; };
 		123BAD5C6459052D7F0CE21A /* Pods-SAAOSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAOSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAOSX/Pods-SAAOSX.debug.xcconfig"; sourceTree = "<group>"; };
-		5407124120A5F47000666489 /* UIVIewController+Theming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Theming.swift"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
 		541378E221DA5BB7003A4481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		541378E421DA6263003A4481 /* NoteSQLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLDatabase.swift; sourceTree = "<group>"; };
@@ -152,7 +152,6 @@
 		543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CuneiformNA.ttf; sourceTree = "<group>"; };
 		543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
 		5439770B20A421E6002072AE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
-		5439770D20A43A4B002072AE /* ThemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeController.swift; sourceTree = "<group>"; };
 		543DC34720B6787A0019FF1E /* UserTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTags.swift; sourceTree = "<group>"; };
 		544138D92004D27A00A64CB2 /* SAAo-SX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SAAo-SX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,7 +163,6 @@
 		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5447AE2A21D421B800EDD45F /* qpn_pleiades.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = qpn_pleiades.json; sourceTree = "<group>"; };
 		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
-		5463D28B20A782B7002B368A /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineViewController.swift; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 		5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
 		54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextEditionStringContainer+MapFunctions.swift"; sourceTree = "<group>"; };
-		54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		54A95216204058D60042E1BA /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
 		54A95217204058D60042E1BA /* Catalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalogue.swift; sourceTree = "<group>"; };
 		54A95218204058D60042E1BA /* Bookmarks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
@@ -211,7 +208,6 @@
 		54C91A872017C743001AA675 /* TextWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWindowController.swift; sourceTree = "<group>"; };
 		54C9843520A75E7B0026C5AA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		54C9843720A75E880026C5AA /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libicucore.tbd; sourceTree = DEVELOPER_DIR; };
-		54C9844F20A767930026C5AA /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		54C9DE9521DF936800014049 /* TextAnnotationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAnnotationManager.swift; sourceTree = "<group>"; };
 		54CD208A20B73ABF0008B69D /* AnnotationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationItem.swift; sourceTree = "<group>"; };
 		54CD208B20B73ABF0008B69D /* AnnotationItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnotationItem.xib; sourceTree = "<group>"; };
@@ -267,15 +263,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5407124020A5F45D00666489 /* Theming */ = {
-			isa = PBXGroup;
-			children = (
-				5439770D20A43A4B002072AE /* ThemeController.swift */,
-				5407124120A5F47000666489 /* UIVIewController+Theming.swift */,
-			);
-			path = Theming;
-			sourceTree = "<group>";
-		};
 		543709A8209F9D4100CE41F7 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,14 +375,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5463D28A20A782AB002B368A /* User */ = {
-			isa = PBXGroup;
-			children = (
-				5463D28B20A782B7002B368A /* UserManager.swift */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
 		54657A5D20A0C0FC00FAC8E3 /* Glossary */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,9 +469,6 @@
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
-				5463D28A20A782AB002B368A /* User */,
-				54C9844E20A767790026C5AA /* Notes */,
-				5407124020A5F45D00666489 /* Theming */,
 				5439770A20A421B0002072AE /* Preferences */,
 				548C57D120A1C4CE008E8C1F /* Extensions */,
 				54657A5D20A0C0FC00FAC8E3 /* Glossary */,
@@ -502,7 +478,6 @@
 				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
-				54A7851E20A8689F0005B7D6 /* GoogleService-Info.plist */,
 				5498CAE8204EAF63004C774A /* Info.plist */,
 			);
 			path = SAAiOS;
@@ -519,14 +494,6 @@
 				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		54C9844E20A767790026C5AA /* Notes */ = {
-			isa = PBXGroup;
-			children = (
-				54C9844F20A767930026C5AA /* NotesViewController.swift */,
-			);
-			path = Notes;
 			sourceTree = "<group>";
 		};
 		54D3B4DD21D7B56D00F836E2 /* Resources */ = {
@@ -727,7 +694,6 @@
 			files = (
 				5498CAE7204EAF63004C774A /* LaunchScreen.storyboard in Resources */,
 				54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */,
-				54A7851F20A8689F0005B7D6 /* GoogleService-Info.plist in Resources */,
 				543709AB209F9D8C00CE41F7 /* DejaVuSans.ttf in Resources */,
 				5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */,
 				549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
@@ -914,28 +880,30 @@
 			files = (
 				54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */,
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
-				54C9845020A767930026C5AA /* NotesViewController.swift in Sources */,
 				543DC34920B6787A0019FF1E /* UserTags.swift in Sources */,
 				5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */,
 				54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */,
-				5439770E20A43A4B002072AE /* ThemeController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
-				5463D28C20A782B8002B368A /* UserManager.swift in Sources */,
 				541378E621DA627C003A4481 /* NoteSQLDatabase.swift in Sources */,
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
-				5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */,
 				54F1C42420A9F4D1009F31C0 /* Note.swift in Sources */,
+				54041CEE21EE6E19006EAF8D /* CKRecord+Conversions.swift in Sources */,
 				548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */,
+				54041CE921EE6E09006EAF8D /* TextAnnotationManager.swift in Sources */,
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
+				54041CED21EE6E19006EAF8D /* CloudKitPull.swift in Sources */,
 				5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */,
 				5439770C20A421E6002072AE /* PreferencesViewController.swift in Sources */,
+				54041CEA21EE6E10006EAF8D /* Annotation.swift in Sources */,
 				5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */,
 				5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */,
 				54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */,
+				54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
 				54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
+				54041CEB21EE6E19006EAF8D /* CloudKitNotes.swift in Sources */,
 				5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
