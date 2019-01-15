@@ -13,13 +13,7 @@ import CDKOraccInterface
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    lazy var oraccInterface: OraccInterface = {
-        if UserDefaults.standard.bool(forKey: PreferenceKey.useGithub.rawValue) {
-            return try! OraccGithubToSwiftInterface()
-        } else {
-            return OraccToSwiftInterface()
-        }
-    }()
+    lazy var oraccInterface: OraccInterface = {return try! OraccGithubToSwiftInterface()}()
 
     lazy var glossary: Glossary = { return Glossary() }()
     lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()

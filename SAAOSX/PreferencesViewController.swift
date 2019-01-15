@@ -12,7 +12,6 @@ import CDKSwiftOracc
 class PreferencesViewController: NSViewController {
     @IBOutlet weak var textPreferenceSwitch: NSSegmentedControl!
     @IBOutlet weak var temporaryFileLabel: NSTextField!
-    @IBOutlet weak var providerSwitch: NSSegmentedControl!
     
     lazy var defaults: UserDefaultsController = {
         return UserDefaultsController()
@@ -48,11 +47,6 @@ class PreferencesViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         temporaryFileLabel?.stringValue = "Cache size: \(sizeToDisplay)"
-        if defaults.useGithub {
-            providerSwitch.selectedSegment = 1
-        } else {
-            providerSwitch.selectedSegment = 0
-        }
     }
 
     @IBAction func temporaryFileClear(_ sender: Any) {
@@ -66,16 +60,5 @@ class PreferencesViewController: NSViewController {
         }
 
         temporaryFileLabel.stringValue = "Cache size: \(sizeToDisplay)"
-    }
-
-    @IBAction func setProviderDefault(_ sender: NSSegmentedControl) {
-        if sender.selectedSegment == 1 {
-            defaults.saveInterfaceSource(true)
-            appDelegate.setOraccInterface(to: .Github)
-
-        } else {
-            defaults.saveInterfaceSource(false)
-            appDelegate.setOraccInterface(to: .Oracc)
-        }
     }
 }
