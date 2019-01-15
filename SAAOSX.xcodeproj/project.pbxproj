@@ -151,7 +151,7 @@
 		548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommands.swift; sourceTree = "<group>"; };
 		5491DD4D21CD385100B49B7D /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
 		549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAA_Lemmatised.sqlite3; sourceTree = "<group>"; };
-		5498CAD8204EAF63004C774A /* SAAiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5498CAD8204EAF63004C774A /* SAAi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5498CADA204EAF63004C774A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5498CADC204EAF63004C774A /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
 		5498CADE204EAF63004C774A /* TextEditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditionViewController.swift; sourceTree = "<group>"; };
@@ -284,7 +284,7 @@
 			children = (
 				544138D92004D27A00A64CB2 /* SAAo-SX.app */,
 				544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */,
-				5498CAD8204EAF63004C774A /* SAAiOS.app */,
+				5498CAD8204EAF63004C774A /* SAAi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -543,9 +543,9 @@
 			productReference = 544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5498CAD7204EAF63004C774A /* SAAiOS */ = {
+		5498CAD7204EAF63004C774A /* SAAi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAiOS" */;
+			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAi" */;
 			buildPhases = (
 				FCACBCDA4947268DEADF6D2D /* [CP] Check Pods Manifest.lock */,
 				5498CAD4204EAF63004C774A /* Sources */,
@@ -557,9 +557,9 @@
 			);
 			dependencies = (
 			);
-			name = SAAiOS;
+			name = SAAi;
 			productName = SAAiOS;
-			productReference = 5498CAD8204EAF63004C774A /* SAAiOS.app */;
+			productReference = 5498CAD8204EAF63004C774A /* SAAi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -617,7 +617,7 @@
 			targets = (
 				544138D82004D27A00A64CB2 /* SAAo-SX */,
 				544138EA2004D27A00A64CB2 /* SAAOSXTests */,
-				5498CAD7204EAF63004C774A /* SAAiOS */,
+				5498CAD7204EAF63004C774A /* SAAi */,
 			);
 		};
 /* End PBXProject section */
@@ -1147,7 +1147,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAiOS" */ = {
+		5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5498CAE9204EAF63004C774A /* Debug */,
