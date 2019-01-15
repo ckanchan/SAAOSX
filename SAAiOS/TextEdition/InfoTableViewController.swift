@@ -137,8 +137,8 @@ class InfoTableViewController: UITableViewController {
         switch indexPath.section {
         case 5:
             if indexPath.row == 0 {
-                presentingVC.viewOnline()
                 presentingVC.dismiss(animated: true)
+                presentingVC.viewOnline()
             } else if indexPath.row == 1 {
                 presentingVC.dismiss(animated: true)
             }
