@@ -83,15 +83,3 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
         }
     }
 }
-
-extension TextPanelViewController: Themeable {
-    func enableDarkMode() {
-        view.backgroundColor = .black
-        textView.enableDarkMode()
-    }
-
-    func disableDarkMode() {
-        view.backgroundColor = .white
-        textView.disableDarkMode()
-    }
-}

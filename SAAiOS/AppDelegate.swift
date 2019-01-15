@@ -8,24 +8,17 @@
 
 import UIKit
 import CDKSwiftOracc
-import Firebase
-import FirebaseUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    lazy var sqlDB: SQLiteCatalogue = {
-        return SQLiteCatalogue()
-        }()!
-
-    lazy var glossaryDB: Glossary = {
-        return Glossary()
-    }()
     
-    lazy var userManager: UserManager = {
-        return UserManager()
-    }()
+    // Essential app services
+    lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue() }()!
+
+    lazy var glossaryDB: Glossary = { return Glossary() }()
+    
 
     var splitViewController: UISplitViewController {
         return window!.rootViewController as! UISplitViewController
@@ -45,32 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
 
-        let themeController = ThemeController()
-        themeController.change(theme: themeController.themePreference)
-        self.registerThemeNotifications()
-        FirebaseApp.configure()
-
         return true
     }
 
-    deinit {
-        deregisterThemeNotifications()
-    }
-
-    func application(_ app: UIApplication, open url: URL,
-                     options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
-        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
-            return true
-        }
-        // other URL handling goes here.
-        return false
-    }
-
-    func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
-        self.sqlDB = SQLiteCatalogue()!
-        self.glossaryDB = Glossary()
-    }
 
     // MARK: - Split view
 
@@ -84,32 +54,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return false
     }
 
-    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
-        return true
-    }
-
-    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        return true
-    }
-
-}
-
-extension AppDelegate: Themeable {
-
-    func enableDarkMode() {
-        UIApplication.shared.statusBarStyle = .lightContent
-    }
-
-    func disableDarkMode() {
-        UIApplication.shared.statusBarStyle = .default
-    }
-
-    var darkTheme: Bool {
-        switch ThemeController().themePreference {
-        case .dark:
-            return true
-        default:
-            return false
-        }
-    }
 }
