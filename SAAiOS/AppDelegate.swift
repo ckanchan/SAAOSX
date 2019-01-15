@@ -10,48 +10,53 @@ import UIKit
 import CDKSwiftOracc
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var didChooseDetail = false
     
     // Essential app services
     lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue() }()!
-
     lazy var glossaryDB: Glossary = { return Glossary() }()
     
 
-    var splitViewController: UISplitViewController {
-        return window!.rootViewController as! UISplitViewController
-    }
-
-    var navigationController: UINavigationController {
-        return splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-    }
-
-    var detailNavigationController: UINavigationController {
-     return self.splitViewController.viewControllers.last! as! UINavigationController
-    }
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-        splitViewController.delegate = self
-
+        
+        UIView.appearance().tintColor = .purple
+        self.window = self.window ?? UIWindow()
+        let svc = UISplitViewController()
+        let detailViewController = TextEditionViewController()
+        let masterViewController = ProjectListViewController.new(detailViewController: detailViewController)
+        let masterNavigationController = UINavigationController(rootViewController: masterViewController)
+        
+        masterNavigationController.isToolbarHidden = false
+        
+        let detailNavigationController = UINavigationController(rootViewController: detailViewController)
+        
+        svc.viewControllers = [masterNavigationController, detailNavigationController]
+        svc.delegate = self
+        
+        self.window!.rootViewController = svc
+        detailViewController.navigationItem.leftBarButtonItem = svc.displayModeButtonItem
+        detailViewController.navigationItem.leftItemsSupplementBackButton = true
+        
+        self.window!.backgroundColor = .white
+        self.window!.makeKeyAndVisible()
+        
         return true
     }
+    
+}
 
-
-    // MARK: - Split view
-
+extension AppDelegate: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
-        guard let topAsDetailController = secondaryAsNavController.topViewController as? TextEditionViewController else { return false }
-        if topAsDetailController.textItem == nil {
-            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+        if
+            let navigationController = secondaryViewController as? UINavigationController,
+            navigationController.topViewController is TextEditionViewController,
+            self.didChooseDetail {
+            return false
+        } else {
             return true
         }
-        return false
     }
-
 }

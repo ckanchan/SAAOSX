@@ -32,13 +32,6 @@ class ProjectListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? TextEditionViewController
-        }
-        
         tableView.reloadData()
         
         if self.catalogue.source != .search {
@@ -83,28 +76,27 @@ class ProjectListViewController: UITableViewController {
     }
 
     // MARK: - Segues
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                guard let (catalogueEntry, textStrings) = getTextViewData(for: indexPath) else {return}
-                let controller = (segue.destination as! UINavigationController).topViewController as! TextEditionViewController
-                controller.textItem = catalogueEntry
-                controller.textStrings = textStrings
-                controller.catalogue = self.catalogue
-                controller.parentController = self
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
+        guard let (catalogueEntry, textStrings) = getTextViewData(for: indexPath) else {return}
+        let controller = TextEditionViewController()
+        controller.textItem = catalogueEntry
+        controller.textStrings = textStrings
+        controller.catalogue = self.catalogue
+        controller.parentController = self
 
-                if catalogue.source == .search {
-                    guard let catalogue = self.catalogue as? Catalogue else {return}
-                    guard let textSearch = catalogue.catalogue as? TextSearchCollection else {return}
-                    let searchTerm = textSearch.searchTerm
-                    controller.searchTerm = searchTerm
-                }
 
-                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
-                controller.becomeFirstResponder()
-            }
+        if catalogue.source == .search {
+            guard let catalogue = self.catalogue as? Catalogue else {return}
+            guard let textSearch = catalogue.catalogue as? TextSearchCollection else {return}
+            let searchTerm = textSearch.searchTerm
+            controller.searchTerm = searchTerm
         }
+        
+        let navigationController = UINavigationController(rootViewController: controller)
+        self.showDetailViewController(navigationController, sender: self)
+        self.appDelegate.didChooseDetail = true
+        controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        controller.navigationItem.leftItemsSupplementBackButton = true
     }
 
     func getTextViewData(for indexPath: IndexPath) -> (OraccCatalogEntry, TextEditionStringContainer)? {
@@ -184,5 +176,14 @@ extension ProjectListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
+extension ProjectListViewController {
+    static func new(detailViewController: TextEditionViewController?) -> ProjectListViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: UIViewController.StoryboardIDs.ProjectListViewController) as! ProjectListViewController
+        vc.detailViewController = detailViewController
+        return vc
     }
 }

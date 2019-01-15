@@ -14,24 +14,23 @@ enum TextDisplay: Int {
 }
 
 class TextEditionViewController: UIViewController {
-    /// Model for what the views are displaying
-    enum DisplayState {
-        case single(TextDisplay)
-        case double(left: TextDisplay, right: TextDisplay)
-    }
-
-    @IBOutlet weak var primaryContainerView: UIView!
-    @IBOutlet weak var secondaryContainerView: UIView!
-
+    var stackView: UIStackView!
+    
     // MARK: - Instance Variables
     weak var parentController: ProjectListViewController?
     weak var catalogue: CatalogueProvider?
-    var displayState: DisplayState?
 
-    weak var primaryPanel: TextPanelViewController!
-    weak var secondaryPanel: TextPanelViewController!
 
-    var textItem: OraccCatalogEntry?
+    var primaryPanel: TextPanelViewController!
+    var secondaryPanel: TextPanelViewController?
+
+    var textItem: OraccCatalogEntry? {
+        didSet {
+            guard let textItem = self.textItem else {return}
+            navigationItem.titleView = titleLabel(for: textItem, color: .darkText)
+        }
+    }
+    
     var textStrings: TextEditionStringContainer? {
         didSet {
             textStrings?.render(withPreferences: UIFont.systemFont(ofSize: UIFont.systemFontSize).makeDefaultPreferences())
@@ -40,23 +39,63 @@ class TextEditionViewController: UIViewController {
 
     var searchTerm: String?
 
+    override func loadView() {
+        let stackView = UIStackView(frame: .zero)
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        self.view = stackView
+        self.stackView = stackView
+    }
+    
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         initialiseToolbar()
         addInfoButton()
-
-        primaryPanel = childViewControllers.first as? TextPanelViewController
-        secondaryPanel = childViewControllers.last as? TextPanelViewController
-
-        primaryPanel.delegate = self
-        primaryPanel.textDisplay = .Normalisation
-
-        secondaryPanel.delegate = self
-        secondaryPanel.textDisplay = .Translation
-
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        switch traitCollection.horizontalSizeClass {
+        case .compact:
+            addPrimaryPanel()
+            
+        case .regular:
+            addPrimaryPanel()
+            addSecondaryPanel()
+            
+        case .unspecified:
+            addPrimaryPanel()
+        }
+    }
+    
+    func addPrimaryPanel() {
+        guard self.primaryPanel == nil else {return}
+        primaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Normalisation)
+        self.addChildViewController(primaryPanel)
+        primaryPanel.loadViewIfNeeded()
+        stackView.addArrangedSubview(primaryPanel.view)
+        primaryPanel.didMove(toParentViewController: self)
+    }
+    
+    func addSecondaryPanel() {
+        guard self.secondaryPanel == nil else {return}
+        secondaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Translation)
+        self.addChildViewController(secondaryPanel!)
+        secondaryPanel!.loadViewIfNeeded()
+        stackView.addArrangedSubview(secondaryPanel!.view)
+        secondaryPanel?.didMove(toParentViewController: self)
+    }
+    
+    func removeSecondaryPanelIfExists() {
+        guard let secondaryPanel = self.secondaryPanel else {return}
+        secondaryPanel.willMove(toParentViewController: nil)
+        stackView.removeArrangedSubview(secondaryPanel.view)
+        secondaryPanel.removeFromParentViewController()
+        self.secondaryPanel = nil
     }
 
-
+    
     func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -79,17 +118,21 @@ class TextEditionViewController: UIViewController {
 
     //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
-        guard let catalogue = self.catalogue else { return }
-        guard let id = self.textItem?.id else { return }
-        guard let currentRow = catalogue.texts.index(where: {$0.id == id}) else {return}
+        guard let catalogue = self.catalogue,
+            let id = self.textItem?.id,
+            let currentRow = catalogue.texts.index(where: {$0.id == id}) else {return}
+        
         let nextRow: Int
-        var direction: Navigate? = nil
-
+        var direction: Navigate
+        
         if let button = sender as? UIBarButtonItem {
-            if button.title == "<" {
+            switch button.title {
+            case .some("<"):
                 direction = .left
-            } else if button.title == ">" {
+            case .some(">"):
                 direction = .right
+            default:
+                return
             }
         } else if let keyCommand = sender as? UIKeyCommand {
             switch keyCommand.input {
@@ -100,102 +143,50 @@ class TextEditionViewController: UIViewController {
             default:
                 return
             }
+        } else {
+            return
         }
-
-        if let direction = direction {
-            switch direction {
-            case .left:
-                nextRow = currentRow - 1
-                guard nextRow >= catalogue.texts.startIndex else {return}
-            case .right:
-                nextRow = currentRow + 1
-                guard nextRow < catalogue.texts.endIndex else {return}
-            }
-
-            guard let nextEntry = catalogue.text(at: nextRow) else {return}
-            guard let strings = sqlite.getTextStrings(nextEntry.id) else {return}
-
-            self.textStrings = strings
-            self.textItem = nextEntry
-            self.title = nextEntry.title
-
-            if traitCollection.horizontalSizeClass == .regular {
-                if direction == .left {
-                    parentController?.navigate(.left)
-                } else {
-                    parentController?.navigate(.right)
-                }
-            }
+        
+        switch direction {
+        case .left:
+            nextRow = currentRow - 1
+            guard nextRow >= catalogue.texts.startIndex else {return}
+        case .right:
+            nextRow = currentRow + 1
+            guard nextRow < catalogue.texts.endIndex else {return}
+        }
+        
+        guard let nextEntry = catalogue.text(at: nextRow),
+            let strings = sqlite.getTextStrings(nextEntry.id) else {return}
+        
+        self.textStrings = strings
+        self.textItem = nextEntry
+        self.title = nextEntry.title
+        self.primaryPanel?.changeText(display: .Normalisation, scrollToTop: true)
+        self.secondaryPanel?.changeText(display: .Translation, scrollToTop: true)
+        
+        if traitCollection.horizontalSizeClass == .regular {
+            parentController?.navigate(direction)
         }
     }
 
-    @IBAction func changeText(_ sender: UISegmentedControl) {
-        guard let displayState = self.displayState else {return}
-        let newState: TextDisplay
-        switch sender.selectedSegmentIndex {
-        case 0:
-            newState = .Cuneiform
-        case 1:
-            newState = .Transliteration
-        case 2:
-            newState = .Normalisation
-        case 3:
-            newState = .Translation
-        default:
-            newState = .Normalisation
-        }
-
-        switch displayState {
-        case .single:
-            self.displayState = DisplayState.single(newState)
-
-        case .double(let leftDisplay, let rightDisplay):
-            let newDisplayState: DisplayState
-
-            switch sender.tag {
-            case 0: // Changing the left display's text
-                newDisplayState = DisplayState.double(left: newState, right: rightDisplay)
-
-            case 1: // Changing the right display's text
-                newDisplayState = DisplayState.double(left: leftDisplay, right: newState)
-
-            default: // Big error
-                return
-            }
-            self.displayState = newDisplayState
-        }
-    }
 
     #warning("Text rendering is inconsistent")
     func string(for textKind: TextDisplay) -> NSAttributedString {
         let notAvailable = NSAttributedString(string: "Not available")
-        let textColor = UIColor.darkText
 
         switch textKind {
         case .Cuneiform:
-            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.cuneiformNA, .foregroundColor: textColor])
+            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.cuneiformNA])
         case .Transliteration:
             return textStrings?.transliteration ?? notAvailable
         case .Normalisation:
             return textStrings?.normalisation ?? notAvailable
         case .Translation:
-            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.defaultFont, .foregroundColor: textColor])
+            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.defaultFont])
 
         }
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        switch traitCollection.horizontalSizeClass {
-        case .regular:
-            return
-
-        default:
-            return
-        }
-    }
-
 }
 
 // MARK: - Outbound Methods
@@ -214,11 +205,13 @@ extension TextEditionViewController {
 
     @objc func presentInformation() {
         guard let catalogueInfo = self.textItem else {return}
-        guard let infoTableController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
+        let storyboard = UIStoryboard(name: "TextEdition", bundle: nil)
+        guard let infoTableController = storyboard.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
         infoTableController.catalogueInfo = catalogueInfo
         infoTableController.textEditionViewController = self
+        infoTableController.tableView.delegate = infoTableController
 
-        if UIDevice.current.userInterfaceIdiom == .pad {
+        if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
             infoTableController.modalPresentationStyle = .popover
             present(infoTableController, animated: true)
             let popoverController = infoTableController.popoverPresentationController
@@ -246,7 +239,8 @@ extension TextEditionViewController {
     }
 
     func initialiseToolbar() {
-        let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: parentController, action: #selector(ProjectListViewController.showGlossary(_:)))
+        #warning("Readd a quick define action to look up the word in glossary")
+        let quickDefine = UIBarButtonItem(title: "Quick define", style: .plain, target: nil, action: nil)
         let (left, right) = makeNavigationButtons()
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         self.setToolbarItems([quickDefine, spacer, left, right], animated: true)
