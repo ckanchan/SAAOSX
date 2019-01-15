@@ -51,9 +51,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         return catalogue?.texts.index(where: {$0.id == self.catalogueEntry.id})
         }()
 
-    var windowController: TextWindowController? {
-        return self.view.window?.windowController as? TextWindowController
-    }
+    var windowController: TextWindowController?
     
 
     override func viewWillAppear() {
@@ -68,6 +66,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         super.viewDidDisappear()
         guard let windowController = self.windowController else {return}
         windowController.textViewController.removeAll()
+        self.windowController = nil
     }
     
     

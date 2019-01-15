@@ -64,11 +64,11 @@ class TextWindowController: NSWindowController, NSSearchFieldDelegate {
                 $0.catalogueEntry = entry
                 $0.catalogue = catalogue
                 $0.splitViewController = splitTextViewController
+                $0.windowController = window
                 window.textViewController.append($0)
             }
 
             controllers[1].textSelected.selectedSegment = 3
-            window.contentViewController = splitTextViewController
             window.window?.title = "\(entry.displayName): \(entry.title)"
             window.window?.setFrame(NSRect(x: 640, y: 640, width: 1000, height: 800), display: false)
             window.catalogueSearch.stringValue = entry.title
