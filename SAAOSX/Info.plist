@@ -43,6 +43,10 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>SAAo-SX.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>me.chaidk.SAAo-SX.help</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
