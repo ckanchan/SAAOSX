@@ -1,0 +1,100 @@
+{
+    "birdseed_version": 5,
+    "build_id": "3.0.0",
+    "build_date": "2019.01.18-19:42:06",
+    "collect_feedback": false,
+    "copyright": "topic-en.lproj-copyright",
+    "copyright_text": "© 2019 Chaitanya Kanchan. All rights reserved.",
+    "css": "",
+    "enable_tracking": false,
+    "framework": "middlemac-3.0.0",
+    "icon": "",
+    "landing": "topic-Resources-en.lproj",
+    "locale": "en",
+    "platform": "mac",
+    "printable_page": "",
+    "product": "SAAo-SX",
+    "quick_links": [],
+    "sections": {
+    },
+    "show_previous_next": false,
+    "source_schema": "apd-schema",
+    "title": "SAAo-SX Help",
+    "toc": [
+        "topic-en.lproj-welcome",
+        "topic-en.lproj-catalogues",
+        "topic-en.lproj-texts",
+        "topic-en.lproj-glossary",
+        "topic-en.lproj-maps",
+        "topic-en.lproj-keyboard_shortcuts"
+    ],
+    "topics": {
+        "topic-Resources-en.lproj": {
+            "name": "SAAo-SX",
+            "href": "index.html",
+            "categories": [
+              "landing"
+            ]
+        },
+        "topic-asides-oracc": {
+            "name": "Oracc",
+            "summary": "About the Open Richly Annotated Cuneiform Corpus",
+            "href": "asides/oracc.html",
+            "categories": [
+              "aside"
+            ]
+        },
+        "topic-en.lproj-catalogues": {
+            "name": "Navigating Catalogues",
+            "summary": "How to browse, search and select texts in the catalogue window",
+            "href": "catalogues.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-copyright": {
+            "name": "License",
+            "summary": "License Page",
+            "href": "copyright.html",
+            "categories": [
+              "copyright"
+            ]
+        },
+        "topic-en.lproj-glossary": {
+            "name": "Using the Glossary",
+            "summary": "How to browse, search and select texts in the catalogue window",
+            "href": "glossary.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-keyboard_shortcuts": {
+            "name": "Keyboard shortcuts",
+            "summary": "Lists the shortcuts used in the program, arranged by view",
+            "href": "keyboard_shortcuts.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-maps": {
+            "name": "The Map View",
+            "summary": "How to browse, search and select texts in the catalogue window",
+            "href": "maps.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-texts": {
+            "name": "Reading Texts",
+            "summary": "Using the Text Viewer",
+            "href": "texts.html",
+            "categories": [
+            ]
+        },
+        "topic-en.lproj-welcome": {
+            "name": "First Steps",
+            "summary": "Introduction to the software",
+            "href": "welcome.html",
+            "categories": [
+            ]
+        }
+    },
+    "urls": {},
+    "version": "3.0.0"
+}
