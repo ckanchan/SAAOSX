@@ -68,31 +68,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.allowsMultipleSelection = false
         panel.begin { _ in
 
-            guard let url = panel.urls.first else {return}
+            guard let url = panel.urls.first,
+                let data = try? Data(contentsOf: url) else {return}
 
             switch url.pathExtension {
-
             case "json":
-                if let data = try? Data(contentsOf: url) {
-                    let decoder = JSONDecoder()
-                    if let textEdition = try? decoder.decode(OraccTextEdition.self, from: data) {
-                        let stringContainer = TextEditionStringContainer(textEdition)
-                        let dummyData = OraccCatalogEntry.initFromSaved(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
-
-                        TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
-
-                    } else if let catalogue = try? decoder.decode(OraccCatalog.self, from: data) {
-                        var texts = Array(catalogue.members.values)
-                        texts.sort {$0.displayName < $1.displayName}
-                        let catalogueProvider = Catalogue(catalogue: catalogue, sorted: texts, source: .local)
-
-                        let newWindow = ProjectListWindowController.new(catalogue: catalogueProvider)
-
-                        newWindow.setConnectionStatus(to: "local")
-
-                    } else {self.openError(fileAt: url)}
+                let decoder = JSONDecoder()
+                if let textEdition = try? decoder.decode(OraccTextEdition.self, from: data) {
+                    let stringContainer = TextEditionStringContainer(textEdition)
+                    let dummyData = OraccCatalogEntry.initFromSaved(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
+                    
+                    TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
+                    
+                } else if let catalogue = try? decoder.decode(OraccCatalog.self, from: data) {
+                    var texts = Array(catalogue.members.values)
+                    texts.sort {$0.displayName < $1.displayName}
+                    let catalogueProvider = Catalogue(catalogue: catalogue, sorted: texts, source: .local)
+                    
+                    let newWindow = ProjectListWindowController.new(catalogue: catalogueProvider)
+                    
+                    newWindow.setConnectionStatus(to: "local")
+                    
                 } else {self.openError(fileAt: url)}
 
+
+            case "ocdl": // this is a Tupshar file
+                struct TupsharDocument: Decodable {
+                    let text: OraccTextEdition
+                    let translation: String
+                }
+                
+                guard let tupsharDocument = try? JSONDecoder().decode(TupsharDocument.self, from: data) else {return}
+                let stringContainer = TextEditionStringContainer(tupsharDocument.text)
+                stringContainer.translation = tupsharDocument.translation
+                let dummyData = OraccCatalogEntry.initFromSaved(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
+                TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
+                
             default:
                 self.openError(fileAt: url)
             }
