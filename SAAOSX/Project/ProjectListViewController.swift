@@ -104,9 +104,9 @@ class ProjectListViewController: NSViewController {
             guard let cat = self.projectList.first(where: {$0.pathname.contains(catalogueStr)})
                 else {
                     DispatchQueue.main.async {
-                        self.windowController?.setConnectionStatus(to: "disconnected")
-                        self.windowController?.pinnedToggle.state = .on
-                        self.loadCatalogue("saa01")
+                        self.windowController?.setConnectionStatus(to: "failed to load")
+                        self.windowController?.pinnedToggle.state = .off
+                        self.loadCatalogue("sqlite")
                     }
                     return
             }
@@ -126,9 +126,9 @@ class ProjectListViewController: NSViewController {
             } catch {
                 print(error)
                 DispatchQueue.main.async {
-                    self.loadCatalogue("pins")
-                    self.windowController?.setConnectionStatus(to: "disconnected")
-                    self.windowController?.pinnedToggle.state = .on
+                    self.windowController?.setConnectionStatus(to: "failed to load")
+                    self.windowController?.pinnedToggle.state = .off
+                    self.loadCatalogue("sqlite")
                 }
             }
         }
