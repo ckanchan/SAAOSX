@@ -72,9 +72,6 @@ final class CloudKitNotes {
     
 }
 
-// MARK :- Push
-
-
 protocol NoteDelegate: AnyObject {
     func noteAdded(_ note: Note)
     func noteRemoved(_ textID: TextID)

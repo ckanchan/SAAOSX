@@ -222,7 +222,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
                 let context = metadata[.referenceContext] as? String,
                 let reference = metadata[.reference] as? String else {return}
             
-            let nodeReference = NodeReference(stringLiteral: reference)
+            let nodeReference = NodeReference(base: catalogueEntry.id, path: reference.split(separator: ".").map { String($0)})
             window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context, annotationManager: annotationManager)
         }
         window?.showWindow(self)
