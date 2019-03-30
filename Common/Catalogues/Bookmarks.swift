@@ -232,7 +232,7 @@ final public class Bookmarks: CatalogueProvider {
     public func remove(entry: OraccCatalogEntry) {
         let query = Bookmarks.bookmarks.select(rowid).filter(Bookmarks.id == entry.id.description)
 
-        guard let row = try? db.pluck(query) else {return nil} 
+        guard let row = try? db.pluck(query) else {return} 
         let rowID = row[rowid]
         remove(at: Int(rowID))
         entry.deindexItem()
