@@ -37,9 +37,9 @@
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
-		544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */; };
 		5447AE2B21D421B800EDD45F /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
+		544E5FF3224FA025004482E5 /* SAAo_SXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */; };
 		54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */; };
 		54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */; };
 		54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */; };
@@ -108,16 +108,15 @@
 		54FE04EA21D141F5000214E5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE04E921D141F5000214E5 /* MapViewController.swift */; };
 		A4AA5D0866D1DD9F98076431 /* Pods_SAAo_SX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08E2E18F8917E045004A82A /* Pods_SAAo_SX.framework */; };
 		CC76434373B0C9DA3A6175C6 /* Pods_SAAi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669CD2880467B05FF720DB1D /* Pods_SAAi.framework */; };
-		EAFD3AE2F4DFF826806C079C /* Pods_SAAOSXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B2CEEC8B33C845D1161687 /* Pods_SAAOSXTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		544138EC2004D27A00A64CB2 /* PBXContainerItemProxy */ = {
+		544E5FF5224FA025004482E5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 544138D12004D27A00A64CB2 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 544138D82004D27A00A64CB2;
-			remoteInfo = SAAOSX;
+			remoteInfo = "SAAo-SX";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -163,11 +162,11 @@
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		544138E32004D27A00A64CB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		544138E52004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAAOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAOSXTests.swift; sourceTree = "<group>"; };
-		544138F12004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5447AE2A21D421B800EDD45F /* qpn_pleiades.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = qpn_pleiades.json; sourceTree = "<group>"; };
 		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
+		544E5FF0224FA025004482E5 /* SAAo-SXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SAAo-SXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAo_SXTests.swift; sourceTree = "<group>"; };
+		544E5FF4224FA025004482E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineViewController.swift; sourceTree = "<group>"; };
@@ -248,11 +247,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		544138E82004D27A00A64CB2 /* Frameworks */ = {
+		544E5FED224FA025004482E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAFD3AE2F4DFF826806C079C /* Pods_SAAOSXTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,9 +316,9 @@
 				54D3B4DD21D7B56D00F836E2 /* Resources */,
 				54A9520B204058C40042E1BA /* Common */,
 				544138DB2004D27A00A64CB2 /* SAAOSX */,
-				544138EE2004D27A00A64CB2 /* SAAOSXTests */,
 				543709A8209F9D4100CE41F7 /* Fonts */,
 				5498CAD9204EAF63004C774A /* SAAiOS */,
+				544E5FF1224FA025004482E5 /* SAAo-SXTests */,
 				544138DA2004D27A00A64CB2 /* Products */,
 				5441390A2004D30A00A64CB2 /* Frameworks */,
 				79E9A18ED51245BB47DA9F75 /* Pods */,
@@ -331,8 +329,8 @@
 			isa = PBXGroup;
 			children = (
 				544138D92004D27A00A64CB2 /* SAAo-SX.app */,
-				544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */,
 				5498CAD8204EAF63004C774A /* SAAi.app */,
+				544E5FF0224FA025004482E5 /* SAAo-SXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -360,15 +358,6 @@
 			path = SAAOSX;
 			sourceTree = "<group>";
 		};
-		544138EE2004D27A00A64CB2 /* SAAOSXTests */ = {
-			isa = PBXGroup;
-			children = (
-				544138EF2004D27A00A64CB2 /* SAAOSXTests.swift */,
-				544138F12004D27A00A64CB2 /* Info.plist */,
-			);
-			path = SAAOSXTests;
-			sourceTree = "<group>";
-		};
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +369,15 @@
 				A08E2E18F8917E045004A82A /* Pods_SAAo_SX.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		544E5FF1224FA025004482E5 /* SAAo-SXTests */ = {
+			isa = PBXGroup;
+			children = (
+				544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */,
+				544E5FF4224FA025004482E5 /* Info.plist */,
+			);
+			path = "SAAo-SXTests";
 			sourceTree = "<group>";
 		};
 		54657A5D20A0C0FC00FAC8E3 /* Glossary */ = {
@@ -575,23 +573,22 @@
 			productReference = 544138D92004D27A00A64CB2 /* SAAo-SX.app */;
 			productType = "com.apple.product-type.application";
 		};
-		544138EA2004D27A00A64CB2 /* SAAOSXTests */ = {
+		544E5FEF224FA025004482E5 /* SAAo-SXTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 544138F72004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAOSXTests" */;
+			buildConfigurationList = 544E5FF7224FA025004482E5 /* Build configuration list for PBXNativeTarget "SAAo-SXTests" */;
 			buildPhases = (
-				65C2ACDB9326581E86DAB424 /* [CP] Check Pods Manifest.lock */,
-				544138E72004D27A00A64CB2 /* Sources */,
-				544138E82004D27A00A64CB2 /* Frameworks */,
-				544138E92004D27A00A64CB2 /* Resources */,
+				544E5FEC224FA025004482E5 /* Sources */,
+				544E5FED224FA025004482E5 /* Frameworks */,
+				544E5FEE224FA025004482E5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				544138ED2004D27A00A64CB2 /* PBXTargetDependency */,
+				544E5FF6224FA025004482E5 /* PBXTargetDependency */,
 			);
-			name = SAAOSXTests;
-			productName = SAAOSXTests;
-			productReference = 544138EB2004D27A00A64CB2 /* SAAOSXTests.xctest */;
+			name = "SAAo-SXTests";
+			productName = "SAAo-SXTests";
+			productReference = 544E5FF0224FA025004482E5 /* SAAo-SXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		5498CAD7204EAF63004C774A /* SAAi */ = {
@@ -619,13 +616,13 @@
 		544138D12004D27A00A64CB2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Chaitanya Kanchan";
 				TargetAttributes = {
 					544138D82004D27A00A64CB2 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
@@ -642,8 +639,8 @@
 							};
 						};
 					};
-					544138EA2004D27A00A64CB2 = {
-						CreatedOnToolsVersion = 9.2;
+					544E5FEF224FA025004482E5 = {
+						CreatedOnToolsVersion = 10.2;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 544138D82004D27A00A64CB2;
 					};
@@ -667,8 +664,8 @@
 			projectRoot = "";
 			targets = (
 				544138D82004D27A00A64CB2 /* SAAo-SX */,
-				544138EA2004D27A00A64CB2 /* SAAOSXTests */,
 				5498CAD7204EAF63004C774A /* SAAi */,
+				544E5FEF224FA025004482E5 /* SAAo-SXTests */,
 			);
 		};
 /* End PBXProject section */
@@ -693,7 +690,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		544138E92004D27A00A64CB2 /* Resources */ = {
+		544E5FEE224FA025004482E5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -741,24 +738,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SAAi/Pods-SAAi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		65C2ACDB9326581E86DAB424 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SAAOSXTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A02C04175A59B4AE38E9F74B /* [CP] Check Pods Manifest.lock */ = {
@@ -878,11 +857,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		544138E72004D27A00A64CB2 /* Sources */ = {
+		544E5FEC224FA025004482E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				544138F02004D27A00A64CB2 /* SAAOSXTests.swift in Sources */,
+				544E5FF3224FA025004482E5 /* SAAo_SXTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,10 +902,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		544138ED2004D27A00A64CB2 /* PBXTargetDependency */ = {
+		544E5FF6224FA025004482E5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 544138D82004D27A00A64CB2 /* SAAo-SX */;
-			targetProxy = 544138EC2004D27A00A64CB2 /* PBXContainerItemProxy */;
+			targetProxy = 544E5FF5224FA025004482E5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1085,7 +1064,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1106,47 +1085,48 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
-		544138F82004D27A00A64CB2 /* Debug */ = {
+		544E5FF8224FA025004482E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6BEC6964438FD17C3291B87E /* Pods-SAAOSXTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = E5EXHV7YGE;
-				INFOPLIST_FILE = SAAOSXTests/Info.plist;
+				DEVELOPMENT_TEAM = 7C57J6H3NZ;
+				INFOPLIST_FILE = "SAAo-SXTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSXTests;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SXTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAAOSX.app/Contents/MacOS/SAAOSX";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAAo-SX.app/Contents/MacOS/SAAo-SX";
 			};
 			name = Debug;
 		};
-		544138F92004D27A00A64CB2 /* Release */ = {
+		544E5FF9224FA025004482E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8668D1A052B7688E4FD5240 /* Pods-SAAOSXTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = E5EXHV7YGE;
-				INFOPLIST_FILE = SAAOSXTests/Info.plist;
+				DEVELOPMENT_TEAM = 7C57J6H3NZ;
+				INFOPLIST_FILE = "SAAo-SXTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSXTests;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SXTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAAOSX.app/Contents/MacOS/SAAOSX";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAAo-SX.app/Contents/MacOS/SAAo-SX";
 			};
 			name = Release;
 		};
@@ -1212,11 +1192,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		544138F72004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAOSXTests" */ = {
+		544E5FF7224FA025004482E5 /* Build configuration list for PBXNativeTarget "SAAo-SXTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				544138F82004D27A00A64CB2 /* Debug */,
-				544138F92004D27A00A64CB2 /* Release */,
+				544E5FF8224FA025004482E5 /* Debug */,
+				544E5FF9224FA025004482E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

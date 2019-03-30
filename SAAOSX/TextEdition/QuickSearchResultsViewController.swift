@@ -97,7 +97,7 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
                 controller.stringContainer = text
                 controller.setText(self)
                 controller.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
-                controller.currentIdx = controller.catalogue?.texts.index(where: {$0.id == controller.catalogueEntry.id})
+                controller.currentIdx = controller.catalogue?.texts.firstIndex(where: {$0.id == controller.catalogueEntry.id})
             }
             self.textWindow?.resultsPopover.close()
         } else {
@@ -111,7 +111,7 @@ class QuickSearchResultsViewController: NSViewController, NSTableViewDataSource,
                             controller.stringContainer = stringContainer
                             controller.setText(self)
                             controller.windowController?.window?.title = "\(entry.displayName): \(entry.title)"
-                            controller.currentIdx = controller.catalogue?.texts.index(where: {$0.id == controller.catalogueEntry.id})
+                            controller.currentIdx = controller.catalogue?.texts.firstIndex(where: {$0.id == controller.catalogueEntry.id})
                         }
                         self.textWindow?.resultsPopover.close()
 

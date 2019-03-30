@@ -48,7 +48,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     var annotationsManager: TextAnnotationManager?
     
     lazy var currentIdx: Int? = {
-        return catalogue?.texts.index(where: {$0.id == self.catalogueEntry.id})
+        return catalogue?.texts.firstIndex(where: {$0.id == self.catalogueEntry.id})
         }()
 
     var windowController: TextWindowController?

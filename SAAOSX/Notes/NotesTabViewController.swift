@@ -66,12 +66,12 @@ extension NotesTabViewController: NoteDelegate {
     }
     
     func noteRemoved(_ textID: TextID) {
-        guard let idx = notes.index(where: {$0.id == textID}) else {return}
+        guard let idx = notes.firstIndex(where: {$0.id == textID}) else {return}
         notes.remove(at: idx)
     }
     
     func noteChanged(_ note: Note) {
-        guard let idx = notes.index(where: {$0.id == note.id}) else {return}
+        guard let idx = notes.firstIndex(where: {$0.id == note.id}) else {return}
         notes[idx] = note
     }
     

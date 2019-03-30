@@ -32,9 +32,7 @@ final class NoteSQLDatabase {
     
     func retrieveNote(forID id: String) -> Note? {
         let query = notesTable.select(note).filter(textID == id)
-        guard let r = try? db.pluck(query),
-            let row = r else {return nil}
-        
+        guard let row = try? db.pluck(query) else {return nil}        
         let data = row[note]
         return try? decoder.decode(Note.self, from: data)
     }
