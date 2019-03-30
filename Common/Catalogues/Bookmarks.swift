@@ -22,7 +22,7 @@ final public class Bookmarks: CatalogueProvider {
         return self.getCatalogueEntries() ?? []
     }()
 
-    static let Update = Notification.Name.init("BookmarksUpdated")
+    static let Update = Notification.Name("BookmarksUpdated")
 
     public func search(_ string: String) -> [OraccCatalogEntry] {
         let searchString = "%\(string)%"
@@ -38,8 +38,13 @@ final public class Bookmarks: CatalogueProvider {
         )
 
         if let results = try? db.prepare(query) {
-            let x = results.map({row in
-                return OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
+            let x = results.map({(row: Row) -> OraccCatalogEntry in
+                let textID = TextID.init(stringLiteral: row[Bookmarks.id])
+                return OraccCatalogEntry(id: textID,
+                                  displayName: row[Bookmarks.displayName],
+                                  ancientAuthor: row[Bookmarks.ancientAuthor],
+                                  title: row[Bookmarks.title],
+                                  project: row[Bookmarks.project])
             })
             return x
         } else {
@@ -104,8 +109,13 @@ final public class Bookmarks: CatalogueProvider {
         )
 
         guard let rows = try? db.prepare(query) else { return nil }
-        let entries = rows.map { row in return OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
-        }
+        let entries = rows.map { (row: Row) -> OraccCatalogEntry in
+            let textID = TextID.init(stringLiteral: row[Bookmarks.id])
+            return OraccCatalogEntry(id: textID,
+                                     displayName: row[Bookmarks.displayName],
+                                     ancientAuthor: row[Bookmarks.ancientAuthor],
+                                     title: row[Bookmarks.title],
+                                     project: row[Bookmarks.project])}
 
         return entries
     }
@@ -175,8 +185,13 @@ final public class Bookmarks: CatalogueProvider {
         guard let r = try? db.pluck(query) else { return nil }
 
         guard let row = r else { return nil}
-
-        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
+        let textID = TextID.init(stringLiteral: row[Bookmarks.id])
+        
+        let catalogueEntry = OraccCatalogEntry(id: textID,
+                                               displayName: row[Bookmarks.displayName],
+                                               ancientAuthor: row[Bookmarks.ancientAuthor],
+                                               title: row[Bookmarks.title],
+                                               project: row[Bookmarks.project])
 
         return catalogueEntry
     }
@@ -192,9 +207,14 @@ final public class Bookmarks: CatalogueProvider {
 
         guard let r = try? db.pluck(query) else { return nil }
 
-        guard let row = r else { return nil}
+        guard let row = r else { return nil }
+        let textID = TextID.init(stringLiteral: row[Bookmarks.id])
 
-        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
+        let catalogueEntry = OraccCatalogEntry(id: textID,
+                                               displayName: row[Bookmarks.displayName],
+                                               ancientAuthor: row[Bookmarks.ancientAuthor],
+                                               title: row[Bookmarks.title],
+                                               project: row[Bookmarks.project])
 
         return catalogueEntry
     }

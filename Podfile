@@ -1,21 +1,21 @@
-target 'SAAiOS' do
+target 'SAAi' do
   
   use_frameworks!
   
-  platform :ios, '11.0'
+  platform :ios, '12.0'
   
-  # Pods for SAAiOS
+  # Pods for SAAi
   pod 'CDKSwiftOracc'
   pod 'CDKOraccInterface'
   pod "SQLite.swift"
   
 end
 
-target 'SAAOSX' do
+target 'SAAo-SX' do
   
   use_frameworks!
   
-  platform :osx, '10.13'
+  platform :osx, '10.14'
   
   # Pods for SAAOSX
   pod 'CDKSwiftOracc'
