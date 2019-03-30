@@ -19,11 +19,11 @@ extension UISplitViewController {
     }
 
     var leftKeyCommand: UIKeyCommand {
-        return UIKeyCommand(input: UIKeyInputLeftArrow, modifierFlags: .command, action: #selector(self.handleKeyCommand(_:)), discoverabilityTitle: "Previous Text")
+        return UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .command, action: #selector(self.handleKeyCommand(_:)), discoverabilityTitle: "Previous Text")
     }
 
     var rightKeyCommand: UIKeyCommand {
-        return UIKeyCommand(input: UIKeyInputRightArrow, modifierFlags: .command, action: #selector(self.handleKeyCommand(_:)), discoverabilityTitle: "Next Text")
+        return UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .command, action: #selector(self.handleKeyCommand(_:)), discoverabilityTitle: "Next Text")
     }
 
     var cuneiformLeft: UIKeyCommand {
@@ -105,9 +105,9 @@ extension TextEditionViewController: KeyCommandHandler {
         switch keyCommand.modifierFlags {
         case .command:
             switch input {
-            case UIKeyInputLeftArrow:
+            case UIKeyCommand.inputLeftArrow:
                 self.navigate(keyCommand)
-            case UIKeyInputRightArrow:
+            case UIKeyCommand.inputRightArrow:
                 self.navigate(keyCommand)
             case "I":
                 self.presentInformation()

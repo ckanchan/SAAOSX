@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var glossaryDB: Glossary = { return Glossary() }()
     
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         UIView.appearance().tintColor = .purple
         self.window = self.window ?? UIWindow()

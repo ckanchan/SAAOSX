@@ -72,26 +72,26 @@ class TextEditionViewController: UIViewController {
     func addPrimaryPanel() {
         guard self.primaryPanel == nil else {return}
         primaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Normalisation)
-        self.addChildViewController(primaryPanel)
+        self.addChild(primaryPanel)
         primaryPanel.loadViewIfNeeded()
         stackView.addArrangedSubview(primaryPanel.view)
-        primaryPanel.didMove(toParentViewController: self)
+        primaryPanel.didMove(toParent: self)
     }
     
     func addSecondaryPanel() {
         guard self.secondaryPanel == nil else {return}
         secondaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Translation)
-        self.addChildViewController(secondaryPanel!)
+        self.addChild(secondaryPanel!)
         secondaryPanel!.loadViewIfNeeded()
         stackView.addArrangedSubview(secondaryPanel!.view)
-        secondaryPanel?.didMove(toParentViewController: self)
+        secondaryPanel?.didMove(toParent: self)
     }
     
     func removeSecondaryPanelIfExists() {
         guard let secondaryPanel = self.secondaryPanel else {return}
-        secondaryPanel.willMove(toParentViewController: nil)
+        secondaryPanel.willMove(toParent: nil)
         stackView.removeArrangedSubview(secondaryPanel.view)
-        secondaryPanel.removeFromParentViewController()
+        secondaryPanel.removeFromParent()
         self.secondaryPanel = nil
     }
 
@@ -120,7 +120,7 @@ class TextEditionViewController: UIViewController {
     @objc func navigate(_ sender: Any) {
         guard let catalogue = self.catalogue,
             let id = self.textItem?.id,
-            let currentRow = catalogue.texts.index(where: {$0.id == id}) else {return}
+            let currentRow = catalogue.texts.firstIndex(where: {$0.id == id}) else {return}
         
         let nextRow: Int
         var direction: Navigate
@@ -136,9 +136,9 @@ class TextEditionViewController: UIViewController {
             }
         } else if let keyCommand = sender as? UIKeyCommand {
             switch keyCommand.input {
-            case UIKeyInputLeftArrow:
+            case UIKeyCommand.inputLeftArrow:
                 direction = .left
-            case UIKeyInputRightArrow:
+            case UIKeyCommand.inputRightArrow:
                 direction = .right
             default:
                 return
@@ -177,13 +177,13 @@ class TextEditionViewController: UIViewController {
 
         switch textKind {
         case .Cuneiform:
-            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.cuneiformNA])
+            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.cuneiformNA])
         case .Transliteration:
             return textStrings?.transliteration ?? notAvailable
         case .Normalisation:
             return textStrings?.normalisation ?? notAvailable
         case .Translation:
-            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedStringKey.font: UIFont.defaultFont])
+            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.defaultFont])
 
         }
     }
@@ -226,7 +226,7 @@ extension TextEditionViewController {
 extension TextEditionViewController {
     func addInfoButton() {
         let info = UIButton(type: .infoLight)
-        info.addTarget(self, action: #selector(presentInformation), for: UIControlEvents.touchUpInside)
+        info.addTarget(self, action: #selector(presentInformation), for: UIControl.Event.touchUpInside)
         let infoBarButton = UIBarButtonItem(customView: info)
         navigationItem.rightBarButtonItem = infoBarButton
     }

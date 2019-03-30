@@ -30,7 +30,7 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
             if searchTerm.lowercased() == stringVal.lowercased() {
                 guard range.length > 2 else {return}
                 let newRange = NSRange(location: range.location, length: range.length - 1)
-                textView.textStorage.addAttributes([NSAttributedStringKey.backgroundColor: UIColor.yellow, NSAttributedStringKey.foregroundColor: UIColor.black], range: newRange)
+                textView.textStorage.addAttributes([NSAttributedString.Key.backgroundColor: UIColor.yellow, NSAttributedString.Key.foregroundColor: UIColor.black], range: newRange)
             }
         })
     }
@@ -72,8 +72,8 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
             if let citationForm = word {
                 guard !citationForm.isEmpty else {delegate?.configureToolBar(withAttributedText: NSAttributedString(string:"")); return}
                 
-                let italicWord = NSAttributedString(string: word ?? "", attributes: [NSAttributedStringKey.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)])
-                let boldGuideWord = NSAttributedString(string: guideWord ?? "", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)])
+                let italicWord = NSAttributedString(string: word ?? "", attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)])
+                let boldGuideWord = NSAttributedString(string: guideWord ?? "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)])
                 
                 let detail = NSMutableAttributedString(attributedString: italicWord)
                 detail.append(NSAttributedString(string: " "))
