@@ -240,14 +240,13 @@ final public class Bookmarks: CatalogueProvider {
 
     public init() throws {
         let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let appSupportPath = paths[0].appendingPathComponent("SAAOSX", isDirectory: true)
+        let appSupportPath = paths[0].appendingPathComponent(Bundle.main.bundleIdentifier!, isDirectory: true)
         if !FileManager.default.fileExists(atPath: appSupportPath.path) {
             try FileManager.default.createDirectory(at: appSupportPath, withIntermediateDirectories: true, attributes: nil)
         }
 
-        let path = paths[0].appendingPathComponent("SAAOSX").appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
+        let path = appSupportPath.appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
         self.db = try Connection(path.path)
         try Bookmarks.initialiseTable(on: self.db)
     }
-
 }
