@@ -14,7 +14,7 @@ extension CloudKitNotes {
     func retrieveAllNotes(completionHandler: @escaping (([TextID: Note]) -> Void)) {
         guard userIsLoggedIn else {return}
         let predicate = NSPredicate(value: true)
-        let query = CKQuery(recordType: CKRecord.RecordTypes.Note, predicate: predicate)
+        let query = CKQuery(recordType: CKRecord.RecordType.Note, predicate: predicate)
         let operation = CKQueryOperation(query: query)
         
         var notes = [TextID: Note]()
@@ -46,7 +46,7 @@ extension CloudKitNotes {
             performTask(note)
             onCompletion(nil)
         } else {
-            let query = CKQuery(recordType: CKRecord.RecordTypes.Note, predicate: Query.TextID(textID))
+            let query = CKQuery(recordType: CKRecord.RecordType.Note, predicate: Query.TextID(textID))
             let operation = CKQueryOperation(query: query)
             operation.recordFetchedBlock = { [weak self] record in
                 guard let note = record.toNote() else {return}
@@ -71,7 +71,7 @@ extension CloudKitNotes {
     func retrieveAllAnnotations(completionHandler: @escaping(([TextID: [Annotation]])-> Void)) {
         guard userIsLoggedIn else {return}
         let predicate = NSPredicate(value: true)
-        let query = CKQuery(recordType: CKRecord.RecordTypes.Annotation, predicate: predicate)
+        let query = CKQuery(recordType: CKRecord.RecordType.Annotation, predicate: predicate)
         let operation = CKQueryOperation(query: query)
         
         var annotations = [Annotation]()
@@ -109,7 +109,7 @@ extension CloudKitNotes {
                              onCompletion: @escaping((CKQueryOperation.Cursor?) -> Void)) {
         
         guard userIsLoggedIn else { return }
-        let query = CKQuery(recordType: CKRecord.RecordTypes.Annotation, predicate: Query.TextID(id))
+        let query = CKQuery(recordType: CKRecord.RecordType.Annotation, predicate: Query.TextID(id))
         let operation = CKQueryOperation(query: query)
         operation.recordFetchedBlock = { record in
             guard let annotation = record.toAnnotation() else {return}

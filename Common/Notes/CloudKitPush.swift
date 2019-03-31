@@ -11,44 +11,35 @@ import CloudKit
 import CDKSwiftOracc
 
 extension CloudKitNotes {
-    private func save(_ record: CKRecord, completionHandler: ((CKRecord) -> Void)? = nil){
+    private func save(_ record: CKRecord, completionHandler: ((Result<CKRecord, Error>) -> Void)? = nil){
         CKContainer.default().privateCloudDatabase.save(record) { record, error in
             if let error = error {
-                print(error.localizedDescription)
+                completionHandler?(.failure(error))
             } else if let record = record {
                 print("Saved \(record)")
-                if let handler = completionHandler {
-                    handler(record)
-                }
+                completionHandler?(.success(record))
             }
         }
     }
     
-    func saveNote(_ note: Note, completionHandler: ((CKRecord) -> Void)? = nil) {
-        guard userIsLoggedIn else {return}
-        if notes.keys.contains(note.id) {
-            let modifyOperation = CKModifyRecordsOperation(
-                recordsToSave: [note.toCKRecord()],
-                recordIDsToDelete: nil)
-            
-            modifyOperation.modifyRecordsCompletionBlock = {[weak self] records, _, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let records = records {
-                    print(records)
-                    guard let ckdb = self else {return}
-                    ckdb.notes[note.id] = note
-                    if let handler = completionHandler {
-                        records.forEach {handler($0)}
-                    }
-                }
+    func modifyRecord(_ record: CKRecord, completionHandler: ((Result<CKRecord, Error>) -> Void)? = nil) {
+        let modifyOperation = CKModifyRecordsOperation(recordsToSave: [record], recordIDsToDelete: nil)
+        modifyOperation.perRecordCompletionBlock = { record, error in
+            if let e = error {
+                completionHandler?(.failure(e))
+            } else {
+                completionHandler?(.success(record))
             }
-            
-            CKContainer.default().privateCloudDatabase.add(modifyOperation)
-        } else {
-            save(note.toCKRecord(), completionHandler: completionHandler)
         }
+        CKContainer.default().privateCloudDatabase.add(modifyOperation)
     }
+    
+    func saveNote(_ note: Note, completionHandler: ((Result<CKRecord, Error>) -> Void)? = nil) {
+        guard userIsLoggedIn else {return}
+        save(note.toCKRecord(), completionHandler: completionHandler)
+    }
+    
+
     
     func saveAnnotation(_ annotation: Annotation) {
         guard userIsLoggedIn else {return}
@@ -76,5 +67,17 @@ extension CloudKitNotes {
         } else {
             save(record)
         }
+    }
+    
+    func deleteRecord(_ record: CKRecord) {
+        let deleteOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [record.recordID])
+        deleteOperation.modifyRecordsCompletionBlock = { _, deletedRecords, error in
+            if let e = error {
+                print(e)
+            } else {
+                print(deletedRecords)
+            }
+        }
+        CKContainer.default().privateCloudDatabase.add(deleteOperation)
     }
 }

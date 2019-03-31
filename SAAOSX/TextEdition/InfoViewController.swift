@@ -16,29 +16,14 @@ class InfoViewController: NSViewController, NSTextFieldDelegate {
     
     var textID: TextID? {
         didSet {
-            self.notesField.isEditable = false
-            if !cloudKitDB.userIsLoggedIn {
-                self.notesField.stringValue = "Sign in to save notes"
+            if let id = textID {
+                if let note = notesDB.retrieveNote(forID: id) {
+                    notesField.stringValue = note.notes
+                } else {
+                    notesField.placeholderString = "Type note here..."
+                }
             } else {
-                guard let textID = self.textID else {return}
-                var note: Note? = nil
-                cloudKitDB.retrieveNotes(forTextID: textID,
-                                         forRetrievedNote: {
-                                            note = $0
-                                            
-                },
-                                         onCompletion: { [weak notesField = self.notesField] _ in
-                                            DispatchQueue.main.async {
-                                                guard let notesField = notesField else {return}
-                                                if let note = note {
-                                                    notesField.stringValue = note.notes
-                                                    self.notesField.isEditable = true
-                                                } else {
-                                                    notesField.placeholderString = "Type notes here..."
-                                                    notesField.isEditable = true
-                                                }
-                                            }
-                })
+                notesField.isEditable = false
             }
         }
     }
@@ -53,16 +38,19 @@ class InfoViewController: NSViewController, NSTextFieldDelegate {
         super.viewDidLoad()
         self.notesField.delegate = self
     }
-
+    
     func controlTextDidEndEditing(_ obj: Notification) {
-        //TODO: - write note level set code
         guard let textId = self.textID else {return}
-        
-        let newNote = Note(id: textId, notes: notesField.stringValue)
-
-        //TODO: - Update note code
-        cloudKitDB.saveNote(newNote)
-        
+        if notesField.stringValue.isEmpty {
+            try! notesDB.deleteNote(forID: textId)
+        } else {
+            let newNote = Note(id: textId, notes: notesField.stringValue)
+            if let _ = notesDB.retrieveNote(forID: textId) {
+                notesDB.updateNote(newNote)
+            } else {
+                notesDB.saveNote(newNote)
+            }
+        }
     }
 }
 

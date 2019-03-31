@@ -20,4 +20,6 @@ extension NSViewController {
     var glossary: Glossary { return appDelegate.glossary }
     var sqlite: SQLiteCatalogue? {return appDelegate.sqlite}
     var cloudKitDB: CloudKitNotes {return appDelegate.cloudKitDB}
+    var notesDB: NoteSQLDatabase { return appDelegate.noteSQL }
+    
 }

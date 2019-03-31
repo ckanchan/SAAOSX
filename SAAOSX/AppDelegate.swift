@@ -19,6 +19,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
     lazy var cloudKitDB: CloudKitNotes = { return CloudKitNotes() }()
+    lazy var noteSQL: NoteSQLDatabase = {
+
+        let applicationSupport = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let supportDirectory = applicationSupport.appendingPathComponent(Bundle.main.bundleIdentifier!, isDirectory: true)
+        if !FileManager.default.fileExists(atPath: supportDirectory.path) {
+            try! FileManager.default.createDirectory(at: supportDirectory, withIntermediateDirectories: true, attributes: nil)
+        }
+        
+        let url = supportDirectory.appendingPathComponent("notes", isDirectory: false).appendingPathExtension("sqlite3")
+        
+        return NoteSQLDatabase(url: url,cloudKitDB: self.cloudKitDB)!}()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))

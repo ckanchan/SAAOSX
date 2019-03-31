@@ -11,12 +11,12 @@ import CDKSwiftOracc
 import CloudKit.CKRecord
 
 extension CKRecord {
-    enum RecordTypes {
+    enum RecordType {
         static let Annotation = "Annotation"
         static let Note = "Note"
     }
     func toNote() -> Note? {
-        guard self.recordType == RecordTypes.Note else {return nil}
+        guard self.recordType == RecordType.Note else {return nil}
         guard let textIDStr = self["textID"] as? String,
             let noteStr = self["notes"] as? String else {return nil}
         
@@ -25,7 +25,7 @@ extension CKRecord {
     }
     
     func toAnnotation() -> Annotation? {
-        guard self.recordType == RecordTypes.Annotation else {return nil}
+        guard self.recordType == RecordType.Annotation else {return nil}
         guard let nodeReferenceStr = self["nodeReference"] as? String,
             let transliteration = self["transliteration"] as? String,
             let normalisation = self["normalisation"] as? String,
@@ -49,7 +49,7 @@ extension CKRecord {
 
 extension Note {
     func toCKRecord() -> CKRecord {
-        let record = CKRecord(recordType: CKRecord.RecordTypes.Note)
+        let record = CKRecord(recordType: CKRecord.RecordType.Note)
         record["textID"] = self.id.description
         record["notes"] = self.notes
         return record
@@ -58,7 +58,7 @@ extension Note {
 
 extension Annotation {
     func toCKRecord() -> CKRecord {
-        let record = CKRecord(recordType: CKRecord.RecordTypes.Annotation)
+        let record = CKRecord(recordType: CKRecord.RecordType.Annotation)
         record["textID"] = self.nodeReference.base.description
         record["nodeReference"] = self.nodeReference.description
         record["transliteration"] = self.transliteration

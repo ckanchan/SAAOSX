@@ -22,7 +22,7 @@ target 'SAAo-SX' do
   pod 'CDKOraccInterface'
   pod 'SQLite.swift'
   
-  target 'SAAOSXTests' do
+  target 'SAAo-SXTests' do
     inherit! :search_paths
     # Pods for testing
   end
