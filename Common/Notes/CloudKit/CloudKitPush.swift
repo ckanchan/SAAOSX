@@ -75,9 +75,32 @@ extension CloudKitNotes {
             if let e = error {
                 print(e)
             } else {
-                print(deletedRecords)
+                print(deletedRecords ?? [])
             }
         }
         CKContainer.default().privateCloudDatabase.add(deleteOperation)
     }
+    
+//    func modifyAnnotation(_ annotation: Annotation) {
+//        if let textAnnotations = self.annotations[annotation.nodeReference.base],
+//            let _ = textAnnotations.first(where: {$0.nodeReference == annotation.nodeReference}) {
+//            let modifyOperation = CKModifyRecordsOperation(recordsToSave: [], recordIDsToDelete: nil)
+//            
+//            modifyOperation.modifyRecordsCompletionBlock = {[weak self] record, _, error in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if let record = record {
+//                    print(record)
+//                    guard let ckdb = self else {return}
+//                    let nodeReference = annotation.nodeReference
+//                    let textID = nodeReference.base
+//                    guard let index = ckdb.annotations[textID]?.firstIndex(where: {$0.nodeReference == nodeReference}) else {return}
+//                    ckdb.annotations[textID]?.remove(at: index)
+//                    ckdb.annotations[textID]?.append(annotation)
+//                }
+//            }
+//            
+//            CKContainer.default().privateCloudDatabase.add(modifyOperation)
+//        }
+//    }
 }
