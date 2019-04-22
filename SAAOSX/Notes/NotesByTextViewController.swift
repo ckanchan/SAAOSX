@@ -49,8 +49,8 @@ extension NotesByTextViewController: NSTableViewDataSource, NSTableViewDelegate 
             view.textField?.stringValue = note.id.description
         } else if tableColumn?.identifier.rawValue == "note" {
             view.textField?.stringValue = note.notes
-        } else if tableColumn?.identifier.rawValue == "tags" {
         }
+
         return view
     }
     

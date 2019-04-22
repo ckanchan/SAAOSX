@@ -32,8 +32,8 @@
             <objects>
                 <splitViewController storyboardIdentifier="NotesViewController" id="jb0-hs-mdW" sceneMemberID="viewController">
                     <splitViewItems>
-                        <splitViewItem id="xwK-vu-HlT"/>
-                        <splitViewItem id="bM6-rO-ubx"/>
+                        <splitViewItem id="pRy-6O-26C"/>
+                        <splitViewItem id="UJs-eN-DQ7"/>
                     </splitViewItems>
                     <splitView key="splitView" dividerStyle="thin" vertical="YES" id="ezm-mg-gJZ">
                         <rect key="frame" x="0.0" y="0.0" width="551" height="300"/>
@@ -44,13 +44,13 @@
                     </splitView>
                     <connections>
                         <outlet property="splitView" destination="ezm-mg-gJZ" id="9Zq-Pg-TMz"/>
-                        <segue destination="CMj-SC-RNh" kind="relationship" relationship="splitItems" id="7UE-OZ-vbn"/>
-                        <segue destination="pgh-T3-5ko" kind="relationship" relationship="splitItems" id="Et6-2e-VKp"/>
+                        <segue destination="2yg-sb-fad" kind="relationship" relationship="splitItems" id="z6k-Of-twP"/>
+                        <segue destination="pgh-T3-5ko" kind="relationship" relationship="splitItems" id="8W7-Qb-LXi"/>
                     </connections>
                 </splitViewController>
                 <customObject id="Zpr-0a-BLv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="199.5" y="174"/>
+            <point key="canvasLocation" x="209" y="-28"/>
         </scene>
         <!--Annotations View Controller-->
         <scene sceneID="PUY-3M-A7l">
@@ -146,7 +146,34 @@
                 </tabViewController>
                 <customObject id="8ih-ka-KhF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="149" y="651"/>
+            <point key="canvasLocation" x="158" y="696"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="3hv-sY-VvP">
+            <objects>
+                <viewController id="2yg-sb-fad" sceneMemberID="viewController">
+                    <view key="view" id="yPT-j8-vmN">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="kTb-I8-R5n">
+                                <rect key="frame" x="10" y="10" width="430" height="280"/>
+                                <connections>
+                                    <segue destination="CMj-SC-RNh" kind="embed" id="gsW-Bu-daR"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="kTb-I8-R5n" firstAttribute="top" secondItem="yPT-j8-vmN" secondAttribute="top" constant="10" id="8Iz-jS-NFl"/>
+                            <constraint firstAttribute="bottom" secondItem="kTb-I8-R5n" secondAttribute="bottom" constant="10" id="S3T-Ep-8Ai"/>
+                            <constraint firstAttribute="trailing" secondItem="kTb-I8-R5n" secondAttribute="trailing" constant="10" id="dyd-I1-cyp"/>
+                            <constraint firstItem="kTb-I8-R5n" firstAttribute="leading" secondItem="yPT-j8-vmN" secondAttribute="leading" constant="10" id="gon-hk-Z2z"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="C5w-JH-Plc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="158" y="321"/>
         </scene>
         <!--Texts-->
         <scene sceneID="0R8-SB-R8z">
@@ -231,39 +258,6 @@
                                                             </subviews>
                                                             <connections>
                                                                 <outlet property="textField" destination="xMg-Ge-ib6" id="I97-Lr-95l"/>
-                                                            </connections>
-                                                        </tableCellView>
-                                                    </prototypeCellViews>
-                                                </tableColumn>
-                                                <tableColumn identifier="tags" width="85" minWidth="10" maxWidth="3.4028234663852886e+38" id="P1F-Eq-0TU">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Tags">
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </tableHeaderCell>
-                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="5CV-Ej-bKA">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                    <prototypeCellViews>
-                                                        <tableCellView id="3zS-y7-YOU">
-                                                            <rect key="frame" x="341" y="1" width="85" height="17"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ba-o5-3yt">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="85" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="RvS-nC-0Yj">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                            </subviews>
-                                                            <connections>
-                                                                <outlet property="textField" destination="3ba-o5-3yt" id="iKh-GR-3cu"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>

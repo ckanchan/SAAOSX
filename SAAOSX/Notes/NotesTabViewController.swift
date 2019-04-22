@@ -23,7 +23,8 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         let storyboard = NSStoryboard(name: "Notes", bundle: Bundle.main)
         guard let wc = storyboard.instantiateController(withIdentifier: "NotesWindowController") as? NSWindowController else {return nil}
         guard let splitView = wc.contentViewController as? NSSplitViewController else {return nil}
-        guard let notesTabViewController = splitView.children[0] as? NotesTabViewController else {return nil}
+        let containerView = splitView.children[0]
+        guard let notesTabViewController = containerView.children[0] as? NotesTabViewController else {return nil}
         guard let annotationsViewController = splitView.children[1] as? AnnotationsViewController else {return nil}
         
         notesTabViewController.annotationsViewController = annotationsViewController
@@ -35,7 +36,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     
     var notes: [Note] = [] {
         didSet {
-            children
+            children[0].children
                 .compactMap{$0 as? NoteDisplaying}
                 .forEach{$0.refreshTable()}
         }
