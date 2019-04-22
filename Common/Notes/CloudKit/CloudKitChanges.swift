@@ -92,7 +92,7 @@ extension CloudKitNotes {
         
         operation.fetchDatabaseChangesCompletionBlock = { [unowned self] changeToken, _, error in
             if let error = error {
-                os_log("Error fetching database changes: %s",
+                os_log("Error fetching database changes: %{public}s",
                        log: Log.CloudKit,
                        type: .error,
                        error.localizedDescription)
@@ -103,7 +103,15 @@ extension CloudKitNotes {
             }
             
             os_log("Fetched database changes", log: Log.CloudKit, type: .info)
-            self.fetchRecordZoneChanges(changedRecordZoneIDs)
+            
+            if !changedRecordZoneIDs.isEmpty {
+                os_log("Updating record zones, count %{public}d, ids: %s",
+                       log: Log.CloudKit,
+                       type: .info,
+                       changedRecordZoneIDs.count,
+                       changedRecordZoneIDs.map({$0.zoneName}).joined(separator: "; "))
+                self.fetchRecordZoneChanges(changedRecordZoneIDs)
+            }
         }
         
         CKContainer.default().privateCloudDatabase.add(operation)
@@ -166,6 +174,12 @@ extension CloudKitNotes {
     }
     
     func updateCKRecord(_ record: CKRecord) {
+        os_log("Received updated record %s from CloudKit of type %{public}s",
+               log: Log.CloudKit,
+               type: .info,
+               String(describing: record.recordID),
+               String(describing: record.recordType))
+        
         switch record.recordType {
         case CKRecord.RecordType.Annotation:
             sqlDB.processCloudKitAnnotation(from: record)
