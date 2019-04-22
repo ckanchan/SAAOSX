@@ -12,10 +12,8 @@
 		54041CEA21EE6E10006EAF8D /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E921DAAFE0003A4481 /* Annotation.swift */; };
 		54041CEB21EE6E19006EAF8D /* CloudKitNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E721DA7BA7003A4481 /* CloudKitNotes.swift */; };
 		54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */; };
-		54041CED21EE6E19006EAF8D /* CloudKitPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145C21E22DE600ABCB70 /* CloudKitPull.swift */; };
 		54041CEE21EE6E19006EAF8D /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
 		5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124320A6173D00666489 /* TextPanelViewController.swift */; };
-		541378E321DA5BB7003A4481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 541378E221DA5BB7003A4481 /* CloudKit.framework */; };
 		541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteSQLDatabase.swift */; };
 		541378E621DA627C003A4481 /* NoteSQLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteSQLDatabase.swift */; };
 		541378E821DA7BA7003A4481 /* CloudKitNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E721DA7BA7003A4481 /* CloudKitNotes.swift */; };
@@ -23,10 +21,11 @@
 		5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0A200F71C7001EE385 /* TextViewController.swift */; };
 		5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* InfoViewController.swift */; };
 		5420145B21E22DDE00ABCB70 /* CloudKitPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */; };
-		5420145D21E22DE600ABCB70 /* CloudKitPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145C21E22DE600ABCB70 /* CloudKitPull.swift */; };
 		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
+		5434C8F4226CE488005572B3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5434C8F3226CE488005572B3 /* CloudKit.framework */; };
+		5434C8F6226CF6F9005572B3 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5434C8F5226CF6F9005572B3 /* Log.swift */; };
 		5435F30321CE5771000A1FC8 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435F30221CE5771000A1FC8 /* GeoJSON.swift */; };
 		543709AB209F9D8C00CE41F7 /* DejaVuSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709A9209F9D8C00CE41F7 /* DejaVuSans.ttf */; };
 		543709AC209F9D8C00CE41F7 /* CuneiformNA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */; };
@@ -48,14 +47,22 @@
 		5466120C20B9D58800FEF2D5 /* NotesByTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5466120B20B9D58800FEF2D5 /* NotesByTagViewController.swift */; };
 		5466120E20B9D59500FEF2D5 /* NotesByLemmaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5466120D20B9D59500FEF2D5 /* NotesByLemmaViewController.swift */; };
 		5466121020B9D9B600FEF2D5 /* AnnotationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5466120F20B9D9B600FEF2D5 /* AnnotationsViewController.swift */; };
+		5469819B2269F3AD00B27F38 /* CloudKitChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469819A2269F3AD00B27F38 /* CloudKitChanges.swift */; };
+		5469819D226B48A200B27F38 /* NSSecureCodingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469819C226B48A200B27F38 /* NSSecureCodingHelper.swift */; };
+		5469819F226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469819E226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift */; };
 		546D462121CFB6730012C1EE /* AncientLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546D462021CFB6730012C1EE /* AncientLocation.swift */; };
 		5471EF7320B1F4AB00EE1B73 /* AnnotationPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5471EF7220B1F4AB00EE1B73 /* AnnotationPopupController.swift */; };
+		54744511225771C30075004D /* UserTagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54744510225771C30075004D /* UserTagController.swift */; };
+		54744515225784830075004D /* CloudKitZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54744514225784830075004D /* CloudKitZones.swift */; };
+		547445172258E6AF0075004D /* NoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547445162258E6AF0075004D /* NoteType.swift */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
 		5484CE9D20B6C4AE002A3809 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5484CE9C20B6C4AE002A3809 /* Notes.storyboard */; };
 		5484CEA120B6C5DE002A3809 /* NotesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484CEA020B6C5DE002A3809 /* NotesTabViewController.swift */; };
+		54863848225141DE00DFE739 /* NoteSQLAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54863847225141DE00DFE739 /* NoteSQLAnnotations.swift */; };
+		5486384A225141E600DFE739 /* NoteSQLNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54863849225141E600DFE739 /* NoteSQLNotes.swift */; };
 		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
 		548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */; };
 		5491DD4E21CD385100B49B7D /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5491DD4D21CD385100B49B7D /* Maps.storyboard */; };
@@ -74,6 +81,8 @@
 		5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
+		549C4FEE226DDDBB0001BCCD /* NoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C4FED226DDDBB0001BCCD /* NoteDelegate.swift */; };
+		549C4FF0226DDE390001BCCD /* NoteNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C4FEF226DDE390001BCCD /* NoteNotifications.swift */; };
 		54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */; };
 		54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */; };
 		54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A95216204058D60042E1BA /* TextEditionStringContainer.swift */; };
@@ -143,16 +152,16 @@
 		3C81CDB7D6CD24874930F15F /* Pods-SAAi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAi/Pods-SAAi.debug.xcconfig"; sourceTree = "<group>"; };
 		5401C5E721F2643D0037628F /* SAAo-SX.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SAAo-SX.help"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
-		541378E221DA5BB7003A4481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		541378E421DA6263003A4481 /* NoteSQLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLDatabase.swift; sourceTree = "<group>"; };
 		541378E721DA7BA7003A4481 /* CloudKitNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitNotes.swift; sourceTree = "<group>"; };
 		541378E921DAAFE0003A4481 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		5418DF0E200FD62A001EE385 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitPush.swift; sourceTree = "<group>"; };
-		5420145C21E22DE600ABCB70 /* CloudKitPull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitPull.swift; sourceTree = "<group>"; };
 		5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+CoreSpotlight.swift"; sourceTree = "<group>"; };
 		54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
+		5434C8F3226CE488005572B3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		5434C8F5226CF6F9005572B3 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5435F30221CE5771000A1FC8 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
 		543709A9209F9D8C00CE41F7 /* DejaVuSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DejaVuSans.ttf; sourceTree = "<group>"; };
 		543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CuneiformNA.ttf; sourceTree = "<group>"; };
@@ -177,14 +186,22 @@
 		5466120B20B9D58800FEF2D5 /* NotesByTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesByTagViewController.swift; sourceTree = "<group>"; };
 		5466120D20B9D59500FEF2D5 /* NotesByLemmaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesByLemmaViewController.swift; sourceTree = "<group>"; };
 		5466120F20B9D9B600FEF2D5 /* AnnotationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationsViewController.swift; sourceTree = "<group>"; };
+		5469819A2269F3AD00B27F38 /* CloudKitChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitChanges.swift; sourceTree = "<group>"; };
+		5469819C226B48A200B27F38 /* NSSecureCodingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSecureCodingHelper.swift; sourceTree = "<group>"; };
+		5469819E226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitUserDefaultKeys.swift; sourceTree = "<group>"; };
 		546D462021CFB6730012C1EE /* AncientLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientLocation.swift; sourceTree = "<group>"; };
 		5471EF7220B1F4AB00EE1B73 /* AnnotationPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPopupController.swift; sourceTree = "<group>"; };
+		54744510225771C30075004D /* UserTagController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTagController.swift; sourceTree = "<group>"; };
+		54744514225784830075004D /* CloudKitZones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitZones.swift; sourceTree = "<group>"; };
+		547445162258E6AF0075004D /* NoteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteType.swift; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
 		547BE627201345830001B8BF /* GlossaryEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryEntryViewController.swift; sourceTree = "<group>"; };
 		5484CE9C20B6C4AE002A3809 /* Notes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notes.storyboard; sourceTree = "<group>"; };
 		5484CEA020B6C5DE002A3809 /* NotesTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTabViewController.swift; sourceTree = "<group>"; };
+		54863847225141DE00DFE739 /* NoteSQLAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLAnnotations.swift; sourceTree = "<group>"; };
+		54863849225141E600DFE739 /* NoteSQLNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLNotes.swift; sourceTree = "<group>"; };
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
 		548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommands.swift; sourceTree = "<group>"; };
 		5491DD4D21CD385100B49B7D /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
@@ -198,6 +215,8 @@
 		5498CAE6204EAF63004C774A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5498CAE8204EAF63004C774A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
+		549C4FED226DDDBB0001BCCD /* NoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDelegate.swift; sourceTree = "<group>"; };
+		549C4FEF226DDE390001BCCD /* NoteNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNotifications.swift; sourceTree = "<group>"; };
 		54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
 		54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextEditionStringContainer+MapFunctions.swift"; sourceTree = "<group>"; };
 		54A95216204058D60042E1BA /* TextEditionStringContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditionStringContainer.swift; sourceTree = "<group>"; };
@@ -246,8 +265,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				541378E321DA5BB7003A4481 /* CloudKit.framework in Frameworks */,
 				A4AA5D0866D1DD9F98076431 /* Pods_SAAo_SX.framework in Frameworks */,
+				5434C8F4226CE488005572B3 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,15 +321,14 @@
 		543DC34620B676DA0019FF1E /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				54F1C42220A9F4D1009F31C0 /* Note.swift */,
+				54863846225141B800DFE739 /* CloudKit */,
+				54863845225141A800DFE739 /* SQL */,
+				548638442251419100DFE739 /* DataTypes */,
 				54C9DE9521DF936800014049 /* TextAnnotationManager.swift */,
-				541378E921DAAFE0003A4481 /* Annotation.swift */,
-				541378E721DA7BA7003A4481 /* CloudKitNotes.swift */,
-				5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */,
-				5420145C21E22DE600ABCB70 /* CloudKitPull.swift */,
-				54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */,
-				541378E421DA6263003A4481 /* NoteSQLDatabase.swift */,
-				543DC34720B6787A0019FF1E /* UserTags.swift */,
+				549C4FEF226DDE390001BCCD /* NoteNotifications.swift */,
+				549C4FED226DDDBB0001BCCD /* NoteDelegate.swift */,
+				5469819C226B48A200B27F38 /* NSSecureCodingHelper.swift */,
+				54744510225771C30075004D /* UserTagController.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -366,7 +384,7 @@
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				541378E221DA5BB7003A4481 /* CloudKit.framework */,
+				5434C8F3226CE488005572B3 /* CloudKit.framework */,
 				54C9843720A75E880026C5AA /* libicucore.tbd */,
 				54C9843520A75E7B0026C5AA /* libc++.tbd */,
 				A8B2CEEC8B33C845D1161687 /* Pods_SAAOSXTests.framework */,
@@ -455,6 +473,40 @@
 			path = Notes;
 			sourceTree = "<group>";
 		};
+		548638442251419100DFE739 /* DataTypes */ = {
+			isa = PBXGroup;
+			children = (
+				547445162258E6AF0075004D /* NoteType.swift */,
+				54F1C42220A9F4D1009F31C0 /* Note.swift */,
+				541378E921DAAFE0003A4481 /* Annotation.swift */,
+				543DC34720B6787A0019FF1E /* UserTags.swift */,
+			);
+			path = DataTypes;
+			sourceTree = "<group>";
+		};
+		54863845225141A800DFE739 /* SQL */ = {
+			isa = PBXGroup;
+			children = (
+				541378E421DA6263003A4481 /* NoteSQLDatabase.swift */,
+				54863847225141DE00DFE739 /* NoteSQLAnnotations.swift */,
+				54863849225141E600DFE739 /* NoteSQLNotes.swift */,
+			);
+			path = SQL;
+			sourceTree = "<group>";
+		};
+		54863846225141B800DFE739 /* CloudKit */ = {
+			isa = PBXGroup;
+			children = (
+				541378E721DA7BA7003A4481 /* CloudKitNotes.swift */,
+				54744514225784830075004D /* CloudKitZones.swift */,
+				5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */,
+				5469819A2269F3AD00B27F38 /* CloudKitChanges.swift */,
+				54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */,
+				5469819E226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift */,
+			);
+			path = CloudKit;
+			sourceTree = "<group>";
+		};
 		548C57D120A1C4CE008E8C1F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,6 +555,7 @@
 				54A95216204058D60042E1BA /* TextEditionStringContainer.swift */,
 				54A95219204058D60042E1BA /* Glossary.swift */,
 				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
+				5434C8F5226CF6F9005572B3 /* Log.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -638,7 +691,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -838,19 +891,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54744515225784830075004D /* CloudKitZones.swift in Sources */,
 				54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */,
 				54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */,
 				54C9DE9621DF936800014049 /* TextAnnotationManager.swift in Sources */,
 				547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */,
 				54FE04EA21D141F5000214E5 /* MapViewController.swift in Sources */,
+				5469819F226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift in Sources */,
 				5471EF7320B1F4AB00EE1B73 /* AnnotationPopupController.swift in Sources */,
+				5486384A225141E600DFE739 /* NoteSQLNotes.swift in Sources */,
 				541378E821DA7BA7003A4481 /* CloudKitNotes.swift in Sources */,
 				547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */,
 				54A9521D204058D60042E1BA /* Glossary.swift in Sources */,
 				54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */,
+				5434C8F6226CF6F9005572B3 /* Log.swift in Sources */,
 				541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */,
 				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
+				5469819B2269F3AD00B27F38 /* CloudKitChanges.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */,
 				54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */,
 				54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */,
@@ -860,10 +918,12 @@
 				54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */,
 				54C91A882017C743001AA675 /* TextWindowController.swift in Sources */,
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
+				54744511225771C30075004D /* UserTagController.swift in Sources */,
 				54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */,
-				5420145D21E22DE600ABCB70 /* CloudKitPull.swift in Sources */,
+				54863848225141DE00DFE739 /* NoteSQLAnnotations.swift in Sources */,
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
 				54CD208C20B73ABF0008B69D /* AnnotationItem.swift in Sources */,
+				549C4FEE226DDDBB0001BCCD /* NoteDelegate.swift in Sources */,
 				544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
 				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
@@ -872,6 +932,7 @@
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
 				54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */,
 				546D462121CFB6730012C1EE /* AncientLocation.swift in Sources */,
+				549C4FF0226DDE390001BCCD /* NoteNotifications.swift in Sources */,
 				547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */,
 				54D3B4E521D7F0F100F836E2 /* NSAlertExtensions.swift in Sources */,
 				5466120C20B9D58800FEF2D5 /* NotesByTagViewController.swift in Sources */,
@@ -880,7 +941,9 @@
 				5435F30321CE5771000A1FC8 /* GeoJSON.swift in Sources */,
 				5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */,
 				5484CEA120B6C5DE002A3809 /* NotesTabViewController.swift in Sources */,
+				5469819D226B48A200B27F38 /* NSSecureCodingHelper.swift in Sources */,
 				5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
+				547445172258E6AF0075004D /* NoteType.swift in Sources */,
 				54D3B4E321D7ED0E00F836E2 /* PleiadesRecord.swift in Sources */,
 				5466120E20B9D59500FEF2D5 /* NotesByLemmaViewController.swift in Sources */,
 				54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */,
@@ -914,7 +977,6 @@
 				548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */,
 				54041CE921EE6E09006EAF8D /* TextAnnotationManager.swift in Sources */,
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
-				54041CED21EE6E19006EAF8D /* CloudKitPull.swift in Sources */,
 				5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */,
 				5439770C20A421E6002072AE /* PreferencesViewController.swift in Sources */,
 				54041CEA21EE6E10006EAF8D /* Annotation.swift in Sources */,

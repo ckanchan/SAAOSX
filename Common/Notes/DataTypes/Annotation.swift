@@ -31,11 +31,3 @@ struct Annotation: Codable {
         self.tags = tags
     }
 }
-
-protocol SingleAnnotationDisplaying: AnyObject {
-    func annotationDidChange(_ annotation: Annotation)
-}
-
-protocol AnnotationsDisplaying: AnyObject {
-    func annotationsWereUpdated()
-}

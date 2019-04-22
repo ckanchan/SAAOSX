@@ -9,6 +9,7 @@
 import Foundation
 import CloudKit
 import CDKSwiftOracc
+import os
 
 extension CloudKitNotes {
     private func save(_ record: CKRecord, completionHandler: ((Result<CKRecord, Error>) -> Void)? = nil){
@@ -16,7 +17,9 @@ extension CloudKitNotes {
             if let error = error {
                 completionHandler?(.failure(error))
             } else if let record = record {
-                print("Saved \(record)")
+                os_log("Saved record to CloudKit",
+                       log: Log.CloudKit,
+                       type: .info)
                 completionHandler?(.success(record))
             }
         }
@@ -35,72 +38,35 @@ extension CloudKitNotes {
     }
     
     func saveNote(_ note: Note, completionHandler: ((Result<CKRecord, Error>) -> Void)? = nil) {
-        guard userIsLoggedIn else {return}
-        save(note.toCKRecord(), completionHandler: completionHandler)
+        guard userIsLoggedIn else {
+            os_log("User is not logged into iCloud, cannot save note %s to server",
+                   log: Log.CloudKit,
+                   type: .error,
+                   String(note.id))
+            return
+        }
+        save(CKRecord(note: note), completionHandler: completionHandler)
     }
     
-
-    
-    func saveAnnotation(_ annotation: Annotation) {
+    func saveAnnotation(_ annotation: Annotation, completionHandler: ((Result<CKRecord, Error>) -> Void)? = nil) {
         guard userIsLoggedIn else {return}
-        let record = annotation.toCKRecord()
-        
-        if let textAnnotations = self.annotations[annotation.nodeReference.base],
-            let _ = textAnnotations.first(where: {$0.nodeReference == annotation.nodeReference}) {
-            let modifyOperation = CKModifyRecordsOperation(recordsToSave: [record], recordIDsToDelete: nil)
-            
-            modifyOperation.modifyRecordsCompletionBlock = {[weak self] record, _, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let record = record {
-                    print(record)
-                    guard let ckdb = self else {return}
-                    let nodeReference = annotation.nodeReference
-                    let textID = nodeReference.base
-                    guard let index = ckdb.annotations[textID]?.firstIndex(where: {$0.nodeReference == nodeReference}) else {return}
-                    ckdb.annotations[textID]?.remove(at: index)
-                    ckdb.annotations[textID]?.append(annotation)
-                }
-            }
-            
-            CKContainer.default().privateCloudDatabase.add(modifyOperation)
-        } else {
-            save(record)
-        }
+        save(CKRecord(annotation: annotation), completionHandler: completionHandler)
+    }
+    
+    func saveTags(_ tags: UserTags, completionHandler: ((Result<CKRecord, Error>) -> Void)? = nil) {
+        guard userIsLoggedIn else {return}
+        save(CKRecord(userTags: tags), completionHandler: completionHandler)
     }
     
     func deleteRecord(_ record: CKRecord) {
         let deleteOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [record.recordID])
         deleteOperation.modifyRecordsCompletionBlock = { _, deletedRecords, error in
             if let e = error {
-                print(e)
+                os_log("Error deleting record with ID: %s, error: %s", log: Log.CloudKit, type: .error, String(describing: record), e.localizedDescription)
             } else {
-                print(deletedRecords ?? [])
+                os_log("Deleted record with ID: %s", log: Log.CloudKit, type: .info, String(describing: record))
             }
         }
         CKContainer.default().privateCloudDatabase.add(deleteOperation)
     }
-    
-//    func modifyAnnotation(_ annotation: Annotation) {
-//        if let textAnnotations = self.annotations[annotation.nodeReference.base],
-//            let _ = textAnnotations.first(where: {$0.nodeReference == annotation.nodeReference}) {
-//            let modifyOperation = CKModifyRecordsOperation(recordsToSave: [], recordIDsToDelete: nil)
-//            
-//            modifyOperation.modifyRecordsCompletionBlock = {[weak self] record, _, error in
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                } else if let record = record {
-//                    print(record)
-//                    guard let ckdb = self else {return}
-//                    let nodeReference = annotation.nodeReference
-//                    let textID = nodeReference.base
-//                    guard let index = ckdb.annotations[textID]?.firstIndex(where: {$0.nodeReference == nodeReference}) else {return}
-//                    ckdb.annotations[textID]?.remove(at: index)
-//                    ckdb.annotations[textID]?.append(annotation)
-//                }
-//            }
-//            
-//            CKContainer.default().privateCloudDatabase.add(modifyOperation)
-//        }
-//    }
 }
