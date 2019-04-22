@@ -9,6 +9,7 @@
 import Foundation
 import SQLite
 import CDKSwiftOracc
+import os
 
 final class SQLiteCatalogue: CatalogueProvider {
     let source: CatalogueSource = .sqlite
@@ -142,7 +143,7 @@ final class SQLiteCatalogue: CatalogueProvider {
             let connection = try Connection(url, readonly: true)
             self.db = connection
         } catch {
-            print(error.localizedDescription)
+            os_log("Fatal error initialising catalogue: %s", log: Log.CatalogueSQLite, type: .error, error.localizedDescription)
             return nil
         }
     }
