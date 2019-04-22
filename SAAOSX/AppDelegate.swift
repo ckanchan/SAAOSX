@@ -10,6 +10,8 @@ import Cocoa
 import CDKSwiftOracc
 import CoreSpotlight
 import CDKOraccInterface
+import CloudKit
+import os
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -18,7 +20,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var glossary: Glossary = { return Glossary() }()
     lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
-    lazy var cloudKitDB: CloudKitNotes = { return CloudKitNotes() }()
     lazy var noteSQL: NoteSQLDatabase = {
 
         let applicationSupport = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -29,16 +30,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let url = supportDirectory.appendingPathComponent("notes", isDirectory: false).appendingPathExtension("sqlite3")
         
-        return NoteSQLDatabase(url: url,cloudKitDB: self.cloudKitDB)!}()
+        return NoteSQLDatabase(url: url, cloudKitDB: nil)!}()
+    lazy var userTags: UserTagController = { return UserTagController() }()
 
+    var cloudKitDB: CloudKitNotes!
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         
+        self.cloudKitDB = CloudKitNotes(sqlDB: self.noteSQL, tagController: self.userTags)
         cloudKitDB.userStatusDidChange()
+        noteSQL.cloudKitDB = self.cloudKitDB
+        userTags.cloudKitDB = self.cloudKitDB
+        
+        if #available(OSX 10.14, *) {
+            NSApp.registerForRemoteNotifications()
+        } else {
+            // Fallback on earlier versions
+            NSApp.registerForRemoteNotifications(matching: .init(rawValue: 0))
+        }
     }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+    
+    func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
+        if let databaseNotification = CKNotification(fromRemoteNotificationDictionary: userInfo),
+            databaseNotification.notificationType == .database,
+            cloudKitDB != nil {
+            os_log("Received database change notification",
+                   log: Log.CloudKit,
+                   type: .info)
+            
+            cloudKitDB.processDatabaseChanges()
+        }
     }
 
     func setOraccInterface(to interface: InterfaceType) {

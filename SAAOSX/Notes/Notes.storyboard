@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,7 +10,7 @@
         <scene sceneID="8yT-2I-L7f">
             <objects>
                 <windowController storyboardIdentifier="NotesWindowController" id="cWG-e4-WBB" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="969-yi-U5J">
+                    <window key="window" title="Note and Annotations" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="969-yi-U5J">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="1865" y="641" width="480" height="270"/>
@@ -55,7 +55,7 @@
         <!--Annotations View Controller-->
         <scene sceneID="PUY-3M-A7l">
             <objects>
-                <viewController id="pgh-T3-5ko" customClass="AnnotationsViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pgh-T3-5ko" customClass="AnnotationsViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="beH-wY-yGv">
                         <rect key="frame" x="0.0" y="0.0" width="640" height="540"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -122,12 +122,13 @@
         <!--Notes Tab View Controller-->
         <scene sceneID="Dv6-QO-wz7">
             <objects>
-                <tabViewController selectedTabViewItemIndex="0" id="CMj-SC-RNh" customClass="NotesTabViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" id="CMj-SC-RNh" customClass="NotesTabViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem identifier="" id="bgs-xC-jky"/>
                         <tabViewItem identifier="" id="6eF-Vm-f8y"/>
                         <tabViewItem id="DxJ-G8-m4y"/>
                     </tabViewItems>
+                    <viewControllerTransitionOptions key="transitionOptions" allowUserInteraction="YES"/>
                     <tabView key="tabView" type="noTabsNoBorder" id="MKT-GT-SJ4">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -150,7 +151,7 @@
         <!--Texts-->
         <scene sceneID="0R8-SB-R8z">
             <objects>
-                <viewController title="Texts" id="2u5-Lm-67X" customClass="NotesByTextViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Texts" id="2u5-Lm-67X" customClass="NotesByTextViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ZnO-XX-aPc">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -303,7 +304,7 @@
         <!--Tags-->
         <scene sceneID="kp0-8e-iuq">
             <objects>
-                <viewController title="Tags" id="a6X-UW-gAm" customClass="NotesByTagViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Tags" id="a6X-UW-gAm" customClass="NotesByTagViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Mlq-5X-bWQ">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -390,7 +391,7 @@
         <!--Lemmas-->
         <scene sceneID="uZX-I5-pmC">
             <objects>
-                <viewController title="Lemmas" id="5vj-fG-are" customClass="NotesByLemmaViewController" customModule="SAAOSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Lemmas" id="5vj-fG-are" customClass="NotesByLemmaViewController" customModule="SAAo_SX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="2ub-Re-Qvd">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -42,13 +42,13 @@ class InfoViewController: NSViewController, NSTextFieldDelegate {
     func controlTextDidEndEditing(_ obj: Notification) {
         guard let textId = self.textID else {return}
         if notesField.stringValue.isEmpty {
-            try! notesDB.deleteNote(forID: textId)
+            notesDB.deleteNote(forID: textId)
         } else {
             let newNote = Note(id: textId, notes: notesField.stringValue)
             if let _ = notesDB.retrieveNote(forID: textId) {
                 notesDB.updateNote(newNote)
             } else {
-                notesDB.saveNote(newNote)
+                notesDB.createNote(newNote)
             }
         }
     }

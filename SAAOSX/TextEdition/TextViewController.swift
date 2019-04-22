@@ -27,7 +27,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     var catalogueEntry: OraccCatalogEntry! {
         didSet {
             guard let cat = catalogueEntry else {return}
-            self.annotationsManager = TextAnnotationManager(cloudKitDB: cloudKitDB, textID: catalogueEntry.id, annotationDelegate: self)
             self.saved = self.bookmarks.contains(textID: cat.id.description)
 
             guard self.windowController != nil else {return}
@@ -45,7 +44,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             }
         }
     }
-    var annotationsManager: TextAnnotationManager?
     
     lazy var currentIdx: Int? = {
         return catalogue?.texts.firstIndex(where: {$0.id == self.catalogueEntry.id})
@@ -59,7 +57,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         self.title = catalogueEntry?.title ?? "Text Edition"
         setText(self)
         textView.delegate = self
-//        self.retrieveAnnotations()
+        annotationsWereUpdated()
     }
     
     override func viewDidDisappear() {
@@ -69,12 +67,27 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         self.windowController = nil
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(annotationsDidChange),
+                                               name: .annotationsChangedForText,
+                                               object: nil)
+    }
+    
+    @objc func annotationsDidChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: TextID],
+            catalogueEntry.id == userInfo["textID"] else {return}
+        
+        annotationsWereUpdated()
+    }
     
     func highlightAnnotations(in textView: NSTextView, annotations: [String: Annotation]) {
         textView.textStorage?.enumerateAttribute(.reference, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
             value, range, _ in
             guard let stringVal = value as? String else {return}
-            if let annotation = annotations[stringVal] {
+            let fullPath = String(catalogueEntry.id) + "." + stringVal
+            if let annotation = annotations[fullPath] {
                 guard range.length > 2 else {return}
                 let newRange = NSRange(location: range.location, length: range.length - 1)
                 textView.textStorage?.addAttributes(
@@ -208,13 +221,15 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     
     @objc func newAnnotationWindow(_ sender: NSMenuItem) {
         let window: NSWindowController?
-        
         guard let metadata = sender.attributedTitle?.attributes(at: 0, effectiveRange: nil) else {return}
         guard let reference = metadata[.reference] as? String else {return}
-        guard let annotationManager = self.annotationsManager else {return}
         
-        if let annotation = self.annotationsManager?.annotationForReference(reference) {
-            window = AnnotationPopupController.new(withAnnotation: annotation, annotationManager: annotationManager)
+        #warning("this code needs  to differentiate between short and long nodereferences encoded in the nsattrubutedstring")
+        let nodeReference = NodeReference(base: catalogueEntry.id,
+                                          path: reference.split(separator: ".").map({String($0)}))
+        
+        if let annotation = notesDB.retrieveSingleAnnotation(nodeReference) {
+            window = AnnotationPopupController.new(withAnnotation: annotation)
         } else {
             guard let citationForm = metadata[.oraccCitationForm] as? String,
                 let transliteration = metadata[.writtenForm] as? String,
@@ -223,7 +238,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
                 let reference = metadata[.reference] as? String else {return}
             
             let nodeReference = NodeReference(base: catalogueEntry.id, path: reference.split(separator: ".").map { String($0)})
-            window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context, annotationManager: annotationManager)
+            window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context)
         }
         window?.showWindow(self)
         guard let annotationVc = window?.contentViewController as? AnnotationPopupController else {return}
@@ -249,8 +264,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             return
         }
     }
-
-
 
     @IBAction func navigate(_ sender: NSSegmentedControl) {
         switch sender.selectedSegment {
@@ -351,13 +364,14 @@ extension TextViewController {
         }
     }
 }
-extension TextViewController: AnnotationsDisplaying {
+extension TextViewController {
     func annotationsWereUpdated() {
-        guard let annotations = annotationsManager?.annotations else {return}
+        let annotations = notesDB.retrieveAnnotations(forID: catalogueEntry.id)
         var strAnnotations = [String: Annotation]()
         annotations.forEach{
-            strAnnotations[$0.key.description] = $0.value
+            strAnnotations[String($0.nodeReference)] = $0
         }
+        
         DispatchQueue.main.async { [weak self] in
             guard let vc = self else {return}
             vc.highlightAnnotations(in: vc.textView, annotations: strAnnotations)

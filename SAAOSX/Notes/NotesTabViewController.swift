@@ -27,9 +27,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         guard let annotationsViewController = splitView.children[1] as? AnnotationsViewController else {return nil}
         
         notesTabViewController.annotationsViewController = annotationsViewController
-        notesTabViewController.cloudKitDB.retrieveAllNotes(completionHandler: {[weak notesTabViewController ] notes in
-            notesTabViewController?.notes = Array(notes.values)
-        })
+        notesTabViewController.notes = (try? notesTabViewController.notesDB.retrieveAllNotes()) ?? []
         
         return notesTabViewController
     }
@@ -47,7 +45,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     
     // This method displays annotations in the right half of the table view controller.
     func setAnnotations(for note: TextID) {
-        let annotations = cloudKitDB.retrieveAnnotations(forTextID: note)
+        let annotations = notesDB.retrieveAnnotations(forID: note)
         annotationsViewController.annotations = annotations
         
     }
@@ -56,26 +54,52 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         let searchText = sender.stringValue.lowercased()
 
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(noteWasAdded),
+                                               name: .noteAdded,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(noteWasUpdated),
+                                               name: .noteUpdated,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(noteWasDeleted),
+                                               name: .noteDeleted,
+                                               object: nil)
+    }
 }
 
 
 
-extension NotesTabViewController: NoteDelegate {
-    func noteAdded(_ note: Note) {
+@objc extension NotesTabViewController {
+    func noteWasAdded(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: TextID],
+            let textID = userInfo["textID"],
+            let note = notesDB.retrieveNote(forID: textID) else {return}
+        
         self.notes.append(note)
     }
     
-    func noteRemoved(_ textID: TextID) {
-        guard let idx = notes.firstIndex(where: {$0.id == textID}) else {return}
-        notes.remove(at: idx)
-    }
-    
-    func noteChanged(_ note: Note) {
-        guard let idx = notes.firstIndex(where: {$0.id == note.id}) else {return}
+    func noteWasUpdated(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: TextID],
+            let textID = userInfo["textID"],
+            let note = notesDB.retrieveNote(forID: textID),
+            let idx = notes.firstIndex(where: {$0.id == note.id}) else {return}
+        
         notes[idx] = note
     }
     
-    func searchResultsUpdated(_ notes: [Note]) {
-        return
+    func noteWasDeleted(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: TextID],
+            let textID = userInfo["textID"],
+            let idx = notes.firstIndex(where: {$0.id == textID}) else {return}
+        
+        notes.remove(at: idx)
     }
+
 }
