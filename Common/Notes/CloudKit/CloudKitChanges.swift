@@ -151,6 +151,17 @@ extension CloudKitNotes {
             
         }
         
+        operation.fetchRecordZoneChangesCompletionBlock = { error in
+            if let error = error {
+                let nsError = error as NSError
+                os_log("Error fetching record zone changes: code %{public}d, more info: %{public}s",
+                       log: Log.CloudKit,
+                       type: .error,
+                       nsError.code,
+                       String(describing: nsError.userInfo))
+            }
+        }
+        
         CKContainer.default().privateCloudDatabase.add(operation)
     }
     
@@ -167,9 +178,5 @@ extension CloudKitNotes {
         default:
             return
         }
-    }
-    
-    func deleteCKRecord(_ record: CKRecord) {
-        
     }
 }
