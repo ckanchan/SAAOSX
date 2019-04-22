@@ -8,6 +8,7 @@
 import Foundation
 import CDKSwiftOracc
 import SQLite
+import os
 
 /// Conform to this protocol to allow BookmarkedTextController to refresh the table view when entries are added or removed from the database.
 @objc public protocol BookmarkDisplaying: AnyObject {
@@ -135,7 +136,7 @@ final public class Bookmarks: CatalogueProvider {
                 Bookmarks.project <- entry.project
             ))
         } catch let Result.error(message: message, code: code, statement: statement) where code == SQLITE_CONSTRAINT {
-            print("Item already exists in database: \(message), \(String(describing: statement)), \(entry.id)")
+            os_log("Item with ID %s already exists in database, message: %s, SQL: %s", log: Log.BookmarksSQLite, type: .error, String(entry.id), message, String(describing: statement))
         }
 
         entry.indexItem()
@@ -149,10 +150,10 @@ final public class Bookmarks: CatalogueProvider {
         let query = Bookmarks.bookmarks.select(rowid == row)
         do {
             let result = try db.run(query.delete())
-            print("Deleted", result)
+            os_log("Deleted bookmark at row %d", log: Log.BookmarksSQLite, type: .info, result)
             postNotification()
         } catch {
-            print(error)
+            os_log("Could not delete bookmark at row %d", log: Log.BookmarksSQLite, type: .error, row)
         }
 
     }
