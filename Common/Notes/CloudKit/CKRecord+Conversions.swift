@@ -63,9 +63,9 @@ extension Annotation {
             let normalisation = ckRecord["normalisation"] as? String,
             let translation = ckRecord["translation"] as? String,
             let context = ckRecord["context"] as? String,
-            let annotationText = ckRecord["annotation"] as? String,
-            let tags = ckRecord["tags"] as? [String] else {return nil}
+            let annotationText = ckRecord["annotation"] as? String else {return nil}
 
+        let tags = ckRecord["tags"] as? [String] ?? []
         self.nodeReference = NodeReference(stringLiteral: nodeReferenceStr)
         self.transliteration = transliteration
         self.normalisation = normalisation
