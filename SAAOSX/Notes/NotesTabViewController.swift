@@ -44,10 +44,10 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     weak var annotationsViewController: AnnotationsViewController!
     
     // This method displays annotations in the right half of the table view controller.
-    func setAnnotations(for note: TextID) {
-        let annotations = notesDB.retrieveAnnotations(forID: note)
+    func setAnnotations(for noteID: TextID) {
+        let annotations = notesDB.retrieveAnnotations(forID: noteID)
         annotationsViewController.annotations = annotations
-        
+        annotationsViewController.textID = noteID
     }
     
     @objc func search(_ sender: NSSearchField) {
@@ -70,6 +70,11 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(noteWasDeleted),
                                                name: .noteDeleted,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(annotationsDidChange),
+                                               name: .annotationsChangedForText,
                                                object: nil)
     }
 }
@@ -100,6 +105,15 @@ class NotesTabViewController: NSTabViewController, NoteStore {
             let idx = notes.firstIndex(where: {$0.id == textID}) else {return}
         
         notes.remove(at: idx)
+    }
+    
+    func annotationsDidChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: TextID],
+            let changedID = userInfo["textID"],
+        let displayedID = annotationsViewController.textID,
+        changedID == displayedID else {return}
+        
+        setAnnotations(for: changedID)
     }
 
 }

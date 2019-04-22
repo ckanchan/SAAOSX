@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CDKSwiftOracc
 
 class AnnotationsViewController: NSViewController {
     @IBOutlet weak var searchField: NSSearchField!
@@ -24,11 +25,7 @@ class AnnotationsViewController: NSViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
-    }
-    
+    var textID: TextID?
 }
 
 extension AnnotationsViewController: NSCollectionViewDataSource {

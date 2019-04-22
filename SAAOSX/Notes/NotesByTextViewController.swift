@@ -20,7 +20,7 @@ class NotesByTextViewController: NSViewController, NoteDisplaying {
         }
     }
     
-    weak var noteStore: NoteStore!
+    unowned var noteStore: NoteStore!
     var currentlySelectedIndex: Int? = nil {
         didSet {
             if let idx = currentlySelectedIndex {
@@ -50,14 +50,6 @@ extension NotesByTextViewController: NSTableViewDataSource, NSTableViewDelegate 
         } else if tableColumn?.identifier.rawValue == "note" {
             view.textField?.stringValue = note.notes
         } else if tableColumn?.identifier.rawValue == "tags" {
-//      if !note.annotations.isEmpty {
-//                var tags = Set<String>()
-//                for annotation in note.annotations.values {
-//                    tags.formUnion(annotation.tags)
-//                }
-//
-//                view.textField?.stringValue = tags.joined(separator: "; ")
-//          }
         }
         return view
     }
