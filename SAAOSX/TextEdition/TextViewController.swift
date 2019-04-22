@@ -184,8 +184,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         }
     }
 
-
-
     @IBAction func navigate(_ sender: NSSegmentedControl) {
         switch sender.selectedSegment {
         case 0:

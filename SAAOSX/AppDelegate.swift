@@ -10,6 +10,8 @@ import Cocoa
 import CDKSwiftOracc
 import CoreSpotlight
 import CDKOraccInterface
+import CloudKit
+import os
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -19,12 +21,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
 
+    var cloudKitDB: CloudKitNotes!
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
     }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+    
+    func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
+        if let databaseNotification = CKNotification(fromRemoteNotificationDictionary: userInfo),
+            databaseNotification.notificationType == .database,
+            cloudKitDB != nil {
+            os_log("Received database change notification",
+                   log: Log.CloudKit,
+                   type: .info)
+            
+            cloudKitDB.processDatabaseChanges()
+        }
     }
 
     func setOraccInterface(to interface: InterfaceType) {
