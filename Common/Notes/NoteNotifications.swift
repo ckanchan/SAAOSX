@@ -37,6 +37,10 @@ extension Notification.Name {
     static var annotationsChangedForText: Notification.Name {
         return Notification.Name(rawValue: "annotationsChangedForText")
     }
+    
+    static var tagsDidChange: Notification.Name {
+                return Notification.Name(rawValue: "tagsDidChange")
+    }
 }
 
 extension Notification {
@@ -89,5 +93,11 @@ extension Notification {
             name: .annotationsChangedForText,
             object: nil,
             userInfo: ["textID": text])
+    }
+}
+
+extension Notification {
+    static var tagsDidChange: Notification {
+        return Notification(name: .tagsDidChange)
     }
 }
