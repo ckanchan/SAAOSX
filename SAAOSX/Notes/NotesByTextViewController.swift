@@ -34,6 +34,11 @@ class NotesByTextViewController: NSViewController, NoteDisplaying {
         self.noteStore = (parent as! NoteStore)
     }
     
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        tableView.reloadData()
+    }
+    
 }
 
 extension NotesByTextViewController: NSTableViewDataSource, NSTableViewDelegate {

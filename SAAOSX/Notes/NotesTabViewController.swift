@@ -12,6 +12,7 @@ import CDKSwiftOracc
 protocol NoteStore: AnyObject {
     var notes: [Note] {get}
     func setAnnotations(for textID: TextID)
+    func setAnnotations(for tag: Tag)
 }
 
 protocol NoteDisplaying: AnyObject {
@@ -49,6 +50,12 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         let annotations = notesDB.retrieveAnnotations(forID: noteID)
         annotationsViewController.annotations = annotations
         annotationsViewController.textID = noteID
+    }
+    
+    func setAnnotations(for tag: Tag) {
+        let annotations = notesDB.annotationsForTag(tag)
+        annotationsViewController.annotations = annotations
+        annotationsViewController.textID = nil
     }
     
     @objc func search(_ sender: NSSearchField) {
