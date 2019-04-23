@@ -120,7 +120,7 @@ final class NoteSQLDatabase {
                 table.column(translation)
                 table.column(context)
                 table.column(annotation)
-                table.column(tags)
+                table.column(tags, collate: .nocase)
                 table.column(ckSystemFields)
                 table.column(ckRecordID)
             })

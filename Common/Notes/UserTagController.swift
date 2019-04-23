@@ -39,37 +39,56 @@ class UserTagController {
         saveTags(UserTags([]))
     }
     
-    private func saveTags(_ userTags: UserTags) {
+    func processCloudKitRecord(_ record: CKRecord) {
+        guard let tags = UserTags(ckRecord: record) else {return}
+        saveTags(tags, updateCloudKit: false)
+        UserTagController.updateCloudKitMetadata(record: record, userDefaults: userDefaults)
+        
+        os_log("Received updated userTags from CloudKit",
+               log: Log.CloudKit,
+               type: .info)
+    }
+    
+    private func saveTags(_ userTags: UserTags, updateCloudKit: Bool = true) {
         self.userTags = userTags
         
-        // Sync tags with CloudKit
-        if let cloudKitRecordData = userDefaults.data(forKey: UserTagController.userTagCKRecordSystemFields) {
-            // Check if valid system fields have been recorded
-            let unarchiver = NSKeyedUnarchiver(forReadingWith: cloudKitRecordData)
-            unarchiver.requiresSecureCoding = true
-            if let record = CKRecord(coder: unarchiver) {
-                // We are modifying a pre-existing cloudkit record
-                record["tags"] = Array(userTags.tags)
-                cloudKitDB?.modifyRecord(record) {[userDefaults] result in
+        if updateCloudKit {
+            // Sync tags with CloudKit
+            if let cloudKitRecordData = userDefaults.data(forKey: UserTagController.userTagCKRecordSystemFields) {
+                // Check if valid system fields have been recorded
+                let unarchiver = NSKeyedUnarchiver(forReadingWith: cloudKitRecordData)
+                unarchiver.requiresSecureCoding = true
+                if let record = CKRecord(coder: unarchiver) {
+                    // We are modifying a pre-existing cloudkit record
+                    record["tags"] = Array(userTags.tags)
+                    cloudKitDB?.modifyRecord(record) {[userDefaults] result in
+                        switch result {
+                        case .success(let updatedRecord):
+                            UserTagController.updateCloudKitMetadata(record: updatedRecord, userDefaults: userDefaults)
+                        case .failure(let error):
+                            os_log("Unable to sync user tags in CloudKit, error %s",
+                                   log: Log.CloudKit,
+                                   type: .error,
+                                   error.localizedDescription)
+                        }
+                    }
+                }
+            } else {
+                // We need to create a new cloudkit tag record
+                cloudKitDB?.saveTags(userTags) {[userDefaults] result in
                     switch result {
-                    case .success(let updatedRecord):
-                        UserTagController.updateCloudKitMetadata(record: updatedRecord, userDefaults: userDefaults)
+                    case .success(let record):
+                        UserTagController.updateCloudKitMetadata(record: record, userDefaults: userDefaults)
                     case .failure(let error):
-                        os_log("Unable to sync user tags in CloudKit, error %s", log: Log.CloudKit, type: .error, error.localizedDescription)
+                        os_log("Could not save new tag record to CloudKit, error %s",
+                               log: Log.CloudKit,
+                               type: .error,
+                               error.localizedDescription)
                     }
                 }
             }
-        } else {
-            // We need to create a new cloudkit tag record
-            cloudKitDB?.saveTags(userTags) {[userDefaults] result in
-                switch result {
-                case .success(let record):
-                    UserTagController.updateCloudKitMetadata(record: record, userDefaults: userDefaults)
-                case .failure(let error):
-                    os_log("Could not save new tag record to CloudKit, error %s", log: Log.CloudKit, type: .error, error.localizedDescription)
-                }
-            }
         }
+        NotificationCenter.default.post(.tagsDidChange)
     }
     
     init(tags: UserTags, userDefaults: UserDefaults) {

@@ -185,7 +185,6 @@ extension NoteSQLDatabase {
                String(reference))
     }
 
-    
     func processCloudKitAnnotation(from record: CKRecord) {
         guard let annotation = Annotation(ckRecord: record) else {return}
         
@@ -201,5 +200,24 @@ extension NoteSQLDatabase {
         }
         
         updateCloudKitMetadata(forAnnotation: annotation, record: record)
+    }
+}
+
+extension NoteSQLDatabase {
+    func annotationsForTag(_ tag: String) -> [Annotation] {
+        let query = annotationTable.filter(tags.like("%\(tag)%"))
+        var results = [Annotation]()
+        do {
+            let rows = try db.prepare(query)
+            results = rows.compactMap(rowToAnnotation)
+        } catch {
+            os_log("Could not retrieve annotations for tag %s in database: %{public}s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   tag,
+                   error.localizedDescription)
+        }
+        
+        return results
     }
 }
