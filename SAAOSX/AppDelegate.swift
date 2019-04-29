@@ -28,7 +28,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             try! FileManager.default.createDirectory(at: supportDirectory, withIntermediateDirectories: true, attributes: nil)
         }
         
+        #if DEBUG
+        let url = supportDirectory.appendingPathComponent("debugNotes", isDirectory: false).appendingPathExtension("sqlite3")
+        
+        #else
         let url = supportDirectory.appendingPathComponent("notes", isDirectory: false).appendingPathExtension("sqlite3")
+        
+        #endif
         
         return NoteSQLDatabase(url: url, cloudKitDB: nil)!}()
     lazy var userTags: UserTagController = { return UserTagController() }()
@@ -38,7 +44,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         
+        #if DEBUG
+        let debugDefaults = UserDefaults(suiteName: "me.chaidk.debug.SAAo-SX")!
+        self.cloudKitDB = CloudKitNotes(withDefaults: debugDefaults,
+                                        sqlDB: noteSQL,
+                                        tagController: userTags)
+        
+        #else
         self.cloudKitDB = CloudKitNotes(sqlDB: self.noteSQL, tagController: self.userTags)
+        
+        #endif
+        
         cloudKitDB.userStatusDidChange()
         noteSQL.cloudKitDB = self.cloudKitDB
         userTags.cloudKitDB = self.cloudKitDB
