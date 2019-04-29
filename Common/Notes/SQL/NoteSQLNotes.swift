@@ -16,9 +16,9 @@ extension NoteSQLDatabase {
     func createNote(_ noteToSave: Note, updateCloudKit: Bool = true) {
         // Persist the note to the local database
         do {
-            _ = try db.run(notesTable.insert(
-                textID <- noteToSave.id.description,
-                note <- noteToSave.notes
+            _ = try db.run(Schema.notesTable.insert(
+                Schema.textID <- noteToSave.id.description,
+                Schema.note <- noteToSave.notes
             ))
         } catch {
             os_log("Unable to save note with ID %s to database: %s",
@@ -61,20 +61,20 @@ extension NoteSQLDatabase {
     }
     
     func retrieveNote(forID id: TextID) -> Note? {
-        let query = notesTable.select(note).filter(textID == String(id))
+        let query = Schema.notesTable.select(Schema.note).filter(Schema.textID == String(id))
         guard let row = try? db.pluck(query) else {return nil}
-        let notes = row[note]
+        let notes = row[Schema.note]
         return Note(id: id, notes: notes)
     }
     
     func updateNote(_ updatedNote: Note, updateCloudKit: Bool = true) {
         // Persist the note to the local database
         let id = String(updatedNote.id)
-        let query = notesTable.filter(textID == id)
+        let query = Schema.notesTable.filter(Schema.textID == id)
         
         do {
             _ = try db.run(query.update(
-                note <- updatedNote.notes
+                Schema.note <- updatedNote.notes
             ))
         } catch {
             os_log("Unable to update note with ID %s to database, error %s",
@@ -88,7 +88,7 @@ extension NoteSQLDatabase {
         if updateCloudKit {
             // Get Cloudkit saved metadata
             guard let row = try? db.pluck(query),
-                let ckRecordData = row[ckSystemFields] else {return}
+                let ckRecordData = row[Schema.ckSystemFields] else {return}
             
             let unarchiver = NSKeyedUnarchiver(forReadingWith: ckRecordData)
             unarchiver.requiresSecureCoding = true
@@ -125,7 +125,7 @@ extension NoteSQLDatabase {
     }
 
     func deleteNote(forID id: TextID, updateCloudKit: Bool = true) {
-        let query = notesTable.filter(textID == String(id))
+        let query = Schema.notesTable.filter(Schema.textID == String(id))
         
         do {
             try delete(query: query)
@@ -144,7 +144,7 @@ extension NoteSQLDatabase {
     
     func deleteNote(withRecordID recordID: CKRecord.ID) throws {
         let recordData = recordID.securelyEncoded()
-        let query = notesTable.filter(ckRecordID == recordData)
+        let query = Schema.notesTable.filter(Schema.ckRecordID == recordData)
         guard let row = try db.pluck(query) else {
             os_log("Unable to find record for CloudKit ID %s",
                    log: Log.NoteSQLite,
@@ -153,7 +153,7 @@ extension NoteSQLDatabase {
             return
         }
         
-        let id = row[textID]
+        let id = row[Schema.textID]
         let textID = TextID(stringLiteral: id)
         try db.run(query.delete())
         
@@ -182,8 +182,8 @@ extension NoteSQLDatabase {
     
     func retrieveAllNotes() throws -> [Note]  {
         var notes = [Note]()
-        for row in try db.prepare(notesTable) {
-            notes.append(Note(id: TextID(stringLiteral: row[textID]), notes: row[note]))
+        for row in try db.prepare(Schema.notesTable) {
+            notes.append(Note(id: TextID(stringLiteral: row[Schema.textID]), notes: row[Schema.note]))
         }
         return notes
     }

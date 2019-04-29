@@ -15,17 +15,17 @@ import os
 extension NoteSQLDatabase {
     
     func rowToAnnotation(_ row: Row) -> Annotation {
-        let reference = NodeReference.init(stringLiteral: row[nodeReference])
-        let tagArray = row[tags]
+        let reference = NodeReference.init(stringLiteral: row[Schema.nodeReference])
+        let tagArray = row[Schema.tags]
             .split(separator: ",")
             .map({String($0)})
         
         return Annotation(nodeReference: reference,
-                          transliteration: row[transliteration],
-                          normalisation: row[normalisation],
-                          translation: row[translation],
-                          annotation: row[annotation],
-                          context: row[context],
+                          transliteration: row[Schema.transliteration],
+                          normalisation: row[Schema.normalisation],
+                          translation: row[Schema.translation],
+                          annotation: row[Schema.annotation],
+                          context: row[Schema.context],
                           tags: Set(tagArray))
     }
     
@@ -33,15 +33,15 @@ extension NoteSQLDatabase {
         // Persist the annotation to the local database
         let tagString = annotationToSave.tags.joined(separator: ",")
         do {
-            _ = try db.run(annotationTable.insert(
-                nodeReference <- String(describing: annotationToSave.nodeReference),
-                textID <- String(describing: annotationToSave.nodeReference.base),
-                transliteration <- annotationToSave.transliteration,
-                normalisation <- annotationToSave.normalisation,
-                translation <- annotationToSave.translation,
-                context <- annotationToSave.context,
-                annotation <- annotationToSave.annotation,
-                tags <- tagString
+            _ = try db.run(Schema.annotationTable.insert(
+                Schema.nodeReference <- String(describing: annotationToSave.nodeReference),
+                Schema.textID <- String(describing: annotationToSave.nodeReference.base),
+                Schema.transliteration <- annotationToSave.transliteration,
+                Schema.normalisation <- annotationToSave.normalisation,
+                Schema.translation <- annotationToSave.translation,
+                Schema.context <- annotationToSave.context,
+                Schema.annotation <- annotationToSave.annotation,
+                Schema.tags <- tagString
             ))
         } catch {
             os_log("Unable to save annotation with ID %s to database, error %s",
@@ -77,13 +77,13 @@ extension NoteSQLDatabase {
     }
     
     func retrieveAnnotations(forID id: TextID) -> [Annotation] {
-        let query = annotationTable.filter(textID == String(id))
+        let query = Schema.annotationTable.filter(Schema.textID == String(id))
         guard let annotationRows = try? db.prepare(query) else { return [] }
         return annotationRows.map(rowToAnnotation)
     }
     
     func retrieveSingleAnnotation(_ reference: NodeReference) -> Annotation? {
-        let query = annotationTable.filter(nodeReference == String(reference))
+        let query = Schema.annotationTable.filter(Schema.nodeReference == String(reference))
         let row = try? db.pluck(query)
         return row.map(rowToAnnotation)
     }
@@ -91,10 +91,10 @@ extension NoteSQLDatabase {
     func updateAnnotation(_ updatedAnnotation: Annotation, updateCloudKit: Bool = true) {
         // Persist the annotation to the local database
         let reference = String(describing: updatedAnnotation.nodeReference)
-        let query = annotationTable.filter(nodeReference == reference)
+        let query = Schema.annotationTable.filter(Schema.nodeReference == reference)
         do {
             _ = try db.run(query.update(
-                annotation <- updatedAnnotation.annotation
+                Schema.annotation <- updatedAnnotation.annotation
             ))
         } catch {
             os_log("Unable to update annotation with ID %s to database, error %s",
@@ -107,7 +107,7 @@ extension NoteSQLDatabase {
         if updateCloudKit {
             // Get Cloudkit saved metadata
             guard let row = try? db.pluck(query),
-                let ckRecordData = row[ckSystemFields] else {return}
+                let ckRecordData = row[Schema.ckSystemFields] else {return}
             
             let unarchiver = NSKeyedUnarchiver(forReadingWith: ckRecordData)
             unarchiver.requiresSecureCoding = true
@@ -139,7 +139,7 @@ extension NoteSQLDatabase {
     }
 
     func deleteAnnotation(withReference reference: NodeReference) {
-        let query = annotationTable.filter(nodeReference == String(describing: reference))
+        let query = Schema.annotationTable.filter(Schema.nodeReference == String(describing: reference))
         do {
             try delete(query: query)
         } catch {
@@ -160,7 +160,7 @@ extension NoteSQLDatabase {
     
     func deleteAnnotation(withRecordID recordID: CKRecord.ID) throws {
         let recordData = recordID.securelyEncoded()
-        let query = annotationTable.filter(ckRecordID == recordData)
+        let query = Schema.annotationTable.filter(Schema.ckRecordID == recordData)
         guard let row = try db.pluck(query) else {
             os_log("Unable to find record for CloudKit ID %s",
                    log: Log.NoteSQLite,
@@ -169,7 +169,7 @@ extension NoteSQLDatabase {
             return
         }
         
-        let nodeReferenceStr = row[nodeReference]
+        let nodeReferenceStr = row[Schema.nodeReference]
         let reference = NodeReference(stringLiteral: nodeReferenceStr)
         try db.run(query.delete())
         
@@ -205,7 +205,7 @@ extension NoteSQLDatabase {
 
 extension NoteSQLDatabase {
     func annotationsForTag(_ tag: String) -> [Annotation] {
-        let query = annotationTable.filter(tags.like("%\(tag)%"))
+        let query = Schema.annotationTable.filter(Schema.tags.like("%\(tag)%"))
         var results = [Annotation]()
         do {
             let rows = try db.prepare(query)
