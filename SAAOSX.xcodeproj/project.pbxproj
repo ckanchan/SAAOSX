@@ -33,6 +33,7 @@
 		5447AE2B21D421B800EDD45F /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		544E5FF3224FA025004482E5 /* SAAo_SXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */; };
+		544F2DB12277511F00407F46 /* NoteSQLSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F2DB02277511F00407F46 /* NoteSQLSchema.swift */; };
 		54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */; };
 		54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */; };
 		54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */; };
@@ -145,6 +146,7 @@
 		544E5FF0224FA025004482E5 /* SAAo-SXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SAAo-SXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAo_SXTests.swift; sourceTree = "<group>"; };
 		544E5FF4224FA025004482E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		544F2DB02277511F00407F46 /* NoteSQLSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLSchema.swift; sourceTree = "<group>"; };
 		54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineViewController.swift; sourceTree = "<group>"; };

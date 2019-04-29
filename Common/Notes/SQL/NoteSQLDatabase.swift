@@ -13,23 +13,6 @@ import CloudKit
 import os
 
 final class NoteSQLDatabase {
-    
-    //Database schema
-    let textID = Expression<String>("textid")
-    let note = Expression<String>("note")
-    let ckSystemFields = Expression<Data?>("ckSystemFields")
-    let ckRecordID = Expression<Data?>("ckRecordID")
-    let notesTable = Table("notes")
-    
-    let nodeReference = Expression<String>("nodeReference")
-    let transliteration = Expression<String>("transliteration")
-    let normalisation = Expression<String>("normalisation")
-    let translation = Expression<String>("translation")
-    let context = Expression<String>("context")
-    let annotation = Expression<String>("annotation")
-    let tags = Expression<String>("tags")
-    let annotationTable = Table("annotations")
-    
     let db: Connection
     weak var cloudKitDB: CloudKitNotes?
     
@@ -44,8 +27,8 @@ final class NoteSQLDatabase {
         
         do {
             try db.run(tableRow.update(
-                ckSystemFields <- data as Data,
-                ckRecordID <- recordID
+                Schema.ckSystemFields <- data as Data,
+                Schema.ckRecordID <- recordID
                 ))
         } catch {
             os_log("SQLite error updating CloudKit metadata for record with ID %s, error: %s",
@@ -57,12 +40,12 @@ final class NoteSQLDatabase {
     }
     
     func updateCloudKitMetadata(forNote note: Note, record: CKRecord) {
-        let tableRow = notesTable.filter(textID == String(note.id))
+        let tableRow = Schema.notesTable.filter(Schema.textID == String(note.id))
         updateCloudKitMetadata(tableRow: tableRow, record: record)
     }
     
     func updateCloudKitMetadata(forAnnotation annotation: Annotation, record: CKRecord) {
-        let tableRow = annotationTable.filter(nodeReference == String(describing: annotation.nodeReference))
+        let tableRow = Schema.annotationTable.filter(Schema.nodeReference == String(describing: annotation.nodeReference))
         updateCloudKitMetadata(tableRow: tableRow, record: record)
     }
     
@@ -72,7 +55,7 @@ final class NoteSQLDatabase {
     /// - Throws: SQLite errors
     func delete(query: Table) throws {
         guard let row = try? db.pluck(query) else {return}
-        if let ckRecordInfo = row[ckSystemFields] {
+        if let ckRecordInfo = row[Schema.ckSystemFields] {
             let unarchiver = NSKeyedUnarchiver(forReadingWith: ckRecordInfo)
             unarchiver.requiresSecureCoding = true
             if let record = CKRecord(coder: unarchiver) {
@@ -105,24 +88,24 @@ final class NoteSQLDatabase {
             let connection = try Connection(url.path)
             self.db = connection
             
-            try connection.run(notesTable.create(ifNotExists: true) {table in
-                table.column(textID, primaryKey: true)
-                table.column(note)
-                table.column(ckSystemFields)
-                table.column(ckRecordID)
+            try connection.run(Schema.notesTable.create(ifNotExists: true) {table in
+                table.column(Schema.textID, primaryKey: true)
+                table.column(Schema.note)
+                table.column(Schema.ckSystemFields)
+                table.column(Schema.ckRecordID)
             })
             
-            try connection.run(annotationTable.create(ifNotExists: true) {table in
-                table.column(nodeReference, primaryKey: true)
-                table.column(textID)
-                table.column(transliteration)
-                table.column(normalisation)
-                table.column(translation)
-                table.column(context)
-                table.column(annotation)
-                table.column(tags, collate: .nocase)
-                table.column(ckSystemFields)
-                table.column(ckRecordID)
+            try connection.run(Schema.annotationTable.create(ifNotExists: true) {table in
+                table.column(Schema.nodeReference, primaryKey: true)
+                table.column(Schema.textID)
+                table.column(Schema.transliteration)
+                table.column(Schema.normalisation)
+                table.column(Schema.translation)
+                table.column(Schema.context)
+                table.column(Schema.annotation)
+                table.column(Schema.tags, collate: .nocase)
+                table.column(Schema.ckSystemFields)
+                table.column(Schema.ckRecordID)
             })
         } catch {
             os_log("Could not initialise SQLite Notes Database: %s",
