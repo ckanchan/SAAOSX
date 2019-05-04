@@ -95,6 +95,10 @@ final class NoteSQLDatabase {
                 table.column(Schema.ckRecordID)
             })
             
+            try connection.run(Schema.notesTable.createIndex(Schema.textID,
+                                                             unique: true,
+                                                             ifNotExists: true))
+            
             try connection.run(Schema.annotationTable.create(ifNotExists: true) {table in
                 table.column(Schema.nodeReference, primaryKey: true)
                 table.column(Schema.textID)
@@ -107,6 +111,11 @@ final class NoteSQLDatabase {
                 table.column(Schema.ckSystemFields)
                 table.column(Schema.ckRecordID)
             })
+            
+            try connection.run(Schema.annotationTable.createIndex(Schema.nodeReference,
+                                                                  unique: true,
+                                                                  ifNotExists: true))
+            
         } catch {
             os_log("Could not initialise SQLite Notes Database: %s",
                    log: Log.NoteSQLite,

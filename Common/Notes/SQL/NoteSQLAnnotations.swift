@@ -13,22 +13,6 @@ import CloudKit
 import os
 
 extension NoteSQLDatabase {
-    
-    func rowToAnnotation(_ row: Row) -> Annotation {
-        let reference = NodeReference.init(stringLiteral: row[Schema.nodeReference])
-        let tagArray = row[Schema.tags]
-            .split(separator: ",")
-            .map({String($0)})
-        
-        return Annotation(nodeReference: reference,
-                          transliteration: row[Schema.transliteration],
-                          normalisation: row[Schema.normalisation],
-                          translation: row[Schema.translation],
-                          annotation: row[Schema.annotation],
-                          context: row[Schema.context],
-                          tags: Set(tagArray))
-    }
-    
     func createAnnotation(_ annotationToSave: Annotation, updateCloudKit: Bool = true) {
         // Persist the annotation to the local database
         let tagString = annotationToSave.tags.joined(separator: ",")
@@ -79,13 +63,37 @@ extension NoteSQLDatabase {
     func retrieveAnnotations(forID id: TextID) -> [Annotation] {
         let query = Schema.annotationTable.filter(Schema.textID == String(id))
         guard let annotationRows = try? db.prepare(query) else { return [] }
-        return annotationRows.map(rowToAnnotation)
+        return annotationRows.map(Annotation.init)
     }
     
     func retrieveSingleAnnotation(_ reference: NodeReference) -> Annotation? {
         let query = Schema.annotationTable.filter(Schema.nodeReference == String(reference))
         let row = try? db.pluck(query)
-        return row.map(rowToAnnotation)
+        return row.map(Annotation.init)
+    }
+    
+    func retrieveAllAnnotations() -> [Annotation] {
+        var annotations = [Annotation]()
+        do {
+            for row in try db.prepare(Schema.annotationTable) {
+                annotations.append(Annotation(row: row))
+            }
+        } catch let Result.error(message: message, code: code, _) {
+            os_log("Error retrieving all notes: code %{public}d, message: %{public}s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   code,
+                   message)
+            return []
+        } catch {
+            os_log("Error retrieving all notes: %s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   error.localizedDescription)
+            return []
+        }
+        
+        return annotations
     }
     
     func updateAnnotation(_ updatedAnnotation: Annotation, updateCloudKit: Bool = true) {
@@ -209,7 +217,7 @@ extension NoteSQLDatabase {
         var results = [Annotation]()
         do {
             let rows = try db.prepare(query)
-            results = rows.compactMap(rowToAnnotation)
+            results = rows.compactMap(Annotation.init)
         } catch {
             os_log("Could not retrieve annotations for tag %s in database: %{public}s",
                    log: Log.NoteSQLite,
@@ -219,5 +227,22 @@ extension NoteSQLDatabase {
         }
         
         return results
+    }
+}
+
+extension Annotation {
+    init(row: Row) {
+        let reference = NodeReference.init(stringLiteral: row[NoteSQLDatabase.Schema.nodeReference])
+        let tagArray = row[NoteSQLDatabase.Schema.tags]
+            .split(separator: ",")
+            .map({String($0)})
+        
+        self.nodeReference = reference
+        self.transliteration = row[NoteSQLDatabase.Schema.transliteration]
+        self.normalisation = row[NoteSQLDatabase.Schema.normalisation]
+        self.translation = row[NoteSQLDatabase.Schema.translation]
+        self.annotation = row[NoteSQLDatabase.Schema.annotation]
+        self.context = row[NoteSQLDatabase.Schema.context]
+        self.tags = Set(tagArray)
     }
 }

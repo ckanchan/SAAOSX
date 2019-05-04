@@ -31,3 +31,37 @@ struct Annotation: Codable {
         self.tags = tags
     }
 }
+
+extension Array where Element == Annotation {
+    func formatted(withMetadata catalogueEntry: OraccCatalogEntry?) -> NSAttributedString? {
+        guard !self.isEmpty else {return nil}
+        let str = NSMutableAttributedString()
+        let title: String
+        
+        if let catalogueEntry = catalogueEntry {
+            title = "\(catalogueEntry.displayName): \(catalogueEntry.title)"
+        } else {
+            title = "Annotations for \(self[0].nodeReference.base)"
+        }
+        
+        let formattedTitle = NSAttributedString(string: title,
+                                                attributes: [
+                                                             NSAttributedString.Key.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)])
+        
+        str.append(formattedTitle)
+        str.append(NSAttributedString(string: "\n"))
+        for annotation in self {
+            let annotationStr = """
+            
+            Context: \(annotation.context)
+            Note: \(annotation.annotation)
+            Tags: \(annotation.tags.joined(separator: "; "))
+            
+            """
+            
+            str.append(NSAttributedString(string: annotationStr,
+                                          attributes: [NSAttributedString.Key.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)]))
+        }
+        return str
+    }
+}

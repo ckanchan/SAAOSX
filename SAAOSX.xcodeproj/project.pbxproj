@@ -22,6 +22,7 @@
 		5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* InfoViewController.swift */; };
 		5420145B21E22DDE00ABCB70 /* CloudKitPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */; };
 		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
+		542AD356227E08DD000E2E8C /* NoteExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542AD355227E08DD000E2E8C /* NoteExporter.swift */; };
 		54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		5434C8F4226CE488005572B3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5434C8F3226CE488005572B3 /* CloudKit.framework */; };
@@ -40,6 +41,7 @@
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		544E5FF3224FA025004482E5 /* SAAo_SXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */; };
 		544F2DB12277511F00407F46 /* NoteSQLSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F2DB02277511F00407F46 /* NoteSQLSchema.swift */; };
+		544F2DB322775F9800407F46 /* NoteSQLExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F2DB222775F9800407F46 /* NoteSQLExport.swift */; };
 		54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */; };
 		54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */; };
 		54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */; };
@@ -160,6 +162,7 @@
 		5418DF0E200FD62A001EE385 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitPush.swift; sourceTree = "<group>"; };
 		5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+CoreSpotlight.swift"; sourceTree = "<group>"; };
+		542AD355227E08DD000E2E8C /* NoteExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteExporter.swift; sourceTree = "<group>"; };
 		54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SAAO_CompleteGlossary.sqlite3; sourceTree = "<group>"; };
 		5434C8F3226CE488005572B3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		5434C8F5226CF6F9005572B3 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -180,6 +183,7 @@
 		544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAo_SXTests.swift; sourceTree = "<group>"; };
 		544E5FF4224FA025004482E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		544F2DB02277511F00407F46 /* NoteSQLSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLSchema.swift; sourceTree = "<group>"; };
+		544F2DB222775F9800407F46 /* NoteSQLExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLExport.swift; sourceTree = "<group>"; };
 		54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextEdition.storyboard; sourceTree = "<group>"; };
 		54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineViewController.swift; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 				549C4FED226DDDBB0001BCCD /* NoteDelegate.swift */,
 				5469819C226B48A200B27F38 /* NSSecureCodingHelper.swift */,
 				54744510225771C30075004D /* UserTagController.swift */,
+				542AD355227E08DD000E2E8C /* NoteExporter.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -490,6 +495,7 @@
 			isa = PBXGroup;
 			children = (
 				541378E421DA6263003A4481 /* NoteSQLDatabase.swift */,
+				544F2DB222775F9800407F46 /* NoteSQLExport.swift */,
 				544F2DB02277511F00407F46 /* NoteSQLSchema.swift */,
 				54863847225141DE00DFE739 /* NoteSQLAnnotations.swift */,
 				54863849225141E600DFE739 /* NoteSQLNotes.swift */,
@@ -906,6 +912,7 @@
 				541378E821DA7BA7003A4481 /* CloudKitNotes.swift in Sources */,
 				547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */,
 				54A9521D204058D60042E1BA /* Glossary.swift in Sources */,
+				542AD356227E08DD000E2E8C /* NoteExporter.swift in Sources */,
 				54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */,
 				5434C8F6226CF6F9005572B3 /* Log.swift in Sources */,
 				541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */,
@@ -952,6 +959,7 @@
 				5466120E20B9D59500FEF2D5 /* NotesByLemmaViewController.swift in Sources */,
 				54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */,
 				54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */,
+				544F2DB322775F9800407F46 /* NoteSQLExport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
