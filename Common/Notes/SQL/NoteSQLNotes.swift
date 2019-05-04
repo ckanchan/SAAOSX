@@ -180,11 +180,27 @@ extension NoteSQLDatabase {
         updateCloudKitMetadata(forNote: note, record: record)
     }
     
-    func retrieveAllNotes() throws -> [Note]  {
+    func retrieveAllNotes() -> [Note]  {
         var notes = [Note]()
-        for row in try db.prepare(Schema.notesTable) {
-            notes.append(Note(id: TextID(stringLiteral: row[Schema.textID]), notes: row[Schema.note]))
+        do {
+            for row in try db.prepare(Schema.notesTable) {
+                notes.append(Note(id: TextID(stringLiteral: row[Schema.textID]), notes: row[Schema.note]))
+            }
+        } catch let Result.error(message: message, code: code, _) {
+            os_log("Error retrieving all notes: code %{public}d, message: %{public}s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   code,
+                   message)
+            return []
+        } catch {
+            os_log("Error retrieving all notes: %s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   error.localizedDescription)
+            return []
         }
+        
         return notes
     }
 }
