@@ -29,7 +29,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
         guard let annotationsViewController = splitView.children[1] as? AnnotationsViewController else {return nil}
         
         notesTabViewController.annotationsViewController = annotationsViewController
-        notesTabViewController.notes = (try? notesTabViewController.notesDB.retrieveAllNotes()) ?? []
+        notesTabViewController.notes = notesTabViewController.notesDB.retrieveAllNotes()
         
         return notesTabViewController
     }
