@@ -51,7 +51,10 @@ extension CloudKitNotes {
         } else if zoneID == tagZoneID {
             setChangeToken(changeToken, for: .Tag)
         } else {
-            os_log("Received call to update change token for an unknown zone type, with zoneID: %s", log: Log.CloudKit, type: .debug, String(describing: zoneID))
+            os_log("Received call to update change token for an unknown zone type, with zoneID: %s",
+                   log: Log.CloudKit,
+                   type: .debug,
+                   String(describing: zoneID))
         }
     }
     

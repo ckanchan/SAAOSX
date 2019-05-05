@@ -24,6 +24,10 @@ final class CloudKitNotes {
     let sqlDB: NoteSQLDatabase
     let tagController: UserTagController
     
+    func deleteAllCloudKitData() {
+        #warning("To be implemented")
+    }
+    
     @objc func userStatusDidChange() {
         CKContainer.default().accountStatus { [weak self] status, error in
             if let error = error {

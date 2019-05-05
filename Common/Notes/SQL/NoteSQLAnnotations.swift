@@ -37,18 +37,21 @@ extension NoteSQLDatabase {
         
         if updateCloudKit {
             // Sync the annotation with CloudKit
-            cloudKitDB?.saveAnnotation(annotationToSave) {[weak self] result in
+            cloudKitDB?.saveAnnotation(annotationToSave) {[unowned self] result in
                 switch result {
                 case .success(let record):
-                    guard let noteSQLDB = self else {return}
-                    noteSQLDB.updateCloudKitMetadata(forAnnotation: annotationToSave, record: record)
+                    self.updateCloudKitMetadata(forAnnotation: annotationToSave, record: record)
                 case .failure(let error):
-                    os_log("Error saving annotation with ID %s to CloudKit: %s", log: Log.CloudKit, type: .error, String(annotationToSave.nodeReference), error.localizedDescription)
+                    os_log("Error saving annotation with ID %s to CloudKit: %s",
+                           log: Log.CloudKit,
+                           type: .error,
+                           String(annotationToSave.nodeReference),
+                           error.localizedDescription)
                 }
             }
         }
         
-        let notification = Notification.annotationAdded(reference: annotationToSave.nodeReference)
+        let notification = Notification.annotationAdded(reference: annotationToSave.nodeReference, tags: annotationToSave.tags)
         NotificationCenter.default.post(notification)
         
         let textChangeNotification = Notification.annotationsChanged(for: annotationToSave.nodeReference.base)
@@ -98,7 +101,7 @@ extension NoteSQLDatabase {
     
     func updateAnnotation(_ updatedAnnotation: Annotation, updateCloudKit: Bool = true) {
         // Persist the annotation to the local database
-        let reference = String(describing: updatedAnnotation.nodeReference)
+        let reference = String(updatedAnnotation.nodeReference)
         let query = Schema.annotationTable.filter(Schema.nodeReference == reference)
         do {
             _ = try db.run(query.update(
@@ -123,19 +126,25 @@ extension NoteSQLDatabase {
             
             record["annotation"] = updatedAnnotation.annotation
             
-            cloudKitDB?.modifyRecord(record) { [weak self] result in
-                guard let noteDB = self else {return}
+            cloudKitDB?.modifyRecord(record) { [unowned self] result in
                 switch result {
                 case .success(let record):
-                    noteDB.updateCloudKitMetadata(forAnnotation: updatedAnnotation, record: record)
-                    os_log("Synced updated annotation %s with CloudKit", log: Log.CloudKit, type: .info, String(updatedAnnotation.nodeReference))
+                    self.updateCloudKitMetadata(forAnnotation: updatedAnnotation, record: record)
+                    os_log("Synced updated annotation %s with CloudKit",
+                           log: Log.CloudKit,
+                           type: .info,
+                           String(updatedAnnotation.nodeReference))
                 case .failure(let error):
-                    os_log("Error updating annotation with ID %s to CloudKit: %s", log: Log.CloudKit, type: .error, String(updatedAnnotation.nodeReference), error.localizedDescription)
+                    os_log("Error updating annotation with ID %s to CloudKit: %{public}s",
+                           log: Log.CloudKit,
+                           type: .error,
+                           String(updatedAnnotation.nodeReference),
+                           error.localizedDescription)
                 }
             }
         }
         
-        let notification = Notification.annotationAdded(reference: updatedAnnotation.nodeReference)
+        let notification = Notification.annotationAdded(reference: updatedAnnotation.nodeReference, tags: updatedAnnotation.tags)
         NotificationCenter.default.post(notification)
         let textChangeNotification = Notification.annotationsChanged(for: updatedAnnotation.nodeReference.base)
         NotificationCenter.default.post(textChangeNotification)

@@ -31,7 +31,7 @@ final class NoteSQLDatabase {
                 Schema.ckRecordID <- recordID
                 ))
         } catch {
-            os_log("SQLite error updating CloudKit metadata for record with ID %s, error: %s",
+            os_log("Could not update CloudKit metadata for record with ID %s, error: %{public}s",
                    log: Log.NoteSQLite,
                    type: .error,
                    String(describing: record.recordID),
