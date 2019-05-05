@@ -13,6 +13,7 @@ class AnnotationPopupController: NSViewController {
     var textID: TextID!
     var nodeReference: NodeReference!
     var annotationMetadata: (transliteration: String, normalisation: String, translation: String)!
+    var userTags: UserTags!
 
     var context: String? {
         didSet {
@@ -39,9 +40,14 @@ class AnnotationPopupController: NSViewController {
         let context = self.context ?? ""
         let tokens = tagField.objectValue as? [String] ?? []
         let annotationTags = Set(tokens.map{$0.lowercased()})
-        let newTags = UserTags(tags: annotationTags)
         
-        let newAnnotation = Annotation(nodeReference: reference, transliteration: transliteration, normalisation: normalisation, translation: translation, annotation: annotation, context: context, tags: annotationTags)
+        let newAnnotation = Annotation(nodeReference: reference,
+                                       transliteration: transliteration,
+                                       normalisation: normalisation,
+                                       translation: translation,
+                                       annotation: annotation,
+                                       context: context,
+                                       tags: annotationTags)
         
         if notesDB.retrieveSingleAnnotation(nodeReference) != nil {
             notesDB.updateAnnotation(newAnnotation)
@@ -49,7 +55,6 @@ class AnnotationPopupController: NSViewController {
             notesDB.createAnnotation(newAnnotation)
         }
         
-        userTags.updateTags(adding: newTags)
         view.window?.close()
     }
     
@@ -84,7 +89,8 @@ extension AnnotationPopupController {
                     transliteration: String,
                     normalisation: String,
                     translation: String,
-                    context: String) -> NSWindowController? {
+                    context: String,
+                    userTags: UserTags) -> NSWindowController? {
         let storyboard = NSStoryboard(name: "TextEdition", bundle: Bundle.main)
         guard let window = storyboard.instantiateController(withIdentifier: "AnnotationViewController") as? NSWindowController else {return nil}
         guard let vc =  window.contentViewController as? AnnotationPopupController else { return nil }
@@ -96,13 +102,14 @@ extension AnnotationPopupController {
         return window
     }
     
-    static func new(withAnnotation annotation: Annotation) -> NSWindowController? {
+    static func new(withAnnotation annotation: Annotation, userTags: UserTags) -> NSWindowController? {
         guard let windowController = AnnotationPopupController.new(textID: annotation.nodeReference.base,
                                                                    node: annotation.nodeReference,
                                                                    transliteration: annotation.transliteration,
                                                                    normalisation: annotation.normalisation,
                                                                    translation: annotation.translation,
-                                                                   context: annotation.context),
+                                                                   context: annotation.context,
+                                                                   userTags: userTags),
             let annotationViewController = windowController.contentViewController as? AnnotationPopupController else {return nil}
         annotationViewController.annotation = annotation
         return windowController
@@ -111,6 +118,7 @@ extension AnnotationPopupController {
 
 extension AnnotationPopupController: NSTokenFieldDelegate {
     func tokenField(_ tokenField: NSTokenField, completionsForSubstring substring: String, indexOfToken tokenIndex: Int, indexOfSelectedItem selectedIndex: UnsafeMutablePointer<Int>?) -> [Any]? {
-        return userTags.userTags.tags.filter{$0.lowercased().contains(substring.lowercased())}
+        guard substring.count > 2 else {return nil}
+        return self.userTags.tags.filter{$0.lowercased().contains(substring.lowercased())}
     }
 }

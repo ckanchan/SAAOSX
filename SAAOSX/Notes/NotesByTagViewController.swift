@@ -36,7 +36,7 @@ class NotesByTagViewController: NSViewController, NoteDisplaying {
     }
     
     @objc func tagsDidChange(_ notification: Notification) {
-        tags = Array(userTags.userTags.tags).sorted()
+        tags = Array(notesDB.tagSet?.tags ?? Set<Tag>())
     }
     
     @objc func annotationsDidChange(_ notification: Notification) {
@@ -48,7 +48,7 @@ class NotesByTagViewController: NSViewController, NoteDisplaying {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        tags = Array(userTags.userTags.tags).sorted()
+        tags = Array(notesDB.tagSet?.tags ?? Set<Tag>())
         self.noteStore = (parent as! NoteStore)
         
         NotificationCenter.default.addObserver(self,
@@ -66,7 +66,7 @@ class NotesByTagViewController: NSViewController, NoteDisplaying {
 extension NotesByTagViewController: NSTableViewDataSource, NSTableViewDelegate {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return userTags.userTags.tags.count
+        return notesDB.tagSet?.tags.count ?? 0
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {

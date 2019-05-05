@@ -223,13 +223,14 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         let window: NSWindowController?
         guard let metadata = sender.attributedTitle?.attributes(at: 0, effectiveRange: nil) else {return}
         guard let reference = metadata[.reference] as? String else {return}
+        let userTags = notesDB.tagSet ?? UserTags([])
         
         #warning("this code needs  to differentiate between short and long nodereferences encoded in the nsattrubutedstring")
         let nodeReference = NodeReference(base: catalogueEntry.id,
                                           path: reference.split(separator: ".").map({String($0)}))
         
         if let annotation = notesDB.retrieveSingleAnnotation(nodeReference) {
-            window = AnnotationPopupController.new(withAnnotation: annotation)
+            window = AnnotationPopupController.new(withAnnotation: annotation, userTags: userTags)
         } else {
             guard let citationForm = metadata[.oraccCitationForm] as? String,
                 let transliteration = metadata[.writtenForm] as? String,
@@ -238,7 +239,13 @@ class TextViewController: NSViewController, NSTextViewDelegate {
                 let reference = metadata[.reference] as? String else {return}
             
             let nodeReference = NodeReference(base: catalogueEntry.id, path: reference.split(separator: ".").map { String($0)})
-            window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context)
+            window = AnnotationPopupController.new(textID: catalogueEntry.id,
+                                                   node: nodeReference,
+                                                   transliteration: transliteration,
+                                                   normalisation: citationForm,
+                                                   translation: translation,
+                                                   context: context,
+                                                   userTags: userTags)
         }
         window?.showWindow(self)
         guard let annotationVc = window?.contentViewController as? AnnotationPopupController else {return}

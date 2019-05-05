@@ -37,7 +37,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         #endif
         
         return NoteSQLDatabase(url: url, cloudKitDB: nil)!}()
-    lazy var userTags: UserTagController = { return UserTagController() }()
 
     var cloudKitDB: CloudKitNotes!
     
@@ -47,17 +46,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         #if DEBUG
         let debugDefaults = UserDefaults(suiteName: "me.chaidk.debug.SAAo-SX")!
         self.cloudKitDB = CloudKitNotes(withDefaults: debugDefaults,
-                                        sqlDB: noteSQL,
-                                        tagController: userTags)
+                                        sqlDB: noteSQL)
         
         #else
-        self.cloudKitDB = CloudKitNotes(sqlDB: self.noteSQL, tagController: self.userTags)
+        self.cloudKitDB = CloudKitNotes(sqlDB: self.noteSQL)
         
         #endif
         
         cloudKitDB.userStatusDidChange()
         noteSQL.cloudKitDB = self.cloudKitDB
-        userTags.cloudKitDB = self.cloudKitDB
         
         if #available(OSX 10.14, *) {
             NSApp.registerForRemoteNotifications()
