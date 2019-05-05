@@ -138,10 +138,13 @@ extension NoteSQLDatabase {
                 }
             }
         }
+        
         os_log("Saved indexed tag %s to database",
                log: Log.NoteSQLite,
                type: .info,
                tag)
+        
+        NotificationCenter.default.post(Notification.tagsDidChange)
     }
     
     func retrieveIndex(forTag tag: Tag) -> Set<NodeReference>? {
@@ -224,6 +227,8 @@ extension NoteSQLDatabase {
                        tags.keys.joined(separator: ", "))
             }
         }
+        
+        NotificationCenter.default.post(Notification.tagsDidChange)
     }
     
     func deleteIndexedTag(_ tag: Tag) {
@@ -237,6 +242,8 @@ extension NoteSQLDatabase {
                    tag,
                    error.localizedDescription)
         }
+        
+        NotificationCenter.default.post(Notification.tagsDidChange)
     }
     
     func processCloudKitIndexedTag(from record: CKRecord) {
