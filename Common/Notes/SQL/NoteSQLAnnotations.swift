@@ -13,7 +13,13 @@ import CloudKit
 import os
 
 extension NoteSQLDatabase {
+    /// Saves a new annotation to the SQL store, syncs it with CloudKit, updates tag indexes and dispatches notifications
+    ///
+    /// - Parameters:
+    ///   - annotationToSave: This must be a new annotation otherwise the operation will fail
+    ///   - updateCloudKit: defaults to `true` - this should only be false if called from a CloudKit database change notification handler
     func createAnnotation(_ annotationToSave: Annotation, updateCloudKit: Bool = true) {
+        
         // Persist the annotation to the local database
         let tagString = annotationToSave.tags.joined(separator: ",")
         do {
@@ -35,8 +41,9 @@ extension NoteSQLDatabase {
                    error.localizedDescription)
         }
         
+        
+        // Sync the annotation with CloudKit
         if updateCloudKit {
-            // Sync the annotation with CloudKit
             cloudKitDB?.saveAnnotation(annotationToSave) {[unowned self] result in
                 switch result {
                 case .success(let record):
@@ -51,6 +58,10 @@ extension NoteSQLDatabase {
             }
         }
         
+       // Update tag indexes
+        processTags(forNewAnnotation: annotationToSave)
+        
+        // Dispatch notifications about a new annotation being added, and a text edition being changed
         let notification = Notification.annotationAdded(reference: annotationToSave.nodeReference, tags: annotationToSave.tags)
         NotificationCenter.default.post(notification)
         
@@ -99,13 +110,39 @@ extension NoteSQLDatabase {
         return annotations
     }
     
+    /// Updates a pre-existing annotation to the SQL store, syncs it with CloudKit, updates tag indexes and dispatches notifications
+    ///
+    /// - Parameters:
+    ///   - updatedAnnotation: this annotation must already exist in the SQL store otherwise the operation wil fail
+    ///   - updateCloudKit: defaults to `true` - this should only be false if called from a CloudKit database change notification handler
     func updateAnnotation(_ updatedAnnotation: Annotation, updateCloudKit: Bool = true) {
         // Persist the annotation to the local database
         let reference = String(updatedAnnotation.nodeReference)
         let query = Schema.annotationTable.filter(Schema.nodeReference == reference)
+        
+        // Need to initialise it here and make it a `var` because the compiler can't tell its initialised across all paths
+        var previousTags = Set<Tag>()
+        
+        // We need to get the previous tags in order to compare them with the updated ones.
+        // This also serves to check that there is indeed a pre-existing entry in the database for this updated annotation
         do {
+            guard let row = try db.pluck(query) else {throw Result.error(message: "No rows found", code: 16, statement: nil)}
+            let prevTagArray = row[Schema.tags].split(separator: ",").map{String($0)} as [Tag]
+            previousTags = Set(prevTagArray)
+        } catch {
+            os_log("Unable to find pre-existing annotation %s in database, error %s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   String(updatedAnnotation.nodeReference),
+                   error.localizedDescription)
+        }
+        
+        // Update the annotation with new annotation note and tags
+        do {
+            let tagString = updatedAnnotation.tags.joined(separator: ",")
             _ = try db.run(query.update(
-                Schema.annotation <- updatedAnnotation.annotation
+                Schema.annotation <- updatedAnnotation.annotation,
+                Schema.tags <- tagString
             ))
         } catch {
             os_log("Unable to update annotation with ID %s to database, error %s",
@@ -115,6 +152,7 @@ extension NoteSQLDatabase {
                    error.localizedDescription)
         }
         
+        // Push the changes to the cloud
         if updateCloudKit {
             // Get Cloudkit saved metadata
             guard let row = try? db.pluck(query),
@@ -144,6 +182,14 @@ extension NoteSQLDatabase {
             }
         }
         
+        // Update tag indexes
+        let newTagsForAnnotation = updatedAnnotation.tags.subtracting(previousTags)
+        let deletedTags = previousTags.subtracting(updatedAnnotation.tags)
+        
+        updateTags(forReference: updatedAnnotation.nodeReference,
+                   newTagsForAnnotation: newTagsForAnnotation,
+                   deletedTags: deletedTags)
+        
         let notification = Notification.annotationAdded(reference: updatedAnnotation.nodeReference, tags: updatedAnnotation.tags)
         NotificationCenter.default.post(notification)
         let textChangeNotification = Notification.annotationsChanged(for: updatedAnnotation.nodeReference.base)
@@ -155,10 +201,30 @@ extension NoteSQLDatabase {
                String(updatedAnnotation.nodeReference))
     }
 
+    
+    /// Deletes an annotation from the SQL store, deletes it from CloudKit, then updates tag indexes
+    ///
+    /// - Parameter reference: `NodeReference` of the deleted annotation
     func deleteAnnotation(withReference reference: NodeReference) {
         let query = Schema.annotationTable.filter(Schema.nodeReference == String(describing: reference))
+        var tagsToDelete = Set<Tag>()
+        
+        // We need to get the tags for this annotation in order to delete the reference from the indexed database
+        // This also serves to check that there is indeed a pre-existing entry in the database for this deleted annotation
         do {
-            try delete(query: query)
+            guard let row = try db.pluck(query) else {throw Result.error(message: "No rows found", code: 16, statement: nil)}
+            let prevTagArray = row[Schema.tags].split(separator: ",").map{String($0)} as [Tag]
+            tagsToDelete = Set(prevTagArray)
+        } catch {
+            os_log("Unable to find pre-existing annotation %s in database, error %s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   String(reference),
+                   error.localizedDescription)
+        }
+        
+        do {
+            try deleteFromSQLAndCloud(query: query)
         } catch {
             os_log("Unable to delete annotation %s, error %s",
                    log: Log.NoteSQLite,
@@ -166,6 +232,9 @@ extension NoteSQLDatabase {
                    String(reference),
                    error.localizedDescription)
         }
+        
+        // Delete the reference for this annotation from tag indexes
+        updateTags(forReference: reference, newTagsForAnnotation: Set<Tag>(), deletedTags: tagsToDelete)
         
         let notification = Notification.annotationDeleted(reference: reference)
         NotificationCenter.default.post(notification)
@@ -175,6 +244,11 @@ extension NoteSQLDatabase {
 
     }
     
+    
+    /// Method called by a CloudKit database change handler when an annotation record is deleted on another device
+    ///
+    /// - Parameter recordID: CloudKit record ID
+    /// - Throws: SQLite errors
     func deleteAnnotation(withRecordID recordID: CKRecord.ID) throws {
         let recordData = recordID.securelyEncoded()
         let query = Schema.annotationTable.filter(Schema.ckRecordID == recordData)
@@ -186,9 +260,15 @@ extension NoteSQLDatabase {
             return
         }
         
+        // Delete annotation from local database
         let nodeReferenceStr = row[Schema.nodeReference]
-        let reference = NodeReference(stringLiteral: nodeReferenceStr)
+        let reference = NodeReference(nodeReferenceStr)!
         try db.run(query.delete())
+        
+        // Update tag indexes
+        let tagString = row[Schema.tags]
+        let tags = tagString.split(separator: ",").map{String($0)}
+        updateTags(forReference: reference, newTagsForAnnotation: Set<Tag>(), deletedTags: Set(tags))
         
         let notification = Notification.annotationDeleted(reference: reference)
         NotificationCenter.default.post(notification)
@@ -202,6 +282,10 @@ extension NoteSQLDatabase {
                String(reference))
     }
 
+    
+    /// Method called when CloudKit notifies an annotation has been changed. Checks whether the annotation exists in the local store: if it does, update the annotation, otherwise create a new annotation, without propagating the changes back to CloudKit (which would create an infinite loop\0
+    ///
+    /// - Parameter record: new CloudKit annotation
     func processCloudKitAnnotation(from record: CKRecord) {
         guard let annotation = Annotation(ckRecord: record) else {return}
         

@@ -13,6 +13,102 @@ import CloudKit
 import os
 
 extension NoteSQLDatabase {
+    enum TagOperation {
+        case add, remove
+    }
+    
+    var tagSet: UserTags? {
+        get {
+            do {
+                let query = Schema.tagsTable.select(Schema.tag)
+                let rows = try db.prepare(query)
+                let tags = rows.map({$0[Schema.tag]})
+                return UserTags(tags)
+            } catch {
+                os_log("Unable to retrieve tags, error:",
+                       log: Log.NoteSQLite,
+                       type: .error,
+                       error.localizedDescription)
+                return nil
+            }
+        }
+    }
+    
+    func updatePreexistingTags(_ tags: Set<Tag>, withReference reference: NodeReference, operation: TagOperation) {
+        
+        // Get the existing indexes for each pre-existing tag
+        let indexPairs = tags.compactMap {tag -> (Tag, Set<NodeReference>)? in
+            guard let index = retrieveIndex(forTag: tag) else {return nil}
+            return (key: tag, value: index)
+        }
+        
+        // Create a keyed dictionary from the retrieved indexes
+        let indexes = Dictionary(uniqueKeysWithValues: indexPairs)
+        let updatedIndexes: [Tag: Set<NodeReference>]
+        
+        // Add or remove the reference from the index
+        switch operation {
+        case .add:
+            updatedIndexes = indexes.mapValues {$0.union([reference])}
+        case .remove:
+            updatedIndexes = indexes.mapValues {$0.subtracting([reference])}
+        }
+        
+        
+        // Commit the updated tag indexes
+        updateIndexedTags(updatedIndexes)
+    }
+    
+    func processTags(forNewAnnotation annotation: Annotation) {
+        guard let tagSet = self.tagSet else {
+            os_log("Could not process tags for annotation %s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   String(annotation.nodeReference))
+            return
+        }
+        
+        let preExistingTags = tagSet.tags.intersection(annotation.tags)
+        let newTags = annotation.tags.subtracting(tagSet.tags)
+        
+        if !preExistingTags.isEmpty {
+            updatePreexistingTags(preExistingTags, withReference: annotation.nodeReference, operation: .add)
+        }
+        
+        if !newTags.isEmpty {
+            newTags.forEach { tag in
+                createIndexedTag(tag, index: Set([annotation.nodeReference]))
+            }
+        }
+    }
+    
+    func updateTags(forReference reference: NodeReference, newTagsForAnnotation: Set<Tag>, deletedTags: Set<Tag>) {
+        guard let tagSet = self.tagSet else {
+            os_log("Could not process tags for annotation %s",
+                   log: Log.NoteSQLite,
+                   type: .error,
+                   String(reference))
+            return
+        }
+        
+        let preExistingTags = tagSet.tags.intersection(newTagsForAnnotation)
+        let newGlobalTags = newTagsForAnnotation.subtracting(tagSet.tags)
+        
+        if !preExistingTags.isEmpty {
+            updatePreexistingTags(preExistingTags, withReference: reference, operation: .add)
+        }
+        
+        if !newGlobalTags.isEmpty {
+            newGlobalTags.forEach { tag in
+                createIndexedTag(tag, index: Set([reference]))
+            }
+        }
+        
+        if !deletedTags.isEmpty {
+            updatePreexistingTags(deletedTags, withReference: reference, operation: .remove)
+        }
+    }
+    
     func createIndexedTag(_ tag: Tag, index: Set<NodeReference>, updateCloudKit: Bool = true) {
         do {
             _ = try db.run(Schema.tagsTable.insert(
@@ -133,7 +229,7 @@ extension NoteSQLDatabase {
     func deleteIndexedTag(_ tag: Tag) {
         let query = Schema.tagsTable.filter(Schema.tag == tag)
         do {
-            try delete(query: query)
+            try deleteFromSQLAndCloud(query: query)
         } catch {
             os_log("Unable to delete indexed tag %s, error %s",
                    log: Log.NoteSQLite,

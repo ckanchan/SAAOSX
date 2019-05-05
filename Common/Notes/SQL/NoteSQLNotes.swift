@@ -127,7 +127,7 @@ extension NoteSQLDatabase {
         let query = Schema.notesTable.filter(Schema.textID == String(id))
         
         do {
-            try delete(query: query)
+            try deleteFromSQLAndCloud(query: query)
         } catch {
             os_log("Unable to delete note %s, error %s",
                    log: Log.NoteSQLite,

@@ -58,7 +58,7 @@ final class NoteSQLDatabase {
     ///
     /// - Parameter query: scoped SQLite query filtering the rows for deletion
     /// - Throws: SQLite errors
-    func delete(query: Table) throws {
+    func deleteFromSQLAndCloud(query: Table) throws {
         guard let row = try? db.pluck(query) else {return}
         if let ckRecordInfo = row[Schema.ckSystemFields] {
             let unarchiver = NSKeyedUnarchiver(forReadingWith: ckRecordInfo)
