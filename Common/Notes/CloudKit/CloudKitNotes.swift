@@ -22,7 +22,6 @@ final class CloudKitNotes {
     var userIsLoggedIn: Bool
     let userDefaults: UserDefaults
     let sqlDB: NoteSQLDatabase
-    let tagController: UserTagController
     
     func deleteAllCloudKitData() {
         #warning("To be implemented")
@@ -51,12 +50,9 @@ final class CloudKitNotes {
         }
     }
     
-    init(withDefaults userDefaults: UserDefaults = UserDefaults.standard,
-         sqlDB: NoteSQLDatabase,
-         tagController: UserTagController) {
+    init(withDefaults userDefaults: UserDefaults = UserDefaults.standard, sqlDB: NoteSQLDatabase) {
         self.userDefaults = userDefaults
         self.sqlDB = sqlDB
-        self.tagController = tagController
         userIsLoggedIn = false
         self.userStatusDidChange()
         
