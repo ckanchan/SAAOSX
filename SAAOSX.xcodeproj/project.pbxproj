@@ -96,6 +96,8 @@
 		54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */; };
 		54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B721D698BB00F00F39 /* AncientMap.swift */; };
 		54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
+		54C21A5E227EEAF50093E494 /* TagIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C21A5D227EEAF50093E494 /* TagIndex.swift */; };
+		54C21A60227F0DB50093E494 /* NoteSQLTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */; };
 		54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C91A7F2017A8C0001AA675 /* Preferences.storyboard */; };
 		54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A812017AAB0001AA675 /* PreferencesViewController.swift */; };
 		54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A832017AB9F001AA675 /* UserDefaultsController.swift */; };
@@ -233,6 +235,8 @@
 		54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMapViewDelegate.swift; sourceTree = "<group>"; };
 		54B3C1B721D698BB00F00F39 /* AncientMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMap.swift; sourceTree = "<group>"; };
 		54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Conversions.swift"; sourceTree = "<group>"; };
+		54C21A5D227EEAF50093E494 /* TagIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TagIndex.swift; path = Common/Notes/TagIndex.swift; sourceTree = SOURCE_ROOT; };
+		54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLTags.swift; sourceTree = "<group>"; };
 		54C91A7F2017A8C0001AA675 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		54C91A812017AAB0001AA675 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		54C91A832017AB9F001AA675 /* UserDefaultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
@@ -487,6 +491,7 @@
 				54F1C42220A9F4D1009F31C0 /* Note.swift */,
 				541378E921DAAFE0003A4481 /* Annotation.swift */,
 				543DC34720B6787A0019FF1E /* UserTags.swift */,
+				54C21A5D227EEAF50093E494 /* TagIndex.swift */,
 			);
 			path = DataTypes;
 			sourceTree = "<group>";
@@ -497,6 +502,7 @@
 				541378E421DA6263003A4481 /* NoteSQLDatabase.swift */,
 				544F2DB222775F9800407F46 /* NoteSQLExport.swift */,
 				544F2DB02277511F00407F46 /* NoteSQLSchema.swift */,
+				54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */,
 				54863847225141DE00DFE739 /* NoteSQLAnnotations.swift */,
 				54863849225141E600DFE739 /* NoteSQLNotes.swift */,
 			);
@@ -945,6 +951,7 @@
 				549C4FF0226DDE390001BCCD /* NoteNotifications.swift in Sources */,
 				547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */,
 				54D3B4E521D7F0F100F836E2 /* NSAlertExtensions.swift in Sources */,
+				54C21A60227F0DB50093E494 /* NoteSQLTags.swift in Sources */,
 				5466120C20B9D58800FEF2D5 /* NotesByTagViewController.swift in Sources */,
 				54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */,
 				543DC34820B6787A0019FF1E /* UserTags.swift in Sources */,
@@ -959,6 +966,7 @@
 				5466120E20B9D59500FEF2D5 /* NotesByLemmaViewController.swift in Sources */,
 				54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */,
 				54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */,
+				54C21A5E227EEAF50093E494 /* TagIndex.swift in Sources */,
 				544F2DB322775F9800407F46 /* NoteSQLExport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

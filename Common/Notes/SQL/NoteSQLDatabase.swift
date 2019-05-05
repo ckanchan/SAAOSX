@@ -45,7 +45,12 @@ final class NoteSQLDatabase {
     }
     
     func updateCloudKitMetadata(forAnnotation annotation: Annotation, record: CKRecord) {
-        let tableRow = Schema.annotationTable.filter(Schema.nodeReference == String(describing: annotation.nodeReference))
+        let tableRow = Schema.annotationTable.filter(Schema.nodeReference == String(annotation.nodeReference))
+        updateCloudKitMetadata(tableRow: tableRow, record: record)
+    }
+    
+    func updateCloudKitMetadata(forIndexedTag tag: Tag, record: CKRecord) {
+        let tableRow = Schema.tagsTable.filter(Schema.tag == tag)
         updateCloudKitMetadata(tableRow: tableRow, record: record)
     }
     
@@ -115,6 +120,17 @@ final class NoteSQLDatabase {
             try connection.run(Schema.annotationTable.createIndex(Schema.nodeReference,
                                                                   unique: true,
                                                                   ifNotExists: true))
+            
+            try connection.run(Schema.tagsTable.create(ifNotExists: true) {table in
+                table.column(Schema.tag)
+                table.column(Schema.nodeReferences)
+                table.column(Schema.ckSystemFields)
+                table.column(Schema.ckRecordID)
+            })
+            
+            try connection.run(Schema.tagsTable.createIndex(Schema.tag,
+                                                            unique: true,
+                                                            ifNotExists: true))
             
         } catch {
             os_log("Could not initialise SQLite Notes Database: %s",

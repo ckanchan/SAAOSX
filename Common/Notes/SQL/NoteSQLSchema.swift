@@ -25,6 +25,10 @@ extension NoteSQLDatabase {
         static var annotation: Expression<String> { return Expression<String>("annotation") }
         static var tags: Expression<String> { return Expression<String>("tags") }
         static var annotationTable: Table { return Table("annotations") }
+        
+        static var tag: Expression<String> { return Expression<String>("tag")}
+        static var nodeReferences: Expression<String> {return Expression<String>("nodeReferences")}
+        static var tagsTable: Table { return Table("tags")}
     }
 }
 

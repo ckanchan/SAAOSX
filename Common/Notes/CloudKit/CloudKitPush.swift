@@ -69,6 +69,37 @@ extension CloudKitNotes {
         save(CKRecord(userTags: tags), completionHandler: completionHandler)
     }
     
+    func saveIndexedTag(_ tag: Tag, index: Set<NodeReference>, completionHandler: CKCompletionHandler = nil) {
+        guard userIsLoggedIn else {
+            os_log("User is not logged into iCloud, cannot save index for tag %s to server",
+                   log: Log.CloudKit,
+                   type: .error,
+                   tag)
+            return
+        }
+        save(CKRecord(tag: tag, index: index), completionHandler: completionHandler)
+    }
+    
+    func saveIndexedTags(_ tagIndex: [Tag: Set<NodeReference>],
+                         perRecordCompletionHandler completionHandler: CKCompletionHandler = nil) {
+        guard userIsLoggedIn else {
+            os_log("User is not logged into iCloud, cannot save indexes for tags %s to server",
+                   log: Log.CloudKit,
+                   type: .error,
+                   tagIndex.keys.joined(separator: ", "))
+            return
+        }
+        
+        let records = tagIndex.map {CKRecord(tag: $0.key, index: $0.value)}
+        let saveOperation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: nil)
+        saveOperation.perRecordCompletionBlock = {record, error in
+            if let error = error {
+                completionHandler?(.failure(error))
+            } else {
+                completionHandler?(.success(record))
+            }
+        }
+    }
     
     func deleteRecord(withID id: CKRecord.ID) {
         let deleteOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [id])

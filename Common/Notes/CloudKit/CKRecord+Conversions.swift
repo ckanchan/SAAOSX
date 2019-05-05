@@ -15,6 +15,7 @@ extension CKRecord {
         static let Annotation = "Annotation"
         static let Note = "Note"
         static let Tags = "Tags"
+        static let IndexedTag = "IndexedTag"
     }
     
     convenience init(note: Note) {
@@ -41,6 +42,13 @@ extension CKRecord {
         let recordID = CKRecord.ID(recordName: UUID().uuidString, zoneID: NoteType.Tag.zone.zoneID)
         self.init(recordType: CKRecord.RecordType.Tags, recordID: recordID)
         self["tags"] = Array(userTags.tags)
+    }
+    
+    convenience init (tag: Tag, index: Set<NodeReference>) {
+        let recordID = CKRecord.ID(recordName: UUID().uuidString, zoneID: NoteType.Tag.zone.zoneID)
+        self.init(recordType: CKRecord.RecordType.Tags, recordID: recordID)
+        self["tag"] = tag
+        self["index"] = Array(index).map({String($0)})
     }
 }
 
