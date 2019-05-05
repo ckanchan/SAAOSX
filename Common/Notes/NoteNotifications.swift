@@ -67,18 +67,18 @@ extension Notification {
 }
 
 extension Notification {
-    static func annotationAdded(reference: NodeReference) -> Notification {
+    static func annotationAdded(reference: NodeReference, tags: Set<Tag>) -> Notification {
         return Notification(
             name: .annotationAdded,
             object: nil,
-            userInfo: ["nodeReference": reference])
+            userInfo: ["nodeReference": reference, "tags": tags])
     }
     
-    static func annotationUpdated(reference: NodeReference) -> Notification {
+    static func annotationUpdated(reference: NodeReference, tags: Set<Tag>) -> Notification {
         return Notification(
             name: .annotationUpdated,
             object: nil,
-            userInfo: ["nodeReference": reference])
+            userInfo: ["nodeReference": reference, tags: tags])
     }
     
     static func annotationDeleted(reference: NodeReference) -> Notification {
@@ -93,6 +93,14 @@ extension Notification {
             name: .annotationsChangedForText,
             object: nil,
             userInfo: ["textID": text])
+    }
+    
+    func annotationMetadata() -> (NodeReference, Set<Tag>)? {
+        guard let userInfo = self.userInfo as? [String: Any],
+            let nodeReference = userInfo["nodeReference"] as? NodeReference,
+            let tags = userInfo["tags"] as? Set<Tag> else {return nil}
+        
+        return (nodeReference: nodeReference, tags: tags)
     }
 }
 

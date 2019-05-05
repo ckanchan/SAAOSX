@@ -30,11 +30,10 @@ extension NoteSQLDatabase {
         
         if updateCloudKit {
             //Sync the note with CloudKit
-            cloudKitDB?.saveNote(noteToSave) {[weak self] result in
-                guard let noteSQLDB = self else {return}
+            cloudKitDB?.saveNote(noteToSave) {[unowned self] result in
                 switch result {
                 case .success(let record):
-                    noteSQLDB.updateCloudKitMetadata(forNote: noteToSave, record: record)
+                    self.updateCloudKitMetadata(forNote: noteToSave, record: record)
                     os_log("Saved note %s to CloudKit",
                            log: Log.CloudKit,
                            type: .info,
