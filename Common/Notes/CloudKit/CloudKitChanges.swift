@@ -190,8 +190,9 @@ extension CloudKitNotes {
         case CKRecord.RecordType.Note:
             sqlDB.processCloudKitNote(from: record)
 
-        case CKRecord.RecordType.Tags:
-            return
+        case CKRecord.RecordType.IndexedTag:
+            sqlDB.processCloudKitIndexedTag(from: record)
+            
         default:
             return
         }
