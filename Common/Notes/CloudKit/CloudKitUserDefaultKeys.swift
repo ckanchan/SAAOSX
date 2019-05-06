@@ -12,4 +12,8 @@ extension String {
     static var CloudKitDatabaseChangeTokenKey: String {
         return "CloudKitDatabaseChangeTokenKey"
     }
+    
+    static var CloudKitDatabaseSubscription: String {
+        return "CloudKitDatabaseSubscriptionKey"
+    }
 }

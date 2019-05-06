@@ -11,6 +11,22 @@ import CloudKit
 import os
 
 extension CloudKitNotes {
+    var databaseSubscription: CKSubscription? {
+        get {
+            guard let data = userDefaults.data(forKey: .CloudKitDatabaseSubscription) else {return nil}
+            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+            unarchiver.requiresSecureCoding = true
+            return CKSubscription(coder: unarchiver)
+        } set {
+            if let subscription = newValue {
+                let data = subscription.securelyEncoded()
+                userDefaults.set(data, forKey: .CloudKitDatabaseSubscription)
+            } else {
+                userDefaults.removeObject(forKey: .CloudKitDatabaseSubscription)
+            }
+        }
+    }
+    
     var databaseChangeToken: CKServerChangeToken? {
         get {
             guard let data = userDefaults.data(forKey: .CloudKitDatabaseChangeTokenKey) else {return nil}
