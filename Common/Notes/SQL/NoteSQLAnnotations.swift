@@ -306,7 +306,11 @@ extension NoteSQLDatabase {
 
 extension NoteSQLDatabase {
     func annotationsForTag(_ tag: String) -> [Annotation] {
-        let query = Schema.annotationTable.filter(Schema.tags.like("%\(tag)%"))
+        guard let index = retrieveIndex(forTag: tag) else {return []}
+        let strIndex = index.map{String($0)}
+        let query = Schema.annotationTable.filter(strIndex.contains(Schema.nodeReference))
+        
+//        let query = Schema.annotationTable.filter(Schema.tags.like("%\(tag)%"))
         var results = [Annotation]()
         do {
             let rows = try db.prepare(query)
