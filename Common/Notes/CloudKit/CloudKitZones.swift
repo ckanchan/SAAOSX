@@ -70,9 +70,10 @@ extension CloudKitNotes {
         }
     }
     
-    func clearAllZoneIDs() {
-        for zoneKey in NoteType.allCases.map({$0.zoneIDKey}) {
-            userDefaults.removeObject(forKey: zoneKey)
+    func clearAllZoneIDsAndChangeTokens() {
+        for noteType in NoteType.allCases {
+            userDefaults.removeObject(forKey: noteType.zoneIDKey)
+            setChangeToken(nil, for: noteType)
         }
     }
     

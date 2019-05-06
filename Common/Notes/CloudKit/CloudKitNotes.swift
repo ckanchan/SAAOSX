@@ -40,7 +40,7 @@ final class CloudKitNotes {
                     deletedIDs.count)
                 
                 try? self.sqlDB.clearAllCloudKitMetadata()
-                self.clearAllZoneIDs()
+                self.clearAllZoneIDsAndChangeTokens()
                 
                 zoneDeletionHandler?(.success(deletedIDs))
             }
