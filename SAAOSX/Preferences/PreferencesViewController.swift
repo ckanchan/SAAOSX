@@ -44,31 +44,6 @@ class PreferencesViewController: NSViewController {
         defaults.saveTextPreference(sender.selectedSegment)
     }
     
-    @IBAction func exportAllNotes(_ sender: Any) {
-        guard let catalogue = sqlite else {return}
-        let noteExporter = NoteExporter(catalogue: catalogue, noteDB: notesDB)
-        
-        do {
-            guard let data = try noteExporter.exportAllNotes(to: .MicrosoftWord) else {return}
-            
-            let panel = NSSavePanel()
-            panel.allowedFileTypes = ["docx"]
-            panel.begin { response in
-                guard response == .OK,
-                    let url = panel.url else {return}
-                
-                do {
-                    try data.write(to: url)
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        } catch {
-            let alert = NSAlert(error: error)
-            alert.runModal()
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         temporaryFileLabel?.stringValue = "Cache size: \(sizeToDisplay)"
