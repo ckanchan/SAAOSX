@@ -82,7 +82,6 @@
 		5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */; };
-		549C4FEE226DDDBB0001BCCD /* NoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C4FED226DDDBB0001BCCD /* NoteDelegate.swift */; };
 		549C4FF0226DDE390001BCCD /* NoteNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C4FEF226DDE390001BCCD /* NoteNotifications.swift */; };
 		54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */; };
 		54A356C721D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */; };
@@ -220,7 +219,6 @@
 		5498CAE6204EAF63004C774A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5498CAE8204EAF63004C774A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5498CAFD204EB3AD004C774A /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
-		549C4FED226DDDBB0001BCCD /* NoteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDelegate.swift; sourceTree = "<group>"; };
 		549C4FEF226DDE390001BCCD /* NoteNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNotifications.swift; sourceTree = "<group>"; };
 		54A356C421D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
 		54A356C621D924A70022C2EC /* TextEditionStringContainer+MapFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextEditionStringContainer+MapFunctions.swift"; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 				54863845225141A800DFE739 /* SQL */,
 				548638442251419100DFE739 /* DataTypes */,
 				549C4FEF226DDE390001BCCD /* NoteNotifications.swift */,
-				549C4FED226DDDBB0001BCCD /* NoteDelegate.swift */,
 				5469819C226B48A200B27F38 /* NSSecureCodingHelper.swift */,
 				542AD355227E08DD000E2E8C /* NoteExporter.swift */,
 			);
@@ -943,7 +940,6 @@
 				54C5394B22808D6100397906 /* NotesPreferencesViewController.swift in Sources */,
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
 				54CD208C20B73ABF0008B69D /* AnnotationItem.swift in Sources */,
-				549C4FEE226DDDBB0001BCCD /* NoteDelegate.swift in Sources */,
 				544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
 				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
