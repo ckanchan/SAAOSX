@@ -40,6 +40,7 @@ extension CloudKitNotes {
                 completionHandler?(.success(record))
             }
         }
+        CKContainer.default().privateCloudDatabase.add(modifyOperation)
     }
     
     func saveNote(_ note: Note, completionHandler: CKCompletionHandler = nil) {
@@ -99,6 +100,7 @@ extension CloudKitNotes {
                 completionHandler?(.success(record))
             }
         }
+        CKContainer.default().privateCloudDatabase.add(saveOperation)
     }
     
     func deleteRecord(withID id: CKRecord.ID) {

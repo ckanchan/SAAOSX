@@ -49,9 +49,15 @@ final class NoteSQLDatabase {
         updateCloudKitMetadata(tableRow: tableRow, record: record)
     }
     
-    func updateCloudKitMetadata(forIndexedTag tag: Tag, record: CKRecord) {
-        let tableRow = Schema.tagsTable.filter(Schema.tag == tag)
-        updateCloudKitMetadata(tableRow: tableRow, record: record)
+    func updateCloudKitMetadata(forIndexedTag tag: Tag?, record: CKRecord) {
+        if let tag = tag {
+            let tableRow = Schema.tagsTable.filter(Schema.tag == tag)
+            updateCloudKitMetadata(tableRow: tableRow, record: record)
+        } else {
+            let id = record.recordID.securelyEncoded()
+            let tableRow = Schema.tagsTable.filter(Schema.ckRecordID == id)
+            updateCloudKitMetadata(tableRow: tableRow, record: record)
+        }
     }
     
     /// Initiates a delete operation that began locally, then propagates the changes to CloudKit
@@ -82,8 +88,8 @@ final class NoteSQLDatabase {
             try deleteNote(withRecordID: recordID)
         case .Annotation:
             try deleteAnnotation(withRecordID: recordID)
-        default:
-            return
+        case .Tag:
+            try deleteIndexedTag(withRecordID: recordID)
         }
     }
     

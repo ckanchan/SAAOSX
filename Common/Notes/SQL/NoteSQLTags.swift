@@ -158,17 +158,22 @@ extension NoteSQLDatabase {
     
     func updateIndexedTags(_ tags: [Tag: Set<NodeReference>], updateCloudKit: Bool = true) {
         for (tag, index) in tags {
-            let query = Schema.tagsTable.filter(Schema.tag == tag)
-            do {
-                _ = try db.run(query.update(
-                    Schema.nodeReferences <- index.map{String($0)}.joined(separator: ",")
-                ))
-            } catch {
-                os_log("Unable to update indexed tag %s, error %s",
-                       log: Log.NoteSQLite,
-                       type: .error,
-                       tag,
-                       error.localizedDescription)
+            if index.isEmpty {
+                deleteIndexedTag(tag)
+                return
+            } else {                
+                let query = Schema.tagsTable.filter(Schema.tag == tag)
+                do {
+                    _ = try db.run(query.update(
+                        Schema.nodeReferences <- index.map{String($0)}.joined(separator: ",")
+                    ))
+                } catch {
+                    os_log("Unable to update indexed tag %s, error %s",
+                           log: Log.NoteSQLite,
+                           type: .error,
+                           tag,
+                           error.localizedDescription)
+                }
             }
         }
         
@@ -199,20 +204,16 @@ extension NoteSQLDatabase {
                 cloudKitDB?.modifyRecords(records){ [unowned self] result in
                     switch result {
                     case .success(let record):
-                        
-                        guard let tag = record["tag"] as? Tag else {
-                            os_log("Received an erroneous updated tag record, record ID %{public}",
-                                   log: Log.CloudKit,
-                                   type: .error,
-                                   String(describing: record.recordID))
-                            return
+                        if let tag = record["tag"] as? Tag {
+                            self.updateCloudKitMetadata(forIndexedTag: tag, record: record)
+                        } else {
+                            self.updateCloudKitMetadata(forIndexedTag: nil, record: record)
                         }
                         
-                        self.updateCloudKitMetadata(forIndexedTag: tag, record: record)
-                        os_log("Synced updated tag %s with CloudKit",
+                        os_log("Synced updated tag with CloudKit",
                                log: Log.CloudKit,
-                               type: .info,
-                               tag)
+                               type: .info)
+                        
                     case .failure(let error):
                         os_log("Error updating tag to CloudKit: %{public}s",
                                log: Log.CloudKit,
@@ -266,6 +267,16 @@ extension NoteSQLDatabase {
         }
         
         updateCloudKitMetadata(forIndexedTag: tag, record: record)
+    }
+    
+    func deleteIndexedTag(withRecordID recordID: CKRecord.ID) throws {
+        let recordData = recordID.securelyEncoded()
+        let query = Schema.tagsTable.filter(Schema.ckRecordID == recordData)
+        
+        try db.run(query.delete())
+        
+        NotificationCenter.default.post(Notification.tagsDidChange)
+        
     }
 }
 

@@ -283,7 +283,7 @@ extension NoteSQLDatabase {
     }
 
     
-    /// Method called when CloudKit notifies an annotation has been changed. Checks whether the annotation exists in the local store: if it does, update the annotation, otherwise create a new annotation, without propagating the changes back to CloudKit (which would create an infinite loop\0
+    /// Method called when CloudKit notifies an annotation has been changed. Checks whether the annotation exists in the local store: if it does, update the annotation, otherwise create a new annotation, without propagating the changes back to CloudKit (which would create an infinite loop)
     ///
     /// - Parameter record: new CloudKit annotation
     func processCloudKitAnnotation(from record: CKRecord) {
