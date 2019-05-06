@@ -9,8 +9,9 @@
 import Foundation
 import SQLite
 import CDKSwiftOracc
+import os
 
-class SQLiteCatalogue: CatalogueProvider {
+final class SQLiteCatalogue: CatalogueProvider {
     let source: CatalogueSource = .sqlite
 
     let textid = Expression<String>("textid")
@@ -118,18 +119,16 @@ class SQLiteCatalogue: CatalogueProvider {
     }
 
     func getEntryFor(id cdliID: TextID) -> OraccCatalogEntry? {
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits).filter(textid == cdliID.description)
+        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY, credits).filter(textid == cdliID.description)
 
-        guard let r = try? db.pluck(query) else {return nil}
-        guard let row = r else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
         return rowToEntry(row)
     }
 
     func getTextStrings(_ textId: TextID) -> TextEditionStringContainer? {
         let query = textTable.select(textStrings).filter(textid == textId.description)
 
-        guard let encodedStringRow = try? db.pluck(query) else {return nil}
-        guard let row = encodedStringRow else {return nil}
+        guard let row = try? db.pluck(query) else {return nil} 
         let encodedString = row[textStrings]
 
         let decoder = NSKeyedUnarchiver(forReadingWith: encodedString)
@@ -144,7 +143,7 @@ class SQLiteCatalogue: CatalogueProvider {
             let connection = try Connection(url, readonly: true)
             self.db = connection
         } catch {
-            print(error.localizedDescription)
+            os_log("Fatal error initialising catalogue: %s", log: Log.CatalogueSQLite, type: .error, error.localizedDescription)
             return nil
         }
     }

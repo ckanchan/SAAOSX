@@ -9,16 +9,16 @@
 import Cocoa
 import CDKSwiftOracc
 
-class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplaying {
+class TextViewController: NSViewController, NSTextViewDelegate {
 
     public enum Navigate {
         case left, right
     }
 
     @IBOutlet weak var textSelected: NSSegmentedControl!
-    @IBOutlet var textView: NSTextView!
+    @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var definitionView: NSTextField!
-    @IBOutlet var textMenu: NSMenu!
+    @IBOutlet weak var textMenu: NSMenu!
 
     var searchTerm: String?
     var catalogue: CatalogueProvider?
@@ -34,7 +34,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             windowController?.catalogueSearch.stringValue = catalogueEntry.title
         }
     }
-
     var saved: Bool? = false {
         didSet {
             guard self.windowController != nil else {return}
@@ -45,72 +44,57 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             }
         }
     }
-
+    
     lazy var currentIdx: Int? = {
-        return catalogue?.texts.index(where: {$0.id == self.catalogueEntry.id})
+        return catalogue?.texts.firstIndex(where: {$0.id == self.catalogueEntry.id})
         }()
 
-    var windowController: TextWindowController? {
-        return self.view.window?.windowController as? TextWindowController
-    }
-
-    lazy var fontManager = {return NSFontManager.shared}()
+    var windowController: TextWindowController?
     
-    lazy var notesManager: FirebaseTextNoteManager? = {
-        return getNotesManager()
-        }()
-    
-    func getNotesManager() -> FirebaseTextNoteManager? {
-        guard let user = self.user.user else {return nil}
-        return FirebaseTextNoteManager(for: user, textID: catalogueEntry.id, delegate: self)
-    }
-    
-    var note: Note? {
-        didSet {
-            if note != nil {
-                highlightAnnotations(in: self.textView)
-            }
-        }
-    }
-    
-    func noteDidChange(_ note: Note) {
-        self.note = note
-    }
 
     override func viewWillAppear() {
         super.viewWillAppear()
         self.title = catalogueEntry?.title ?? "Text Edition"
         setText(self)
         textView.delegate = self
-
-        self.textView.usesFontPanel = true
-        if let listener = self.notesManager?.listener {
-            print("Initialised listener, handle \(listener)")
-        } else {
-            print("Some listener error occured")
-        }
+        annotationsWereUpdated()
     }
     
-    override func viewWillDisappear() {
-        self.notesManager = nil
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        guard let windowController = self.windowController else {return}
+        windowController.textViewController.removeAll()
+        self.windowController = nil
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(annotationsDidChange),
+                                               name: .annotationsChangedForText,
+                                               object: nil)
+    }
     
-    func highlightAnnotations(in textView: NSTextView) {
-        guard let note = self.note else {return}
-        let annotations = note.annotations.keys.description
+    @objc func annotationsDidChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: TextID],
+            catalogueEntry.id == userInfo["textID"] else {return}
+        
+        annotationsWereUpdated()
+    }
+    
+    func highlightAnnotations(in textView: NSTextView, annotations: [String: Annotation]) {
         textView.textStorage?.enumerateAttribute(.reference, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
             value, range, _ in
             guard let stringVal = value as? String else {return}
-            if annotations.contains(stringVal) {
+            let fullPath = String(catalogueEntry.id) + "." + stringVal
+            if let annotation = annotations[fullPath] {
                 guard range.length > 2 else {return}
                 let newRange = NSRange(location: range.location, length: range.length - 1)
                 textView.textStorage?.addAttributes(
                     [NSAttributedString.Key.backgroundColor: NSColor.systemPink,
-                     NSAttributedString.Key.toolTip: note.annotations[NodeReference(stringLiteral: stringVal)]?.annotation ?? ""
-                     ],
+                     NSAttributedString.Key.toolTip: annotation.annotation
+                    ],
                     range: newRange)
-                
             }
         })
     }
@@ -134,12 +118,11 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             let cuneiformNA = NSFont(name: "CuneiformNAOutline-Medium", size: NSFont.systemFontSize) ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
             textView.string = stringContainer.cuneiform
             textView.font = cuneiformNA
-            fontManager.setSelectedFont(cuneiformNA, isMultiple: false)
         case 1:
             textView.textStorage?.setAttributedString(stringContainer.transliteration)
         case 2:
             textView.textStorage?.setAttributedString(stringContainer.normalisation)
-            highlightAnnotations(in: textView)
+            annotationsWereUpdated()
             if let searchTerm = searchTerm {
                 highlightSearchTerm(searchTerm, in: textView)
             }
@@ -152,18 +135,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         }
     }
 
-    @IBAction func changeFont(_ sender: Any?) {
-        guard let sender = sender as? NSFontManager else {return}
-        let newFont: NSFont
-        if let oldFont = self.textView.font {
-            newFont = sender.convert(oldFont)
-        } else {
-            newFont = sender.selectedFont ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
-        }
-
-        //self.stringContainer?.render(withPreferences: newFont.makeDefaultPreferences())
-        self.textView.setFont(newFont, range: NSRange(location: 0, length: self.textView.string.utf16.count))
-    }
 
     // MARK :- Toolbar Control Methods
     @IBAction func newTextWindow(_ sender: Any) {
@@ -174,8 +145,9 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         guard let infoWindow = storyboard?.instantiateController(withIdentifier: "infoWindow") as? NSWindowController else {return}
         guard let infoView = infoWindow.contentViewController as? InfoViewController else {return}
 
-        infoView.textId = self.catalogueEntry.id
+        infoView.textID = self.catalogueEntry.id
         infoView.infoLabel.stringValue = self.catalogueEntry.description
+        infoView.annotations = notesDB.retrieveAnnotations(forID: self.catalogueEntry.id)
         
         infoWindow.showWindow(nil)
     }
@@ -187,7 +159,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     func loadText(entry: OraccCatalogEntry) -> Bool {
         if let text = sqlite?.getTextStrings(entry.id) {
             catalogueEntry = entry
-            notesManager = getNotesManager()
             text.render(withPreferences: TextWindowController.defaultformattingPreferences)
             stringContainer = text
             
@@ -232,10 +203,17 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
                                                              .reference: reference,
                                                              .referenceContext: contextStr]
         
+        let annotationLabel: String
         
-        let annotationItem = NSMenuItem(title: "Add annotation", action: #selector(newAnnotationWindow), keyEquivalent: "")
+        if let highlight = metadata[.backgroundColor] as? NSColor,
+            highlight == .systemPink {
+            annotationLabel = "Edit annotation"
+        } else {
+            annotationLabel = "Add annotation"
+        }
         
-        let annotatedTitle = NSAttributedString(string: "Add annotation",
+        let annotationItem = NSMenuItem(title: annotationLabel, action: #selector(newAnnotationWindow), keyEquivalent: "")
+        let annotatedTitle = NSAttributedString(string: annotationLabel,
                                                         attributes: menuMetadata)
         
         annotationItem.attributedTitle = annotatedTitle
@@ -250,24 +228,39 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
     }
     
     @objc func newAnnotationWindow(_ sender: NSMenuItem) {
+        let window: NSWindowController?
         guard let metadata = sender.attributedTitle?.attributes(at: 0, effectiveRange: nil) else {return}
+        guard let reference = metadata[.reference] as? String else {return}
+        let userTags = notesDB.tagSet ?? UserTags([])
         
-        guard let citationForm = metadata[.oraccCitationForm] as? String,
-            let transliteration = metadata[.writtenForm] as? String,
-            let translation = metadata[.instanceTranslation] as? String,
-            let context = metadata[.referenceContext] as? String,
-            let reference = metadata[.reference] as? String else {return}
+        #warning("this code needs  to differentiate between short and long nodereferences encoded in the nsattrubutedstring")
+        let nodeReference = NodeReference(base: catalogueEntry.id,
+                                          path: reference.split(separator: ".").map({String($0)}))
         
-        let nodeReference = NodeReference.init(stringLiteral: reference)
-        guard let window = AnnotationPopupController.new(textID: catalogueEntry.id, node: nodeReference, user: user, transliteration: transliteration, normalisation: citationForm, translation: translation, context: context) else {return}
-        
-        window.showWindow(self)
-        guard let annotationVc = window.contentViewController as? AnnotationPopupController else {return}
+        if let annotation = notesDB.retrieveSingleAnnotation(nodeReference) {
+            window = AnnotationPopupController.new(withAnnotation: annotation, userTags: userTags)
+        } else {
+            guard let citationForm = metadata[.oraccCitationForm] as? String,
+                let transliteration = metadata[.writtenForm] as? String,
+                let translation = metadata[.instanceTranslation] as? String,
+                let context = metadata[.referenceContext] as? String,
+                let reference = metadata[.reference] as? String else {return}
+            
+            let nodeReference = NodeReference(base: catalogueEntry.id, path: reference.split(separator: ".").map { String($0)})
+            window = AnnotationPopupController.new(textID: catalogueEntry.id,
+                                                   node: nodeReference,
+                                                   transliteration: transliteration,
+                                                   normalisation: citationForm,
+                                                   translation: translation,
+                                                   context: context,
+                                                   userTags: userTags)
+        }
+        window?.showWindow(self)
+        guard let annotationVc = window?.contentViewController as? AnnotationPopupController else {return}
         annotationVc.textField.becomeFirstResponder()
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
-        fontManager.target = self
         switch self.textSelected.selectedSegment {
         case 2:
             //transliteration
@@ -285,14 +278,6 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
         default:
             return
         }
-    }
-
-    @IBAction func viewOnline(_ sender: Any) {
-        var baseURL = URL(string: "http://oracc.org")!
-        baseURL.appendPathComponent(catalogueEntry.project)
-        baseURL.appendPathComponent(catalogueEntry.id.description)
-        baseURL.appendPathComponent("html")
-        NSWorkspace.shared.open(baseURL)
     }
 
     @IBAction func navigate(_ sender: NSSegmentedControl) {
@@ -328,14 +313,25 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             }
         }
     }
+}
 
+// Toolbar control methods live here
+extension TextViewController {
+    
+    @IBAction func viewOnline(_ sender: Any) {
+        var baseURL = URL(string: "http://oracc.org")!
+        baseURL.appendPathComponent(catalogueEntry.project)
+        baseURL.appendPathComponent(catalogueEntry.id.description)
+        baseURL.appendPathComponent("html")
+        NSWorkspace.shared.open(baseURL)
+    }
     @IBAction func glossary(_ sender: Any) {
         GlossaryWindowController.new(self)
     }
-
+    
     @IBAction func bookmark(_ sender: NSButton) {
         guard let str = self.stringContainer else {return}
-
+        
         if let alreadySaved = self.bookmarks.contains(textID: self.catalogueEntry.id.description) {
             if alreadySaved {
                 self.bookmarks.remove(entry: self.catalogueEntry)
@@ -350,7 +346,7 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
             }
         }
     }
-
+    
     @IBAction func showMapView(_ sender: NSButton) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let placeNames = self?.stringContainer?.getLocationNamesInText() else {return}
@@ -375,12 +371,74 @@ class TextViewController: NSViewController, NSTextViewDelegate, TextNoteDisplayi
                 placesDictionary["excavationSite"] = letterExcavationSite
                 
             }
-                
+            
             let ancientMap = AncientMap(locationDictionary: placesDictionary)
             DispatchQueue.main.async {
                 MapViewController.new(forMap: ancientMap)
             }
         }
     }
+    
+    @IBAction func exportNotes(_ sender: NSButton) {
+        guard let catalogueEntry = self.catalogueEntry else {return}
+        let note = notesDB.retrieveNote(forID: catalogueEntry.id)
+        let annotations = notesDB.retrieveAnnotations(forID: catalogueEntry.id)
+        
+        let exportString = NSMutableAttributedString()
+        
+        switch (note, annotations.isEmpty) {
+            // Notes and annotations are available
+        case (.some(let note), false):
+            exportString.append(note.formatted(withMetadata: catalogueEntry))
+            exportString.append(.singleLineBreak)
+            exportString.append(annotations.formatted(withMetadata: catalogueEntry)!)
+            
+            // Annotations, no note
+        case (.none, false):
+            exportString.append(annotations.formatted(withMetadata: catalogueEntry)!)
+            
+            // Note, no annotations
+        case (.some(let note), true):
+            exportString.append(note.formatted(withMetadata: catalogueEntry))
+            
+            // Nothing
+        case (.none, true):
+            return
+        }
+        
+        let documentAttributes: [NSAttributedString.DocumentAttributeKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.officeOpenXML,
+            .title: catalogueEntry.title
+        ]
+        
+        #warning("Return an error here")
+        guard let data = try? exportString.data(from: NSMakeRange(0, exportString.length), documentAttributes: documentAttributes) else {return}
+        
+        let panel = NSSavePanel()
+        panel.allowedFileTypes = ["docx"]
+        panel.nameFieldStringValue = "exported_notes_\(catalogueEntry.id)"
+        panel.message = "Choose a location to save your exported notes and annotations for \(catalogueEntry.displayName)"
+        
+        guard let window = view.window else {return}
+        panel.beginSheetModal(for: window) { response in
+            guard response == .OK,
+                let url = panel.url else {return}
+            
+            try? data.write(to: url)
+        }
+    }
 }
-
+extension TextViewController {
+    func annotationsWereUpdated() {
+        let annotations = notesDB.retrieveAnnotations(forID: catalogueEntry.id)
+        var strAnnotations = [String: Annotation]()
+        annotations.forEach{
+            strAnnotations[String($0.nodeReference)] = $0
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let vc = self else {return}
+            vc.highlightAnnotations(in: vc.textView, annotations: strAnnotations)
+        }
+    }
+}

@@ -8,6 +8,7 @@
 import Foundation
 import CDKSwiftOracc
 import SQLite
+import os
 
 /// Conform to this protocol to allow BookmarkedTextController to refresh the table view when entries are added or removed from the database.
 @objc public protocol BookmarkDisplaying: AnyObject {
@@ -15,14 +16,14 @@ import SQLite
 }
 
 /// Responsible for saving and loading bookmarked texts to the SQLite store.
-public class Bookmarks: CatalogueProvider {
-    public var source: CatalogueSource = .bookmarks
+final public class Bookmarks: CatalogueProvider {
+    public let source: CatalogueSource = .bookmarks
 
     public lazy var texts: [OraccCatalogEntry] = {
         return self.getCatalogueEntries() ?? []
     }()
 
-    static let Update = Notification.Name.init("BookmarksUpdated")
+    static let Update = Notification.Name("BookmarksUpdated")
 
     public func search(_ string: String) -> [OraccCatalogEntry] {
         let searchString = "%\(string)%"
@@ -38,8 +39,13 @@ public class Bookmarks: CatalogueProvider {
         )
 
         if let results = try? db.prepare(query) {
-            let x = results.map({row in
-                return OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
+            let x = results.map({(row: Row) -> OraccCatalogEntry in
+                let textID = TextID.init(stringLiteral: row[Bookmarks.id])
+                return OraccCatalogEntry(id: textID,
+                                  displayName: row[Bookmarks.displayName],
+                                  ancientAuthor: row[Bookmarks.ancientAuthor],
+                                  title: row[Bookmarks.title],
+                                  project: row[Bookmarks.project])
             })
             return x
         } else {
@@ -104,8 +110,13 @@ public class Bookmarks: CatalogueProvider {
         )
 
         guard let rows = try? db.prepare(query) else { return nil }
-        let entries = rows.map { row in return OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
-        }
+        let entries = rows.map { (row: Row) -> OraccCatalogEntry in
+            let textID = TextID.init(stringLiteral: row[Bookmarks.id])
+            return OraccCatalogEntry(id: textID,
+                                     displayName: row[Bookmarks.displayName],
+                                     ancientAuthor: row[Bookmarks.ancientAuthor],
+                                     title: row[Bookmarks.title],
+                                     project: row[Bookmarks.project])}
 
         return entries
     }
@@ -125,17 +136,12 @@ public class Bookmarks: CatalogueProvider {
                 Bookmarks.project <- entry.project
             ))
         } catch let Result.error(message: message, code: code, statement: statement) where code == SQLITE_CONSTRAINT {
-            print("Item already exists in database: \(message), \(String(describing: statement)), \(entry.id)")
+            os_log("Item with ID %s already exists in database, message: %s, SQL: %s", log: Log.BookmarksSQLite, type: .error, String(entry.id), message, String(describing: statement))
         }
 
         entry.indexItem()
         postNotification()
 
-//        if tableViews.count != 0 {
-//            tableViews.allObjects.forEach {
-//                $0.refreshTableView()
-//            }
-//        }
 
     }
 
@@ -144,10 +150,10 @@ public class Bookmarks: CatalogueProvider {
         let query = Bookmarks.bookmarks.select(rowid == row)
         do {
             let result = try db.run(query.delete())
-            print("Deleted", result)
+            os_log("Deleted bookmark at row %d", log: Log.BookmarksSQLite, type: .info, result)
             postNotification()
         } catch {
-            print(error)
+            os_log("Could not delete bookmark at row %d", log: Log.BookmarksSQLite, type: .error, row)
         }
 
     }
@@ -161,8 +167,7 @@ public class Bookmarks: CatalogueProvider {
         let rowID = Int64(rowID)
         let query = Bookmarks.bookmarks.select(Bookmarks.id, Bookmarks.displayName, Bookmarks.displayName, Bookmarks.title).filter(rowid == rowID)
 
-        guard let r = try? db.pluck(query) else { return nil }
-        guard let row = r else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
 
         return (row[Bookmarks.displayName], row[Bookmarks.title], row[Bookmarks.id])
 
@@ -177,11 +182,16 @@ public class Bookmarks: CatalogueProvider {
             Bookmarks.project
             ).filter(rowid == Int64(rowID))
 
-        guard let r = try? db.pluck(query) else { return nil }
+        guard let r = ((try? db.pluck(query)) as Row??) else { return nil }
 
         guard let row = r else { return nil}
-
-        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
+        let textID = TextID.init(stringLiteral: row[Bookmarks.id])
+        
+        let catalogueEntry = OraccCatalogEntry(id: textID,
+                                               displayName: row[Bookmarks.displayName],
+                                               ancientAuthor: row[Bookmarks.ancientAuthor],
+                                               title: row[Bookmarks.title],
+                                               project: row[Bookmarks.project])
 
         return catalogueEntry
     }
@@ -195,11 +205,14 @@ public class Bookmarks: CatalogueProvider {
             Bookmarks.project
             ).filter(Bookmarks.id == id)
 
-        guard let r = try? db.pluck(query) else { return nil }
+        guard let row = try? db.pluck(query) else {return nil}
+        let textID = TextID.init(stringLiteral: row[Bookmarks.id])
 
-        guard let row = r else { return nil}
-
-        let catalogueEntry = OraccCatalogEntry.initFromSaved(id: row[Bookmarks.id], displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
+        let catalogueEntry = OraccCatalogEntry(id: textID,
+                                               displayName: row[Bookmarks.displayName],
+                                               ancientAuthor: row[Bookmarks.ancientAuthor],
+                                               title: row[Bookmarks.title],
+                                               project: row[Bookmarks.project])
 
         return catalogueEntry
     }
@@ -207,8 +220,7 @@ public class Bookmarks: CatalogueProvider {
     public func getTextStrings(_ id: String) -> TextEditionStringContainer? {
         let query = Bookmarks.bookmarks.select(Bookmarks.textStrings).filter(Bookmarks.id == id)
 
-        guard let encodedStringRow = try? db.pluck(query) else {return nil}
-        guard let row = encodedStringRow else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
         let encodedString = row[Bookmarks.textStrings]
 
         let decoder = NSKeyedUnarchiver(forReadingWith: encodedString)
@@ -221,8 +233,7 @@ public class Bookmarks: CatalogueProvider {
     public func remove(entry: OraccCatalogEntry) {
         let query = Bookmarks.bookmarks.select(rowid).filter(Bookmarks.id == entry.id.description)
 
-        guard let r = try? db.pluck(query) else {return}
-        guard let row = r else {return}
+        guard let row = try? db.pluck(query) else {return} 
         let rowID = row[rowid]
         remove(at: Int(rowID))
         entry.deindexItem()
@@ -230,14 +241,13 @@ public class Bookmarks: CatalogueProvider {
 
     public init() throws {
         let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let appSupportPath = paths[0].appendingPathComponent("SAAOSX", isDirectory: true)
+        let appSupportPath = paths[0].appendingPathComponent(Bundle.main.bundleIdentifier!, isDirectory: true)
         if !FileManager.default.fileExists(atPath: appSupportPath.path) {
             try FileManager.default.createDirectory(at: appSupportPath, withIntermediateDirectories: true, attributes: nil)
         }
 
-        let path = paths[0].appendingPathComponent("SAAOSX").appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
+        let path = appSupportPath.appendingPathComponent("bookmarks").appendingPathExtension("sqlite3")
         self.db = try Connection(path.path)
         try Bookmarks.initialiseTable(on: self.db)
     }
-
 }

@@ -10,40 +10,70 @@ import Cocoa
 import CDKSwiftOracc
 import CoreSpotlight
 import CDKOraccInterface
-import FirebaseCore
-import FirebaseDatabase
+import CloudKit
+import os
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    lazy var oraccInterface: OraccInterface = {
-        if UserDefaults.standard.bool(forKey: PreferenceKey.useGithub.rawValue) {
-            return try! OraccGithubToSwiftInterface()
-        } else {
-            return OraccToSwiftInterface()
-        }
-    }()
+    lazy var oraccInterface: OraccInterface = {return try! OraccGithubToSwiftInterface()}()
 
-    lazy var glossary: Glossary = {
-        return Glossary()
-    }()
-
-    lazy var bookmarks: Bookmarks = {
-        return try! Bookmarks()
-    }()
-
+    lazy var glossary: Glossary = { return Glossary() }()
+    lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
-    lazy var userManager: UserManager = {
-        return UserManager()
-    }()
+    lazy var noteSQL: NoteSQLDatabase = {
 
+        let applicationSupport = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let supportDirectory = applicationSupport.appendingPathComponent(Bundle.main.bundleIdentifier!, isDirectory: true)
+        if !FileManager.default.fileExists(atPath: supportDirectory.path) {
+            try! FileManager.default.createDirectory(at: supportDirectory, withIntermediateDirectories: true, attributes: nil)
+        }
+        
+        #if DEBUG
+        let url = supportDirectory.appendingPathComponent("debugNotes", isDirectory: false).appendingPathExtension("sqlite3")
+        
+        #else
+        let url = supportDirectory.appendingPathComponent("notes", isDirectory: false).appendingPathExtension("sqlite3")
+        
+        #endif
+        
+        return NoteSQLDatabase(url: url, cloudKitDB: nil)!}()
+
+    var cloudKitDB: CloudKitNotes!
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
-        FirebaseApp.configure()
-
+        
+        #if DEBUG
+        let debugDefaults = UserDefaults(suiteName: "me.chaidk.debug.SAAo-SX")!
+        self.cloudKitDB = CloudKitNotes(withDefaults: debugDefaults,
+                                        sqlDB: noteSQL)
+        
+        #else
+        self.cloudKitDB = CloudKitNotes(sqlDB: self.noteSQL)
+        
+        #endif
+        
+        cloudKitDB.userStatusDidChange()
+        noteSQL.cloudKitDB = self.cloudKitDB
+        
+        if #available(OSX 10.14, *) {
+            NSApp.registerForRemoteNotifications()
+        } else {
+            // Fallback on earlier versions
+            NSApp.registerForRemoteNotifications(matching: .init(rawValue: 0))
+        }
     }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+    
+    func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
+        if let databaseNotification = CKNotification(fromRemoteNotificationDictionary: userInfo),
+            databaseNotification.notificationType == .database,
+            cloudKitDB != nil {
+            os_log("Received database change notification",
+                   log: Log.CloudKit,
+                   type: .info)
+            
+            cloudKitDB.processDatabaseChanges()
+        }
     }
 
     func setOraccInterface(to interface: InterfaceType) {
@@ -68,8 +98,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func newNotesWindow(_ sender: Any){
-        guard let user = userManager.user else {return}
-        guard let notesViewController = NotesTabViewController.new(for: user) else {return}
+        //TODO :- Check User is signed in?
+        guard cloudKitDB.userIsLoggedIn,
+            let notesViewController = NotesTabViewController.new() else {return}
         notesViewController.view.window?.makeKeyAndOrderFront(self)
         
     }
@@ -93,31 +124,50 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.allowsMultipleSelection = false
         panel.begin { _ in
 
-            guard let url = panel.urls.first else {return}
+            guard let url = panel.urls.first,
+                let data = try? Data(contentsOf: url) else {return}
 
             switch url.pathExtension {
-
             case "json":
-                if let data = try? Data(contentsOf: url) {
-                    let decoder = JSONDecoder()
-                    if let textEdition = try? decoder.decode(OraccTextEdition.self, from: data) {
-                        let stringContainer = TextEditionStringContainer(textEdition)
-                        let dummyData = OraccCatalogEntry.initFromSaved(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
-
-                        TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
-
-                    } else if let catalogue = try? decoder.decode(OraccCatalog.self, from: data) {
-                        var texts = Array(catalogue.members.values)
-                        texts.sort {$0.displayName < $1.displayName}
-                        let catalogueProvider = Catalogue(catalogue: catalogue, sorted: texts, source: .local)
-
-                        let newWindow = ProjectListWindowController.new(catalogue: catalogueProvider)
-
-                        newWindow.setConnectionStatus(to: "local")
-
-                    } else {self.openError(fileAt: url)}
+                let decoder = JSONDecoder()
+                if let textEdition = try? decoder.decode(OraccTextEdition.self, from: data) {
+                    let stringContainer = TextEditionStringContainer(textEdition)
+                    let dummyData = OraccCatalogEntry(id: "nil",
+                                                      displayName: "nil",
+                                                      ancientAuthor: nil,
+                                                      title: url.lastPathComponent,
+                                                      project: "file")
+                    
+                    TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
+                    
+                } else if let catalogue = try? decoder.decode(OraccCatalog.self, from: data) {
+                    var texts = Array(catalogue.members.values)
+                    texts.sort {$0.displayName < $1.displayName}
+                    let catalogueProvider = Catalogue(catalogue: catalogue, sorted: texts, source: .local)
+                    
+                    let newWindow = ProjectListWindowController.new(catalogue: catalogueProvider)
+                    
+                    newWindow.setConnectionStatus(to: "local")
+                    
                 } else {self.openError(fileAt: url)}
 
+
+            case "ocdl": // this is a Tupshar file
+                struct TupsharDocument: Decodable {
+                    let text: OraccTextEdition
+                    let translation: String
+                }
+                
+                guard let tupsharDocument = try? JSONDecoder().decode(TupsharDocument.self, from: data) else {return}
+                let stringContainer = TextEditionStringContainer(tupsharDocument.text)
+                stringContainer.translation = tupsharDocument.translation
+                let dummyData = OraccCatalogEntry(id: "nil",
+                                                  displayName: "nil",
+                                                  ancientAuthor: nil,
+                                                  title: url.lastPathComponent,
+                                                  project: "file")
+                TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
+                
             default:
                 self.openError(fileAt: url)
             }

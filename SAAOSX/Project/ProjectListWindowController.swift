@@ -8,39 +8,68 @@
 
 import Cocoa
 
-class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
+class ProjectListWindowController: NSWindowController {
     @IBOutlet weak var volumesBox: NSComboBox!
     @IBOutlet weak var loadingIndicator: NSProgressIndicator!
     @IBOutlet weak var searchField: NSSearchField!
     @IBOutlet weak var pinnedToggle: NSButton!
     @IBOutlet weak var connectionStatus: NSTextField!
-
-    @discardableResult static func new(catalogue: CatalogueProvider?) -> ProjectListWindowController {
-        let storyboard = NSStoryboard(name: "Main", bundle: Bundle.main)
-        let sceneIdentifier = "ProjectListWindow"
-        let newWindow = storyboard.instantiateController(withIdentifier: sceneIdentifier) as! ProjectListWindowController
-        newWindow.projectViewController.catalogueProvider = catalogue
-        newWindow.showWindow(nil)
-        return newWindow
-    }
     
-
-    lazy var projectViewController: ProjectListViewController = {
-        let splitView = self.contentViewController as! NSSplitViewController
-        return splitView.children.first! as! ProjectListViewController
-    }()
-
     var previousCatalogue: CatalogueProvider?
     var previousConnection: String?
-
-    override func windowDidLoad() {
-        super.windowDidLoad()
+    
+    unowned var splitViewController: NSSplitViewController {
+        return self.contentViewController as! NSSplitViewController
     }
-
+    
+    unowned var projectViewController: ProjectListViewController {
+        return splitViewController.children.first! as! ProjectListViewController
+    }
+    
     func setTitle(_ title: String) {
         self.window?.title = title
     }
 
+    @IBAction func performFindPanelAction(_ sender: Any) {
+        searchField.selectText(nil)
+    }
+
+    @IBAction func search(_ sender: NSSearchFieldCell) {
+        projectViewController.search(sender)
+    }
+
+    @IBAction func togglePinned(_ sender: NSButton) {
+        if sender.state == .on {
+            sender.state = .on
+            previousCatalogue = projectViewController.catalogueProvider
+            previousConnection = connectionStatus.stringValue
+            projectViewController.loadCatalogue("pins")
+        } else {
+            sender.state = .off
+            if let catalogue = previousCatalogue {
+                projectViewController.setCatalogueProvider(catalogue)
+                setConnectionStatus(to: previousConnection ?? "")
+                previousCatalogue = nil
+                previousConnection = nil
+            } else {
+                projectViewController.loadCatalogue("saa01")
+            }
+        }
+    }
+
+    func setConnectionStatus(to state: String) {
+        connectionStatus.stringValue = state
+    }
+
+    override func close() {
+        super.close()
+        if let splitViewController = self.window?.contentViewController as? NSSplitViewController {
+            splitViewController.children.removeAll()
+        }
+    }
+}
+
+extension ProjectListWindowController: NSComboBoxDelegate {
     func comboBoxSelectionDidChange(_ notification: Notification) {
         let box = notification.object as! NSComboBox
         let item = box.objectValueOfSelectedItem as! NSString
@@ -89,36 +118,22 @@ class ProjectListWindowController: NSWindowController, NSComboBoxDelegate {
             return
         }
     }
+}
 
-    @IBAction func performFindPanelAction(_ sender: Any) {
-        searchField.selectText(nil)
+extension ProjectListWindowController: NSWindowDelegate {
+    func windowWillClose(_ notification: Notification) {
+        splitViewController.children.removeAll()
     }
+}
 
-    @IBAction func search(_ sender: NSSearchFieldCell) {
-        projectViewController.search(sender)
+extension ProjectListWindowController {
+    @discardableResult static func new(catalogue: CatalogueProvider?) -> ProjectListWindowController {
+        let storyboard = NSStoryboard(name: "Main", bundle: Bundle.main)
+        let sceneIdentifier = "ProjectListWindow"
+        let newWindow = storyboard.instantiateController(withIdentifier: sceneIdentifier) as! ProjectListWindowController
+        newWindow.projectViewController.catalogueProvider = catalogue
+        newWindow.showWindow(nil)
+        newWindow.window?.delegate = newWindow
+        return newWindow
     }
-
-    @IBAction func togglePinned(_ sender: NSButton) {
-        if sender.state == .on {
-            sender.state = .on
-            previousCatalogue = projectViewController.catalogueProvider
-            previousConnection = connectionStatus.stringValue
-            projectViewController.loadCatalogue("pins")
-        } else {
-            sender.state = .off
-            if let catalogue = previousCatalogue {
-                projectViewController.setCatalogueProvider(catalogue)
-                setConnectionStatus(to: previousConnection ?? "")
-                previousCatalogue = nil
-                previousConnection = nil
-            } else {
-                projectViewController.loadCatalogue("saa01")
-            }
-        }
-    }
-
-    func setConnectionStatus(to state: String) {
-        connectionStatus.stringValue = state
-    }
-
 }

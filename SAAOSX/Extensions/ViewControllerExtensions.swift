@@ -15,21 +15,10 @@ extension NSViewController {
         return NSApplication.shared.delegate! as! AppDelegate
     }
 
-    var oracc: OraccInterface {
-        return appDelegate.oraccInterface
-    }
-
-    var bookmarks: Bookmarks {
-        return appDelegate.bookmarks
-    }
-
-    var glossary: Glossary {
-        return appDelegate.glossary
-    }
-
+    var oracc: OraccInterface { return appDelegate.oraccInterface }
+    var bookmarks: Bookmarks { return appDelegate.bookmarks }
+    var glossary: Glossary { return appDelegate.glossary }
     var sqlite: SQLiteCatalogue? {return appDelegate.sqlite}
+    var notesDB: NoteSQLDatabase { return appDelegate.noteSQL }
     
-    var user: UserManager {
-        return appDelegate.userManager
-    }
 }

@@ -39,7 +39,15 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? AncientLocation else {return}
-        mapViewController?.setInfo(locationName: annotation.title ?? "", locationDescription: annotation.subtitle ?? "No description available")
+        let description: String
+        if let record = annotation.pleiadesRecord,
+            let siteDescription = annotation.subtitle {
+            description = siteDescription + "\n" + record.rights
+        } else {
+            description = annotation.subtitle ?? "No description available"
+        }
+        
+        mapViewController?.setInfo(locationName: annotation.title ?? "", locationDescription: description)
     }
     
     func selectAnnotation(qpnID: String) {
