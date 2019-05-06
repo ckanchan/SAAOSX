@@ -378,6 +378,55 @@ extension TextViewController {
             }
         }
     }
+    
+    @IBAction func exportNotes(_ sender: NSButton) {
+        guard let catalogueEntry = self.catalogueEntry else {return}
+        let note = notesDB.retrieveNote(forID: catalogueEntry.id)
+        let annotations = notesDB.retrieveAnnotations(forID: catalogueEntry.id)
+        
+        let exportString = NSMutableAttributedString()
+        
+        switch (note, annotations.isEmpty) {
+            // Notes and annotations are available
+        case (.some(let note), false):
+            exportString.append(note.formatted(withMetadata: catalogueEntry))
+            exportString.append(.singleLineBreak)
+            exportString.append(annotations.formatted(withMetadata: catalogueEntry)!)
+            
+            // Annotations, no note
+        case (.none, false):
+            exportString.append(annotations.formatted(withMetadata: catalogueEntry)!)
+            
+            // Note, no annotations
+        case (.some(let note), true):
+            exportString.append(note.formatted(withMetadata: catalogueEntry))
+            
+            // Nothing
+        case (.none, true):
+            return
+        }
+        
+        let documentAttributes: [NSAttributedString.DocumentAttributeKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.officeOpenXML,
+            .title: catalogueEntry.title
+        ]
+        
+        #warning("Return an error here")
+        guard let data = try? exportString.data(from: NSMakeRange(0, exportString.length), documentAttributes: documentAttributes) else {return}
+        
+        let panel = NSSavePanel()
+        panel.allowedFileTypes = ["docx"]
+        panel.nameFieldStringValue = "exported_notes_\(catalogueEntry.id)"
+        panel.message = "Choose a location to save your exported notes and annotations for \(catalogueEntry.displayName)"
+        
+        guard let window = view.window else {return}
+        panel.beginSheetModal(for: window) { response in
+            guard response == .OK,
+                let url = panel.url else {return}
+            
+            try? data.write(to: url)
+        }
+    }
 }
 extension TextViewController {
     func annotationsWereUpdated() {
