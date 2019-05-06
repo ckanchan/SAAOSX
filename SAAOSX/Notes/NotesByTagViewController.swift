@@ -10,7 +10,9 @@ import Cocoa
 
 class NotesByTagViewController: NSViewController, NoteDisplaying {
     func refreshTable() {
-        tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView?.reloadData()
+        }
     }
     
     @IBOutlet weak var tableView: NSTableView! {
@@ -22,7 +24,9 @@ class NotesByTagViewController: NSViewController, NoteDisplaying {
     
     var tags: [String] = [] {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView?.reloadData()
+            }
         }
     }
     

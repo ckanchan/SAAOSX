@@ -37,7 +37,7 @@ class NotesTabViewController: NSTabViewController, NoteStore {
     
     var notes: [Note] = [] {
         didSet {
-            children[0].children
+            children
                 .compactMap{$0 as? NoteDisplaying}
                 .forEach{$0.refreshTable()}
         }

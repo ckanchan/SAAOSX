@@ -20,7 +20,9 @@ class AnnotationsViewController: NSViewController {
     var annotations: [Annotation]? = nil {
         didSet {
             if self.annotations != nil {
-                annotationView.reloadData()
+                DispatchQueue.main.async { [weak self] in
+                    self?.annotationView.reloadData()
+                }
             }
         }
     }

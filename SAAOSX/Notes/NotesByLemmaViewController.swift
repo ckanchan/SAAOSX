@@ -10,7 +10,9 @@ import Cocoa
 
 class NotesByLemmaViewController: NSViewController, NoteDisplaying {
     func refreshTable() {
-        tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView?.reloadData()
+        }
     }
     
     @IBOutlet weak var tableView: NSTableView!

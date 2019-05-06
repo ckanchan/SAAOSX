@@ -98,6 +98,7 @@ extension AnnotationPopupController {
         vc.nodeReference = node
         vc.annotationMetadata = (transliteration, normalisation, translation)
         vc.context = context
+        vc.userTags = userTags
         vc.tagField.delegate = vc
         return window
     }
