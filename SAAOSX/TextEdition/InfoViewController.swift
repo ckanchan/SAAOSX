@@ -28,15 +28,21 @@ class InfoViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
-    var annotations = [NodeReference: Annotation]() {
+    var annotations = [Annotation]() {
         didSet {
-            annotationsView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                self?.annotationsView.reloadData()
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.notesField.delegate = self
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(annotationsDidChange),
+                                               name: .annotationsChangedForText,
+                                               object: nil)
     }
     
     func controlTextDidEndEditing(_ obj: Notification) {
@@ -45,7 +51,8 @@ class InfoViewController: NSViewController, NSTextFieldDelegate {
             notesDB.deleteNote(forID: textId)
         } else {
             let newNote = Note(id: textId, notes: notesField.stringValue)
-            if let _ = notesDB.retrieveNote(forID: textId) {
+            if let oldNote = notesDB.retrieveNote(forID: textId) {
+                guard oldNote.notes != newNote.notes else {return}
                 notesDB.updateNote(newNote)
             } else {
                 notesDB.createNote(newNote)
@@ -62,7 +69,6 @@ extension InfoViewController: NSTableViewDataSource, NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else {return nil}
         
-        let annotations = Array(self.annotations.values)
         let annotation = annotations[row]
         
         if tableColumn?.identifier.rawValue == "reference" {
@@ -73,5 +79,16 @@ extension InfoViewController: NSTableViewDataSource, NSTableViewDelegate {
 
 
         return view
+    }
+}
+
+@objc extension InfoViewController {
+    func annotationsDidChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: TextID],
+            let changedText = userInfo["textID"],
+            let textID = self.textID,
+            textID == changedText else {return}
+        
+        self.annotations = notesDB.retrieveAnnotations(forID: textID)
     }
 }

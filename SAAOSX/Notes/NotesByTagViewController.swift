@@ -24,6 +24,7 @@ class NotesByTagViewController: NSViewController, NoteDisplaying {
     
     var tags: [String] = [] {
         didSet {
+            tags.sort()
             DispatchQueue.main.async { [weak self] in
                 self?.tableView?.reloadData()
             }
@@ -45,6 +46,10 @@ class NotesByTagViewController: NSViewController, NoteDisplaying {
     
     @objc func annotationsDidChange(_ notification: Notification) {
         if let selectedIndex = currentlySelectedIndex {
+            guard tags.count > selectedIndex else {
+                currentlySelectedIndex = nil
+                return
+            }
             noteStore.setAnnotations(for: tags[selectedIndex])
         }
     }

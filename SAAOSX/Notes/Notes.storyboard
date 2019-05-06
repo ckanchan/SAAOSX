@@ -126,7 +126,6 @@
                     <tabViewItems>
                         <tabViewItem identifier="" id="bgs-xC-jky"/>
                         <tabViewItem identifier="" id="6eF-Vm-f8y"/>
-                        <tabViewItem id="DxJ-G8-m4y"/>
                     </tabViewItems>
                     <viewControllerTransitionOptions key="transitionOptions" allowUserInteraction="YES"/>
                     <tabView key="tabView" type="noTabsNoBorder" id="MKT-GT-SJ4">
@@ -141,7 +140,6 @@
                         <outlet property="tabView" destination="MKT-GT-SJ4" id="3j7-ko-R2J"/>
                         <segue destination="2u5-Lm-67X" kind="relationship" relationship="tabItems" id="Qq9-dh-xaZ"/>
                         <segue destination="a6X-UW-gAm" kind="relationship" relationship="tabItems" id="TgN-d2-Pob"/>
-                        <segue destination="5vj-fG-are" kind="relationship" relationship="tabItems" id="Cl2-Hm-kQe"/>
                     </connections>
                 </tabViewController>
                 <customObject id="8ih-ka-KhF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -293,7 +291,7 @@
                 </viewController>
                 <customObject id="ns0-Yc-4Lp" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-201" y="1104"/>
+            <point key="canvasLocation" x="-77" y="1148"/>
         </scene>
         <!--Tags-->
         <scene sceneID="kp0-8e-iuq">
@@ -380,7 +378,7 @@
                 </viewController>
                 <customObject id="OMh-ME-lEA" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="259" y="1104"/>
+            <point key="canvasLocation" x="431" y="1148"/>
         </scene>
         <!--Lemmas-->
         <scene sceneID="uZX-I5-pmC">
@@ -500,7 +498,7 @@
                 </viewController>
                 <customObject id="Qtq-zN-pZG" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="732" y="1104"/>
+            <point key="canvasLocation" x="924" y="728"/>
         </scene>
     </scenes>
 </document>
