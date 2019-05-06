@@ -95,6 +95,8 @@
 		54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B721D698BB00F00F39 /* AncientMap.swift */; };
 		54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
 		54C21A60227F0DB50093E494 /* NoteSQLTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */; };
+		54C5394B22808D6100397906 /* NotesPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */; };
+		54C5394D228096F000397906 /* NSAttributedStringLineBreaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */; };
 		54C91A802017A8C0001AA675 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C91A7F2017A8C0001AA675 /* Preferences.storyboard */; };
 		54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A812017AAB0001AA675 /* PreferencesViewController.swift */; };
 		54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A832017AB9F001AA675 /* UserDefaultsController.swift */; };
@@ -231,6 +233,8 @@
 		54B3C1B721D698BB00F00F39 /* AncientMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMap.swift; sourceTree = "<group>"; };
 		54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Conversions.swift"; sourceTree = "<group>"; };
 		54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLTags.swift; sourceTree = "<group>"; };
+		54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPreferencesViewController.swift; sourceTree = "<group>"; };
+		54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringLineBreaks.swift; sourceTree = "<group>"; };
 		54C91A7F2017A8C0001AA675 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		54C91A812017AAB0001AA675 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		54C91A832017AB9F001AA675 /* UserDefaultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
@@ -363,10 +367,10 @@
 		544138DB2004D27A00A64CB2 /* SAAOSX */ = {
 			isa = PBXGroup;
 			children = (
+				54C5394922808D0E00397906 /* Preferences */,
 				5401C5E721F2643D0037628F /* SAAo-SX.help */,
 				54D3B4E621D7F2D700F836E2 /* Extensions */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
-				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
 				5491DD4C21CD381100B49B7D /* Maps */,
 				54737B3920387C450030F71D /* Project */,
 				54737B3820387C0E0030F71D /* TextEdition */,
@@ -375,8 +379,6 @@
 				54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */,
 				544138E02004D27A00A64CB2 /* Assets.xcassets */,
 				544138DC2004D27A00A64CB2 /* AppDelegate.swift */,
-				54C91A812017AAB0001AA675 /* PreferencesViewController.swift */,
-				54C91A832017AB9F001AA675 /* UserDefaultsController.swift */,
 				544138E52004D27A00A64CB2 /* Info.plist */,
 				54D9CD082019C974005498A3 /* Credits.rtf */,
 			);
@@ -561,8 +563,20 @@
 				54A95219204058D60042E1BA /* Glossary.swift */,
 				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
 				5434C8F5226CF6F9005572B3 /* Log.swift */,
+				54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		54C5394922808D0E00397906 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
+				54C91A812017AAB0001AA675 /* PreferencesViewController.swift */,
+				54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */,
+				54C91A832017AB9F001AA675 /* UserDefaultsController.swift */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		54D3B4DD21D7B56D00F836E2 /* Resources */ = {
@@ -910,6 +924,7 @@
 				542AD356227E08DD000E2E8C /* NoteExporter.swift in Sources */,
 				54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */,
 				5434C8F6226CF6F9005572B3 /* Log.swift in Sources */,
+				54C5394D228096F000397906 /* NSAttributedStringLineBreaks.swift in Sources */,
 				541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */,
 				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
@@ -925,6 +940,7 @@
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
 				54A9521A204058D60042E1BA /* TextEditionStringContainer.swift in Sources */,
 				54863848225141DE00DFE739 /* NoteSQLAnnotations.swift in Sources */,
+				54C5394B22808D6100397906 /* NotesPreferencesViewController.swift in Sources */,
 				54C91A822017AAB0001AA675 /* PreferencesViewController.swift in Sources */,
 				54CD208C20B73ABF0008B69D /* AnnotationItem.swift in Sources */,
 				549C4FEE226DDDBB0001BCCD /* NoteDelegate.swift in Sources */,

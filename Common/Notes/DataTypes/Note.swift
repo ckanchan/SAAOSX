@@ -43,7 +43,9 @@ extension Note {
                                                attributes: [NSAttributedString.Key.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)])
         
         str.append(formattedTitle)
+        str.append(.singleLineBreak)
         str.append(formattedNote)
+        str.append(.doubleLineBreak)
         
         return NSAttributedString(attributedString: str)
     }
