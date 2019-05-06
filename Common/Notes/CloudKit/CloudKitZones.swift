@@ -63,7 +63,10 @@ extension CloudKitNotes {
         if let noteType = NoteType.fromString(zone.zoneID.zoneName) {
             saveZoneIDLocally(zone.zoneID, for: noteType)
         } else {
-            os_log("Zone ID does not match any known zone types, received ID with zone name: %s", log: Log.CloudKit, type: .error, zone.zoneID.zoneName)
+            os_log("Zone ID does not match any known zone types, received ID with zone name: %{public}s",
+                   log: Log.CloudKit,
+                   type: .error,
+                   zone.zoneID.zoneName)
         }
     }
     
@@ -74,7 +77,11 @@ extension CloudKitNotes {
         checkServerZones { [weak self] result in
             switch result {
             case .success(let cloudZones):
-                os_log("Received list of zones from server, count: %{public}d", log: Log.CloudKit, type: .info, cloudZones.count)
+                os_log("Received list of zones from server, count: %{public}d",
+                       log: Log.CloudKit,
+                       type: .info,
+                       cloudZones.count)
+                
                 var zonesToSave = [CKRecordZone]()
                 NoteType.allCases.forEach { noteType in
                     let zone = noteType.zone
@@ -101,7 +108,10 @@ extension CloudKitNotes {
                 }
                 CKContainer.default().privateCloudDatabase.add(operation)
             case .failure(let error):
-                os_log("Unable to check zones on server: %s", log: Log.CloudKit, type: .error, error.localizedDescription)
+                os_log("Unable to check zones on server: %{public}s",
+                       log: Log.CloudKit,
+                       type: .error,
+                       error.localizedDescription)
             }
         }
     }
