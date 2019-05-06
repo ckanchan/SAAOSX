@@ -70,6 +70,12 @@ extension CloudKitNotes {
         }
     }
     
+    func clearAllZoneIDs() {
+        for zoneKey in NoteType.allCases.map({$0.zoneIDKey}) {
+            userDefaults.removeObject(forKey: zoneKey)
+        }
+    }
+    
     /// Checks the zones on the server and then saves any missing zones
     ///
     /// - Parameter completionHandler: a closure that takes an array of `CKRecordZone`s saved to the server
