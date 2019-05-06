@@ -113,6 +113,7 @@ class TextViewController: NSViewController, NSTextViewDelegate {
 
         infoView.textID = self.catalogueEntry.id
         infoView.infoLabel.stringValue = self.catalogueEntry.description
+        infoView.annotations = notesDB.retrieveAnnotations(forID: self.catalogueEntry.id)
         
         infoWindow.showWindow(nil)
     }
