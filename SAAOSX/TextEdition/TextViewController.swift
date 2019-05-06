@@ -202,10 +202,17 @@ class TextViewController: NSViewController, NSTextViewDelegate {
                                                              .reference: reference,
                                                              .referenceContext: contextStr]
         
+        let annotationLabel: String
         
-        let annotationItem = NSMenuItem(title: "Add annotation", action: #selector(newAnnotationWindow), keyEquivalent: "")
+        if let highlight = metadata[.backgroundColor] as? NSColor,
+            highlight == .systemPink {
+            annotationLabel = "Edit annotation"
+        } else {
+            annotationLabel = "Add annotation"
+        }
         
-        let annotatedTitle = NSAttributedString(string: "Add annotation",
+        let annotationItem = NSMenuItem(title: annotationLabel, action: #selector(newAnnotationWindow), keyEquivalent: "")
+        let annotatedTitle = NSAttributedString(string: annotationLabel,
                                                         attributes: menuMetadata)
         
         annotationItem.attributedTitle = annotatedTitle
