@@ -60,6 +60,23 @@ final class NoteSQLDatabase {
         }
     }
     
+    func clearAllCloudKitMetadata() throws {
+        try db.run(Schema.notesTable.update(
+            Schema.ckRecordID <- nil,
+            Schema.ckSystemFields <- nil
+        ))
+        
+        try db.run(Schema.tagsTable.update(
+            Schema.ckRecordID <- nil,
+            Schema.ckSystemFields <- nil
+        ))
+        
+        try db.run(Schema.annotationTable.update(
+            Schema.ckRecordID <- nil,
+            Schema.ckSystemFields <- nil
+        ))
+    }
+    
     /// Initiates a delete operation that began locally, then propagates the changes to CloudKit
     ///
     /// - Parameter query: scoped SQLite query filtering the rows for deletion

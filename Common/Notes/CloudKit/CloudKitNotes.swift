@@ -12,22 +12,21 @@ import CDKSwiftOracc
 import os
 
 final class CloudKitNotes {
-    enum Query {
-        static func TextID(_ id: TextID) -> NSPredicate {
-            let textID = id.description
-            return NSPredicate(format: "textID == %@", textID)
-        }
-    }
-    
     var userIsLoggedIn: Bool
     let userDefaults: UserDefaults
     let sqlDB: NoteSQLDatabase
     
+    
+    /// Deletes all zones and the database subscription from the server, clears cached metadata for all records in the local database and in user defaults, and calls completion handlers
+    ///
+    /// - Parameters:
+    ///   - zoneDeletionHandler: notifies when zones have been deleted
+    ///   - subscriptionDeletionHandler: notifies when database subscription has been deleted
     func deleteAllCloudKitData(zoneDeletionHandler: ((Result<[CKRecordZone.ID], Error>) -> Void)?,
-                               subscriptionDeletionHandler: ((Result<CKSubscription.ID, Error>) -> Void)?) throws {
+                               subscriptionDeletionHandler: ((Result<CKSubscription.ID, Error>) -> Void)?) {
         let zoneIDs = [noteZoneID, annotationZoneID, tagZoneID].compactMap {$0}
         let deleteZonesOperation = CKModifyRecordZonesOperation(recordZonesToSave: nil, recordZoneIDsToDelete: zoneIDs)
-        deleteZonesOperation.modifyRecordZonesCompletionBlock = { _, deletedIDs, error in
+        deleteZonesOperation.modifyRecordZonesCompletionBlock = { [unowned self] _, deletedIDs, error in
             if let error = error {
                 os_log("Error deleting all CloudKit data, deleting zones: %{public}s",
                        log: Log.CloudKit,
@@ -39,6 +38,10 @@ final class CloudKitNotes {
                     log: Log.CloudKit,
                     type: .info,
                     deletedIDs.count)
+                
+                try? self.sqlDB.clearAllCloudKitMetadata()
+                self.clearAllZoneIDs()
+                
                 zoneDeletionHandler?(.success(deletedIDs))
             }
         }
@@ -59,6 +62,7 @@ final class CloudKitNotes {
                            log: Log.CloudKit,
                            type: .info)
                     subscriptionDeletionHandler?(.success(deletedID[0]))
+                    self.databaseSubscription = nil
                 }
             }
             CKContainer.default().privateCloudDatabase.add(deleteSubscriptionOperation)
