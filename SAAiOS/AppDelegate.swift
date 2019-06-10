@@ -27,18 +27,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let svc = UISplitViewController()
         let detailViewController = TextEditionViewController()
         let masterViewController = ProjectListViewController.new(detailViewController: detailViewController)
+        let detailNavigationController = UINavigationController(rootViewController: detailViewController)
+        
+        #if !targetEnvironment(UIKitForMac)
+        
         let masterNavigationController = UINavigationController(rootViewController: masterViewController)
         
         masterNavigationController.isToolbarHidden = false
         
-        let detailNavigationController = UINavigationController(rootViewController: detailViewController)
-        
         svc.viewControllers = [masterNavigationController, detailNavigationController]
+        
+        #else
+        svc.viewControllers = [masterViewController, detailNavigationController]
+        
+        #endif
+        
         svc.delegate = self
         
         self.window!.rootViewController = svc
         detailViewController.navigationItem.leftBarButtonItem = svc.displayModeButtonItem
         detailViewController.navigationItem.leftItemsSupplementBackButton = true
+        svc.primaryBackgroundStyle = .sidebar
         
 //        self.window!.backgroundColor = .white
         self.window!.makeKeyAndVisible()

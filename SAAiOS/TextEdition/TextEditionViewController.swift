@@ -27,7 +27,7 @@ class TextEditionViewController: UIViewController {
     var textItem: OraccCatalogEntry? {
         didSet {
             guard let textItem = self.textItem else {return}
-            navigationItem.titleView = titleLabel(for: textItem, color: .darkText)
+            navigationItem.titleView = titleLabel(for: textItem)
         }
     }
     
@@ -100,7 +100,7 @@ class TextEditionViewController: UIViewController {
     }
 
     
-    func titleLabel(for item: OraccCatalogEntry, color: UIColor) -> UILabel {
+    func titleLabel(for item: OraccCatalogEntry, color: UIColor = UIColor.label) -> UILabel {
         let label = UILabel()
         label.backgroundColor = .clear
         label.textColor = color
@@ -181,13 +181,14 @@ class TextEditionViewController: UIViewController {
 
         switch textKind {
         case .Cuneiform:
-            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.cuneiformNA])
+            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.cuneiformNA, .foregroundColor: UIColor.label])
         case .Transliteration:
             return textStrings?.transliteration ?? notAvailable
         case .Normalisation:
             return textStrings?.normalisation ?? notAvailable
         case .Translation:
-            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.defaultFont])
+            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.defaultFont,
+                                                                                                          .foregroundColor: UIColor.label])
 
         }
     }

@@ -39,9 +39,9 @@ class ProjectListViewController: UITableViewController {
             self.setToolbarItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
         }
         
-        let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
+        //let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
         
-        navigationItem.rightBarButtonItem = preferencesButton
+        //navigationItem.rightBarButtonItem = preferencesButton
     }
     
     @objc func loadPreferences() {
