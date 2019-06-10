@@ -26,6 +26,7 @@ struct Note: Codable {
 }
 
 #if canImport(AppKit)
+import AppKit.NSFont
 
 extension Note {
     func formatted(withMetadata catalogueEntry: OraccCatalogEntry?) -> NSAttributedString {

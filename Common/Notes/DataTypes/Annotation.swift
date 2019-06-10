@@ -34,6 +34,7 @@ struct Annotation: Codable {
 
 
 #if canImport(AppKit)
+import AppKit.NSFont
 extension Array where Element == Annotation {
     func formatted(withMetadata catalogueEntry: OraccCatalogEntry?) -> NSAttributedString? {
         guard !self.isEmpty else {return nil}
