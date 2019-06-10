@@ -3,37 +3,41 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		5401C5E821F2643D0037628F /* SAAo-SX.help in Resources */ = {isa = PBXBuildFile; fileRef = 5401C5E721F2643D0037628F /* SAAo-SX.help */; };
-		54041CE921EE6E09006EAF8D /* TextAnnotationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9DE9521DF936800014049 /* TextAnnotationManager.swift */; };
-		54041CEA21EE6E10006EAF8D /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E921DAAFE0003A4481 /* Annotation.swift */; };
-		54041CEB21EE6E19006EAF8D /* CloudKitNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E721DA7BA7003A4481 /* CloudKitNotes.swift */; };
-		54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */; };
-		54041CED21EE6E19006EAF8D /* CloudKitPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145C21E22DE600ABCB70 /* CloudKitPull.swift */; };
-		54041CEE21EE6E19006EAF8D /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
+
+
+
+
+
+
+
 		5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124320A6173D00666489 /* TextPanelViewController.swift */; };
-		541378E321DA5BB7003A4481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 541378E221DA5BB7003A4481 /* CloudKit.framework */; };
+
 		5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0A200F71C7001EE385 /* TextViewController.swift */; };
 		5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418DF0E200FD62A001EE385 /* InfoViewController.swift */; };
 		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
+		5434C8F6226CF6F9005572B3 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5434C8F5226CF6F9005572B3 /* Log.swift */; };
 		5435F30321CE5771000A1FC8 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435F30221CE5771000A1FC8 /* GeoJSON.swift */; };
 		543709AB209F9D8C00CE41F7 /* DejaVuSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709A9209F9D8C00CE41F7 /* DejaVuSans.ttf */; };
 		543709AC209F9D8C00CE41F7 /* CuneiformNA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */; };
 		543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */; };
 		5439770C20A421E6002072AE /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770B20A421E6002072AE /* PreferencesViewController.swift */; };
-		5439770E20A43A4B002072AE /* ThemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770D20A43A4B002072AE /* ThemeController.swift */; };
+		543D400222AEC43500C5A96D /* CDKSwiftOracc in Frameworks */ = {isa = PBXBuildFile; productRef = 543D400122AEC43500C5A96D /* CDKSwiftOracc */; };
+		543D400522AEC44800C5A96D /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 543D400422AEC44800C5A96D /* CDKOraccInterface */; };
+		543D400822AEC45A00C5A96D /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 543D400722AEC45A00C5A96D /* SQLite */; };
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
 		5447AE2B21D421B800EDD45F /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		544E5FF3224FA025004482E5 /* SAAo_SXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */; };
-		544F2DB12277511F00407F46 /* NoteSQLSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F2DB02277511F00407F46 /* NoteSQLSchema.swift */; };
+
 		54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54657A5720A0633F00FAC8E3 /* TextEdition.storyboard */; };
 		54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A5E20A0C34800FAC8E3 /* InfoTableViewController.swift */; };
 		54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6020A0D6E000FAC8E3 /* OnlineViewController.swift */; };
@@ -76,7 +80,6 @@
 		54C91A882017C743001AA675 /* TextWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C91A872017C743001AA675 /* TextWindowController.swift */; };
 		54C9843620A75E7B0026C5AA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843520A75E7B0026C5AA /* libc++.tbd */; };
 		54C9843820A75E880026C5AA /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C9843720A75E880026C5AA /* libicucore.tbd */; };
-		54C9845020A767930026C5AA /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C9844F20A767930026C5AA /* NotesViewController.swift */; };
 		54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */; };
 		54D3B4DE21D7B5A800F836E2 /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E021D7BBE000F836E2 /* AncientMapTableViewDelegate.swift */; };
@@ -88,9 +91,6 @@
 		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
 		54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */; };
 		54FE04EA21D141F5000214E5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE04E921D141F5000214E5 /* MapViewController.swift */; };
-		A4AA5D0866D1DD9F98076431 /* Pods_SAAo_SX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08E2E18F8917E045004A82A /* Pods_SAAo_SX.framework */; };
-		A811C0412F370789F778A41B /* Pods_SAAo_SXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF752F3AD84DF9011545A1C0 /* Pods_SAAo_SXTests.framework */; };
-		CC76434373B0C9DA3A6175C6 /* Pods_SAAi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669CD2880467B05FF720DB1D /* Pods_SAAi.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,15 +117,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		118CFB55773AAAD4E108D905 /* Pods-SAAiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAiOS/Pods-SAAiOS.release.xcconfig"; sourceTree = "<group>"; };
-		123BAD5C6459052D7F0CE21A /* Pods-SAAOSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAOSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAOSX/Pods-SAAOSX.debug.xcconfig"; sourceTree = "<group>"; };
-		1B93E1BA5A59CE9626187EB2 /* Pods-SAAo-SXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAo-SXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAo-SXTests/Pods-SAAo-SXTests.debug.xcconfig"; sourceTree = "<group>"; };
-		1FE52B6F6F8B72EF35F40A57 /* Pods-SAAo-SX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAo-SX.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAo-SX/Pods-SAAo-SX.release.xcconfig"; sourceTree = "<group>"; };
-		3A7200AA45659B4E6F6D2563 /* Pods-SAAo-SX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAo-SX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAo-SX/Pods-SAAo-SX.debug.xcconfig"; sourceTree = "<group>"; };
-		3C81CDB7D6CD24874930F15F /* Pods-SAAi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAi/Pods-SAAi.debug.xcconfig"; sourceTree = "<group>"; };
 		5401C5E721F2643D0037628F /* SAAo-SX.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SAAo-SX.help"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
-		541378E221DA5BB7003A4481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		5418DF0E200FD62A001EE385 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+CoreSpotlight.swift"; sourceTree = "<group>"; };
@@ -135,7 +129,7 @@
 		543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CuneiformNA.ttf; sourceTree = "<group>"; };
 		543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
 		5439770B20A421E6002072AE /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
-		5439770D20A43A4B002072AE /* ThemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeController.swift; sourceTree = "<group>"; };
+
 		544138D92004D27A00A64CB2 /* SAAo-SX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SAAo-SX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		544138DC2004D27A00A64CB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -184,7 +178,6 @@
 		54C91A872017C743001AA675 /* TextWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWindowController.swift; sourceTree = "<group>"; };
 		54C9843520A75E7B0026C5AA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		54C9843720A75E880026C5AA /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/usr/lib/libicucore.tbd; sourceTree = DEVELOPER_DIR; };
-		54C9844F20A767930026C5AA /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		54D223F620A0FA09007E88F4 /* CustomKeyboardKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardKeys.swift; sourceTree = "<group>"; };
 		54D3B4E021D7BBE000F836E2 /* AncientMapTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMapTableViewDelegate.swift; sourceTree = "<group>"; };
 		54D3B4E221D7ED0E00F836E2 /* PleiadesRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PleiadesRecord.swift; sourceTree = "<group>"; };
@@ -196,16 +189,6 @@
 		54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListWindowController.swift; sourceTree = "<group>"; };
 		54FE04E921D141F5000214E5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		669CD2880467B05FF720DB1D /* Pods_SAAi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SAAi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BEC6964438FD17C3291B87E /* Pods-SAAOSXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAOSXTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAOSXTests/Pods-SAAOSXTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6D157BF5C997680FEFAE28F9 /* Pods-SAAo-SXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAo-SXTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAo-SXTests/Pods-SAAo-SXTests.release.xcconfig"; sourceTree = "<group>"; };
-		93BF5D73987FB01606EA4289 /* Pods-SAAOSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAOSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAOSX/Pods-SAAOSX.release.xcconfig"; sourceTree = "<group>"; };
-		A08E2E18F8917E045004A82A /* Pods_SAAo_SX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SAAo_SX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1748662C1950676027A91D6 /* Pods-SAAi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAi.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAi/Pods-SAAi.release.xcconfig"; sourceTree = "<group>"; };
-		A8B2CEEC8B33C845D1161687 /* Pods_SAAOSXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SAAOSXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B8668D1A052B7688E4FD5240 /* Pods-SAAOSXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAOSXTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAAOSXTests/Pods-SAAOSXTests.release.xcconfig"; sourceTree = "<group>"; };
-		C51DF0895BE4BEEE26BC98FA /* Pods-SAAiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAiOS/Pods-SAAiOS.debug.xcconfig"; sourceTree = "<group>"; };
-		CF752F3AD84DF9011545A1C0 /* Pods_SAAo_SXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SAAo_SXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,8 +196,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				541378E321DA5BB7003A4481 /* CloudKit.framework in Frameworks */,
-				A4AA5D0866D1DD9F98076431 /* Pods_SAAo_SX.framework in Frameworks */,
+				543D400822AEC45A00C5A96D /* SQLite in Frameworks */,
+				543D400222AEC43500C5A96D /* CDKSwiftOracc in Frameworks */,
+				543D400522AEC44800C5A96D /* CDKOraccInterface in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +206,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A811C0412F370789F778A41B /* Pods_SAAo_SXTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,9 +213,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54C9843820A75E880026C5AA /* libicucore.tbd in Frameworks */,
-				54C9843620A75E7B0026C5AA /* libc++.tbd in Frameworks */,
-				CC76434373B0C9DA3A6175C6 /* Pods_SAAi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +257,6 @@
 				544E5FF1224FA025004482E5 /* SAAo-SXTests */,
 				544138DA2004D27A00A64CB2 /* Products */,
 				5441390A2004D30A00A64CB2 /* Frameworks */,
-				79E9A18ED51245BB47DA9F75 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -316,13 +295,7 @@
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				541378E221DA5BB7003A4481 /* CloudKit.framework */,
-				54C9843720A75E880026C5AA /* libicucore.tbd */,
-				54C9843520A75E7B0026C5AA /* libc++.tbd */,
-				A8B2CEEC8B33C845D1161687 /* Pods_SAAOSXTests.framework */,
-				669CD2880467B05FF720DB1D /* Pods_SAAi.framework */,
-				A08E2E18F8917E045004A82A /* Pods_SAAo_SX.framework */,
-				CF752F3AD84DF9011545A1C0 /* Pods_SAAo_SXTests.framework */,
+				5434C8F3226CE488005572B3 /* CloudKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -472,25 +445,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		79E9A18ED51245BB47DA9F75 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				123BAD5C6459052D7F0CE21A /* Pods-SAAOSX.debug.xcconfig */,
-				93BF5D73987FB01606EA4289 /* Pods-SAAOSX.release.xcconfig */,
-				6BEC6964438FD17C3291B87E /* Pods-SAAOSXTests.debug.xcconfig */,
-				B8668D1A052B7688E4FD5240 /* Pods-SAAOSXTests.release.xcconfig */,
-				C51DF0895BE4BEEE26BC98FA /* Pods-SAAiOS.debug.xcconfig */,
-				118CFB55773AAAD4E108D905 /* Pods-SAAiOS.release.xcconfig */,
-				3C81CDB7D6CD24874930F15F /* Pods-SAAi.debug.xcconfig */,
-				A1748662C1950676027A91D6 /* Pods-SAAi.release.xcconfig */,
-				3A7200AA45659B4E6F6D2563 /* Pods-SAAo-SX.debug.xcconfig */,
-				1FE52B6F6F8B72EF35F40A57 /* Pods-SAAo-SX.release.xcconfig */,
-				1B93E1BA5A59CE9626187EB2 /* Pods-SAAo-SXTests.debug.xcconfig */,
-				6D157BF5C997680FEFAE28F9 /* Pods-SAAo-SXTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -498,18 +452,21 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 544138F42004D27A00A64CB2 /* Build configuration list for PBXNativeTarget "SAAo-SX" */;
 			buildPhases = (
-				A02C04175A59B4AE38E9F74B /* [CP] Check Pods Manifest.lock */,
 				544138D62004D27A00A64CB2 /* Frameworks */,
 				544138D52004D27A00A64CB2 /* Sources */,
 				544138D72004D27A00A64CB2 /* Resources */,
 				5494D8D12042D36C0071756C /* Embed Frameworks */,
-				EC33E475B3BCEA9815E2CD6E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "SAAo-SX";
+			packageProductDependencies = (
+				543D400122AEC43500C5A96D /* CDKSwiftOracc */,
+				543D400422AEC44800C5A96D /* CDKOraccInterface */,
+				543D400722AEC45A00C5A96D /* SQLite */,
+			);
 			productName = SAAOSX;
 			productReference = 544138D92004D27A00A64CB2 /* SAAo-SX.app */;
 			productType = "com.apple.product-type.application";
@@ -518,7 +475,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 544E5FF7224FA025004482E5 /* Build configuration list for PBXNativeTarget "SAAo-SXTests" */;
 			buildPhases = (
-				FC13D9C7670C5D304102D174 /* [CP] Check Pods Manifest.lock */,
 				544E5FEC224FA025004482E5 /* Sources */,
 				544E5FED224FA025004482E5 /* Frameworks */,
 				544E5FEE224FA025004482E5 /* Resources */,
@@ -537,11 +493,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAi" */;
 			buildPhases = (
-				FCACBCDA4947268DEADF6D2D /* [CP] Check Pods Manifest.lock */,
 				5498CAD4204EAF63004C774A /* Sources */,
 				5498CAD5204EAF63004C774A /* Frameworks */,
 				5498CAD6204EAF63004C774A /* Resources */,
-				2944C7C373055202B4B7B94C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -601,6 +555,11 @@
 				Base,
 			);
 			mainGroup = 544138D02004D27A00A64CB2;
+			packageReferences = (
+				543D400022AEC43500C5A96D /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */,
+				543D400322AEC44800C5A96D /* XCRemoteSwiftPackageReference "CDKOraccInterface" */,
+				543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+			);
 			productRefGroup = 544138DA2004D27A00A64CB2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -654,115 +613,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		2944C7C373055202B4B7B94C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SAAi/Pods-SAAi-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CDKOraccInterface-iOS/CDKOraccInterface.framework",
-				"${BUILT_PRODUCTS_DIR}/CDKSwiftOracc-iOS/CDKSwiftOracc.framework",
-				"${BUILT_PRODUCTS_DIR}/SQLite.swift-iOS/SQLite.framework",
-				"${BUILT_PRODUCTS_DIR}/ZIPFoundation-iOS/ZIPFoundation.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CDKOraccInterface.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CDKSwiftOracc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SAAi/Pods-SAAi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A02C04175A59B4AE38E9F74B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SAAo-SX-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC33E475B3BCEA9815E2CD6E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SAAo-SX/Pods-SAAo-SX-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CDKOraccInterface-macOS/CDKOraccInterface.framework",
-				"${BUILT_PRODUCTS_DIR}/CDKSwiftOracc-macOS/CDKSwiftOracc.framework",
-				"${BUILT_PRODUCTS_DIR}/SQLite.swift-macOS/SQLite.framework",
-				"${BUILT_PRODUCTS_DIR}/ZIPFoundation-macOS/ZIPFoundation.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CDKOraccInterface.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CDKSwiftOracc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SAAo-SX/Pods-SAAo-SX-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FC13D9C7670C5D304102D174 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SAAo-SXTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FCACBCDA4947268DEADF6D2D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SAAi-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		544138D52004D27A00A64CB2 /* Sources */ = {
@@ -988,13 +838,13 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
 		544138F52004D27A00A64CB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A7200AA45659B4E6F6D2563 /* Pods-SAAo-SX.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1005,7 +855,10 @@
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1015,7 +868,6 @@
 		};
 		544138F62004D27A00A64CB2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FE52B6F6F8B72EF35F40A57 /* Pods-SAAo-SX.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1026,7 +878,10 @@
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1036,7 +891,6 @@
 		};
 		544E5FF8224FA025004482E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B93E1BA5A59CE9626187EB2 /* Pods-SAAo-SXTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -1045,7 +899,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = "SAAo-SXTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1058,7 +916,6 @@
 		};
 		544E5FF9224FA025004482E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6D157BF5C997680FEFAE28F9 /* Pods-SAAo-SXTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -1067,7 +924,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = "SAAo-SXTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SXTests";
@@ -1079,7 +940,6 @@
 		};
 		5498CAE9204EAF63004C774A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C81CDB7D6CD24874930F15F /* Pods-SAAi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = iOSAppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1087,7 +947,10 @@
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.saaios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1099,7 +962,6 @@
 		};
 		5498CAEA204EAF63004C774A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1748662C1950676027A91D6 /* Pods-SAAi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = iOSAppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1107,7 +969,10 @@
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.saaios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1158,6 +1023,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		543D400022AEC43500C5A96D /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ckanchan/CDKSwiftOracc.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		543D400322AEC44800C5A96D /* XCRemoteSwiftPackageReference "CDKOraccInterface" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ckanchan/CDKOraccInterface.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		543D400122AEC43500C5A96D /* CDKSwiftOracc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D400022AEC43500C5A96D /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */;
+			productName = CDKSwiftOracc;
+		};
+		543D400422AEC44800C5A96D /* CDKOraccInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D400322AEC44800C5A96D /* XCRemoteSwiftPackageReference "CDKOraccInterface" */;
+			productName = CDKOraccInterface;
+		};
+		543D400722AEC45A00C5A96D /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 544138D12004D27A00A64CB2 /* Project object */;
 }

@@ -9,6 +9,7 @@ import Foundation
 import CDKSwiftOracc
 import SQLite
 import os
+import SQLiteObjc
 
 /// Conform to this protocol to allow BookmarkedTextController to refresh the table view when entries are added or removed from the database.
 @objc public protocol BookmarkDisplaying: AnyObject {
