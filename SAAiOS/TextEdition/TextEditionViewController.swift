@@ -45,6 +45,7 @@ class TextEditionViewController: UIViewController {
         stackView.distribution = .fillEqually
         self.view = stackView
         self.stackView = stackView
+        self.traitCollectionDidChange(nil)
     }
     
     // MARK: - Lifecycle methods

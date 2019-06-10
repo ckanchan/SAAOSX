@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        UIView.appearance().tintColor = .purple
+//        UIView.appearance().tintColor = .purple
         self.window = self.window ?? UIWindow()
         let svc = UISplitViewController()
         let detailViewController = TextEditionViewController()
@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         detailViewController.navigationItem.leftBarButtonItem = svc.displayModeButtonItem
         detailViewController.navigationItem.leftItemsSupplementBackButton = true
         
-        self.window!.backgroundColor = .white
+//        self.window!.backgroundColor = .white
         self.window!.makeKeyAndVisible()
         
         return true

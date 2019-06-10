@@ -33,7 +33,7 @@ struct Annotation: Codable {
 }
 
 
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(UIKitForMac)
 import AppKit.NSFont
 extension Array where Element == Annotation {
     func formatted(withMetadata catalogueEntry: OraccCatalogEntry?) -> NSAttributedString? {

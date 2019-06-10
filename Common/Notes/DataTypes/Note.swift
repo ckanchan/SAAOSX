@@ -25,7 +25,7 @@ struct Note: Codable {
     
 }
 
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(UIKitForMac)
 import AppKit.NSFont
 
 extension Note {

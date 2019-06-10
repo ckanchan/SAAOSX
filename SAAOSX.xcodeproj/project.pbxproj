@@ -123,6 +123,9 @@
 		54D3B4E321D7ED0E00F836E2 /* PleiadesRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E221D7ED0E00F836E2 /* PleiadesRecord.swift */; };
 		54D3B4E521D7F0F100F836E2 /* NSAlertExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E421D7F0F100F836E2 /* NSAlertExtensions.swift */; };
 		54D9CD092019C974005498A3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 54D9CD082019C974005498A3 /* Credits.rtf */; };
+		54DDDAE622AECE16006B296E /* CDKSwiftOracc in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAE522AECE16006B296E /* CDKSwiftOracc */; };
+		54DDDAE822AECE1A006B296E /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAE722AECE1A006B296E /* CDKOraccInterface */; };
+		54DDDAEA22AECE1F006B296E /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAE922AECE1F006B296E /* SQLite */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54F1C42320A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
 		54F1C42420A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
@@ -249,6 +252,7 @@
 		54D3B4E421D7F0F100F836E2 /* NSAlertExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAlertExtensions.swift; sourceTree = "<group>"; };
 		54D9CD082019C974005498A3 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAOSX.entitlements; sourceTree = "<group>"; };
+		54DDDAE422AECDD1006B296E /* SAAi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAi.entitlements; sourceTree = "<group>"; };
 		54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSideBarViewController.swift; sourceTree = "<group>"; };
 		54F1C42220A9F4D1009F31C0 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +284,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54DDDAEA22AECE1F006B296E /* SQLite in Frameworks */,
+				54DDDAE822AECE1A006B296E /* CDKOraccInterface in Frameworks */,
+				54DDDAE622AECE16006B296E /* CDKSwiftOracc in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +336,7 @@
 		544138D02004D27A00A64CB2 = {
 			isa = PBXGroup;
 			children = (
+				54DDDAE422AECDD1006B296E /* SAAi.entitlements */,
 				54D3B4DD21D7B56D00F836E2 /* Resources */,
 				54A9520B204058C40042E1BA /* Common */,
 				544138DB2004D27A00A64CB2 /* SAAOSX */,
@@ -648,6 +656,11 @@
 			dependencies = (
 			);
 			name = SAAi;
+			packageProductDependencies = (
+				54DDDAE522AECE16006B296E /* CDKSwiftOracc */,
+				54DDDAE722AECE1A006B296E /* CDKOraccInterface */,
+				54DDDAE922AECE1F006B296E /* SQLite */,
+			);
 			productName = SAAiOS;
 			productReference = 5498CAD8204EAF63004C774A /* SAAi.app */;
 			productType = "com.apple.product-type.application";
@@ -1130,8 +1143,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = iOSAppIcon;
+				CODE_SIGN_ENTITLEMENTS = SAAi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
@@ -1142,6 +1157,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.saaios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTS_UIKITFORMAC = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = /Users/Chaitanya/Documents/Programming/SAAOSX;
@@ -1152,8 +1168,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = iOSAppIcon;
+				CODE_SIGN_ENTITLEMENTS = SAAi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
@@ -1164,6 +1182,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.chaidk.saaios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTS_UIKITFORMAC = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = /Users/Chaitanya/Documents/Programming/SAAOSX;
@@ -1251,6 +1270,21 @@
 			productName = CDKOraccInterface;
 		};
 		543D400722AEC45A00C5A96D /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		54DDDAE522AECE16006B296E /* CDKSwiftOracc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D400022AEC43500C5A96D /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */;
+			productName = CDKSwiftOracc;
+		};
+		54DDDAE722AECE1A006B296E /* CDKOraccInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 543D400322AEC44800C5A96D /* XCRemoteSwiftPackageReference "CDKOraccInterface" */;
+			productName = CDKOraccInterface;
+		};
+		54DDDAE922AECE1F006B296E /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
