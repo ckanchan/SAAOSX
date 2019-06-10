@@ -32,6 +32,8 @@ struct Annotation: Codable {
     }
 }
 
+
+#if canImport(AppKit)
 extension Array where Element == Annotation {
     func formatted(withMetadata catalogueEntry: OraccCatalogEntry?) -> NSAttributedString? {
         guard !self.isEmpty else {return nil}
@@ -65,3 +67,4 @@ extension Array where Element == Annotation {
         return str
     }
 }
+#endif

@@ -25,6 +25,8 @@ struct Note: Codable {
     
 }
 
+#if canImport(AppKit)
+
 extension Note {
     func formatted(withMetadata catalogueEntry: OraccCatalogEntry?) -> NSAttributedString {
         let str = NSMutableAttributedString()
@@ -50,3 +52,5 @@ extension Note {
         return NSAttributedString(attributedString: str)
     }
 }
+
+#endif
