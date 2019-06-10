@@ -66,6 +66,9 @@ class TextEditionViewController: UIViewController {
             
         case .unspecified:
             addPrimaryPanel()
+
+        @unknown default:
+            addPrimaryPanel()
         }
     }
     
