@@ -108,6 +108,7 @@
 		54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */; };
 		54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B721D698BB00F00F39 /* AncientMap.swift */; };
 		54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
+		54BF519C22AFFB6D00DA4BD0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */; };
 		54C21A60227F0DB50093E494 /* NoteSQLTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */; };
 		54C5394B22808D6100397906 /* NotesPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */; };
 		54C5394D228096F000397906 /* NSAttributedStringLineBreaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */; };
@@ -237,6 +238,7 @@
 		54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMapViewDelegate.swift; sourceTree = "<group>"; };
 		54B3C1B721D698BB00F00F39 /* AncientMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMap.swift; sourceTree = "<group>"; };
 		54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Conversions.swift"; sourceTree = "<group>"; };
+		54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLTags.swift; sourceTree = "<group>"; };
 		54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPreferencesViewController.swift; sourceTree = "<group>"; };
 		54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringLineBreaks.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
 				5498CAE8204EAF63004C774A /* Info.plist */,
+				54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */,
 			);
 			path = SAAiOS;
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
 				54041CEB21EE6E19006EAF8D /* CloudKitNotes.swift in Sources */,
 				5402366322AEBE17005F22A4 /* NoteType.swift in Sources */,
+				54BF519C22AFFB6D00DA4BD0 /* SceneDelegate.swift in Sources */,
 				5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
 				5402366222AEBE10005F22A4 /* NoteSQLNotes.swift in Sources */,
 			);
