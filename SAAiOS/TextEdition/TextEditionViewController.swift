@@ -28,12 +28,14 @@ class TextEditionViewController: UIViewController {
         didSet {
             guard let textItem = self.textItem else {return}
             navigationItem.titleView = titleLabel(for: textItem)
+            view.window?.windowScene?.title = textItem.title
         }
     }
     
     var textStrings: TextEditionStringContainer? {
         didSet {
             textStrings?.render(withPreferences: UIFont.systemFont(ofSize: UIFont.systemFontSize).makeDefaultPreferences())
+            refreshPanels()
         }
     }
 
@@ -120,7 +122,6 @@ class TextEditionViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = true
     }
 
-    //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
         var direction: Navigate
         
@@ -171,22 +172,23 @@ class TextEditionViewController: UIViewController {
         self.textStrings = strings
         self.textItem = nextEntry
         self.title = nextEntry.title
-        self.primaryPanel?.changeText(display: .Normalisation, scrollToTop: true)
-        self.secondaryPanel?.changeText(display: .Translation, scrollToTop: true)
-        
         if traitCollection.horizontalSizeClass == .regular {
             parentController?.navigate(direction)
         }
     }
+    
+    func refreshPanels() {
+        self.primaryPanel?.changeText(display: .Normalisation, scrollToTop: true)
+        self.secondaryPanel?.changeText(display: .Translation, scrollToTop: true)
+    }
 
-
-    #warning("Text rendering is inconsistent")
     func string(for textKind: TextDisplay) -> NSAttributedString {
         let notAvailable = NSAttributedString(string: "Not available")
 
         switch textKind {
         case .Cuneiform:
-            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.cuneiformNA, .foregroundColor: UIColor.label])
+            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"),
+                                      attributes: [NSAttributedString.Key.font: UIFont.cuneiformNA, .foregroundColor: UIColor.label])
         case .Transliteration:
             return textStrings?.transliteration ?? notAvailable
         case .Normalisation:

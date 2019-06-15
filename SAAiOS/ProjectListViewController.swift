@@ -96,25 +96,15 @@ class ProjectListViewController: UITableViewController {
     // MARK: - Segues
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
         guard let (catalogueEntry, textStrings) = getTextViewData(for: indexPath) else {return}
-        let controller = TextEditionViewController()
-        controller.textItem = catalogueEntry
-        controller.textStrings = textStrings
-        controller.catalogue = self.catalogue
-        controller.parentController = self
-        self.detailViewController = controller
-
-        if catalogue.source == .search {
-            guard let catalogue = self.catalogue as? Catalogue else {return}
-            guard let textSearch = catalogue.catalogue as? TextSearchCollection else {return}
-            let searchTerm = textSearch.searchTerm
-            controller.searchTerm = searchTerm
-        }
         
-        let navigationController = UINavigationController(rootViewController: controller)
-        self.showDetailViewController(navigationController, sender: self)
+        detailViewController?.textItem = catalogueEntry
+        detailViewController?.textStrings = textStrings
+        
+        #if !targetEnvironment(UIKitForMac)
         self.appDelegate.didChooseDetail = true
-        controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-        controller.navigationItem.leftItemsSupplementBackButton = true
+        detailViewController?.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        detailViewController?.navigationItem.leftItemsSupplementBackButton = true
+        #endif
     }
 
     func getTextViewData(for indexPath: IndexPath) -> (OraccCatalogEntry, TextEditionStringContainer)? {
@@ -143,9 +133,10 @@ class ProjectListViewController: UITableViewController {
     }
 
     func navigate(_ direction: Navigate) {
-        guard let newIndexPath = getIndexPath(direction) else {return}
-        guard tableView.cellForRow(at: newIndexPath) != nil else {return}
-
+        guard let newIndexPath = getIndexPath(direction),
+            tableView.cellForRow(at: newIndexPath) != nil,
+            viewIfLoaded?.window != nil else {return}
+        
         tableView.selectRow(at: newIndexPath, animated: false, scrollPosition: .middle)
     }
 }

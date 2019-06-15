@@ -46,6 +46,7 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
         }
         
         segmentedControl.selectedSegmentIndex = display.rawValue
+        view.layoutSubviews()
     }
 
     @IBAction func changeText(_ sender: UISegmentedControl) {

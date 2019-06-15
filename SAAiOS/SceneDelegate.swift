@@ -25,6 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Configure 'list' (master) pane
         let masterViewController = ProjectListViewController.new(detailViewController: detailViewController)
+        detailViewController.catalogue = masterViewController.catalogue
+        detailViewController.parentController = masterViewController
         
         #if !targetEnvironment(UIKitForMac)
         // For all iPhone and iPad environments, embed the list controller in a nav view
@@ -35,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         splitViewController.viewControllers = [masterNavigationController, detailNavigationController]
         
         #else
-        splitViewController.viewControllers = [masterViewController, detailNavigationController]
+        splitViewController.viewControllers = [masterViewController, detailViewController]
         #endif
         
         return splitViewController
@@ -56,15 +58,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             #if targetEnvironment(UIKitForMac)
             splitViewController.primaryBackgroundStyle = .sidebar
             
-            if let titlebar = windowScene.titlebar {
+            if let titleBar = windowScene.titlebar {
                 let toolbar = NSToolbar(identifier: "MainWindow")
                 toolbar.delegate = splitViewController.children[0] as! ProjectListViewController
-                titlebar.titleVisibility = .hidden
-                titlebar.toolbar = toolbar
-                
+                titleBar.toolbar = toolbar
             }
-            
-            
             
             #else
             splitViewController.preferredDisplayMode = .allVisible
