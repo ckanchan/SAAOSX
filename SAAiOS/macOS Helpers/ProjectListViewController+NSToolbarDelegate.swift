@@ -49,7 +49,7 @@ extension ProjectListViewController: NSToolbarDelegate {
     }
     
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [.navigateLeft, .navigateRight, .flexibleSpace, .info]
+        return [.navigateLeft, .navigateRight, .flexibleSpace, .glossary, .space, .info]
     }
     
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {

@@ -110,12 +110,14 @@ class ProjectListViewController: UITableViewController {
     // MARK: - Segues
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
         guard let catalogueEntry = dataSource.itemIdentifier(for: indexPath),
-            let textStrings = sqlite.getTextStrings(catalogueEntry.id) else {return}
+            let textStrings = sqlite.getTextStrings(catalogueEntry.id),
+        let controller = detailViewController else {return}
         
-        detailViewController?.textItem = catalogueEntry
-        detailViewController?.textStrings = textStrings
+        controller.textItem = catalogueEntry
+        controller.textStrings = textStrings
         
         #if !targetEnvironment(UIKitForMac)
+        splitViewController?.showDetailViewController(controller.navigationController!, sender: self)
         self.appDelegate.didChooseDetail = true
         detailViewController?.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         detailViewController?.navigationItem.leftItemsSupplementBackButton = true
