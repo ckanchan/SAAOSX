@@ -122,11 +122,6 @@ class TextEditionViewController: UIViewController {
 
     //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
-        guard let catalogue = self.catalogue,
-            let id = self.textItem?.id,
-            let currentRow = catalogue.texts.firstIndex(where: {$0.id == id}) else {return}
-        
-        let nextRow: Int
         var direction: Navigate
         
         if let button = sender as? UIBarButtonItem {
@@ -150,6 +145,16 @@ class TextEditionViewController: UIViewController {
         } else {
             return
         }
+        
+        navigateIn(direction)
+    }
+    
+    func navigateIn(_ direction: Navigate) {
+        guard let catalogue = self.catalogue,
+            let id = self.textItem?.id,
+            let currentRow = catalogue.texts.firstIndex(where: {$0.id == id}) else {return}
+        
+        let nextRow: Int
         
         switch direction {
         case .left:
@@ -238,7 +243,7 @@ extension TextEditionViewController {
 
     func makeNavigationButtons() -> (UIBarButtonItem, UIBarButtonItem) {
         let left = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(navigate(_:)))
-        let right = UIBarButtonItem(title: ">", style: .plain, target: self, action: #selector(navigate(_:)))
+        let right = UIBarButtonItem(title: ">", style: .plain, target: self, action: #selector(navigate))
 
         return (left, right)
     }

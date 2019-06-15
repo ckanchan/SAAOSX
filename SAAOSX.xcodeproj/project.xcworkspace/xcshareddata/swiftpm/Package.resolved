@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/ckanchan/CDKOraccInterface.git",
         "state": {
           "branch": "master",
-          "revision": "1431955de15d8a092fc414efccb6d426425d52cc",
+          "revision": "4e8840c1e10f2bed97b95992e94c5e76e7647496",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/ckanchan/CDKSwiftOracc.git",
         "state": {
           "branch": "master",
-          "revision": "3c6ce927d5dcea1ceb266de59927f1176a5f48f2",
+          "revision": "fdcf5c6c7d98d0a06d1783392dea5b73f89692a7",
           "version": null
         }
       },

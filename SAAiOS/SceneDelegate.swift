@@ -13,7 +13,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var didChooseDetail = false
     
-    
+    func setUpControllers() -> UISplitViewController {
+        let splitViewController = UISplitViewController()
+        
+        // Configure 'right' (detail) pane
+        let detailViewController = TextEditionViewController()
+        detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        detailViewController.navigationItem.leftItemsSupplementBackButton = true
+        
+        let detailNavigationController = UINavigationController(rootViewController: detailViewController)
+        
+        // Configure 'list' (master) pane
+        let masterViewController = ProjectListViewController.new(detailViewController: detailViewController)
+        
+        #if !targetEnvironment(UIKitForMac)
+        // For all iPhone and iPad environments, embed the list controller in a nav view
+        
+        let masterNavigationController = UINavigationController(rootViewController: masterViewController)
+        masterNavigationController.isToolbarHidden = false
+        
+        splitViewController.viewControllers = [masterNavigationController, detailNavigationController]
+        
+        #else
+        splitViewController.viewControllers = [masterViewController, detailNavigationController]
+        #endif
+        
+        return splitViewController
+    }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -22,33 +48,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
+
+        if session.configuration.name == "Default Configuration" {
+            let splitViewController = setUpControllers()
+            splitViewController.delegate = self
+            
+            #if targetEnvironment(UIKitForMac)
+            splitViewController.primaryBackgroundStyle = .sidebar
+            
+            if let titlebar = windowScene.titlebar {
+                let toolbar = NSToolbar(identifier: "MainWindow")
+                toolbar.delegate = splitViewController.children[0] as! ProjectListViewController
+                titlebar.titleVisibility = .hidden
+                titlebar.toolbar = toolbar
+                
+            }
+            
+            
+            
+            #else
+            splitViewController.preferredDisplayMode = .allVisible
+            #endif
+            
+            window?.rootViewController = splitViewController
+            
+        }  else if session.configuration.name == "Glossary" {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let glossaryController = storyboard.instantiateViewController(identifier: UIViewController.StoryboardIDs.Glossary)
+            
+            window?.rootViewController = glossaryController
+        }
         
-        let svc = UISplitViewController()
-        let detailViewController = TextEditionViewController()
-        let masterViewController = ProjectListViewController.new(detailViewController: detailViewController)
-        let detailNavigationController = UINavigationController(rootViewController: detailViewController)
-        
-        #if !targetEnvironment(UIKitForMac)
-        
-        let masterNavigationController = UINavigationController(rootViewController: masterViewController)
-        
-        masterNavigationController.isToolbarHidden = false
-        
-        svc.viewControllers = [masterNavigationController, detailNavigationController]
-        
-        #else
-        svc.viewControllers = [masterViewController, detailNavigationController]
-        
-        #endif
-        
-        svc.delegate = self
-        
-        self.window!.rootViewController = svc
-        detailViewController.navigationItem.leftBarButtonItem = svc.displayModeButtonItem
-        detailViewController.navigationItem.leftItemsSupplementBackButton = true
-        svc.primaryBackgroundStyle = .sidebar
         window?.makeKeyAndVisible()
-        
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

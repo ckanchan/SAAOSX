@@ -34,13 +34,13 @@ class ProjectListViewController: UITableViewController {
         super.viewDidLoad()
         tableView.reloadData()
         
+        #if !targetEnvironment(UIKitForMac)
         if self.catalogue.source != .search {
             let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
             self.setToolbarItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
         }
-        
+        #endif
         //let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
-        
         //navigationItem.rightBarButtonItem = preferencesButton
     }
     
@@ -72,7 +72,25 @@ class ProjectListViewController: UITableViewController {
             }
         }
 
+        #if targetEnvironment(UIKitForMac)
+        let userActivity = NSUserActivity(activityType: "me.chaidk.saai.glossary")
+        userActivity.title = "View Glossary"
+        
+        let activationOptions = UIScene.ActivationRequestOptions()
+        activationOptions.requestingScene = view.window?.windowScene
+        
+        UIApplication.shared.requestSceneSessionActivation(nil,
+                                                           userActivity: userActivity,
+                                                           options: activationOptions,
+                                                           errorHandler: {print($0)})
+        
+        
+        
+        #else
+        
         self.navigationController?.pushViewController(glossaryController, animated: true)
+        
+        #endif
     }
 
     // MARK: - Segues
@@ -83,7 +101,7 @@ class ProjectListViewController: UITableViewController {
         controller.textStrings = textStrings
         controller.catalogue = self.catalogue
         controller.parentController = self
-
+        self.detailViewController = controller
 
         if catalogue.source == .search {
             guard let catalogue = self.catalogue as? Catalogue else {return}

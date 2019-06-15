@@ -109,6 +109,7 @@
 		54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B721D698BB00F00F39 /* AncientMap.swift */; };
 		54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
 		54BF519C22AFFB6D00DA4BD0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */; };
+		54BF51A522B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BF51A422B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift */; };
 		54C21A60227F0DB50093E494 /* NoteSQLTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */; };
 		54C5394B22808D6100397906 /* NotesPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */; };
 		54C5394D228096F000397906 /* NSAttributedStringLineBreaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */; };
@@ -239,6 +240,8 @@
 		54B3C1B721D698BB00F00F39 /* AncientMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMap.swift; sourceTree = "<group>"; };
 		54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Conversions.swift"; sourceTree = "<group>"; };
 		54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		54BF519D22B0059B00DA4BD0 /* SAAi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAAi-Bridging-Header.h"; sourceTree = "<group>"; };
+		54BF51A422B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+NSToolbarDelegate.swift"; sourceTree = "<group>"; };
 		54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLTags.swift; sourceTree = "<group>"; };
 		54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPreferencesViewController.swift; sourceTree = "<group>"; };
 		54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringLineBreaks.swift; sourceTree = "<group>"; };
@@ -529,17 +532,18 @@
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
+				54BF51A322B007AA00DA4BD0 /* macOS Helpers */,
 				5439770A20A421B0002072AE /* Preferences */,
 				548C57D120A1C4CE008E8C1F /* Extensions */,
 				54657A5D20A0C0FC00FAC8E3 /* Glossary */,
 				547BEB35209FA8C000C42007 /* TextEdition */,
 				5498CADA204EAF63004C774A /* AppDelegate.swift */,
+				54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */,
 				5498CADC204EAF63004C774A /* ProjectListViewController.swift */,
-				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
+				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
 				5498CAE8204EAF63004C774A /* Info.plist */,
-				54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */,
 			);
 			path = SAAiOS;
 			sourceTree = "<group>";
@@ -557,6 +561,15 @@
 				54C5394C228096F000397906 /* NSAttributedStringLineBreaks.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		54BF51A322B007AA00DA4BD0 /* macOS Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				54BF519D22B0059B00DA4BD0 /* SAAi-Bridging-Header.h */,
+				54BF51A422B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift */,
+			);
+			path = "macOS Helpers";
 			sourceTree = "<group>";
 		};
 		54C5394922808D0E00397906 /* Preferences */ = {
@@ -704,6 +717,7 @@
 					};
 					5498CAD7204EAF63004C774A = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -888,6 +902,7 @@
 				5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */,
 				54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */,
 				54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */,
+				54BF51A522B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
 				54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
@@ -987,6 +1002,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1040,6 +1056,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -1147,13 +1164,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = iOSAppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SAAi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1162,6 +1180,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTS_UIKITFORMAC = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SAAiOS/macOS Helpers/SAAi-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = /Users/Chaitanya/Documents/Programming/SAAOSX;
@@ -1172,13 +1192,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = iOSAppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SAAi.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1187,6 +1208,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTS_UIKITFORMAC = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SAAiOS/macOS Helpers/SAAi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = /Users/Chaitanya/Documents/Programming/SAAOSX;
