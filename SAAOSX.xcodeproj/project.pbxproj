@@ -108,6 +108,8 @@
 		54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */; };
 		54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B721D698BB00F00F39 /* AncientMap.swift */; };
 		54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
+		54B6A3C322B53A210017F29F /* OraccCatalogEntry+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B6A3C222B53A200017F29F /* OraccCatalogEntry+Hashable.swift */; };
+		54B6A3C422B53A400017F29F /* OraccCatalogEntry+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B6A3C222B53A200017F29F /* OraccCatalogEntry+Hashable.swift */; };
 		54BF519C22AFFB6D00DA4BD0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */; };
 		54BF51A522B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BF51A422B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift */; };
 		54C21A60227F0DB50093E494 /* NoteSQLTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */; };
@@ -239,6 +241,7 @@
 		54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMapViewDelegate.swift; sourceTree = "<group>"; };
 		54B3C1B721D698BB00F00F39 /* AncientMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientMap.swift; sourceTree = "<group>"; };
 		54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+Conversions.swift"; sourceTree = "<group>"; };
+		54B6A3C222B53A200017F29F /* OraccCatalogEntry+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OraccCatalogEntry+Hashable.swift"; sourceTree = "<group>"; };
 		54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		54BF519D22B0059B00DA4BD0 /* SAAi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAAi-Bridging-Header.h"; sourceTree = "<group>"; };
 		54BF51A422B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+NSToolbarDelegate.swift"; sourceTree = "<group>"; };
@@ -540,6 +543,7 @@
 				5498CADA204EAF63004C774A /* AppDelegate.swift */,
 				54BF519B22AFFB6D00DA4BD0 /* SceneDelegate.swift */,
 				5498CADC204EAF63004C774A /* ProjectListViewController.swift */,
+				54B6A3C222B53A200017F29F /* OraccCatalogEntry+Hashable.swift */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
@@ -815,6 +819,7 @@
 				541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */,
 				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
+				54B6A3C322B53A210017F29F /* OraccCatalogEntry+Hashable.swift in Sources */,
 				5469819B2269F3AD00B27F38 /* CloudKitChanges.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */,
 				54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */,
@@ -902,6 +907,7 @@
 				5498CAFC204EB34B004C774A /* SQLiteCatalogue.swift in Sources */,
 				54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */,
 				54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */,
+				54B6A3C422B53A400017F29F /* OraccCatalogEntry+Hashable.swift in Sources */,
 				54BF51A522B0091000DA4BD0 /* ProjectListViewController+NSToolbarDelegate.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
 				54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */,

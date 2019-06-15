@@ -50,32 +50,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-
-        if session.configuration.name == "Default Configuration" {
-            let splitViewController = setUpControllers()
-            splitViewController.delegate = self
-            
-            #if targetEnvironment(UIKitForMac)
-            splitViewController.primaryBackgroundStyle = .sidebar
-            
-            if let titleBar = windowScene.titlebar {
-                let toolbar = NSToolbar(identifier: "MainWindow")
-                toolbar.delegate = splitViewController.children[0] as! ProjectListViewController
-                titleBar.toolbar = toolbar
-            }
-            
-            #else
-            splitViewController.preferredDisplayMode = .allVisible
-            #endif
-            
-            window?.rootViewController = splitViewController
-            
-        }  else if session.configuration.name == "Glossary" {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let glossaryController = storyboard.instantiateViewController(identifier: UIViewController.StoryboardIDs.Glossary)
-            
-            window?.rootViewController = glossaryController
+        
+        let splitViewController = setUpControllers()
+        splitViewController.delegate = self
+        
+        #if targetEnvironment(UIKitForMac)
+        splitViewController.primaryBackgroundStyle = .sidebar
+        
+        if let titleBar = windowScene.titlebar {
+            let toolbar = NSToolbar(identifier: "MainWindow")
+            toolbar.delegate = splitViewController.children[0] as! ProjectListViewController
+            titleBar.toolbar = toolbar
         }
+        
+        #else
+        splitViewController.preferredDisplayMode = .allVisible
+        #endif
+        
+        window?.rootViewController = splitViewController
         
         window?.makeKeyAndVisible()
     }

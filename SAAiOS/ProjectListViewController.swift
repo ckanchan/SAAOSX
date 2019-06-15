@@ -14,7 +14,6 @@ enum Navigate {
 }
 
 class ProjectListViewController: UITableViewController {
-
     var detailViewController: TextEditionViewController?
     var filteredTexts: [OraccCatalogEntry] = []
     lazy var catalogue: CatalogueProvider = {return sqlite}()
@@ -29,18 +28,29 @@ class ProjectListViewController: UITableViewController {
 
         return searchController
     }()
+    
+    lazy var dataSource = makeDataSource()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
-        
+        tableView.dataSource = dataSource
+
         #if !targetEnvironment(UIKitForMac)
         if self.catalogue.source != .search {
-            let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
-            self.setToolbarItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
+            let glossaryButton = UIBarButtonItem(title: "Glossary",
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(showGlossary))
+            
+            self.setToolbarItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton],
+                                 animated: false)
         }
         #endif
-        //let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
+//        let gearImage = UIImage(systemName: "gear")
+//        let preferencesButton = UIBarButtonItem(image: gear,
+//                                                style: .plain,
+//                                                target: self,
+//                                                action: #selector(loadPreferences))
         //navigationItem.rightBarButtonItem = preferencesButton
     }
     
@@ -52,6 +62,10 @@ class ProjectListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+       update(with: catalogue)
     }
 
     @objc func showGlossary(_ sender: Any?) {
@@ -95,7 +109,8 @@ class ProjectListViewController: UITableViewController {
 
     // MARK: - Segues
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
-        guard let (catalogueEntry, textStrings) = getTextViewData(for: indexPath) else {return}
+        guard let catalogueEntry = dataSource.itemIdentifier(for: indexPath),
+            let textStrings = sqlite.getTextStrings(catalogueEntry.id) else {return}
         
         detailViewController?.textItem = catalogueEntry
         detailViewController?.textStrings = textStrings
@@ -105,20 +120,6 @@ class ProjectListViewController: UITableViewController {
         detailViewController?.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         detailViewController?.navigationItem.leftItemsSupplementBackButton = true
         #endif
-    }
-
-    func getTextViewData(for indexPath: IndexPath) -> (OraccCatalogEntry, TextEditionStringContainer)? {
-        let catalogueEntry: OraccCatalogEntry
-        if isFiltering() {
-            catalogueEntry = filteredTexts[indexPath.row]
-        } else {
-            catalogueEntry = catalogue.texts[indexPath.row]
-        }
-
-        guard let textStrings = sqlite.getTextStrings(catalogueEntry.id) else {return nil}
-
-        return (catalogueEntry, textStrings)
-
     }
 
     func getIndexPath(_ direction: Navigate) -> IndexPath? {
@@ -141,28 +142,31 @@ class ProjectListViewController: UITableViewController {
     }
 }
 
-// MARK: - Table view methods
+// MARK: - iOS 13 Table View Methods
 extension ProjectListViewController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return filteredTexts.count
-        } else {
-            return catalogue.texts.count
-        }
+    enum Section {
+        case section
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let textItem: OraccCatalogEntry
-        if isFiltering() {
-            textItem = filteredTexts[indexPath.row]
-        } else {
-            textItem = catalogue.texts[indexPath.row]
-        }
-
-        cell.textLabel?.text = textItem.displayName
-        cell.detailTextLabel?.text = textItem.title
-        return cell
+    
+    func makeDataSource() -> UITableViewDiffableDataSource<Section, OraccCatalogEntry> {
+        let reuseIdentifier = "Cell"
+        
+        return UITableViewDiffableDataSource(tableView: tableView,
+                                             cellProvider: { tableView, indexPath, catalogueEntry in
+                                                let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+                                                
+                                                cell.textLabel?.text = catalogueEntry.displayName
+                                                cell.detailTextLabel?.text = catalogueEntry.title
+                                                return cell
+                                                
+        })
+    }
+    
+    func update(with catalogue: CatalogueProvider) {
+        let snapshot = NSDiffableDataSourceSnapshot<Section, OraccCatalogEntry>()
+        snapshot.appendSections([Section.section])
+        snapshot.appendItems(catalogue.texts, toSection: .section)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 

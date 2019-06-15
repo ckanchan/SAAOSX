@@ -59,6 +59,8 @@ class TextEditionViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
+        
+        #if !targetEnvironment(UIKitForMac)
         switch traitCollection.horizontalSizeClass {
         case .compact:
             addPrimaryPanel()
@@ -73,6 +75,11 @@ class TextEditionViewController: UIViewController {
         @unknown default:
             addPrimaryPanel()
         }
+        
+        #else
+        addPrimaryPanel()
+        addSecondaryPanel()
+        #endif
     }
     
     func addPrimaryPanel() {
