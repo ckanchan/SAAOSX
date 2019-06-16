@@ -11,9 +11,7 @@ import CDKSwiftOracc
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-    var didChooseDetail = false
     
     // MARK:- Essential app services
     lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue() }()!

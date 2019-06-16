@@ -6,26 +6,33 @@
 //  Copyright © 2018 Chaitanya Kanchan. All rights reserved.
 //
 
-import Cocoa
-import CDKSwiftOracc
-import CoreSpotlight
 import CDKOraccInterface
+import CDKSwiftOracc
 import CloudKit
+import Cocoa
+import CoreSpotlight
 import os
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+    
+    // MARK: App Services
     lazy var oraccInterface: OraccInterface = {return try! OraccGithubToSwiftInterface()}()
-
     lazy var glossary: Glossary = { return Glossary() }()
     lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
     lazy var noteSQL: NoteSQLDatabase = {
 
-        let applicationSupport = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let applicationSupport = try! FileManager.default.url(for: .applicationSupportDirectory,
+                                                              in: .userDomainMask,
+                                                              appropriateFor: nil,
+                                                              create: true)
+        
         let supportDirectory = applicationSupport.appendingPathComponent(Bundle.main.bundleIdentifier!, isDirectory: true)
         if !FileManager.default.fileExists(atPath: supportDirectory.path) {
-            try! FileManager.default.createDirectory(at: supportDirectory, withIntermediateDirectories: true, attributes: nil)
+            try! FileManager.default.createDirectory(at: supportDirectory,
+                                                     withIntermediateDirectories: true,
+                                                     attributes: nil)
         }
         
         #if DEBUG
@@ -40,8 +47,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var cloudKitDB: CloudKitNotes!
     
+    
+    // MARK: - Lifecycle Methods
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+        NSAppleEventManager.shared().setEventHandler(self,
+                                                     andSelector: #selector(handleAppleEvent(event:replyEvent:)),
+                                                     forEventClass: AEEventClass(kInternetEventClass),
+                                                     andEventID: AEEventID(kAEGetURL))
         
         #if DEBUG
         let debugDefaults = UserDefaults(suiteName: "me.chaidk.debug.SAAo-SX")!
@@ -64,7 +76,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
+    func application(_ application: NSApplication,
+                     didReceiveRemoteNotification userInfo: [String : Any]) {
+        
         if let databaseNotification = CKNotification(fromRemoteNotificationDictionary: userInfo),
             databaseNotification.notificationType == .database,
             cloudKitDB != nil {
@@ -75,6 +89,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             cloudKitDB.processDatabaseChanges()
         }
     }
+
+    func application(_ application: NSApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([NSUserActivityRestoring]) -> Void) -> Bool {
+        
+        if userActivity.activityType == CSSearchableItemActionType,
+            let cdliID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
+            self.bookmarks.contains(textID: cdliID),
+            let entry = self.bookmarks.getCatalogueEntry(forID: cdliID) {
+
+            let strings = self.bookmarks.getTextStrings(cdliID)
+            TextWindowController.new(entry, strings: strings, catalogue: bookmarks)
+            return true
+            
+        } else {
+            return openFromDatabase(withID: cdliID)
+        }
+        
+        return false
+    }
+
+    func openFromDatabase(withID id: String) -> Bool {
+        guard let sqliteDB = self.sqlite else {return false}
+        let id = TextID.init(stringLiteral: id)
+        if let entry = sqliteDB.getEntryFor(id: id),
+            let strings = sqliteDB.getTextStrings(id)
+        {
+            TextWindowController.new(entry, strings: strings, catalogue: sqliteDB)
+            return true
+        } else {
+            return false
+        }
+    }
+
+    
 
     func setOraccInterface(to interface: InterfaceType) {
         switch interface {
@@ -88,7 +137,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             oraccInterface = OraccToSwiftInterface()
         }
     }
+    
+}
 
+// MARK: - Window Open Methods
+extension AppDelegate {
+    
     @IBAction func newProjectListWindow(_ sender: Any) {
         ProjectListWindowController.new(catalogue: nil)
     }
@@ -104,7 +158,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         notesViewController.view.window?.makeKeyAndOrderFront(self)
         
     }
-
+    
     @IBAction func openPreferencesWindow(_ sender: Any) {
         if NSApp.windows.contains(where: {
             $0.title == "Preferences"
@@ -112,21 +166,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.windows.first(where: {$0.title == "Preferences"})?.makeKeyAndOrderFront(nil)
             return
         }
-        let storyboard = NSStoryboard.init(name: "Preferences", bundle: Bundle.main)
-
+        let storyboard = NSStoryboard(name: "Preferences", bundle: Bundle.main)
+        
         guard let newWindow = storyboard.instantiateController(withIdentifier: "Preferences") as? NSWindowController else {return}
         newWindow.showWindow(sender)
-
+        
     }
+}
 
+
+// MARK: - File Open Methods
+extension AppDelegate {
     @IBAction func openDocument(_ sender: Any) {
         let panel = NSOpenPanel.init()
         panel.allowsMultipleSelection = false
         panel.begin { _ in
-
+            
             guard let url = panel.urls.first,
                 let data = try? Data(contentsOf: url) else {return}
-
+            
             switch url.pathExtension {
             case "json":
                 let decoder = JSONDecoder()
@@ -150,8 +208,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     newWindow.setConnectionStatus(to: "local")
                     
                 } else {self.openError(fileAt: url)}
-
-
+                
+                
             case "ocdl": // this is a Tupshar file
                 struct TupsharDocument: Decodable {
                     let text: OraccTextEdition
@@ -173,55 +231,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-
+    
     func openError(fileAt url: URL) {
         let alert = NSAlert()
         alert.messageText = "Could not open file"
         alert.informativeText = "The file at \(url.path) does not contain valid Oracc data."
         _ = alert.runModal()
     }
+}
 
-    func application(_ application: NSApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([NSUserActivityRestoring]) -> Void) -> Bool {
-        if userActivity.activityType == CSSearchableItemActionType {
-            if let cdliID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                if let result = self.bookmarks.contains(textID: cdliID) {
-                    if result {
-                        guard let entry = self.bookmarks.getCatalogueEntry(forID: cdliID) else {return openFromDatabase(withID: cdliID)}
-                        let strings = self.bookmarks.getTextStrings(cdliID)
-                        TextWindowController.new(entry, strings: strings, catalogue: bookmarks)
-                        return true
-                    }
-                } else {
-                    return openFromDatabase(withID: cdliID)
-                }
-            }
-        }
-        return false
-    }
-
-    func openFromDatabase(withID id: String) -> Bool {
-        guard let sqliteDB = self.sqlite else {return false}
-        let id = TextID.init(stringLiteral: id)
-        if let entry = sqliteDB.getEntryFor(id: id) {
-            if let strings = sqliteDB.getTextStrings(id) {
-                TextWindowController.new(entry, strings: strings, catalogue: sqliteDB)
-                return true
-            }
-        }
-        return false
-    }
-
+// MARK: - URL Scheme Handling
+extension AppDelegate {
     @objc func handleAppleEvent(event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
-        guard let appleEventDescription = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)) else {return}
-        guard let appleEventURLString = appleEventDescription.stringValue else {return}
-
-        guard let url = URL(string: appleEventURLString) else {return}
-        guard let sqlite = self.sqlite else {return}
-
+        guard let appleEventDescription = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)),
+            let appleEventURLString = appleEventDescription.stringValue,
+            let url = URL(string: appleEventURLString),
+            let sqlite = self.sqlite else {return}
+        
         if let host = url.host {
-
+            
             let window: TextWindowController?
-
+            
             switch host {
             case "first":
                 let components = url.pathComponents.reduce("", {result, next in
@@ -231,22 +261,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         return "\(result)\(next.lowercased())"
                     }
                 })
-
+                
                 let results = sqlite.search(components)
                 guard let first = results.first else {return}
                 guard let strings = sqlite.getTextStrings(first.id) else {return}
                 window = TextWindowController.new(first, strings: strings, catalogue: sqlite)
-
+                
             case "id":
                 let idString = url.lastPathComponent.uppercased()
                 guard idString.count == 7 else {return}
                 guard "PQX".contains(idString.prefix(1)) else {return}
                 let id = TextID.init(stringLiteral: idString)
-
+                
                 guard let result = sqlite.getEntryFor(id: id) else {return}
                 guard let strings = sqlite.getTextStrings(id) else {return}
                 window = TextWindowController.new(result, strings: strings, catalogue: sqlite)
-
+                
             case "search":
                 let searchString = url.pathComponents.reduce("", {result, next in
                     if next == "/" {
@@ -255,16 +285,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         return "\(result)\(next.lowercased())"
                     }
                 })
-
+                
                 let projectWindow = ProjectListWindowController.new(catalogue: sqlite)
                 projectWindow.searchField.stringValue = searchString
                 projectWindow.projectViewController.search(searchString)
                 return
-
+                
             default:
                 return
             }
-
+            
             if let query = url.query {
                 guard let window = window else {return}
                 switch query {
@@ -277,12 +307,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 default:
                     return
                 }
-
+                
                 window.textViewController.first?.setText(self)
             }
-
         }
-
     }
-
 }
