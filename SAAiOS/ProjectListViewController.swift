@@ -17,17 +17,7 @@ class ProjectListViewController: UITableViewController {
     var detailViewController: TextEditionViewController?
     var filteredTexts: [OraccCatalogEntry] = []
     lazy var catalogue: CatalogueProvider = {return sqlite}()
-    lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search texts"
-        searchController.searchBar.addShortcuts()
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-
-        return searchController
-    }()
+    lazy var searchController: UISearchController = initialiseSearchController()
     
     lazy var dataSource = makeDataSource()
 
@@ -55,7 +45,7 @@ class ProjectListViewController: UITableViewController {
     }
     
     @objc func loadPreferences() {
-        guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.PreferencesViewController) else {return}
+        guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardID.PreferencesViewController) else {return}
         navigationController?.pushViewController(preferencesViewController, animated: true)
     }
 
@@ -69,7 +59,7 @@ class ProjectListViewController: UITableViewController {
     }
 
     @objc func showGlossary(_ sender: Any?) {
-        guard let glossaryController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.Glossary) as? GlossaryTableViewController else {return}
+        guard let glossaryController = storyboard?.instantiateViewController(withIdentifier: StoryboardID.Glossary) as? GlossaryTableViewController else {return}
 
         if let quickDefinition = sender as? UIBarButtonItem {
             if let text = quickDefinition.title {
@@ -174,6 +164,19 @@ extension ProjectListViewController {
 
 // MARK: - Search Controller methods
 extension ProjectListViewController: UISearchResultsUpdating {
+    
+    func initialiseSearchController() -> UISearchController {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search texts"
+        searchController.searchBar.addShortcuts()
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        return searchController
+    }
+    
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -197,7 +200,7 @@ extension ProjectListViewController: UISearchResultsUpdating {
 extension ProjectListViewController {
     static func new(detailViewController: TextEditionViewController?) -> ProjectListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: UIViewController.StoryboardIDs.ProjectListViewController) as! ProjectListViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: UIViewController.StoryboardID.ProjectListViewController) as! ProjectListViewController
         vc.detailViewController = detailViewController
         return vc
     }

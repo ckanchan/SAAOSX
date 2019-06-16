@@ -19,11 +19,8 @@ class TextEditionViewController: UIViewController {
     // MARK: - Instance Variables
     weak var parentController: ProjectListViewController?
     weak var catalogue: CatalogueProvider?
-
-
     var primaryPanel: TextPanelViewController!
     var secondaryPanel: TextPanelViewController?
-
     var textItem: OraccCatalogEntry? {
         didSet {
             guard let textItem = self.textItem else {return}
@@ -41,6 +38,8 @@ class TextEditionViewController: UIViewController {
 
     var searchTerm: String?
 
+    
+    // MARK: - Lifecycle methods
     override func loadView() {
         let stackView = UIStackView(frame: .zero)
         stackView.alignment = .fill
@@ -50,10 +49,16 @@ class TextEditionViewController: UIViewController {
         self.traitCollectionDidChange(nil)
     }
     
-    // MARK: - Lifecycle methods
+
     override func viewDidLoad() {
         initialiseToolbar()
         addInfoButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: false)
+        navigationController?.hidesBarsOnSwipe = true
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -81,34 +86,10 @@ class TextEditionViewController: UIViewController {
         addSecondaryPanel()
         #endif
     }
-    
-    func addPrimaryPanel() {
-        guard self.primaryPanel == nil else {return}
-        primaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Normalisation)
-        self.addChild(primaryPanel)
-        primaryPanel.loadViewIfNeeded()
-        stackView.addArrangedSubview(primaryPanel.view)
-        primaryPanel.didMove(toParent: self)
-    }
-    
-    func addSecondaryPanel() {
-        guard self.secondaryPanel == nil else {return}
-        secondaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Translation)
-        self.addChild(secondaryPanel!)
-        secondaryPanel!.loadViewIfNeeded()
-        stackView.addArrangedSubview(secondaryPanel!.view)
-        secondaryPanel?.didMove(toParent: self)
-    }
-    
-    func removeSecondaryPanelIfExists() {
-        guard let secondaryPanel = self.secondaryPanel else {return}
-        secondaryPanel.willMove(toParent: nil)
-        stackView.removeArrangedSubview(secondaryPanel.view)
-        secondaryPanel.removeFromParent()
-        self.secondaryPanel = nil
-    }
+}
 
-    
+// MARK: - String Layout and Formatting
+extension TextEditionViewController {
     func titleLabel(for item: OraccCatalogEntry, color: UIColor = UIColor.label) -> UILabel {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -119,16 +100,65 @@ class TextEditionViewController: UIViewController {
         label.text = "\(item.title)\n\(item.displayName)"
         label.minimumScaleFactor = CGFloat.init(0.25)
         label.allowsDefaultTighteningForTruncation = true
-
+        
         return label
     }
+    
+    func string(for textKind: TextDisplay) -> NSAttributedString {
+        let notAvailable = NSAttributedString(string: "Not available")
+        
+        switch textKind {
+        case .Cuneiform:
+            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"),
+                                      attributes: [NSAttributedString.Key.font: UIFont.cuneiformNA, .foregroundColor: UIColor.label])
+        case .Transliteration:
+            return textStrings?.transliteration ?? notAvailable
+        case .Normalisation:
+            return textStrings?.normalisation ?? notAvailable
+        case .Translation:
+            return NSAttributedString(string: (textStrings?.translation ?? "Not available"),
+                                      attributes: [NSAttributedString.Key.font: UIFont.defaultFont,
+                                                   .foregroundColor: UIColor.label])
+            
+        }
+    }
+}
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.setToolbarHidden(false, animated: false)
-        navigationController?.hidesBarsOnSwipe = true
+// MARK: - Outbound Methods
+extension TextEditionViewController {
+    func viewOnline() {
+        guard let catalogueInfo = self.textItem else {return}
+        let textID = catalogueInfo.id
+        let projectPath = catalogueInfo.project
+        let url = URL(string: "http://oracc.org/\(projectPath)/\(textID)/html")!
+
+        let webView = OnlineViewController()
+        webView.url = url
+
+        self.navigationController?.pushViewController(webView, animated: true)
     }
 
+    @objc func presentInformation() {
+        guard let catalogueInfo = self.textItem else {return}
+        let storyboard = UIStoryboard(name: "TextEdition", bundle: nil)
+        guard let infoTableController = storyboard.instantiateViewController(withIdentifier: StoryboardID.InfoTableViewController) as? InfoTableViewController else {return}
+        infoTableController.catalogueInfo = catalogueInfo
+        infoTableController.textEditionViewController = self
+        infoTableController.tableView.delegate = infoTableController
+
+        if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
+            infoTableController.modalPresentationStyle = .popover
+            present(infoTableController, animated: true)
+            let popoverController = infoTableController.popoverPresentationController
+            popoverController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        } else {
+            navigationController?.pushViewController(infoTableController, animated: true)
+        }
+    }
+}
+
+// MARK: - Text navigation
+extension TextEditionViewController {
     @objc func navigate(_ sender: Any) {
         var direction: Navigate
         
@@ -183,65 +213,44 @@ class TextEditionViewController: UIViewController {
             parentController?.navigate(direction)
         }
     }
+}
+
+
+// MARK: - Panel methods
+extension TextEditionViewController {
+    func addPrimaryPanel() {
+        guard self.primaryPanel == nil else {return}
+        primaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Normalisation)
+        self.addChild(primaryPanel)
+        primaryPanel.loadViewIfNeeded()
+        stackView.addArrangedSubview(primaryPanel.view)
+        primaryPanel.didMove(toParent: self)
+    }
+    
+    func addSecondaryPanel() {
+        guard self.secondaryPanel == nil else {return}
+        secondaryPanel = TextPanelViewController.new(delegate: self, textDisplay: .Translation)
+        self.addChild(secondaryPanel!)
+        secondaryPanel!.loadViewIfNeeded()
+        stackView.addArrangedSubview(secondaryPanel!.view)
+        secondaryPanel?.didMove(toParent: self)
+    }
+    
+    func removeSecondaryPanelIfExists() {
+        guard let secondaryPanel = self.secondaryPanel else {return}
+        secondaryPanel.willMove(toParent: nil)
+        stackView.removeArrangedSubview(secondaryPanel.view)
+        secondaryPanel.removeFromParent()
+        self.secondaryPanel = nil
+    }
     
     func refreshPanels() {
         self.primaryPanel?.changeText(display: .Normalisation, scrollToTop: true)
         self.secondaryPanel?.changeText(display: .Translation, scrollToTop: true)
     }
-
-    func string(for textKind: TextDisplay) -> NSAttributedString {
-        let notAvailable = NSAttributedString(string: "Not available")
-
-        switch textKind {
-        case .Cuneiform:
-            return NSAttributedString(string: (textStrings?.cuneiform ?? "Not available"),
-                                      attributes: [NSAttributedString.Key.font: UIFont.cuneiformNA, .foregroundColor: UIColor.label])
-        case .Transliteration:
-            return textStrings?.transliteration ?? notAvailable
-        case .Normalisation:
-            return textStrings?.normalisation ?? notAvailable
-        case .Translation:
-            return NSAttributedString(string: (textStrings?.translation ?? "Not available"), attributes: [NSAttributedString.Key.font: UIFont.defaultFont,
-                                                                                                          .foregroundColor: UIColor.label])
-
-        }
-    }
 }
 
-// MARK: - Outbound Methods
-extension TextEditionViewController {
-    func viewOnline() {
-        guard let catalogueInfo = self.textItem else {return}
-        let textID = catalogueInfo.id
-        let projectPath = catalogueInfo.project
-        let url = URL(string: "http://oracc.org/\(projectPath)/\(textID)/html")!
-
-        let webView = OnlineViewController()
-        webView.url = url
-
-        self.navigationController?.pushViewController(webView, animated: true)
-    }
-
-    @objc func presentInformation() {
-        guard let catalogueInfo = self.textItem else {return}
-        let storyboard = UIStoryboard(name: "TextEdition", bundle: nil)
-        guard let infoTableController = storyboard.instantiateViewController(withIdentifier: StoryboardIDs.InfoTableViewController) as? InfoTableViewController else {return}
-        infoTableController.catalogueInfo = catalogueInfo
-        infoTableController.textEditionViewController = self
-        infoTableController.tableView.delegate = infoTableController
-
-        if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
-            infoTableController.modalPresentationStyle = .popover
-            present(infoTableController, animated: true)
-            let popoverController = infoTableController.popoverPresentationController
-            popoverController?.barButtonItem = self.navigationItem.rightBarButtonItem
-        } else {
-            navigationController?.pushViewController(infoTableController, animated: true)
-        }
-    }
-}
-
-// MARK :- Factory methods for UI components
+// MARK: - UI components
 extension TextEditionViewController {
     func addInfoButton() {
         let info = UIButton(type: .infoLight)

@@ -24,7 +24,7 @@ extension UIViewController {
 
 // Storyboard IDs
 extension UIViewController {
-    public enum StoryboardIDs {
+    public enum StoryboardID {
         static var TextEditionViewController: String {
             return "TextEditionViewController"
         }

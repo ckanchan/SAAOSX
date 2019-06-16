@@ -97,7 +97,7 @@ class GlossaryTableViewController: UITableViewController {
 
         let sortedSet = searchSet.members.values.sorted(by: {$0.displayName < $1.displayName})
 
-        let searchSetViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.ProjectListViewController) as! ProjectListViewController
+        let searchSetViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardID.ProjectListViewController) as! ProjectListViewController
 
         let catalogue = Catalogue.init(catalogue: searchSet, sorted: sortedSet, source: .search)
 
