@@ -64,7 +64,24 @@ final class SQLiteCatalogue: CatalogueProvider {
             coordinate = nil
         }
         
-        return OraccCatalogEntry(displayName: row[displayName], title: row[title], id: row[textid], ancientAuthor: row[ancientAuthor], project: row[project], chapterNumber: row[chapterNumber], chapterName: row[chapterName], genre: row[genre], material: row[material], period: row[period], provenience: row[provenience], primaryPublication: row[primaryPublication], museumNumber: row[museumNumber], publicationHistory: row[publicationHistory], notes: row[notes], pleiadesID: row[pleiadesID], pleiadesCoordinate: coordinate, credits: row[credits])
+        return OraccCatalogEntry(displayName: row[displayName],
+                                 title: row[title],
+                                 id: row[textid],
+                                 ancientAuthor: row[ancientAuthor],
+                                 project: row[project],
+                                 chapterNumber: row[chapterNumber],
+                                 chapterName: row[chapterName],
+                                 genre: row[genre],
+                                 material: row[material],
+                                 period: row[period],
+                                 provenience: row[provenience],
+                                 primaryPublication: row[primaryPublication],
+                                 museumNumber: row[museumNumber],
+                                 publicationHistory: row[publicationHistory],
+                                 notes: row[notes],
+                                 pleiadesID: row[pleiadesID],
+                                 pleiadesCoordinate: coordinate,
+                                 credits: row[credits])
     }
     
     func text(at row: Int) -> OraccCatalogEntry? {
@@ -119,7 +136,26 @@ final class SQLiteCatalogue: CatalogueProvider {
     }
 
     func getEntryFor(id cdliID: TextID) -> OraccCatalogEntry? {
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY, credits).filter(textid == cdliID.description)
+        let query = textTable.select(displayName,
+                                     title,
+                                     textid,
+                                     ancientAuthor,
+                                     project,
+                                     chapterNumber,
+                                     chapterName,
+                                     genre,
+                                     material,
+                                     period,
+                                     provenience,
+                                     primaryPublication,
+                                     museumNumber,
+                                     publicationHistory,
+                                     notes,
+                                     pleiadesID,
+                                     pleiadesCoordinateX,
+                                     pleiadesCoordinateY,
+                                     credits)
+            .filter(textid == cdliID.description)
 
         guard let row = try? db.pluck(query) else {return nil}
         return rowToEntry(row)
@@ -137,13 +173,20 @@ final class SQLiteCatalogue: CatalogueProvider {
         return stringContainer
     }
 
-    init? () {
-        guard let url = Bundle.main.url(forResource: "SAA_Lemmatised", withExtension: "sqlite3")?.path else {return nil}
+    convenience init? () {
+        guard let url = Bundle.main.url(forResource: "SAA_Lemmatised", withExtension: "sqlite3") else {return nil}
+        self.init(url: url)
+    }
+    
+    init?(url: URL) {
         do {
-            let connection = try Connection(url, readonly: true)
+            let connection = try Connection(url.path, readonly: true)
             self.db = connection
         } catch {
-            os_log("Fatal error initialising catalogue: %s", log: Log.CatalogueSQLite, type: .error, error.localizedDescription)
+            os_log("Fatal error initialising catalogue: %s",
+                   log: Log.CatalogueSQLite,
+                   type: .error,
+                   error.localizedDescription)
             return nil
         }
     }
