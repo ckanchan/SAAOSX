@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CDKSwiftOracc
 import SwiftUI
 
 struct TextBox: View {
@@ -14,20 +15,28 @@ struct TextBox: View {
     
     @Binding var selectedDisplayMode: Int
     
-    var textStrings: [String]
+    var textStrings: TextEditionStringContainer
     
     
     var body: some View {
+        let text: Text
+        switch selectedDisplayMode {
+        case 0: text = Text(textStrings.cuneiform).font(.custom("CuneiformNAOutline-Medium", size: 20))
+        case 1: text = textStrings.transliteration.renderForSwiftUI()
+        case 2: text = textStrings.normalisation.renderForSwiftUI()
+        case 3: text = Text(textStrings.translation)
+        default: text = Text("Not available").font(.subheadline)
+        }
+    
         return GeometryReader { geometry in
             ScrollView {
-                    Text(self.textStrings[self.selectedDisplayMode])        
-                        .lineLimit(nil)
-                        .padding()
-                        .frame(maxWidth:geometry.size.width,
-                               idealHeight: 2000,
-                               alignment: .topLeading)
-                }
-        }.frame(alignment: .topLeading)
+                text
+                    .lineLimit(nil)
+                    .padding()
+                    .frame(maxWidth:geometry.size.width,
+                           alignment: .topLeading)
+                }.frame(alignment: .topLeading)
+        }
     }
 }
 
@@ -35,8 +44,14 @@ struct TextBox: View {
 struct TextBox_Previews : PreviewProvider {
     static var previews: some View {
         let catalogue = SQLiteCatalogue()!
-        let strings = catalogue.getTextStrings("P224485")!.rawStrings
-        return TextBox(selectedDisplayMode: .constant(2), textStrings: strings)
+        let strings = catalogue.getTextStrings("P224485")!
+        return
+            Group {
+                TextBox(selectedDisplayMode: .constant(0), textStrings: strings).previewDisplayName("Cuneiform")
+                TextBox(selectedDisplayMode: .constant(1), textStrings: strings).previewDisplayName("Transliteration")
+                TextBox(selectedDisplayMode: .constant(2), textStrings: strings).previewDisplayName("Normalisation")
+                TextBox(selectedDisplayMode: .constant(3), textStrings: strings).previewDisplayName("Translation")
+        }.previewLayout(.sizeThatFits)
     }
 }
 #endif

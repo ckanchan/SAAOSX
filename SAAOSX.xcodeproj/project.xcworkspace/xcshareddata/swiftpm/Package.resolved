@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/ckanchan/CDKSwiftOracc.git",
         "state": {
           "branch": "master",
-          "revision": "bca289bf03647121c342f6c1207159b0373e5f18",
+          "revision": "94ad273b345712903cd2ded3a13edd088077fb64",
           "version": null
         }
       },
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
         "state": {
           "branch": "master",
-          "revision": "35d30678b376211569efbde702996f77f88a5bb2",
+          "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
           "version": null
         }
       },

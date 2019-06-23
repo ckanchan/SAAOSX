@@ -12,7 +12,7 @@ import CDKSwiftOracc
 struct TextDetail : View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     
-    var strings: [String]
+    var strings: TextEditionStringContainer
     var metadata: OraccCatalogEntry
     var body: some View {
         
@@ -35,7 +35,7 @@ struct TextDetail : View {
 struct TextDetail_Previews : PreviewProvider {
     static var previews: some View {
         let catalogue = SQLiteCatalogue()!
-        let strings = catalogue.getTextStrings("P224485")!.rawStrings
+        let strings = catalogue.getTextStrings("P224485")!
         let metadata = catalogue.getEntryFor(id: "P224485")!
         let textView = TextDetail(strings: strings,
                                   metadata: metadata)

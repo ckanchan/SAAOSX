@@ -16,7 +16,7 @@ struct ContentView : View {
     var body: some View {
         NavigationView {
             List(sqlite.texts) { textEntry in
-                NavigationButton(destination: TextDetail(strings: self.sqlite.getTextStrings(textEntry.id)!.rawStrings,
+                NavigationButton(destination: TextDetail(strings: self.sqlite.getTextStrings(textEntry.id)!,
                                                          metadata: textEntry)){
                     ListRow(textItem: textEntry)
                 }
@@ -32,17 +32,3 @@ struct ContentView_Previews : PreviewProvider {
     }
 }
 #endif
-
-extension TextEditionStringContainer {
-    var rawStrings: [String] {
-        return [self.cuneiform,
-                self.transliteration.string,
-                self.normalisation.string,
-                self.translation]
-    }
-    
-    var swiftUIText: [Text] {
-        return [Text(self.cuneiform).font(nil)
-        ]
-    }
-}

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TextColumn : View {
     @State private var selectedDisplayMode = 3
-    var strings: [String]
+    var strings: TextEditionStringContainer
     
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
@@ -32,7 +32,7 @@ enum TextType: String, CaseIterable {
 struct TextColumn_Previews : PreviewProvider {
     static var previews: some View {
         let catalogue = SQLiteCatalogue()!
-        let strings = catalogue.getTextStrings("P224485")!.rawStrings
+        let strings = catalogue.getTextStrings("P224485")!
         let view = TextColumn(strings: strings)
         return HStack {
             view

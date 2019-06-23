@@ -78,6 +78,8 @@
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
+		547D730822BFE64700958187 /* DejaVuSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709A9209F9D8C00CE41F7 /* DejaVuSans.ttf */; };
+		547D730922BFE68700958187 /* CuneiformNA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */; };
 		5484CE9D20B6C4AE002A3809 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5484CE9C20B6C4AE002A3809 /* Notes.storyboard */; };
 		5484CEA120B6C5DE002A3809 /* NotesTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484CEA020B6C5DE002A3809 /* NotesTabViewController.swift */; };
 		54863848225141DE00DFE739 /* NoteSQLAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54863847225141DE00DFE739 /* NoteSQLAnnotations.swift */; };
@@ -903,6 +905,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				547D730922BFE68700958187 /* CuneiformNA.ttf in Resources */,
+				547D730822BFE64700958187 /* DejaVuSans.ttf in Resources */,
 				54B6A42A22B7855F0017F29F /* LaunchScreen.storyboard in Resources */,
 				54B6A42722B7855F0017F29F /* Preview Assets.xcassets in Resources */,
 				54AA64C722B78DCB00CB7644 /* SAA_Lemmatised.sqlite3 in Resources */,
