@@ -27,8 +27,7 @@ struct ContentView : View {
                 ForEach(texts.keys.sorted().identified(by: \.self)) { key in
                     Section(header: SectionHeader(project: key) ) {
                         ForEach(self.texts[key]!) { textEntry in
-                            NavigationButton(destination: TextDetail(strings: self.sqlite.getTextStrings(textEntry.id)!,
-                                                                     metadata: textEntry)){
+                            NavigationButton(destination: TextDetail( metadata: textEntry, sqlite: self.sqlite)){
                                                                         ListRow(textItem: textEntry)
                             }
                         }

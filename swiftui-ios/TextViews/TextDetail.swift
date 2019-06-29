@@ -12,8 +12,12 @@ import CDKSwiftOracc
 struct TextDetail : View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     
-    var strings: TextEditionStringContainer
+    var strings: TextEditionStringContainer {
+        return sqlite.getTextStrings(metadata.id)!
+    }
+    
     var metadata: OraccCatalogEntry
+    var sqlite: SQLiteCatalogue
     var body: some View {
         
         Group {
@@ -35,10 +39,8 @@ struct TextDetail : View {
 struct TextDetail_Previews : PreviewProvider {
     static var previews: some View {
         let catalogue = SQLiteCatalogue()!
-        let strings = catalogue.getTextStrings("P224485")!
         let metadata = catalogue.getEntryFor(id: "P224485")!
-        let textView = TextDetail(strings: strings,
-                                  metadata: metadata)
+        let textView = TextDetail(metadata: metadata, sqlite: catalogue)
         
         return NavigationView {textView}
     }
