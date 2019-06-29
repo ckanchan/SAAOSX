@@ -14,12 +14,13 @@ struct TextColumn : View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
+
+            TextBox(selectedDisplayMode: $selectedDisplayMode, textStrings: strings)
             SegmentedControl(selection: $selectedDisplayMode) {
                 ForEach(0..<TextType.allCases.count) { index in
                     Text(TextType.allCases[index].rawValue).tag(index)
                 }
-                }
-            TextBox(selectedDisplayMode: $selectedDisplayMode, textStrings: strings)
+            }
         }
     }
 }

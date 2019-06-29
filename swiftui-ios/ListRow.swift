@@ -19,6 +19,9 @@ struct ListRow: View {
                 Text(textItem.displayName)
                     .font(.subheadline)
                 Divider()
+                textItem.ancientAuthor.map {
+                    Text($0)
+                }
                 Text(textItem.id.description)
                     .font(.subheadline)
                     .color(.secondary)
@@ -31,14 +34,14 @@ struct ListRow: View {
 struct ListRow_Previews : PreviewProvider {
     static var previews: some View {
         Group {
-            ListRow(textItem: PreviewData.Texts[0])
+            ListRow(textItem: SQLiteCatalogue()!.getEntryFor(id: "P224485")!)
             .previewDisplayName("Light")
             
-            ListRow(textItem: PreviewData.Texts[1])
+            ListRow(textItem: SQLiteCatalogue()!.getEntryFor(id: "P224485")!)
             .environment(\.colorScheme, .dark)
             .previewDisplayName("Dark")
         }
-            .previewLayout(.sizeThatFits)
+            .previewLayout(.fixed(width: 800, height: 48))
     }
 }
 #endif

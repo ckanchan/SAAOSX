@@ -13,12 +13,27 @@ extension OraccCatalogEntry: Identifiable {}
 
 struct ContentView : View {
     var sqlite: SQLiteCatalogue
+    var texts: [SAAVolume: [OraccCatalogEntry]] {
+        var t = [SAAVolume: [OraccCatalogEntry]]()
+        for volume in SAAVolume.allVolumes {
+            t[volume] = sqlite.entriesForVolume(volume)
+        }
+        return t
+    }
+    
     var body: some View {
         NavigationView {
-            List(sqlite.texts) { textEntry in
-                NavigationButton(destination: TextDetail(strings: self.sqlite.getTextStrings(textEntry.id)!,
-                                                         metadata: textEntry)){
-                    ListRow(textItem: textEntry)
+            List {
+                ForEach(texts.keys.sorted().identified(by: \.self)) { key in
+                    Section(header: SectionHeader(project: key) ) {
+                        ForEach(self.texts[key]!) { textEntry in
+                            NavigationButton(destination: TextDetail(strings: self.sqlite.getTextStrings(textEntry.id)!,
+                                                                     metadata: textEntry)){
+                                                                        ListRow(textItem: textEntry)
+                            }
+                        }
+                    }
+                    
                 }
                 }.navigationBarTitle(Text("SAAi"))
         }

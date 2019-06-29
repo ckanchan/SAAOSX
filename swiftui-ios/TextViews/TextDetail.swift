@@ -27,7 +27,7 @@ struct TextDetail : View {
             }
             }.navigationBarTitle(Text(metadata.title),
                                  displayMode: .inline)
-            .navigationBarItems(trailing: TextInfoButton(textInfo: self.metadata))
+            .navigationBarItems(trailing: NavigationButtons(textInfo: metadata))
     }
 }
 
@@ -45,10 +45,32 @@ struct TextDetail_Previews : PreviewProvider {
 }
 #endif
 
-struct TextInfoButton: View {
+struct NavigationButtons: View {
     var textInfo: OraccCatalogEntry
     var body: some View {
-        PresentationButton(destination: TextInfoView(textInfo: textInfo), label: {Image(systemName: "info.circle")})
+        HStack {
+            WebViewButton(textInfo: self.textInfo)
+            TextInfoButton(textInfo: self.textInfo)
+        }
     }
 }
 
+struct TextInfoButton: View {
+    var textInfo: OraccCatalogEntry
+    var body: some View {
+        PresentationButton(destination: TextInfoView(textInfo: self.textInfo), label: {Image(systemName: "info.circle")})
+    }
+}
+
+struct WebViewButton: View {
+    var textInfo: OraccCatalogEntry
+    var body: some View {
+        PresentationButton(destination: WebView(address: self.textInfo.url), label: {Image(systemName: "safari")})
+    }
+}
+
+extension OraccCatalogEntry {
+    var url: URL {
+        URL(string: "http://oracc.org/\(self.id)/\(self.project)/html")!
+    }
+}

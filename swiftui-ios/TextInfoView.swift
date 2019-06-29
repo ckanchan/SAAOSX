@@ -10,34 +10,53 @@ import SwiftUI
 import CDKSwiftOracc
 
 struct TextInfoView : View {
+    @Environment(\.isPresented) var isPresented: Binding<Bool>?
+    
     var textInfo: OraccCatalogEntry
     var body: some View {
-        List {
-            Section(header: Text("Basic Information")) {
-                Text(textInfo.title)
-                Text(textInfo.chapter)
-                textInfo.ancientAuthor.map({Text($0)})
+        VStack {
+            Form {
+                Section(header: Text("Basic Information")) {
+                    TextInfoViewRow(title: "Title", value: textInfo.title)
+                    TextInfoViewRow(title: "Chapter", value: textInfo.chapter)
+                    textInfo.ancientAuthor.map({TextInfoViewRow(title: "Chapter", value: $0)})
+                }
+                Section(header: Text("Text IDs")) {
+                    TextInfoViewRow(title: "CDLI ID", value: textInfo.id.description)
+                    TextInfoViewRow(title: "Designation", value: textInfo.displayName)
+                    textInfo.museumNumber.map({TextInfoViewRow(title: "Museum Number", value: $0)})
+                }
+                Section(header: Text("Archaeological Data")) {
+                    textInfo.genre.map({TextInfoViewRow(title: "Genre", value: $0)})
+                    textInfo.material.map({TextInfoViewRow(title: "Material", value: $0)})
+                    textInfo.period.map({TextInfoViewRow(title: "Period", value: $0)})
+                    textInfo.provenience.map({TextInfoViewRow(title: "Provenience", value: $0)})
+                }
+                Section(header: Text("Publication Data")) {
+                    textInfo.primaryPublication.map({TextInfoViewRow(title: "Primary publication", value: $0)})
+                    textInfo.publicationHistory.map({TextInfoViewRow(title: "Publication history", value: $0)})
+                    textInfo.notes.map({TextInfoViewRow(title: "Notes", value: $0)})
+                }
+                Section(header: Text("Credits")) {
+                    textInfo.credits.map({Text($0).lineLimit(nil)})
+                }
             }
-            Section(header: Text("Text IDs")) {
-                Text(textInfo.id.description)
-                Text(textInfo.displayName)
-                textInfo.museumNumber.map({Text($0)})
-            }
-            Section(header: Text("Archaeological Data")) {
-                textInfo.genre.map({Text($0)})
-                textInfo.material.map({Text($0)})
-                textInfo.period.map({Text($0)})
-                textInfo.provenience.map({Text($0)})
-            }
-            Section(header: Text("Publication Data")) {
-                textInfo.primaryPublication.map({Text($0)})
-                textInfo.publicationHistory.map({Text($0).lineLimit(nil)})
-                textInfo.notes.map({Text($0)})
-            }
-            Section(header: Text("Credits")) {
-                textInfo.credits.map({Text($0).lineLimit(nil)})
-            }
-        }.listStyle(.grouped)
+            
+//            Button(action: {self.isPresented?.value = false}) {
+//                Text("Dismiss")
+//            }
+        }
+    }
+}
+
+struct TextInfoViewRow: View {
+    var title: String
+    var value: String
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title).font(.subheadline).color(.secondary)
+            Text(value).lineLimit(nil)
+        }
     }
 }
 
