@@ -12,7 +12,7 @@
     {
       "identity" : "cdkswiftoracc",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ckanchan/CDKSwiftOracc.git",
+      "location" : "https://github.com/ckanchan/CDKSwiftOracc",
       "state" : {
         "branch" : "main",
         "revision" : "93f3acc0f2872301e6bb736d9302084dd792cdd3"
@@ -21,7 +21,7 @@
     {
       "identity" : "sqlite.swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/stephencelis/SQLite.swift.git",
+      "location" : "https://github.com/stephencelis/SQLite.swift",
       "state" : {
         "branch" : "master",
         "revision" : "35d30678b376211569efbde702996f77f88a5bb2"
