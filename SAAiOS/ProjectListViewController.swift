@@ -16,6 +16,7 @@ enum Navigate {
 class ProjectListViewController: UITableViewController {
     var detailViewController: TextEditionViewController?
     var filteredTexts: [OraccCatalogEntry] = []
+    var sceneDelegate: SceneDelegate?
     lazy var catalogue: CatalogueProvider = {return sqlite}()
     lazy var searchController: UISearchController = initialiseSearchController()
     
@@ -108,7 +109,7 @@ class ProjectListViewController: UITableViewController {
         
         #if !targetEnvironment(UIKitForMac)
         splitViewController?.showDetailViewController(controller.navigationController!, sender: self)
-        self.appDelegate.didChooseDetail = true
+        sceneDelegate?.didChooseDetail = true
         detailViewController?.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         detailViewController?.navigationItem.leftItemsSupplementBackButton = true
         #endif
@@ -198,10 +199,11 @@ extension ProjectListViewController: UISearchResultsUpdating {
 }
 
 extension ProjectListViewController {
-    static func new(detailViewController: TextEditionViewController?) -> ProjectListViewController {
+    static func new(detailViewController: TextEditionViewController?, sceneDelegate: SceneDelegate? = nil) -> ProjectListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: UIViewController.StoryboardID.ProjectListViewController) as! ProjectListViewController
         vc.detailViewController = detailViewController
+        vc.sceneDelegate = sceneDelegate
         return vc
     }
 }

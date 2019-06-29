@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let detailNavigationController = UINavigationController(rootViewController: detailViewController)
         
         // Configure 'list' (master) pane
-        let masterViewController = ProjectListViewController.new(detailViewController: detailViewController)
+        let masterViewController = ProjectListViewController.new(detailViewController: detailViewController, sceneDelegate: self)
         detailViewController.catalogue = masterViewController.catalogue
         detailViewController.parentController = masterViewController
         

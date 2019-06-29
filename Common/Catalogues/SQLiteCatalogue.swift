@@ -160,6 +160,32 @@ final class SQLiteCatalogue: CatalogueProvider {
         guard let row = try? db.pluck(query) else {return nil}
         return rowToEntry(row)
     }
+    
+    func entriesForVolume(_ volume: SAAVolume) -> [OraccCatalogEntry] {
+        let query = textTable.select(displayName,
+                                     title,
+                                     textid,
+                                     ancientAuthor,
+                                     project,
+                                     chapterNumber,
+                                     chapterName,
+                                     genre,
+                                     material,
+                                     period,
+                                     provenience,
+                                     primaryPublication,
+                                     museumNumber,
+                                     publicationHistory,
+                                     notes,
+                                     pleiadesID,
+                                     pleiadesCoordinateX,
+                                     pleiadesCoordinateY,
+                                     credits)
+            .filter(project == volume.path)
+        
+        guard let rows = try? db.prepare(query) else { return [] }
+        return rows.map(rowToEntry)
+    }
 
     func getTextStrings(_ textId: TextID) -> TextEditionStringContainer? {
         let query = textTable.select(textStrings).filter(textid == textId.description)
