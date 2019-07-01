@@ -13,6 +13,7 @@ enum Navigate {
     case left, right
 }
 
+// MARK: Class -
 class ProjectListViewController: UITableViewController {
     var detailViewController: TextEditionViewController?
     var filteredTexts: [OraccCatalogEntry] = []
@@ -25,7 +26,10 @@ class ProjectListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = dataSource
-
+        tableView.dragDelegate = self
+        tableView.dragInteractionEnabled = true
+        update(with: catalogue)
+        
         #if !targetEnvironment(UIKitForMac)
         if self.catalogue.source != .search {
             let glossaryButton = UIBarButtonItem(title: "Glossary",
@@ -55,9 +59,6 @@ class ProjectListViewController: UITableViewController {
         super.viewWillAppear(animated)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-       update(with: catalogue)
-    }
 
     @objc func showGlossary(_ sender: Any?) {
         guard let glossaryController = storyboard?.instantiateViewController(withIdentifier: StoryboardID.Glossary) as? GlossaryTableViewController else {return}
@@ -98,7 +99,7 @@ class ProjectListViewController: UITableViewController {
         #endif
     }
 
-    // MARK: - Segues
+    // MARK: Segues -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
         guard let catalogueEntry = dataSource.itemIdentifier(for: indexPath),
             let textStrings = sqlite.getTextStrings(catalogueEntry.id),
@@ -106,6 +107,10 @@ class ProjectListViewController: UITableViewController {
         
         controller.textItem = catalogueEntry
         controller.textStrings = textStrings
+        let activity = catalogueEntry.webUA
+        activity.isEligibleForHandoff = true
+        activity.needsSave = true
+        activity.becomeCurrent()
         
         #if !targetEnvironment(UIKitForMac)
         splitViewController?.showDetailViewController(controller.navigationController!, sender: self)
@@ -133,15 +138,21 @@ class ProjectListViewController: UITableViewController {
         
         tableView.selectRow(at: newIndexPath, animated: false, scrollPosition: .middle)
     }
+    
+    func navigate(to textWithID: TextID) {
+        loadViewIfNeeded()
+        guard let entry = sqlite.getEntryFor(id: textWithID),
+            let indexPath = dataSource.indexPath(for: entry) else {return}
+        
+        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
+        tableView(self.tableView, didSelectRowAt: indexPath)
+
+    }
 }
 
-// MARK: - iOS 13 Table View Methods
+// MARK: iOS 13 Table View Methods -
 extension ProjectListViewController {
-    enum Section {
-        case section
-    }
-    
-    func makeDataSource() -> UITableViewDiffableDataSource<Section, OraccCatalogEntry> {
+    func makeDataSource() -> UITableViewDiffableDataSource<SAAVolume, OraccCatalogEntry> {
         let reuseIdentifier = "Cell"
         
         return UITableViewDiffableDataSource(tableView: tableView,
@@ -156,14 +167,18 @@ extension ProjectListViewController {
     }
     
     func update(with catalogue: CatalogueProvider) {
-        let snapshot = NSDiffableDataSourceSnapshot<Section, OraccCatalogEntry>()
-        snapshot.appendSections([Section.section])
-        snapshot.appendItems(catalogue.texts, toSection: .section)
+        let snapshot = NSDiffableDataSourceSnapshot<SAAVolume, OraccCatalogEntry>()
+        snapshot.appendSections(SAAVolume.allVolumes)
+        for volume in SAAVolume.allVolumes {
+            let entries = sqlite.entriesForVolume(volume)
+            snapshot.appendItems(entries, toSection: volume)
+        }
+        
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
-// MARK: - Search Controller methods
+// MARK: Search Controller methods -
 extension ProjectListViewController: UISearchResultsUpdating {
     
     func initialiseSearchController() -> UISearchController {
@@ -198,6 +213,8 @@ extension ProjectListViewController: UISearchResultsUpdating {
     }
 }
 
+
+// MARK: Factory Method -
 extension ProjectListViewController {
     static func new(detailViewController: TextEditionViewController?, sceneDelegate: SceneDelegate? = nil) -> ProjectListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -205,5 +222,48 @@ extension ProjectListViewController {
         vc.detailViewController = detailViewController
         vc.sceneDelegate = sceneDelegate
         return vc
+    }
+}
+
+extension ProjectListViewController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {return []}
+
+        return [item.appUrl as NSURL]
+            .map(NSItemProvider.init)
+            .map(UIDragItem.init)
+        
+    }
+}
+
+extension OraccCatalogEntry {
+    var appUrl: URL {
+        return URL(string: "oracc://saao/text?id=\(String(self.id))")!
+    }
+    
+    var url: URL {
+        return URL(string: "http://oracc.org/saao/\(String(self.id))")!
+    }
+    
+    var userActivity: NSUserActivity {
+        let userActivity = NSUserActivity(activityType: "me.chaidk.oracc.text")
+        userActivity.title = String(self.id)
+        userActivity.webpageURL = self.appUrl
+        return userActivity
+    }
+    
+    var webUA: NSUserActivity {
+        let userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
+        userActivity.title = String(self.id)
+        userActivity.webpageURL = URL(string: "http://oracc.org/saao/\(String(self.id))")!
+        return userActivity
+    }
+    
+    
+}
+
+extension NSUserActivity {
+    var dragItem: UIDragItem {
+        return UIDragItem(itemProvider: NSItemProvider(object: self))
     }
 }

@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CDKSwiftOracc
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
+    var projectViewController: ProjectListViewController?
     var didChooseDetail = false
     
     func setUpControllers() -> UISplitViewController {
@@ -27,6 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let masterViewController = ProjectListViewController.new(detailViewController: detailViewController, sceneDelegate: self)
         detailViewController.catalogue = masterViewController.catalogue
         detailViewController.parentController = masterViewController
+        projectViewController = masterViewController
         
         #if !targetEnvironment(UIKitForMac)
         // For all iPhone and iPad environments, embed the list controller in a nav view
@@ -70,6 +73,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = splitViewController
         
         window?.makeKeyAndVisible()
+        
+        if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
+            self.scene(scene, continue: userActivity)
+        } else if connectionOptions.urlContexts.count == 1 {
+            self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -96,7 +105,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        for urlContext in URLContexts {
+            guard let projectListViewController = self.projectViewController,
+                let components = URLComponents(url: urlContext.url, resolvingAgainstBaseURL: true),
+                let query = components.queryItems?.first,
+                query.name == "id",
+                let idString = query.value else {continue}
+            
+            switch components.path {
+            case "/text":
+                let textID = TextID(idString)!
+                projectListViewController.navigate(to: textID)
+                
+            default:
+                continue
+            }
+
+        }
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if let id = TextID(userActivity.title ?? "") {
+            projectViewController?.navigate(to: id)
+        }
+    }
 }
+
+
 
 extension SceneDelegate: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {

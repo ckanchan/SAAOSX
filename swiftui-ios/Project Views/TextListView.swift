@@ -11,7 +11,7 @@ import CDKSwiftOracc
 
 extension OraccCatalogEntry: Identifiable {}
 
-struct ContentView : View {
+struct TextListView: View {
     var sqlite: SQLiteCatalogue
     var texts: [SAAVolume: [OraccCatalogEntry]] {
         var t = [SAAVolume: [OraccCatalogEntry]]()
@@ -40,9 +40,9 @@ struct ContentView : View {
 }
 
 #if DEBUG
-struct ContentView_Previews : PreviewProvider {
+struct TextListView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView(sqlite: SQLiteCatalogue()!)
+        TextListView(sqlite: SQLiteCatalogue()!)
     }
 }
 #endif
