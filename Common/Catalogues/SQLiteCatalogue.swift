@@ -10,13 +10,17 @@ import Foundation
 import SQLite
 import CDKSwiftOracc
 import os
+import CloudKit.CKRecord
 
 final class SQLiteCatalogue {
     // MARK: Instance Variables
     let db: Connection
+    let readOnly: Bool
     private lazy var textMetadataCache: [OraccCatalogEntry] = {
         self.getCatalogueEntries() ?? []
     }()
+    
+    var cloudKitReferenceCache: [SAAVolume: CKRecord.ID] = [:]
     
     public var textCount: Int {
         return try! db.scalar(Schema.textTable.count)
@@ -96,9 +100,10 @@ final class SQLiteCatalogue {
         self.init(url: url)
     }
     
-    init?(url: URL) {
+    init?(url: URL, readonly: Bool = true) {
         do {
-            let connection = try Connection(url.path, readonly: true)
+            self.readOnly = readonly
+            let connection = try Connection(url.path, readonly: readOnly)
             self.db = connection
         } catch {
             os_log("Fatal error initialising catalogue: %s",

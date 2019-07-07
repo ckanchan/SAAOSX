@@ -94,7 +94,6 @@
 		548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */; };
 		5491DD4E21CD385100B49B7D /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5491DD4D21CD385100B49B7D /* Maps.storyboard */; };
 		549832FB209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */; };
-		549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 549832FA209F502F00338470 /* SAA_Lemmatised.sqlite3 */; };
 		5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADA204EAF63004C774A /* AppDelegate.swift */; };
 		5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADC204EAF63004C774A /* ProjectListViewController.swift */; };
 		5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498CADE204EAF63004C774A /* TextEditionViewController.swift */; };
@@ -159,6 +158,9 @@
 		54DDDAE622AECE16006B296E /* CDKSwiftOracc in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAE522AECE16006B296E /* CDKSwiftOracc */; };
 		54DDDAE822AECE1A006B296E /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAE722AECE1A006B296E /* CDKOraccInterface */; };
 		54DDDAEA22AECE1F006B296E /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAE922AECE1F006B296E /* SQLite */; };
+		54E0C9B322D273F10016FE5E /* CloudKitProjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E0C9B222D273F10016FE5E /* CloudKitProjects.swift */; };
+		54E0C9B422D28AE50016FE5E /* CloudKitProjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E0C9B222D273F10016FE5E /* CloudKitProjects.swift */; };
+		54E0C9B622D28E020016FE5E /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54E0C9B522D28E020016FE5E /* CloudKit.framework */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54F1C42320A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
 		54F1C42420A9F4D1009F31C0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F1C42220A9F4D1009F31C0 /* Note.swift */; };
@@ -311,6 +313,8 @@
 		54D9CD082019C974005498A3 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAOSX.entitlements; sourceTree = "<group>"; };
 		54DDDAE422AECDD1006B296E /* SAAi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAi.entitlements; sourceTree = "<group>"; };
+		54E0C9B222D273F10016FE5E /* CloudKitProjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitProjects.swift; sourceTree = "<group>"; };
+		54E0C9B522D28E020016FE5E /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSideBarViewController.swift; sourceTree = "<group>"; };
 		54F1C42220A9F4D1009F31C0 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		54F5E16122B7883900570A02 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
@@ -345,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54DDDAEA22AECE1F006B296E /* SQLite in Frameworks */,
+				54E0C9B622D28E020016FE5E /* CloudKit.framework in Frameworks */,
 				54DDDAE822AECE1A006B296E /* CDKOraccInterface in Frameworks */,
 				54DDDAE622AECE16006B296E /* CDKSwiftOracc in Frameworks */,
 			);
@@ -396,6 +401,7 @@
 			children = (
 				54A95218204058D60042E1BA /* Bookmarks.swift */,
 				54A95217204058D60042E1BA /* Catalogue.swift */,
+				54E0C9B222D273F10016FE5E /* CloudKitProjects.swift */,
 				544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */,
 				5444CE8322CE987E003ABD2C /* SQLiteCatalogueSchema.swift */,
 			);
@@ -466,6 +472,7 @@
 		5441390A2004D30A00A64CB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				54E0C9B522D28E020016FE5E /* CloudKit.framework */,
 				5434C8F3226CE488005572B3 /* CloudKit.framework */,
 			);
 			name = Frameworks;
@@ -933,7 +940,6 @@
 				543709AB209F9D8C00CE41F7 /* DejaVuSans.ttf in Resources */,
 				54F8A92022C7CE1F003A6F60 /* ProjectImages.xcassets in Resources */,
 				5498CAE4204EAF63004C774A /* Assets.xcassets in Resources */,
-				549832FC209F502F00338470 /* SAA_Lemmatised.sqlite3 in Resources */,
 				54D3B4DE21D7B5A800F836E2 /* qpn_pleiades.json in Resources */,
 				5498CAE2204EAF63004C774A /* Main.storyboard in Resources */,
 				54657A5820A0633F00FAC8E3 /* TextEdition.storyboard in Resources */,
@@ -988,6 +994,7 @@
 				541378EA21DAAFE0003A4481 /* Annotation.swift in Sources */,
 				54F1C42320A9F4D1009F31C0 /* Note.swift in Sources */,
 				5466120A20B9D56B00FEF2D5 /* NotesByTextViewController.swift in Sources */,
+				54E0C9B322D273F10016FE5E /* CloudKitProjects.swift in Sources */,
 				54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */,
 				54C91A882017C743001AA675 /* TextWindowController.swift in Sources */,
 				544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */,
@@ -1078,6 +1085,7 @@
 				54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
 				54041CEB21EE6E19006EAF8D /* CloudKitNotes.swift in Sources */,
+				54E0C9B422D28AE50016FE5E /* CloudKitProjects.swift in Sources */,
 				5402366322AEBE17005F22A4 /* NoteType.swift in Sources */,
 				54BF519C22AFFB6D00DA4BD0 /* SceneDelegate.swift in Sources */,
 				5498CAFB204EB0D1004C774A /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,

@@ -41,12 +41,20 @@ class ProjectListViewController: UITableViewController {
                                  animated: false)
         }
         #endif
-//        let gearImage = UIImage(systemName: "gear")
-//        let preferencesButton = UIBarButtonItem(image: gear,
-//                                                style: .plain,
-//                                                target: self,
-//                                                action: #selector(loadPreferences))
-        //navigationItem.rightBarButtonItem = preferencesButton
+        let gear = UIImage(systemName: "gear")
+        let preferencesButton = UIBarButtonItem(image: gear,
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(loadPreferences))
+        navigationItem.rightBarButtonItem = preferencesButton
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: Notification.Name("downloadedVolumesDidChange"), object: nil)
+    }
+    
+    @objc func updateTableView() {
+        DispatchQueue.main.async { [unowned self] in
+            self.update(with: self.catalogue)
+        }
     }
     
     @objc func loadPreferences() {

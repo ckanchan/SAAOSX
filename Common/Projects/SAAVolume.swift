@@ -108,6 +108,23 @@ extension SAAVolume {
         }
     }
     
+    init?(code: String) {
+        switch code {
+        case "saa01": self = .saa01
+        case "saa02": self = .saa02
+        case "saa05": self = .saa05
+        case "saa08": self = .saa08
+        case "saa10": self = .saa10
+        case "saa13": self = .saa13
+        case "saa15": self = .saa15
+        case "saa16": self = .saa16
+        case "saa17": self = .saa17
+        case "saa18": self = .saa18
+        case "saa19": self = .saa19
+        default: return nil
+        }
+    }
+    
     static var allVolumes: [SAAVolume] {
         return [.saa01, .saa02, .saa05, .saa08, .saa10, .saa13, .saa15, .saa16, .saa17, .saa18, .saa19]
     }

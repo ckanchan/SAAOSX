@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     // MARK:- Essential app services
-    lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue() }()!
+    lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue(readOnly: false) }()!
     lazy var glossaryDB: Glossary = { return Glossary() }()
     
     // MARK:- UISceneSession Lifecycle

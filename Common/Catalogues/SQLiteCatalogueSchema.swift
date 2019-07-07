@@ -48,26 +48,49 @@ extension SQLiteCatalogue {
 }
 
 extension SQLiteCatalogue.Schema {
-    static func selectAll() -> QueryType {
-        return textTable.select(displayName,
-                                title,
-                                textid,
-                                ancientAuthor,
-                                project,
-                                chapterNumber,
-                                chapterName,
-                                genre,
-                                material,
-                                period,
-                                provenience,
-                                primaryPublication,
-                                museumNumber,
-                                publicationHistory,
-                                notes,
-                                pleiadesID,
-                                pleiadesCoordinateX,
-                                pleiadesCoordinateY,
-                                credits)
+    static func selectAll(withStrings: Bool = false) -> QueryType {
+        if withStrings {
+            return textTable.select(displayName,
+                                    title,
+                                    textid,
+                                    ancientAuthor,
+                                    project,
+                                    chapterNumber,
+                                    chapterName,
+                                    genre,
+                                    material,
+                                    period,
+                                    provenience,
+                                    primaryPublication,
+                                    museumNumber,
+                                    publicationHistory,
+                                    notes,
+                                    pleiadesID,
+                                    pleiadesCoordinateX,
+                                    pleiadesCoordinateY,
+                                    credits,
+                                    textStrings)
+        } else {
+            return textTable.select(displayName,
+                                    title,
+                                    textid,
+                                    ancientAuthor,
+                                    project,
+                                    chapterNumber,
+                                    chapterName,
+                                    genre,
+                                    material,
+                                    period,
+                                    provenience,
+                                    primaryPublication,
+                                    museumNumber,
+                                    publicationHistory,
+                                    notes,
+                                    pleiadesID,
+                                    pleiadesCoordinateX,
+                                    pleiadesCoordinateY,
+                                    credits)
+        }
     }
     
     static func selectTextID() -> QueryType {
