@@ -54,6 +54,9 @@
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
 		544138E12004D27A00A64CB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 544138E02004D27A00A64CB2 /* Assets.xcassets */; };
 		544138E42004D27A00A64CB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544138E22004D27A00A64CB2 /* Main.storyboard */; };
+		5444CE8422CE987E003ABD2C /* SQLiteCatalogueSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5444CE8322CE987E003ABD2C /* SQLiteCatalogueSchema.swift */; };
+		5444CE8522CE987E003ABD2C /* SQLiteCatalogueSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5444CE8322CE987E003ABD2C /* SQLiteCatalogueSchema.swift */; };
+		5444CE8622CE987E003ABD2C /* SQLiteCatalogueSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5444CE8322CE987E003ABD2C /* SQLiteCatalogueSchema.swift */; };
 		5447AE2B21D421B800EDD45F /* qpn_pleiades.json in Resources */ = {isa = PBXBuildFile; fileRef = 5447AE2A21D421B800EDD45F /* qpn_pleiades.json */; };
 		544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */; };
 		544E5FF3224FA025004482E5 /* SAAo_SXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544E5FF2224FA025004482E5 /* SAAo_SXTests.swift */; };
@@ -220,6 +223,7 @@
 		544138E02004D27A00A64CB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		544138E32004D27A00A64CB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		544138E52004D27A00A64CB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5444CE8322CE987E003ABD2C /* SQLiteCatalogueSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogueSchema.swift; sourceTree = "<group>"; };
 		5447AE2A21D421B800EDD45F /* qpn_pleiades.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = qpn_pleiades.json; sourceTree = "<group>"; };
 		544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogue.swift; sourceTree = "<group>"; };
 		544E5FF0224FA025004482E5 /* SAAo-SXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SAAo-SXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +397,7 @@
 				54A95218204058D60042E1BA /* Bookmarks.swift */,
 				54A95217204058D60042E1BA /* Catalogue.swift */,
 				544D4FFD204196F6009016DA /* SQLiteCatalogue.swift */,
+				5444CE8322CE987E003ABD2C /* SQLiteCatalogueSchema.swift */,
 			);
 			path = Catalogues;
 			sourceTree = "<group>";
@@ -996,6 +1001,7 @@
 				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
 				5420145B21E22DDE00ABCB70 /* CloudKitPush.swift in Sources */,
 				5466121020B9D9B600FEF2D5 /* AnnotationsViewController.swift in Sources */,
+				5444CE8422CE987E003ABD2C /* SQLiteCatalogueSchema.swift in Sources */,
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
 				54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */,
 				546D462121CFB6730012C1EE /* AncientLocation.swift in Sources */,
@@ -1052,6 +1058,7 @@
 				54F1C42420A9F4D1009F31C0 /* Note.swift in Sources */,
 				5402366822AEBE2C005F22A4 /* NSAttributedStringLineBreaks.swift in Sources */,
 				54041CEE21EE6E19006EAF8D /* CKRecord+Conversions.swift in Sources */,
+				5444CE8522CE987E003ABD2C /* SQLiteCatalogueSchema.swift in Sources */,
 				5402366022AEBE0C005F22A4 /* NoteSQLTags.swift in Sources */,
 				5402366522AEBE20005F22A4 /* NSSecureCodingHelper.swift in Sources */,
 				548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */,
@@ -1094,6 +1101,7 @@
 				54F5E16222B7883900570A02 /* SampleData.swift in Sources */,
 				547D730C22BFFAD000958187 /* OnlineViewController.swift in Sources */,
 				54B6A42222B7855E0017F29F /* TextListView.swift in Sources */,
+				5444CE8622CE987E003ABD2C /* SQLiteCatalogueSchema.swift in Sources */,
 				544FA3E022C7D51C00E8701F /* SectionHeader.swift in Sources */,
 				54AA64C822B78DD600CB7644 /* SQLiteCatalogue.swift in Sources */,
 				541EA16E22BE4426008B5B55 /* TextColumn.swift in Sources */,

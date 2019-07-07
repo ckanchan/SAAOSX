@@ -11,107 +11,21 @@ import SQLite
 import CDKSwiftOracc
 import os
 
-final class SQLiteCatalogue: CatalogueProvider {
-    let source: CatalogueSource = .sqlite
-
-    let textid = Expression<String>("textid")
-    let project = Expression<String>("project")
-    let displayName = Expression<String>("display_name")
-    let title = Expression<String>("title")
-    let ancientAuthor = Expression<String?>("ancient_author")
-
-    // Additional catalogue data
-    let chapterNumber = Expression<Int?>("chapter_num")
-    let chapterName = Expression<String?>("chapter_name")
-    let museumNumber = Expression<String?>("museum_num")
-
-    //Archaeological data
-    let genre = Expression<String?>("genre")
-    let material = Expression<String?>("material")
-    let period = Expression<String?>("period")
-    let provenience = Expression<String?>("provenience")
-
-    //Publication data
-    let primaryPublication = Expression<String?>("primary_publication")
-    let publicationHistory = Expression<String?>("publication_history")
-    let notes = Expression<String?>("notes")
-    let credits = Expression<String?>("credits")
-    
-    //Location data
-    let pleiadesID = Expression<Int?>("pleiades_id")
-    let pleiadesCoordinateX = Expression<Double?>("pleiades_coordinate_x")
-    let pleiadesCoordinateY = Expression<Double?>("pleiades_coordinate_y")
-
-    // A place to encode TextEditionStringContainer with NSCoding
-    let textStrings = Expression<Data>("Text")
-
-    let textTable = Table("texts")
-
-    var count: Int {
-        return self.textCount
-    }
-
-    public lazy var texts: [OraccCatalogEntry] = {
+final class SQLiteCatalogue {
+    // MARK: Instance Variables
+    let db: Connection
+    private lazy var textMetadataCache: [OraccCatalogEntry] = {
         self.getCatalogueEntries() ?? []
     }()
-
     
-    func rowToEntry(_ row: Row) -> OraccCatalogEntry {
-        let coordinate: (Double, Double)?
-        if let x = row[pleiadesCoordinateX], let y = row[pleiadesCoordinateY] {
-            coordinate = (x, y)
-        } else {
-            coordinate = nil
-        }
-        
-        return OraccCatalogEntry(displayName: row[displayName],
-                                 title: row[title],
-                                 id: row[textid],
-                                 ancientAuthor: row[ancientAuthor],
-                                 project: row[project],
-                                 chapterNumber: row[chapterNumber],
-                                 chapterName: row[chapterName],
-                                 genre: row[genre],
-                                 material: row[material],
-                                 period: row[period],
-                                 provenience: row[provenience],
-                                 primaryPublication: row[primaryPublication],
-                                 museumNumber: row[museumNumber],
-                                 publicationHistory: row[publicationHistory],
-                                 notes: row[notes],
-                                 pleiadesID: row[pleiadesID],
-                                 pleiadesCoordinate: coordinate,
-                                 credits: row[credits])
-    }
-    
-    func text(at row: Int) -> OraccCatalogEntry? {
-        return getEntryAt(row: row)
-    }
-
-    func search(_ string: String) -> [OraccCatalogEntry] {
-        let searchString = "%\(string)%"
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, credits, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY).filter(textid.like(searchString) || displayName.like(searchString) || title.like(searchString) || ancientAuthor.like(searchString))
-
-        if let rows = try? db.prepare(query) {
-            return rows.map(rowToEntry)
-        } else {
-            return []
-        }
-    }
-
-    let db: Connection
-
     public var textCount: Int {
-        return try! db.scalar(textTable.count)
+        return try! db.scalar(Schema.textTable.count)
     }
-
-    var name: String = "Database"
 
     public func getCatalogueEntries() -> [OraccCatalogEntry]? {
-        let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY, credits)
-
+        let query = Schema.selectAll()
         guard let rows = try? db.prepare(query) else { return nil }
-        return rows.map(rowToEntry)
+        return rows.map(OraccCatalogEntry.init)
     }
 
     public func getSearchCollection(term: String, references: [String]) -> TextSearchCollection {
@@ -136,62 +50,28 @@ final class SQLiteCatalogue: CatalogueProvider {
     }
 
     func getEntryFor(id cdliID: TextID) -> OraccCatalogEntry? {
-        let query = textTable.select(displayName,
-                                     title,
-                                     textid,
-                                     ancientAuthor,
-                                     project,
-                                     chapterNumber,
-                                     chapterName,
-                                     genre,
-                                     material,
-                                     period,
-                                     provenience,
-                                     primaryPublication,
-                                     museumNumber,
-                                     publicationHistory,
-                                     notes,
-                                     pleiadesID,
-                                     pleiadesCoordinateX,
-                                     pleiadesCoordinateY,
-                                     credits)
-            .filter(textid == cdliID.description)
+        let query = Schema
+            .selectAll()
+            .filter(Schema.textid == cdliID.description)
 
         guard let row = try? db.pluck(query) else {return nil}
-        return rowToEntry(row)
+        return OraccCatalogEntry(row: row)
     }
     
     func entriesForVolume(_ volume: SAAVolume) -> [OraccCatalogEntry] {
-        let query = textTable.select(displayName,
-                                     title,
-                                     textid,
-                                     ancientAuthor,
-                                     project,
-                                     chapterNumber,
-                                     chapterName,
-                                     genre,
-                                     material,
-                                     period,
-                                     provenience,
-                                     primaryPublication,
-                                     museumNumber,
-                                     publicationHistory,
-                                     notes,
-                                     pleiadesID,
-                                     pleiadesCoordinateX,
-                                     pleiadesCoordinateY,
-                                     credits)
-            .filter(project == volume.path)
+        let query = Schema
+            .selectAll()
+            .filter(Schema.project == volume.path)
         
         guard let rows = try? db.prepare(query) else { return [] }
-        return rows.map(rowToEntry)
+        return rows.map(OraccCatalogEntry.init)
     }
     
     func getTextStrings(_ textId: TextID) -> TextEditionStringContainer? {
-        let query = textTable.select(textStrings).filter(textid == textId.description)
+        let query = Schema.selectTextID().filter(Schema.textid == textId.description)
         do {
             guard let row = try db.pluck(query) else {return nil}
-            let encodedString = row[textStrings]
+            let encodedString = row[Schema.textStrings]
             let decoder = try NSKeyedUnarchiver(forReadingFrom: encodedString)
             decoder.requiresSecureCoding = false
             let stringContainer = TextEditionStringContainer(coder: decoder)
@@ -227,5 +107,61 @@ final class SQLiteCatalogue: CatalogueProvider {
                    error.localizedDescription)
             return nil
         }
+    }
+}
+
+extension SQLiteCatalogue: CatalogueProvider {
+    public var name: String { "Database" }
+    public var count: Int { self.textCount }
+    public var texts: [OraccCatalogEntry] { self.textMetadataCache }
+    public var source: CatalogueSource {.sqlite}
+    
+    func text(at row: Int) -> OraccCatalogEntry? {
+        return getEntryAt(row: row)
+    }
+    
+    func search(_ string: String) -> [OraccCatalogEntry] {
+        let searchString = "%\(string)%"
+        let query = Schema.selectAll()
+            .filter(Schema.textid.like(searchString)
+                || Schema.displayName.like(searchString)
+                || Schema.title.like(searchString)
+                || Schema.ancientAuthor.like(searchString))
+        
+        if let rows = try? db.prepare(query) {
+            return rows.map(OraccCatalogEntry.init)
+        } else {
+            return []
+        }
+    }
+}
+
+extension OraccCatalogEntry {
+    init(row: Row) {
+        let coordinate: (Double, Double)?
+        if let x = row[SQLiteCatalogue.Schema.pleiadesCoordinateX], let y = row[SQLiteCatalogue.Schema.pleiadesCoordinateY] {
+            coordinate = (x, y)
+        } else {
+            coordinate = nil
+        }
+        
+        self.init(displayName: row[SQLiteCatalogue.Schema.displayName],
+                                 title: row[SQLiteCatalogue.Schema.title],
+                                 id: row[SQLiteCatalogue.Schema.textid],
+                                 ancientAuthor: row[SQLiteCatalogue.Schema.ancientAuthor],
+                                 project: row[SQLiteCatalogue.Schema.project],
+                                 chapterNumber: row[SQLiteCatalogue.Schema.chapterNumber],
+                                 chapterName: row[SQLiteCatalogue.Schema.chapterName],
+                                 genre: row[SQLiteCatalogue.Schema.genre],
+                                 material: row[SQLiteCatalogue.Schema.material],
+                                 period: row[SQLiteCatalogue.Schema.period],
+                                 provenience: row[SQLiteCatalogue.Schema.provenience],
+                                 primaryPublication: row[SQLiteCatalogue.Schema.primaryPublication],
+                                 museumNumber: row[SQLiteCatalogue.Schema.museumNumber],
+                                 publicationHistory: row[SQLiteCatalogue.Schema.publicationHistory],
+                                 notes: row[SQLiteCatalogue.Schema.notes],
+                                 pleiadesID: row[SQLiteCatalogue.Schema.pleiadesID],
+                                 pleiadesCoordinate: coordinate,
+                                 credits: row[SQLiteCatalogue.Schema.credits])
     }
 }
