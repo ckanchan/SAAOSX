@@ -60,14 +60,14 @@ struct NavigationButtons: View {
 struct TextInfoButton: View {
     var textInfo: OraccCatalogEntry
     var body: some View {
-        PresentationButton(destination: TextInfoView(textInfo: self.textInfo), label: {Image(systemName: "info.circle")})
+        PresentationLink(destination: TextInfoView(textInfo: self.textInfo), label: {Image(systemName: "info.circle")})
     }
 }
 
 struct WebViewButton: View {
     var textInfo: OraccCatalogEntry
     var body: some View {
-        PresentationButton(destination: WebView(address: self.textInfo.url), label: {Image(systemName: "safari")})
+        PresentationLink(destination: WebView(address: self.textInfo.url), label: {Image(systemName: "safari")})
     }
 }
 
