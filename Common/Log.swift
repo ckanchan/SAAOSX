@@ -25,6 +25,10 @@ enum Log {
     static var CatalogueSQLite: OSLog {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "CatalogueSQLite")
     }
+    
+    static var GlossarySQLite: OSLog{
+        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "GlossarySQLite")
+    }
 }
 
 

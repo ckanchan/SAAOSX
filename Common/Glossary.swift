@@ -8,6 +8,7 @@
 import Foundation
 import CDKSwiftOracc
 import SQLite
+import os
 
 final public class Glossary {
     lazy var db: Connection = {
@@ -61,11 +62,21 @@ final public class Glossary {
 
     public func entryForRow(row: Int) -> GlossaryEntry? {
         let query = entries.filter(rowid == Int64(row))
-        guard let row = try? db.pluck(query),
-            let result: GlossaryEntry = try! row.decode()
-            else {return nil}
+        
+        do {
+            guard let row = try? db.pluck(query)  else { return nil }
+            let result: GlossaryEntry = try row.decode()
+            return result
+        } catch {
+            os_log("Unable to get glossary entry, %{public}s",
+                   log: Log.GlossarySQLite,
+                   type: .error,
+                   error.localizedDescription)
+            
+            return nil
+        }
 
-        return result
+        
 
     }
 
