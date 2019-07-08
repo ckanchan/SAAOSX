@@ -331,18 +331,15 @@ extension TextViewController {
     
     @IBAction func bookmark(_ sender: NSButton) {
         guard let str = self.stringContainer else {return}
-        
-        if let alreadySaved = self.bookmarks.contains(textID: self.catalogueEntry.id.description) {
-            if alreadySaved {
-                self.bookmarks.remove(entry: self.catalogueEntry)
-                sender.state = .off
-            } else {
-                do {
-                    try bookmarks.save(entry: self.catalogueEntry, strings: str)
-                    sender.state = .on
-                } catch {
-                    print(error)
-                }
+        if self.bookmarks.contains(textID: self.catalogueEntry.id.description) {
+            self.bookmarks.remove(entry: self.catalogueEntry)
+            sender.state = .off
+        } else {
+            do {
+                try bookmarks.save(entry: self.catalogueEntry, strings: str)
+                sender.state = .on
+            } catch {
+                print(error)
             }
         }
     }

@@ -91,8 +91,8 @@ final public class Bookmarks: CatalogueProvider {
         })
     }
 
-    public func contains(textID: String) -> Bool? {
-        guard let result = try? db.scalar(Bookmarks.bookmarks.filter(Bookmarks.id == textID).count) else {return nil}
+    public func contains(textID: String) -> Bool {
+        guard let result = try? db.scalar(Bookmarks.bookmarks.filter(Bookmarks.id == textID).count) else {return false}
 
         if result > 0 {
             return true

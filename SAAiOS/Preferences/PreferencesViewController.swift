@@ -9,14 +9,17 @@
 import UIKit
 
 class PreferencesViewController: UITableViewController {
-    var downloadedVolumes: Set<String> {
-        get {
-            Set(UserDefaults.standard.stringArray(forKey: "downloadedVolumes") ?? [])
-        } set {
-            UserDefaults.standard.set(Array(newValue), forKey: "downloadedVolumes")
-        }
+    var downloadsSize: Int {
+        return (try? sqlite.url.resourceValues(forKeys: [.totalFileAllocatedSizeKey]).totalFileAllocatedSize) ?? 0
     }
     
+    private lazy var byteCountFormatter: ByteCountFormatter = {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = .useMB
+        formatter.countStyle = .file
+        return formatter
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: Notification.Name("downloadedVolumesDidChange"), object: nil)
@@ -26,8 +29,8 @@ class PreferencesViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "Downloaded Volumes"
-        case 1: return "Other"
+        case 0: return "Text Volumes"
+        case 1: return "Storage"
         default: return nil
         }
     }
@@ -35,29 +38,24 @@ class PreferencesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return SAAVolume.allVolumes.count
-        case 1: return 0
+        case 1: return 2
         default: return 0
         }
     }
     
     @objc func updateTableView(_ notification: Notification) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             guard let userInfo = notification.userInfo as? [String: String],
                 let volumeCode = userInfo["volume"],
-                let op = userInfo["op"],
-                let row = SAAVolume.allVolumes.firstIndex(where: {$0.code == volumeCode}),
-                let cell = self.tableView.cellForRow(at: IndexPath(row: row, section: 0)) else {return}
+                let op = userInfo["op"] else {return}
             switch op {
             case "add":
-                cell.accessoryView = nil
-                cell.accessoryType = .checkmark
-                self.downloadedVolumes.insert(volumeCode)
-            case "delete":
-                cell.accessoryType = .none
-                return
+                self?.downloadedVolumes.insert(volumeCode)
             default:
-                return
+                break
             }
+            
+            self?.tableView.reloadData()
         }
     }
     
@@ -76,6 +74,21 @@ class PreferencesViewController: UITableViewController {
                 cell.accessoryType = .none
             }
             
+            return cell
+            
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Download size: \(self.byteCountFormatter.string(for: downloadsSize) ?? "?")"
+                cell.textLabel?.textColor = .secondaryLabel
+                cell.selectionStyle = .none
+            case 1:
+                cell.textLabel?.text = "Delete all downloads"
+                cell.textLabel?.textColor = .systemRed
+            default:
+                break
+            }
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)

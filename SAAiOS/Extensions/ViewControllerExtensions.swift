@@ -20,6 +20,14 @@ extension UIViewController {
     var glossary: Glossary {
         return appDelegate.glossaryDB
     }
+    
+    var downloadedVolumes: Set<String> {
+        get {
+            Set(UserDefaults.standard.stringArray(forKey: "downloadedVolumes") ?? [])
+        } set {
+            UserDefaults.standard.set(Array(newValue), forKey: "downloadedVolumes")
+        }
+    }
 }
 
 // Storyboard IDs

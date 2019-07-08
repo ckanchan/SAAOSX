@@ -267,13 +267,12 @@ extension ProjectListViewController: NSTableViewDataSource, NSTableViewDelegate 
             vw.textField?.stringValue = text.ancientAuthor ?? "(unassigned)"
         }
         
-        if let pinned = bookmarks.contains(textID: text.id.description) {
-            if pinned {
-                vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
-            } else {
-                vw.textField?.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-            }
+        if bookmarks.contains(textID: text.id.description) {
+            vw.textField?.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+        } else {
+            vw.textField?.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
         }
+
         return vw
     }
 

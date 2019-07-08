@@ -94,20 +94,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([NSUserActivityRestoring]) -> Void) -> Bool {
         
-        if userActivity.activityType == CSSearchableItemActionType,
-            let cdliID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
-            self.bookmarks.contains(textID: cdliID),
-            let entry = self.bookmarks.getCatalogueEntry(forID: cdliID) {
-
-            let strings = self.bookmarks.getTextStrings(cdliID)
+        guard userActivity.activityType == CSSearchableItemActionType,
+            let cdliID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String else {return false}
+        
+        if self.bookmarks.contains(textID: cdliID),
+            let entry = self.bookmarks.getCatalogueEntry(forID: cdliID),
+            let strings = self.bookmarks.getTextStrings(cdliID){
             TextWindowController.new(entry, strings: strings, catalogue: bookmarks)
             return true
-            
         } else {
             return openFromDatabase(withID: cdliID)
         }
         
-        return false
     }
 
     func openFromDatabase(withID id: String) -> Bool {

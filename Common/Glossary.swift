@@ -62,7 +62,7 @@ final public class Glossary {
     public func entryForRow(row: Int) -> GlossaryEntry? {
         let query = entries.filter(rowid == Int64(row))
         guard let row = try? db.pluck(query),
-            let result: GlossaryEntry = try? row.decode()
+            let result: GlossaryEntry = try! row.decode()
             else {return nil}
 
         return result

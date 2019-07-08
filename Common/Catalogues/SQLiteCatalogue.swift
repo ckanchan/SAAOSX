@@ -16,6 +16,8 @@ final class SQLiteCatalogue {
     // MARK: Instance Variables
     let db: Connection
     let readOnly: Bool
+    
+    let url: URL
     private lazy var textMetadataCache: [OraccCatalogEntry] = {
         self.getCatalogueEntries() ?? []
     }()
@@ -102,6 +104,7 @@ final class SQLiteCatalogue {
     
     init?(url: URL, readonly: Bool = true) {
         do {
+            self.url = url
             self.readOnly = readonly
             let connection = try Connection(url.path, readonly: readOnly)
             self.db = connection

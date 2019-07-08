@@ -28,7 +28,7 @@ class ProjectListViewController: UITableViewController {
         tableView.dataSource = dataSource
         tableView.dragDelegate = self
         tableView.dragInteractionEnabled = true
-        update(with: catalogue)
+        update()
         
         #if !targetEnvironment(UIKitForMac)
         if self.catalogue.source != .search {
@@ -52,16 +52,10 @@ class ProjectListViewController: UITableViewController {
     }
     
     @objc func updateTableView() {
-        DispatchQueue.main.async { [unowned self] in
-            self.update(with: self.catalogue)
+        DispatchQueue.main.async { [weak self] in
+            self?.update()
         }
     }
-    
-    @objc func loadPreferences() {
-        guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardID.PreferencesViewController) else {return}
-        navigationController?.pushViewController(preferencesViewController, animated: true)
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
@@ -156,6 +150,12 @@ class ProjectListViewController: UITableViewController {
         tableView(self.tableView, didSelectRowAt: indexPath)
 
     }
+    
+    @objc func loadPreferences() {
+        guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardID.PreferencesViewController) else {return}
+        navigationController?.pushViewController(preferencesViewController, animated: true)
+    }
+
 }
 
 // MARK: iOS 13 Table View Methods -
@@ -174,15 +174,25 @@ extension ProjectListViewController {
         })
     }
     
-    func update(with catalogue: CatalogueProvider) {
+    func update() {
         let snapshot = NSDiffableDataSourceSnapshot<SAAVolume, OraccCatalogEntry>()
-        snapshot.appendSections(SAAVolume.allVolumes)
-        for volume in SAAVolume.allVolumes {
+        let volumes = downloadedVolumes.compactMap(SAAVolume.init(code:)).sorted()
+        snapshot.appendSections(volumes)
+        for volume in volumes {
             let entries = sqlite.entriesForVolume(volume)
             snapshot.appendItems(entries, toSection: volume)
         }
         
         dataSource.apply(snapshot, animatingDifferences: false)
+        
+        if volumes.isEmpty {
+            let alert = UIAlertController(title: "No volumes downloaded",
+                                          message: "There are no texts available to view. Download at least one text volume in Settings",
+                                          preferredStyle: .alert)
+            let action = UIAlertAction(title: "Go to Settings", style: .default, handler: {_ in self.loadPreferences()})
+            alert.addAction(action)
+            present(alert, animated: true)
+        }
     }
 }
 
