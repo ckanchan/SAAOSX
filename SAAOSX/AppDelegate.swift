@@ -77,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     let decoder = JSONDecoder()
                     if let textEdition = try? decoder.decode(OraccTextEdition.self, from: data) {
                         let stringContainer = TextEditionStringContainer(textEdition)
-                        let dummyData = OraccCatalogEntry.initFromSaved(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
+                        let dummyData = OraccCatalogEntry(id: "nil", displayName: "nil", ancientAuthor: nil, title: url.lastPathComponent, project: "file")
 
                         TextWindowController.new(dummyData, strings: stringContainer, catalogue: nil)
 
