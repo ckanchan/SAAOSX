@@ -178,20 +178,36 @@ extension ProjectListViewController {
         let snapshot = NSDiffableDataSourceSnapshot<SAAVolume, OraccCatalogEntry>()
         let volumes = downloadedVolumes.compactMap(SAAVolume.init(code:)).sorted()
         snapshot.appendSections(volumes)
-        for volume in volumes {
-            let entries = sqlite.entriesForVolume(volume)
-            snapshot.appendItems(entries, toSection: volume)
-        }
         
-        dataSource.apply(snapshot, animatingDifferences: false)
-        
-        if volumes.isEmpty {
-            let alert = UIAlertController(title: "No volumes downloaded",
-                                          message: "There are no texts available to view. Download at least one text volume in Settings",
-                                          preferredStyle: .alert)
-            let action = UIAlertAction(title: "Go to Settings", style: .default, handler: {_ in self.loadPreferences()})
-            alert.addAction(action)
-            present(alert, animated: true)
+        switch catalogue.source {
+        case .sqlite:
+            for volume in volumes {
+                let entries = sqlite.entriesForVolume(volume)
+                snapshot.appendItems(entries, toSection: volume)
+            }
+            
+            dataSource.apply(snapshot, animatingDifferences: false)
+            
+            if volumes.isEmpty {
+                let alert = UIAlertController(title: "No volumes downloaded",
+                                              message: "There are no texts available to view. Download at least one text volume in Settings",
+                                              preferredStyle: .alert)
+                let action = UIAlertAction(title: "Go to Settings", style: .default, handler: {_ in self.loadPreferences()})
+                alert.addAction(action)
+                present(alert, animated: true)
+            }
+            
+        case .search:
+            let dict = Dictionary(grouping: catalogue.texts, by: {$0.project})
+            for (projectPath, entries) in dict {
+                let volume = SAAVolume(path: projectPath)
+                snapshot.appendItems(entries, toSection: volume)
+            }
+            
+            dataSource.apply(snapshot, animatingDifferences: false)
+            
+        default:
+            fatalError("Not implemented")
         }
     }
 }
