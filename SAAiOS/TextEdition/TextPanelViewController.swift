@@ -30,7 +30,10 @@ class TextPanelViewController: UIViewController, UITextViewDelegate {
             if searchTerm.lowercased() == stringVal.lowercased() {
                 guard range.length > 2 else {return}
                 let newRange = NSRange(location: range.location, length: range.length - 1)
-                textView.textStorage.addAttributes([NSAttributedString.Key.backgroundColor: UIColor.yellow, NSAttributedString.Key.foregroundColor: UIColor.black], range: newRange)
+                textView.textStorage.addAttributes([
+                    NSAttributedString.Key.backgroundColor: UIColor.systemYellow,
+                    NSAttributedString.Key.foregroundColor: UIColor.label],
+                                                   range: newRange)
             }
         })
     }

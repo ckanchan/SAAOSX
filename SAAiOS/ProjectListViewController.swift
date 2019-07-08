@@ -114,6 +114,10 @@ class ProjectListViewController: UITableViewController {
         activity.needsSave = true
         activity.becomeCurrent()
         
+        if catalogue.source != .search {
+            controller.searchTerm = nil
+        }
+        
         #if !targetEnvironment(UIKitForMac)
         splitViewController?.showDetailViewController(controller.navigationController!, sender: self)
         sceneDelegate?.didChooseDetail = true

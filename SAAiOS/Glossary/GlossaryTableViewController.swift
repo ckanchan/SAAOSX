@@ -103,6 +103,7 @@ class GlossaryTableViewController: UITableViewController {
         if let detailNavController = splitViewController?.viewControllers.last as? UINavigationController,
             let detailViewController = detailNavController.children.first as? TextEditionViewController {
             searchSetViewController.detailViewController =  detailViewController
+            detailViewController.searchTerm = glossaryEntry.citationForm
         }
 
 
