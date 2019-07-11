@@ -111,7 +111,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>me.chaidk.oracc.text</key>
-	<string></string>
 </dict>
 </plist>
