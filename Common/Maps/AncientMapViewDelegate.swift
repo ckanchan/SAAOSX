@@ -6,14 +6,14 @@
 //  Copyright © 2018 Chaitanya Kanchan. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 import MapKit
 
 class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
     
     let ancientMap: AncientMap
     weak var mapView: MKMapView?
-    weak var mapViewController: MapViewController?
+    weak var mapViewDelegateDelegate: MapViewDelegateDelegate?
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "AncientLocation"
@@ -47,7 +47,7 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
             description = annotation.subtitle ?? "No description available"
         }
         
-        mapViewController?.setInfo(locationName: annotation.title ?? "", locationDescription: description)
+        mapViewDelegateDelegate?.setInfo(locationName: annotation.title ?? "", locationDescription: description)
     }
     
     func selectAnnotation(qpnID: String) {
@@ -63,13 +63,16 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
         mapView.addAnnotations(annotations)
     }
     
-    init(mapView: MKMapView, mapViewController: MapViewController, ancientMap: AncientMap) {
+    init(mapView: MKMapView, mapViewDelegateDelegate: MapViewDelegateDelegate, ancientMap: AncientMap) {
         self.mapView = mapView
-        self.mapViewController = mapViewController
+        self.mapViewDelegateDelegate = mapViewDelegateDelegate
         self.ancientMap = ancientMap
         super.init()
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(self.ancientMap.locations)
     }
+}
 
+protocol MapViewDelegateDelegate {
+    func setInfo(locationName: String, locationDescription: String)
 }

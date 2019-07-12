@@ -34,7 +34,11 @@ class GlossaryTableViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.searchController = self.searchController
         definesPresentationContext = true
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.setToolbarHidden(true, animated: true)
     }
 
     // MARK: - Table view data source

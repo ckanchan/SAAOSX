@@ -33,30 +33,39 @@ class ProjectListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if self.catalogue.source != .search {
+        switch catalogue.source {
+        case .search:
+            let label = UILabel()
+            label.text = catalogue.name
+            let labelBtn = UIBarButtonItem(customView: label)
+            self.setToolbarItems([labelBtn], animated: true)
+            navigationItem.title = "Search results"
+        default:
             let glossaryButton = UIBarButtonItem(title: "Glossary",
                                                  style: .plain,
                                                  target: self,
                                                  action: #selector(showGlossary))
             self.setToolbarItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
+            
+            let preferencesButton = UIBarButtonItem(title: "⚙︎",
+                                                    style: .plain,
+                                                    target: self,
+                                                    action: #selector(loadPreferences))
+            
+            let helpButton = UIBarButtonItem(title: "?",
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(showHelp))
+            
+            navigationItem.leftBarButtonItem = preferencesButton
+            navigationItem.rightBarButtonItem = helpButton
+            navigationItem.title = "Tupšenna"
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(updateTableView),
+                                                   name: Notification.Name("downloadedVolumesDidChange"),
+                                                   object: nil)
         }
-        
-        let preferencesButton = UIBarButtonItem(title: "⚙︎",
-                                                style: .plain,
-                                                target: self,
-                                                action: #selector(loadPreferences))
-        
-        let helpButton = UIBarButtonItem(title: "?",
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(showHelp))
-        
-        navigationItem.leftBarButtonItem = preferencesButton
-        navigationItem.rightBarButtonItem = helpButton
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateTableView),
-                                               name: Notification.Name("downloadedVolumesDidChange"),
-                                               object: nil)
+        registerForPreviewing(with: self, sourceView: self.tableView)
     }
     
     @objc func updateTableView() {
@@ -73,7 +82,7 @@ class ProjectListViewController: UITableViewController {
     @objc func showHelp() {
         let configuration = WKWebViewConfiguration()
         let view = WKWebView(frame: .zero, configuration: configuration)
-        guard let url = URL(string: "https://www.chaidk.me/manuals/tupsenna_ios/index.html") else {return}
+        guard let url = URL(string: "https://www.chaidk.me/manuals/tupshenna/") else {return}
         
         let request = URLRequest(url: url)
         let viewController = UIViewController()
@@ -91,7 +100,7 @@ class ProjectListViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if catalogue.texts.isEmpty && !noTextsLoadedPromptShownAlreadyInSession {
+        if catalogue.texts.isEmpty && !noTextsLoadedPromptShownAlreadyInSession && catalogue.source != .search {
             let alert = UIAlertController(title: "No volumes downloaded",
                                           message: "There are no texts available to view. Download at least one text volume in Settings",
                                           preferredStyle: .alert)
@@ -123,16 +132,27 @@ class ProjectListViewController: UITableViewController {
 
         self.navigationController?.pushViewController(glossaryController, animated: true)
     }
-
-    // MARK: - Segues
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
-        guard let (catalogueEntry, textStrings) = getTextViewData(for: indexPath) else {return}
-        let controller = TextEditionViewController()
+    
+    func configureDetailViewController(for indexPath: IndexPath, peeking: Bool = false) -> TextEditionViewController? {
+        guard let (catalogueEntry, textStrings) = getTextViewData(for: indexPath) else {return nil}
+        
+        let controller: TextEditionViewController
+        if peeking {
+            controller = TextEditionViewController()
+        } else {
+            controller = self.detailViewController ?? TextEditionViewController()
+        }
         controller.textItem = catalogueEntry
         controller.textStrings = textStrings
         controller.catalogue = self.catalogue
         controller.parentController = self
+        return controller
+    }
+    
+    // MARK: - Segues
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
 
+        guard let controller = configureDetailViewController(for: indexPath) else {return}
 
         if catalogue.source == .search {
             guard let catalogue = self.catalogue as? Catalogue else {return}
@@ -141,8 +161,8 @@ class ProjectListViewController: UITableViewController {
             controller.searchTerm = searchTerm
         }
         
-        let navigationController = UINavigationController(rootViewController: controller)
-        self.showDetailViewController(navigationController, sender: self)
+        let navigationController = controller.navigationController ?? UINavigationController(rootViewController: controller)
+        splitViewController?.showDetailViewController(navigationController, sender: self)
         self.appDelegate.didChooseDetail = true
         controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         controller.navigationItem.leftItemsSupplementBackButton = true
@@ -235,4 +255,21 @@ extension ProjectListViewController {
         vc.detailViewController = detailViewController
         return vc
     }
+}
+
+extension ProjectListViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        if let indexPath = tableView.indexPathForRow(at: location) {
+            previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
+            return configureDetailViewController(for: indexPath, peeking: true)
+        } else {
+            return nil
+        }
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        splitViewController?.showDetailViewController(viewControllerToCommit, sender: self)
+    }
+    
+    
 }

@@ -10,7 +10,7 @@ import Cocoa
 import MapKit
 
 
-class MapViewController: NSViewController {
+class MapViewController: NSViewController, MapViewDelegateDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var siteTitle: NSTextField!
     @IBOutlet var siteDescription: NSTextView!
@@ -29,7 +29,7 @@ class MapViewController: NSViewController {
         guard let mapWindow = storyboard.instantiateController(withIdentifier: "GazetteerViewController") as? NSWindowController else {return nil}
         guard let mapViewController = mapWindow.contentViewController as? MapViewController else {return nil}
         
-        mapViewController.ancientMapDelegate = AncientMapViewDelegate(mapView: mapViewController.mapView, mapViewController: mapViewController, ancientMap: map)
+        mapViewController.ancientMapDelegate = AncientMapViewDelegate(mapView: mapViewController.mapView, mapViewDelegateDelegate: mapViewController, ancientMap: map)
         
         mapViewController.mapView.delegate = mapViewController.ancientMapDelegate
         
