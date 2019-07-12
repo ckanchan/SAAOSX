@@ -35,13 +35,29 @@ class ProjectListViewController: UITableViewController {
         tableView.reloadData()
         
         if self.catalogue.source != .search {
-            let glossaryButton = UIBarButtonItem(title: "Glossary", style: .plain, target: self, action: #selector(showGlossary))
+            let glossaryButton = UIBarButtonItem(title: "Glossary",
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(showGlossary))
             self.setToolbarItems([UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), glossaryButton], animated: false)
         }
         
-        let preferencesButton = UIBarButtonItem(title: "⚙︎", style: .plain, target: self, action: #selector(loadPreferences))
+        let preferencesButton = UIBarButtonItem(title: "⚙︎",
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(loadPreferences))
         
         navigationItem.rightBarButtonItem = preferencesButton
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateTableView),
+                                               name: Notification.Name("downloadedVolumesDidChange"),
+                                               object: nil)
+    }
+    
+    @objc func updateTableView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     @objc func loadPreferences() {
