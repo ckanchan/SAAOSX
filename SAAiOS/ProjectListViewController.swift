@@ -32,8 +32,6 @@ class ProjectListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
-        
         if self.catalogue.source != .search {
             let glossaryButton = UIBarButtonItem(title: "Glossary",
                                                  style: .plain,
@@ -68,6 +66,7 @@ class ProjectListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     @objc func showGlossary(_ sender: Any?) {

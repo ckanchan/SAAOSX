@@ -18,8 +18,8 @@ final class SQLiteCatalogue {
     let readOnly: Bool
     
     let url: URL
-    private lazy var textMetadataCache: [OraccCatalogEntry] = {
-        self.getCatalogueEntries() ?? []
+    lazy var textMetadataCache: [OraccCatalogEntry] = {
+        self.getCatalogueEntries()
     }()
     
     var cloudKitReferenceCache: [SAAVolume: CKRecord.ID] = [:]
@@ -28,9 +28,9 @@ final class SQLiteCatalogue {
         return try! db.scalar(Schema.textTable.count)
     }
     
-    public func getCatalogueEntries() -> [OraccCatalogEntry]? {
-        let query = Schema.selectAll()
-        guard let rows = try? db.prepare(query) else { return nil }
+    public func getCatalogueEntries() -> [OraccCatalogEntry] {
+        let query = Schema.selectAll().order(Schema.project)
+        guard let rows = try? db.prepare(query) else { return [] }
         return rows.map(OraccCatalogEntry.init)
     }
     

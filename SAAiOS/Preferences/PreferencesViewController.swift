@@ -51,17 +51,8 @@ class PreferencesViewController: UITableViewController {
             switch op {
             case "add":
                 self?.downloadedVolumes.insert(volumeCode)
-                guard let volume = SAAVolume(code: volumeCode),
-                    let idx = SAAVolume.allVolumes.firstIndex(of: volume),
-                    let cell = self?.tableView.cellForRow(at: IndexPath(row: idx, section: 0))
-                    else {return}
-                
-                self?.tableView.reloadData()
-                cell.accessoryType = .checkmark
-                
             case "delete":
                 self?.tableView.reloadData()
-                
             default:
                 break
             }
@@ -112,20 +103,56 @@ class PreferencesViewController: UITableViewController {
             let volume = SAAVolume.allVolumes[indexPath.row]
             if downloadedVolumes.contains(volume.code) {
                 tableView.deselectRow(at: indexPath, animated: true)
-                try! sqlite.delete(volume)
-                downloadedVolumes.remove(volume.code)
-                cell.accessoryType = .none
+                let db = self.sqlite
                 
+                let alert = UIAlertController(title: "Remove downloaded volume",
+                                              message: "Are you sure you want to remove the downloaded volume \(volume.title) from the offline cache?\nYou will need to redownload it again to view text from it.", preferredStyle: .alert)
+                let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+                    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                        db.delete(volume) {result in
+                            DispatchQueue.main.async {
+                                switch result {
+                                case .success(_):
+                                    self?.downloadedVolumes.remove(volume.code)
+                                    cell.accessoryType = .none
+                                case.failure(let error):
+                                    print(error.localizedDescription)
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                alert.addAction(cancelAction)
+                alert.addAction(deleteAction)
+                present(alert, animated: true)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
                 let progressIndicator = UIActivityIndicatorView(style: .gray)
                 cell.accessoryView = progressIndicator
                 progressIndicator.startAnimating()
-                sqlite.insert(volume)
+                sqlite.insert(volume) { [weak self] result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success:
+                            cell.accessoryView = nil
+                            cell.accessoryType = .checkmark
+                            self?.downloadedVolumes.insert(volume.code)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
             }
         default:
             return
         }
+    }
+    
+    func deleteVolume(_ volume: SAAVolume) {
+
+       
     }
 }
 
