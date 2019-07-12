@@ -234,7 +234,7 @@
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
 		548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommands.swift; sourceTree = "<group>"; };
 		5491DD4D21CD385100B49B7D /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
-		5498CAD8204EAF63004C774A /* SAAi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAAi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5498CAD8204EAF63004C774A /* Tupšenna.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tupšenna.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5498CADA204EAF63004C774A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5498CADC204EAF63004C774A /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
 		5498CADE204EAF63004C774A /* TextEditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditionViewController.swift; sourceTree = "<group>"; };
@@ -383,7 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				544138D92004D27A00A64CB2 /* SAAo-SX.app */,
-				5498CAD8204EAF63004C774A /* SAAi.app */,
+				5498CAD8204EAF63004C774A /* Tupšenna.app */,
 				544E5FF0224FA025004482E5 /* SAAo-SXTests.xctest */,
 			);
 			name = Products;
@@ -707,9 +707,9 @@
 			productReference = 544E5FF0224FA025004482E5 /* SAAo-SXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5498CAD7204EAF63004C774A /* SAAi */ = {
+		5498CAD7204EAF63004C774A /* Tupšenna */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAi" */;
+			buildConfigurationList = 5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "Tupšenna" */;
 			buildPhases = (
 				FCACBCDA4947268DEADF6D2D /* [CP] Check Pods Manifest.lock */,
 				5498CAD4204EAF63004C774A /* Sources */,
@@ -721,9 +721,9 @@
 			);
 			dependencies = (
 			);
-			name = SAAi;
+			name = "Tupšenna";
 			productName = SAAiOS;
-			productReference = 5498CAD8204EAF63004C774A /* SAAi.app */;
+			productReference = 5498CAD8204EAF63004C774A /* Tupšenna.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -788,7 +788,7 @@
 			projectRoot = "";
 			targets = (
 				544138D82004D27A00A64CB2 /* SAAo-SX */,
-				5498CAD7204EAF63004C774A /* SAAi */,
+				5498CAD7204EAF63004C774A /* Tupšenna */,
 				544E5FEF224FA025004482E5 /* SAAo-SXTests */,
 			);
 		};
@@ -1380,7 +1380,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "SAAi" */ = {
+		5498CAEB204EAF63004C774A /* Build configuration list for PBXNativeTarget "Tupšenna" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5498CAE9204EAF63004C774A /* Debug */,

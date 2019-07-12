@@ -8,13 +8,14 @@
 
 import UIKit
 import CDKSwiftOracc
+import WebKit
 
 enum Navigate {
     case left, right
 }
 
 class ProjectListViewController: UITableViewController {
-
+    var noTextsLoadedPromptShownAlreadyInSession: Bool = false
     var detailViewController: TextEditionViewController?
     var filteredTexts: [OraccCatalogEntry] = []
     lazy var catalogue: CatalogueProvider = {return sqlite}()
@@ -45,7 +46,13 @@ class ProjectListViewController: UITableViewController {
                                                 target: self,
                                                 action: #selector(loadPreferences))
         
-        navigationItem.rightBarButtonItem = preferencesButton
+        let helpButton = UIBarButtonItem(title: "?",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(showHelp))
+        
+        navigationItem.leftBarButtonItem = preferencesButton
+        navigationItem.rightBarButtonItem = helpButton
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateTableView),
                                                name: Notification.Name("downloadedVolumesDidChange"),
@@ -62,11 +69,38 @@ class ProjectListViewController: UITableViewController {
         guard let preferencesViewController = storyboard?.instantiateViewController(withIdentifier: StoryboardIDs.PreferencesViewController) else {return}
         navigationController?.pushViewController(preferencesViewController, animated: true)
     }
+    
+    @objc func showHelp() {
+        let configuration = WKWebViewConfiguration()
+        let view = WKWebView(frame: .zero, configuration: configuration)
+        guard let url = URL(string: "https://www.chaidk.me/manuals/tupsenna_ios/index.html") else {return}
+        
+        let request = URLRequest(url: url)
+        let viewController = UIViewController()
+        viewController.view = view
+        view.load(request)
+        navigationController?.setToolbarHidden(true, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         tableView.reloadData()
+        navigationController?.setToolbarHidden(false, animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if catalogue.texts.isEmpty && !noTextsLoadedPromptShownAlreadyInSession {
+            let alert = UIAlertController(title: "No volumes downloaded",
+                                          message: "There are no texts available to view. Download at least one text volume in Settings",
+                                          preferredStyle: .alert)
+            let action = UIAlertAction(title: "Go to Settings", style: .default, handler: {_ in self.loadPreferences()})
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            alert.addAction(action)
+            alert.addAction(cancel)
+            present(alert, animated: true) {self.noTextsLoadedPromptShownAlreadyInSession = true}
+        }
     }
 
     @objc func showGlossary(_ sender: Any?) {

@@ -12,7 +12,7 @@
         <!--Preferences-->
         <scene sceneID="kdu-s0-DOg">
             <objects>
-                <tableViewController storyboardIdentifier="PreferencesViewController" title="Preferences" id="nwZ-9k-MxC" customClass="PreferencesViewController" customModule="SAAi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PreferencesViewController" title="Preferences" id="nwZ-9k-MxC" customClass="PreferencesViewController" customModule="Tupšenna" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="UQc-x5-UOh">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,10 +46,10 @@
             </objects>
             <point key="canvasLocation" x="-1131" y="415"/>
         </scene>
-        <!--SAAiOS-->
+        <!--Tupšenna-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController storyboardIdentifier="ProjectListViewController" title="SAAiOS" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="ProjectListViewController" customModule="SAAi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProjectListViewController" title="Tupšenna" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="ProjectListViewController" customModule="Tupšenna" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,7 +96,7 @@
         <!--Glossary-->
         <scene sceneID="8t6-nD-ZsS">
             <objects>
-                <tableViewController storyboardIdentifier="Glossary" title="Glossary" id="yuc-6o-kWv" customClass="GlossaryTableViewController" customModule="SAAi" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Glossary" title="Glossary" id="yuc-6o-kWv" customClass="GlossaryTableViewController" customModule="Tupšenna" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tk5-h1-ZXK">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

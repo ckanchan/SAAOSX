@@ -22,6 +22,7 @@ class PreferencesViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setToolbarHidden(true, animated: true)
         NotificationCenter.default.addObserver(self, selector: #selector(updateTableView), name: Notification.Name("downloadedVolumesDidChange"), object: nil)
     }
     
@@ -106,7 +107,7 @@ class PreferencesViewController: UITableViewController {
                 let db = self.sqlite
                 
                 let alert = UIAlertController(title: "Remove downloaded volume",
-                                              message: "Are you sure you want to remove the downloaded volume \(volume.title) from the offline cache?\nYou will need to redownload it again to view text from it.", preferredStyle: .alert)
+                                              message: "Are you sure you want to remove the downloaded volume \(volume.title) from the offline cache?\nYou will need to redownload it to view texts from it.", preferredStyle: .alert)
                 let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
                     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                         db.delete(volume) {result in
@@ -132,13 +133,15 @@ class PreferencesViewController: UITableViewController {
                 let progressIndicator = UIActivityIndicatorView(style: .gray)
                 cell.accessoryView = progressIndicator
                 progressIndicator.startAnimating()
-                sqlite.insert(volume) { [weak self] result in
+                sqlite.insert(volume) { [downloadedVolumes] result in
                     DispatchQueue.main.async {
                         switch result {
                         case .success:
                             cell.accessoryView = nil
                             cell.accessoryType = .checkmark
-                            self?.downloadedVolumes.insert(volume.code)
+                            var newSet = downloadedVolumes
+                            newSet.insert(volume.code)
+                            UserDefaults.standard.set(Array(newSet), forKey: "downloadedVolumes")
                         case .failure(let error):
                             print(error.localizedDescription)
                         }
@@ -148,11 +151,6 @@ class PreferencesViewController: UITableViewController {
         default:
             return
         }
-    }
-    
-    func deleteVolume(_ volume: SAAVolume) {
-
-       
     }
 }
 
