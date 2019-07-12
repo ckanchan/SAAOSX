@@ -1,9 +1,12 @@
+source 'https://cdn.cocoapods.org/'
+
 target 'SAAi' do
   
   use_frameworks!
   
   platform :ios, '12.0'
-  
+
+
   # Pods for SAAi
   pod 'CDKSwiftOracc'
   pod 'CDKOraccInterface'

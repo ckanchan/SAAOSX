@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var didChooseDetail = false
     
     // Essential app services
-    lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue() }()!
+    lazy var sqlDB: SQLiteCatalogue = { return SQLiteCatalogue(readOnly: false) }()!
     lazy var glossaryDB: Glossary = { return Glossary() }()
     
 
