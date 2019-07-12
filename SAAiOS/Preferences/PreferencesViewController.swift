@@ -65,6 +65,11 @@ class PreferencesViewController: UITableViewController {
             default:
                 break
             }
+            
+            if let s = self {
+                let storageCell = s.tableView.cellForRow(at: IndexPath(row: 0, section: 1))
+                storageCell?.textLabel?.text = "Download size: \(s.byteCountFormatter.string(for: s.downloadsSize) ?? "?")"
+            }
         }
     }
     
@@ -123,9 +128,38 @@ class PreferencesViewController: UITableViewController {
                 progressIndicator.startAnimating()
                 sqlite.insert(volume)
             }
+            
+        case 1:
+            if indexPath.row == 1 {
+                deleteAll()
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         default:
             return
         }
+    }
+    
+    func deleteAll() {
+        let alert = UIAlertController(title: "Delete all?", message: "Deleting all texts from downloads will mean you will need to redownload at least one volume again to use the app", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let db = self.sqlite
+        let delete = UIAlertAction(title: "Delete All", style: .destructive){ _ in
+            db.deleteAll() { result in
+                switch result {
+                case .success:
+                    UserDefaults.standard.removeObject(forKey: "downloadedVolumes")
+                    DispatchQueue.main.async { [weak self] in
+                        self?.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        alert.addAction(cancel)
+        alert.addAction(delete)
+        present(alert, animated: true)
     }
 }
 

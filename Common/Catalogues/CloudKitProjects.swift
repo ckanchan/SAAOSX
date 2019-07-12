@@ -121,6 +121,21 @@ extension SQLiteCatalogue {
         NotificationCenter.default.post(notification)
     }
     
+    func deleteAll(_ completionHandler: ((Swift.Result<Void, Error>) -> Void)? = nil) {
+        do {
+            do {
+                try db.run(Schema.textTable.delete())
+                try db.execute("VACUUM;")
+                let notification = Notification(name: Notification.Name("downloadedVolumesDidChange"), userInfo: ["op": "delete"])
+                self.textMetadataCache = []
+                NotificationCenter.default.post(notification)
+                completionHandler?(.success(()))
+            }
+        } catch {
+            completionHandler?(.failure(error))
+        }
+    }
+    
     func getRecordIDs() {
         let pred = NSPredicate(value: true)
         let query = CKQuery(recordType: "Project", predicate: pred)
