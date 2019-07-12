@@ -34,6 +34,7 @@ class TextEditionViewController: UIViewController {
     var textStrings: TextEditionStringContainer? {
         didSet {
             textStrings?.render(withPreferences: UIFont.systemFont(ofSize: UIFont.systemFontSize).makeDefaultPreferences())
+            refreshPanels()
         }
     }
 
@@ -118,6 +119,12 @@ class TextEditionViewController: UIViewController {
         navigationController?.setToolbarHidden(false, animated: false)
         navigationController?.hidesBarsOnSwipe = true
     }
+    
+    func refreshPanels() {
+        self.primaryPanel?.changeText(display: .Normalisation, scrollToTop: true)
+        self.secondaryPanel?.changeText(display: .Translation, scrollToTop: true)
+    }
+
 
     //TODO :- Refactor grotesquely horrible navigation.
     @objc func navigate(_ sender: Any) {
