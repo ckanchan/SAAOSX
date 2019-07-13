@@ -9,38 +9,36 @@
 import UIKit
 
 extension ProjectListViewController {
-    enum Toolbar {
-        static var glossaryButton: UIBarButtonItem {
+        func glossaryButton() -> UIBarButtonItem {
             return UIBarButtonItem(title: "Glossary",
                                    style: .plain,
                                    target: self,
                                    action: #selector(showGlossary))
         }
         
-        static var preferencesButton: UIBarButtonItem {
+        func preferencesButton() -> UIBarButtonItem {
             return UIBarButtonItem(title: "⚙︎",
                                    style: .plain,
                                    target: self,
                                    action: #selector(loadPreferences))
         }
         
-        static var helpButton: UIBarButtonItem {
+        func helpButton() -> UIBarButtonItem {
             return UIBarButtonItem(title: "?",
                                    style: .plain,
                                    target: self,
                                    action: #selector(showHelp))
         }
         
-        static var flexibleSpace: UIBarButtonItem {
+        func flexibleSpace() -> UIBarButtonItem {
             return UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
                                    target: nil,
                                    action: nil)
         }
         
-        static var defaultToolbarItems: [UIBarButtonItem] {
-            return [Toolbar.flexibleSpace, glossaryButton]
+        var defaultToolbarItems: [UIBarButtonItem] {
+            return [flexibleSpace(), glossaryButton()]
         }
-    }
     
     func configureToolbars() {
         switch catalogue.source {
@@ -51,9 +49,9 @@ extension ProjectListViewController {
             self.setToolbarItems([labelBtn], animated: true)
             navigationItem.title = "Search results"
         default:
-            setToolbarItems(Toolbar.defaultToolbarItems, animated: false)
-            navigationItem.leftBarButtonItem = Toolbar.preferencesButton
-            navigationItem.rightBarButtonItem = Toolbar.helpButton
+            setToolbarItems(defaultToolbarItems, animated: false)
+            navigationItem.leftBarButtonItem = preferencesButton()
+            navigationItem.rightBarButtonItem = helpButton()
             navigationItem.title = "Tupšenna"
         }
     }
