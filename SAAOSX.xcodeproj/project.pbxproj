@@ -77,6 +77,10 @@
 		5473AD1F22D7C9500029317F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5473AD1E22D7C9500029317F /* CloudKit.framework */; };
 		54744515225784830075004D /* CloudKitZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54744514225784830075004D /* CloudKitZones.swift */; };
 		547445172258E6AF0075004D /* NoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547445162258E6AF0075004D /* NoteType.swift */; };
+		54765D3C22D9C28600F60771 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54765D3B22D9C28600F60771 /* Navigate.swift */; };
+		54765D3E22D9C55800F60771 /* ProjectListViewController+UIViewControllerPreviewingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54765D3D22D9C55800F60771 /* ProjectListViewController+UIViewControllerPreviewingDelegate.swift */; };
+		54765D4022D9C9C800F60771 /* ProjectListViewToolbars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54765D3F22D9C9C800F60771 /* ProjectListViewToolbars.swift */; };
+		54765D4222D9CAB200F60771 /* ProjectListViewController+UISearchResultsUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54765D4122D9CAB200F60771 /* ProjectListViewController+UISearchResultsUpdating.swift */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
@@ -222,6 +226,10 @@
 		5473AD1E22D7C9500029317F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		54744514225784830075004D /* CloudKitZones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitZones.swift; sourceTree = "<group>"; };
 		547445162258E6AF0075004D /* NoteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteType.swift; sourceTree = "<group>"; };
+		54765D3B22D9C28600F60771 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
+		54765D3D22D9C55800F60771 /* ProjectListViewController+UIViewControllerPreviewingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+UIViewControllerPreviewingDelegate.swift"; sourceTree = "<group>"; };
+		54765D3F22D9C9C800F60771 /* ProjectListViewToolbars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewToolbars.swift; sourceTree = "<group>"; };
+		54765D4122D9CAB200F60771 /* ProjectListViewController+UISearchResultsUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+UISearchResultsUpdating.swift"; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
@@ -484,6 +492,18 @@
 			path = Projects;
 			sourceTree = "<group>";
 		};
+		54765D3A22D9C26D00F60771 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				5498CADC204EAF63004C774A /* ProjectListViewController.swift */,
+				54765D4122D9CAB200F60771 /* ProjectListViewController+UISearchResultsUpdating.swift */,
+				54765D3F22D9C9C800F60771 /* ProjectListViewToolbars.swift */,
+				54765D3D22D9C55800F60771 /* ProjectListViewController+UIViewControllerPreviewingDelegate.swift */,
+				54765D3B22D9C28600F60771 /* Navigate.swift */,
+			);
+			path = Project;
+			sourceTree = "<group>";
+		};
 		547BEB35209FA8C000C42007 /* TextEdition */ = {
 			isa = PBXGroup;
 			children = (
@@ -572,12 +592,12 @@
 		5498CAD9204EAF63004C774A /* SAAiOS */ = {
 			isa = PBXGroup;
 			children = (
+				54765D3A22D9C26D00F60771 /* Project */,
 				5439770A20A421B0002072AE /* Preferences */,
 				548C57D120A1C4CE008E8C1F /* Extensions */,
 				54657A5D20A0C0FC00FAC8E3 /* Glossary */,
 				547BEB35209FA8C000C42007 /* TextEdition */,
 				5498CADA204EAF63004C774A /* AppDelegate.swift */,
-				5498CADC204EAF63004C774A /* ProjectListViewController.swift */,
 				5498CAE0204EAF63004C774A /* Main.storyboard */,
 				5498CAE3204EAF63004C774A /* Assets.xcassets */,
 				5498CAE5204EAF63004C774A /* LaunchScreen.storyboard */,
@@ -1030,8 +1050,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5402365B22AEBDE0005F22A4 /* CloudKitZones.swift in Sources */,
+				54765D4222D9CAB200F60771 /* ProjectListViewController+UISearchResultsUpdating.swift in Sources */,
 				5402365F22AEBE0A005F22A4 /* NoteSQLSchema.swift in Sources */,
 				5473AD1C22D7C6F10029317F /* CloudKitProjects.swift in Sources */,
+				54765D4022D9C9C800F60771 /* ProjectListViewToolbars.swift in Sources */,
 				54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */,
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
 				543DC34920B6787A0019FF1E /* UserTags.swift in Sources */,
@@ -1049,7 +1071,9 @@
 				54F1C42420A9F4D1009F31C0 /* Note.swift in Sources */,
 				5402366822AEBE2C005F22A4 /* NSAttributedStringLineBreaks.swift in Sources */,
 				54041CEE21EE6E19006EAF8D /* CKRecord+Conversions.swift in Sources */,
+				54765D3E22D9C55800F60771 /* ProjectListViewController+UIViewControllerPreviewingDelegate.swift in Sources */,
 				5402366022AEBE0C005F22A4 /* NoteSQLTags.swift in Sources */,
+				54765D3C22D9C28600F60771 /* Navigate.swift in Sources */,
 				5402366522AEBE20005F22A4 /* NSSecureCodingHelper.swift in Sources */,
 				548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */,
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
