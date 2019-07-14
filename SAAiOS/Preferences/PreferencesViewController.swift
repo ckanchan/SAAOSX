@@ -38,7 +38,7 @@ class PreferencesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return SAAVolume.allVolumes.count
+        case 0: return Volume.allVolumes.count
         case 1: return 2
         default: return 0
         }
@@ -69,7 +69,7 @@ class PreferencesViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "VolumeCell", for: indexPath)
-            let volume = SAAVolume.allVolumes[indexPath.row]
+            let volume = Volume.allVolumes[indexPath.row]
             cell.imageView?.image = volume.image
             cell.textLabel?.text = volume.title
             cell.detailTextLabel?.text = volume.code.capitalized
@@ -106,7 +106,7 @@ class PreferencesViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)!
         switch indexPath.section {
         case 0:
-            let volume = SAAVolume.allVolumes[indexPath.row]
+            let volume = Volume.allVolumes[indexPath.row]
             if downloadedVolumes.contains(volume.code) {
                 tableView.deselectRow(at: indexPath, animated: true)
                 let db = self.sqlite

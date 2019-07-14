@@ -22,7 +22,7 @@ final class SQLiteCatalogue {
         self.getCatalogueEntries()
     }()
     
-    var cloudKitReferenceCache: [SAAVolume: CKRecord.ID] = [:]
+    var cloudKitReferenceCache: [Volume: CKRecord.ID] = [:]
     
     public var textCount: Int {
         return try! db.scalar(Schema.textTable.count)
@@ -64,7 +64,7 @@ final class SQLiteCatalogue {
         return OraccCatalogEntry(row: row)
     }
     
-    func entriesForVolume(_ volume: SAAVolume) -> [OraccCatalogEntry] {
+    func entriesForVolume(_ volume: Volume) -> [OraccCatalogEntry] {
         let query = Schema
             .selectAll()
             .filter(Schema.project == volume.path)

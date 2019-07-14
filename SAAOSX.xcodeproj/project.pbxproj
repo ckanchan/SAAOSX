@@ -25,6 +25,12 @@
 		54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420145A21E22DDE00ABCB70 /* CloudKitPush.swift */; };
 		54041CEE21EE6E19006EAF8D /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
 		5407124420A6173D00666489 /* TextPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407124320A6173D00666489 /* TextPanelViewController.swift */; };
+		540DBAB622DB857500DB293D /* RINAP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DBAB522DB857500DB293D /* RINAP.swift */; };
+		540DBAB722DB857500DB293D /* RINAP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DBAB522DB857500DB293D /* RINAP.swift */; };
+		540DBAB922DBA0FE00DB293D /* SAA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DBAB822DBA0FE00DB293D /* SAA.swift */; };
+		540DBABA22DBA0FE00DB293D /* SAA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DBAB822DBA0FE00DB293D /* SAA.swift */; };
+		540DBABC22DBA8A000DB293D /* CAMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DBABB22DBA8A000DB293D /* CAMS.swift */; };
+		540DBABD22DBA8A000DB293D /* CAMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DBABB22DBA8A000DB293D /* CAMS.swift */; };
 		541378E521DA6263003A4481 /* NoteSQLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteSQLDatabase.swift */; };
 		541378E621DA627C003A4481 /* NoteSQLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E421DA6263003A4481 /* NoteSQLDatabase.swift */; };
 		541378E821DA7BA7003A4481 /* CloudKitNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541378E721DA7BA7003A4481 /* CloudKitNotes.swift */; };
@@ -66,8 +72,8 @@
 		5469819F226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469819E226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift */; };
 		546D462121CFB6730012C1EE /* AncientLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546D462021CFB6730012C1EE /* AncientLocation.swift */; };
 		5471EF7320B1F4AB00EE1B73 /* AnnotationPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5471EF7220B1F4AB00EE1B73 /* AnnotationPopupController.swift */; };
-		5473AD1222D7C5E00029317F /* SAAVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5473AD1122D7C5E00029317F /* SAAVolume.swift */; };
-		5473AD1322D7C5E00029317F /* SAAVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5473AD1122D7C5E00029317F /* SAAVolume.swift */; };
+		5473AD1222D7C5E00029317F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5473AD1122D7C5E00029317F /* Volume.swift */; };
+		5473AD1322D7C5E00029317F /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5473AD1122D7C5E00029317F /* Volume.swift */; };
 		5473AD1522D7C6550029317F /* ProjectImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5473AD1422D7C6550029317F /* ProjectImages.xcassets */; };
 		5473AD1622D7C6550029317F /* ProjectImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5473AD1422D7C6550029317F /* ProjectImages.xcassets */; };
 		5473AD1822D7C6B40029317F /* SQLiteCatalogueSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5473AD1722D7C6B40029317F /* SQLiteCatalogueSchema.swift */; };
@@ -176,6 +182,9 @@
 		3C81CDB7D6CD24874930F15F /* Pods-SAAi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAAi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAAi/Pods-SAAi.debug.xcconfig"; sourceTree = "<group>"; };
 		5401C5E721F2643D0037628F /* SAAo-SX.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SAAo-SX.help"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
+		540DBAB522DB857500DB293D /* RINAP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RINAP.swift; sourceTree = "<group>"; };
+		540DBAB822DBA0FE00DB293D /* SAA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAA.swift; sourceTree = "<group>"; };
+		540DBABB22DBA8A000DB293D /* CAMS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMS.swift; sourceTree = "<group>"; };
 		541378E421DA6263003A4481 /* NoteSQLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSQLDatabase.swift; sourceTree = "<group>"; };
 		541378E721DA7BA7003A4481 /* CloudKitNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitNotes.swift; sourceTree = "<group>"; };
 		541378E921DAAFE0003A4481 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
@@ -218,7 +227,7 @@
 		5469819E226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitUserDefaultKeys.swift; sourceTree = "<group>"; };
 		546D462021CFB6730012C1EE /* AncientLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientLocation.swift; sourceTree = "<group>"; };
 		5471EF7220B1F4AB00EE1B73 /* AnnotationPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPopupController.swift; sourceTree = "<group>"; };
-		5473AD1122D7C5E00029317F /* SAAVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAAVolume.swift; sourceTree = "<group>"; };
+		5473AD1122D7C5E00029317F /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
 		5473AD1422D7C6550029317F /* ProjectImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ProjectImages.xcassets; sourceTree = "<group>"; };
 		5473AD1722D7C6B40029317F /* SQLiteCatalogueSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteCatalogueSchema.swift; sourceTree = "<group>"; };
 		5473AD1A22D7C6F00029317F /* CloudKitProjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitProjects.swift; sourceTree = "<group>"; };
@@ -487,7 +496,10 @@
 			isa = PBXGroup;
 			children = (
 				5473AD1422D7C6550029317F /* ProjectImages.xcassets */,
-				5473AD1122D7C5E00029317F /* SAAVolume.swift */,
+				5473AD1122D7C5E00029317F /* Volume.swift */,
+				540DBAB522DB857500DB293D /* RINAP.swift */,
+				540DBAB822DBA0FE00DB293D /* SAA.swift */,
+				540DBABB22DBA8A000DB293D /* CAMS.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -976,6 +988,7 @@
 				54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */,
 				547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */,
 				54FE04EA21D141F5000214E5 /* MapViewController.swift in Sources */,
+				540DBABC22DBA8A000DB293D /* CAMS.swift in Sources */,
 				5469819F226B6C9A00B27F38 /* CloudKitUserDefaultKeys.swift in Sources */,
 				5473AD1822D7C6B40029317F /* SQLiteCatalogueSchema.swift in Sources */,
 				5471EF7320B1F4AB00EE1B73 /* AnnotationPopupController.swift in Sources */,
@@ -1023,8 +1036,9 @@
 				543DC34820B6787A0019FF1E /* UserTags.swift in Sources */,
 				5435F30321CE5771000A1FC8 /* GeoJSON.swift in Sources */,
 				5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */,
+				540DBAB922DBA0FE00DB293D /* SAA.swift in Sources */,
 				5484CEA120B6C5DE002A3809 /* NotesTabViewController.swift in Sources */,
-				5473AD1222D7C5E00029317F /* SAAVolume.swift in Sources */,
+				5473AD1222D7C5E00029317F /* Volume.swift in Sources */,
 				5469819D226B48A200B27F38 /* NSSecureCodingHelper.swift in Sources */,
 				5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
 				547445172258E6AF0075004D /* NoteType.swift in Sources */,
@@ -1033,6 +1047,7 @@
 				5466120E20B9D59500FEF2D5 /* NotesByLemmaViewController.swift in Sources */,
 				54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */,
 				54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */,
+				540DBAB622DB857500DB293D /* RINAP.swift in Sources */,
 				544F2DB322775F9800407F46 /* NoteSQLExport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1057,10 +1072,13 @@
 				54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */,
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
 				543DC34920B6787A0019FF1E /* UserTags.swift in Sources */,
+				540DBAB722DB857500DB293D /* RINAP.swift in Sources */,
 				5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */,
 				54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */,
 				5402366122AEBE0E005F22A4 /* NoteSQLAnnotations.swift in Sources */,
 				5402366422AEBE1E005F22A4 /* NoteNotifications.swift in Sources */,
+				540DBABA22DBA0FE00DB293D /* SAA.swift in Sources */,
+				540DBABD22DBA8A000DB293D /* CAMS.swift in Sources */,
 				5473AD1922D7C6B40029317F /* SQLiteCatalogueSchema.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
 				5402365D22AEBE02005F22A4 /* CloudKitUserDefaultKeys.swift in Sources */,
@@ -1086,7 +1104,7 @@
 				54D223F720A0FA09007E88F4 /* CustomKeyboardKeys.swift in Sources */,
 				54041CEC21EE6E19006EAF8D /* CloudKitPush.swift in Sources */,
 				5498CADB204EAF63004C774A /* AppDelegate.swift in Sources */,
-				5473AD1322D7C5E00029317F /* SAAVolume.swift in Sources */,
+				5473AD1322D7C5E00029317F /* Volume.swift in Sources */,
 				54657A5F20A0C34800FAC8E3 /* InfoTableViewController.swift in Sources */,
 				5498CAFE204EB3AD004C774A /* ViewControllerExtensions.swift in Sources */,
 				54041CEB21EE6E19006EAF8D /* CloudKitNotes.swift in Sources */,

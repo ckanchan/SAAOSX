@@ -74,7 +74,7 @@ extension SQLiteCatalogue {
         }
     }
     
-    func insert(_ volume: SAAVolume, completionHandler: ((Swift.Result<SAAVolume, Error>) -> Void)? = nil) {
+    func insert(_ volume: Volume, completionHandler: ((Swift.Result<Volume, Error>) -> Void)? = nil) {
         guard let id = cloudKitReferenceCache[volume] else {return}
         cloudKitDatabase.fetch(withRecordID: id) {[unowned self] record, error in
             if let error = error {
@@ -115,7 +115,7 @@ extension SQLiteCatalogue {
         }
     }
     
-    func delete(_ volume: SAAVolume, completionHandler: ((Swift.Result<SAAVolume, Error>) -> Void)? = nil) {
+    func delete(_ volume: Volume, completionHandler: ((Swift.Result<Volume, Error>) -> Void)? = nil) {
         let query = Schema.textTable.filter(Schema.project == volume.path)
         do {
             try db.run(query.delete())
@@ -148,11 +148,11 @@ extension SQLiteCatalogue {
         let pred = NSPredicate(value: true)
         let query = CKQuery(recordType: "Project", predicate: pred)
         let operation = CKQueryOperation(query: query)
-        var dict = [SAAVolume: CKRecord.ID]()
+        var dict = [Volume: CKRecord.ID]()
         operation.desiredKeys = ["code"]
         operation.recordFetchedBlock = { record in
             guard let code = record["code"] as? String,
-                let volume = SAAVolume(code: code) else {return}
+                let volume = Volume(code: code) else {return}
                 dict[volume] = record.recordID
         }
         operation.queryCompletionBlock = { [weak self] _, error in
