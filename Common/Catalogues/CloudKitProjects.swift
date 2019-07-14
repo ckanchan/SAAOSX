@@ -57,10 +57,10 @@ extension SQLiteCatalogue {
                 t.column(Schema.textStrings)
             })
             
-            try db.run(Schema.textTable.createIndex(Schema.ancientAuthor))
-            try db.run(Schema.textTable.createIndex(Schema.displayName))
-            try db.run(Schema.textTable.createIndex(Schema.textid, unique: true))
-            try db.run(Schema.textTable.createIndex(Schema.title))
+            try db.run(Schema.textTable.createIndex(Schema.ancientAuthor, ifNotExists: true))
+            try db.run(Schema.textTable.createIndex(Schema.displayName, ifNotExists: true))
+            try db.run(Schema.textTable.createIndex(Schema.textid, unique: true, ifNotExists: true))
+            try db.run(Schema.textTable.createIndex(Schema.title, ifNotExists: true))
         } catch let SQLite.Result.error(message, code, _){
             os_log("SQLite error initialising a writeable database, code %{public}d, message %{public}s",
                    log: Log.CatalogueSQLite,
@@ -74,7 +74,7 @@ extension SQLiteCatalogue {
         }
     }
     
-    func insert(_ volume: SAAVolume) {
+    func insert(_ volume: Volume, completionHandler: ((Swift.Result<Volume, Error>) -> Void)? = nil) {
         guard let id = cloudKitReferenceCache[volume] else {return}
         cloudKitDatabase.fetch(withRecordID: id) {[unowned self] record, error in
             if let error = error {
@@ -82,6 +82,7 @@ extension SQLiteCatalogue {
                        log: Log.CatalogueSQLite,
                        type: .error,
                        volume.code, error.localizedDescription)
+                completionHandler?(.failure(error))
             } else if let record = record,
                 let downloadedVolumeFile = record["data"] as? CKAsset,
                 let dbUrl = downloadedVolumeFile.fileURL,
@@ -106,19 +107,26 @@ extension SQLiteCatalogue {
                                error.localizedDescription)
                     }
                 }
-                
+                self.textMetadataCache = self.getCatalogueEntries()
                 let notification = Notification(name: Notification.Name("downloadedVolumesDidChange"), userInfo: ["volume": volume.code, "op": "add"])
                 NotificationCenter.default.post(notification)
+                completionHandler?(.success(volume))
             }
         }
     }
     
-    func delete(_ volume: SAAVolume) throws {
+    func delete(_ volume: Volume, completionHandler: ((Swift.Result<Volume, Error>) -> Void)? = nil) {
         let query = Schema.textTable.filter(Schema.project == volume.path)
-        try db.run(query.delete())
-        try db.execute("VACUUM;")
-        let notification = Notification(name: Notification.Name("downloadedVolumesDidChange"), userInfo: ["volume": volume.code, "op": "delete"])
-        NotificationCenter.default.post(notification)
+        do {
+            try db.run(query.delete())
+            try db.execute("VACUUM;")
+            let notification = Notification(name: Notification.Name("downloadedVolumesDidChange"), userInfo: ["volume": volume.code, "op": "delete"])
+            self.textMetadataCache = self.getCatalogueEntries()
+            NotificationCenter.default.post(notification)
+            completionHandler?(.success(volume))
+        } catch {
+            completionHandler?(.failure(error))
+        }
     }
     
     func deleteAll(_ completionHandler: ((Swift.Result<Void, Error>) -> Void)? = nil) {
@@ -140,11 +148,11 @@ extension SQLiteCatalogue {
         let pred = NSPredicate(value: true)
         let query = CKQuery(recordType: "Project", predicate: pred)
         let operation = CKQueryOperation(query: query)
-        var dict = [SAAVolume: CKRecord.ID]()
+        var dict = [Volume: CKRecord.ID]()
         operation.desiredKeys = ["code"]
         operation.recordFetchedBlock = { record in
             guard let code = record["code"] as? String,
-                let volume = SAAVolume(code: code) else {return}
+                let volume = Volume(code: code) else {return}
                 dict[volume] = record.recordID
         }
         operation.queryCompletionBlock = { [weak self] _, error in
