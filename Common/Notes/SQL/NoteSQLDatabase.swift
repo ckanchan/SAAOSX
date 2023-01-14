@@ -17,17 +17,16 @@ final class NoteSQLDatabase {
     weak var cloudKitDB: CloudKitNotes?
     
     func updateCloudKitMetadata(tableRow: Table, record: CKRecord) {
-        let data = NSMutableData()
-        let coder = NSKeyedArchiver(forWritingWith: data)
-        coder.requiresSecureCoding = true
+        let coder = NSKeyedArchiver(requiringSecureCoding: true)
         record.encodeSystemFields(with: coder)
         coder.finishEncoding()
+        let data = coder.encodedData
         
         let recordID = record.recordID.securelyEncoded()
         
         do {
             try db.run(tableRow.update(
-                Schema.ckSystemFields <- data as Data,
+                Schema.ckSystemFields <- data,
                 Schema.ckRecordID <- recordID
                 ))
         } catch {
@@ -83,15 +82,14 @@ final class NoteSQLDatabase {
     /// - Throws: SQLite errors
     func deleteFromSQLAndCloud(query: Table) throws {
         guard let row = try? db.pluck(query) else {return}
-        if let ckRecordInfo = row[Schema.ckSystemFields] {
-            let unarchiver = NSKeyedUnarchiver(forReadingWith: ckRecordInfo)
-            unarchiver.requiresSecureCoding = true
-            if let record = CKRecord(coder: unarchiver) {
-                cloudKitDB?.deleteRecord(record)
+        if
+            let ckRecordInfo = row[Schema.ckSystemFields],
+            let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: ckRecordInfo),
+            let record =  CKRecord(coder: unarchiver) {
+            cloudKitDB?.deleteRecord(record)
             }
-        }        
         try db.run(query.delete())
-    }
+        }        
     
     /// Called when a record has been deleted from CloudKit, deleting the record in the local database
     ///

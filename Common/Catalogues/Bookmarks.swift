@@ -8,6 +8,7 @@
 import Foundation
 import CDKSwiftOracc
 import SQLite
+import SQLite3
 import os
 
 /// Conform to this protocol to allow BookmarkedTextController to refresh the table view when entries are added or removed from the database.
@@ -122,7 +123,7 @@ final public class Bookmarks: CatalogueProvider {
     }
 
     public func save(entry: OraccCatalogEntry, strings: TextEditionStringContainer) throws {
-        let archiver = NSKeyedArchiver()
+        let archiver = NSKeyedArchiver(requiringSecureCoding: true)
         strings.encode(with: archiver)
         let data = archiver.encodedData
 
@@ -223,8 +224,10 @@ final public class Bookmarks: CatalogueProvider {
         guard let row = try? db.pluck(query) else {return nil}
         let encodedString = row[Bookmarks.textStrings]
 
-        let decoder = NSKeyedUnarchiver(forReadingWith: encodedString)
-        guard let stringContainer = TextEditionStringContainer(coder: decoder) else {return nil}
+        guard
+            let decoder = try? NSKeyedUnarchiver(forReadingFrom: encodedString),
+            let stringContainer = TextEditionStringContainer(coder: decoder)
+        else {return nil}
 
         return stringContainer
 

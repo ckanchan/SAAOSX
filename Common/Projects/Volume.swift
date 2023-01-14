@@ -13,7 +13,6 @@ import UIKit
 
 #elseif os(macOS)
 import AppKit
-typealias UIImage = NSImage
 #endif
 
 struct Volume: Hashable {

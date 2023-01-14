@@ -8,6 +8,9 @@
 
 import Foundation
 import CDKSwiftOracc
+#if canImport(AppKit)
+    import AppKit
+#endif
 
 extension NSAttributedString.Key {
     static var referenceContext = NSAttributedString.Key("referenceContext")

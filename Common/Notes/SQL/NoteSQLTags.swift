@@ -282,10 +282,12 @@ extension NoteSQLDatabase {
 
 extension Row {
     func toIndexedTagCKRecord() -> CKRecord? {
-        guard let recordData = self[NoteSQLDatabase.Schema.ckSystemFields] else {return nil}
-        let unarchiver = NSKeyedUnarchiver(forReadingWith: recordData)
-        unarchiver.requiresSecureCoding = true
-        guard let record = CKRecord(coder: unarchiver) else {return nil}
+        guard
+            let recordData = self[NoteSQLDatabase.Schema.ckSystemFields],
+            let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: recordData),
+            let record = CKRecord(coder: unarchiver)
+        else {return nil}
+
         return record
     }
 }

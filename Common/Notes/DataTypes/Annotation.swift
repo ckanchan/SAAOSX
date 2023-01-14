@@ -9,6 +9,10 @@
 import Foundation
 import CDKSwiftOracc
 
+#if canImport(AppKit)
+import AppKit.NSFont
+#endif
+
 struct Annotation: Codable {
     let nodeReference: NodeReference
     let transliteration: String

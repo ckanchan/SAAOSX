@@ -87,10 +87,11 @@ extension NoteSQLDatabase {
         if updateCloudKit {
             // Get Cloudkit saved metadata
             guard let row = try? db.pluck(query),
-                let ckRecordData = row[Schema.ckSystemFields] else {return}
-            
-            let unarchiver = NSKeyedUnarchiver(forReadingWith: ckRecordData)
-            unarchiver.requiresSecureCoding = true
+                let ckRecordData = row[Schema.ckSystemFields],
+                let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: ckRecordData)
+                
+            else {return}
+
             guard let record = CKRecord(coder: unarchiver) else {return}
             record["notes"] = updatedNote.notes
             

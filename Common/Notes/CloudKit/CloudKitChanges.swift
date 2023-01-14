@@ -13,9 +13,11 @@ import os
 extension CloudKitNotes {
     var databaseSubscription: CKSubscription? {
         get {
-            guard let data = userDefaults.data(forKey: .CloudKitDatabaseSubscription) else {return nil}
-            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
-            unarchiver.requiresSecureCoding = true
+            guard
+                let data = userDefaults.data(forKey: .CloudKitDatabaseSubscription),
+                let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data)
+            else
+                {return nil}
             return CKSubscription(coder: unarchiver)
         } set {
             if let subscription = newValue {
@@ -29,8 +31,11 @@ extension CloudKitNotes {
     
     var databaseChangeToken: CKServerChangeToken? {
         get {
-            guard let data = userDefaults.data(forKey: .CloudKitDatabaseChangeTokenKey) else {return nil}
-            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+            guard
+                let data = userDefaults.data(forKey: .CloudKitDatabaseChangeTokenKey),
+                let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data)
+            else {return nil}
+            
             unarchiver.requiresSecureCoding = true
             return CKServerChangeToken(coder: unarchiver)
         } set {
@@ -44,8 +49,10 @@ extension CloudKitNotes {
     }
     
     func getChangeToken(for noteType: NoteType) -> CKServerChangeToken? {
-        guard let data = userDefaults.data(forKey: noteType.changeTokenKey) else {return nil}
-        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+        guard
+            let data = userDefaults.data(forKey: noteType.changeTokenKey),
+            let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data)
+        else {return nil}
         unarchiver.requiresSecureCoding = true
         return CKServerChangeToken(coder: unarchiver)
     }

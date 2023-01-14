@@ -10,11 +10,9 @@ import Foundation
 
 extension NSSecureCoding {
     func securelyEncoded() -> Data {
-        let data = NSMutableData()
-        let coder = NSKeyedArchiver(forWritingWith: data)
-        coder.requiresSecureCoding = true
+        let coder = NSKeyedArchiver(requiringSecureCoding: true)
         self.encode(with: coder)
         coder.finishEncoding()
-        return data as Data
+        return coder.encodedData
     }
 }

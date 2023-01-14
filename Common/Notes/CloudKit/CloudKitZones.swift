@@ -25,8 +25,10 @@ extension CloudKitNotes {
     
     
     func zoneIDForNoteType(_ noteType: NoteType) -> CKRecordZone.ID? {
-        guard let data = userDefaults.data(forKey: noteType.zoneIDKey) else {return nil}
-        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+        guard
+            let data = userDefaults.data(forKey: noteType.zoneIDKey),
+            let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data)
+        else {return nil}
         unarchiver.requiresSecureCoding = true
         return CKRecordZone.ID(coder: unarchiver)
     }

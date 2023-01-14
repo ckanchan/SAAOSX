@@ -73,6 +73,6 @@ class AncientMapViewDelegate: NSObject, MKMapViewDelegate {
     }
 }
 
-protocol MapViewDelegateDelegate {
+protocol MapViewDelegateDelegate: AnyObject {
     func setInfo(locationName: String, locationDescription: String)
 }
