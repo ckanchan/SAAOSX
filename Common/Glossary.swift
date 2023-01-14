@@ -55,15 +55,18 @@ final public class Glossary {
 
     public func labelsForRow(row: Int) -> (String, String)? {
         let query = entries.select(citationForm, guideWord).filter(rowid == Int64(row))
+
         guard let row = try? db.pluck(query) else {return nil}
+
         return(cf: row[citationForm], gw: row[guideWord] ?? "")
     }
 
     public func entryForRow(row: Int) -> GlossaryEntry? {
         let query = entries.filter(rowid == Int64(row))
-        guard let row = try? db.pluck(query),
+        guard
+            let row = try? db.pluck(query),
             let result: GlossaryEntry = try? row.decode()
-            else {return nil}
+        else {return nil}
 
         return result
 

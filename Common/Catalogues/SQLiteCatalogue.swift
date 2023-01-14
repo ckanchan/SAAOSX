@@ -189,26 +189,16 @@ final class SQLiteCatalogue: CatalogueProvider {
     
     func getTextStrings(_ textId: TextID) -> TextEditionStringContainer? {
         let query = textTable.select(textStrings).filter(textid == textId.description)
-        do {
-            guard let row = try db.pluck(query) else {return nil}
-            let encodedString = row[textStrings]
-            let decoder = try NSKeyedUnarchiver(forReadingFrom: encodedString)
-            decoder.requiresSecureCoding = false
+
+        guard let row = try? db.pluck(query) else {return nil}
+        let encodedString = row[textStrings]
+
+        guard
+            let decoder = try? NSKeyedUnarchiver(forReadingFrom: encodedString),
             let stringContainer = TextEditionStringContainer(coder: decoder)
-            return stringContainer
-        } catch let SQLite.Result.error(message, code, _) {
-            os_log("SQLite error retrieving strings, code %{public}d, message %{public}s",
-                   log: Log.CatalogueSQLite,
-                   type: .error,
-                   code, message)
-            return nil
-        } catch {
-            os_log("Unable to decode text strings: %{public}s",
-                   log: Log.CatalogueSQLite,
-                   type: .error,
-                   error.localizedDescription)
-            return nil
-        }
+        else {return nil}
+
+        return stringContainer
     }
 
     convenience init? () {
