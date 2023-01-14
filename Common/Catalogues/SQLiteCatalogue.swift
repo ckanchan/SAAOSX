@@ -120,20 +120,20 @@ final class SQLiteCatalogue: CatalogueProvider {
     func getEntryFor(id cdliID: TextID) -> OraccCatalogEntry? {
         let query = textTable.select(displayName, title, textid, ancientAuthor, project, chapterNumber, chapterName, genre, material, period, provenience, primaryPublication, museumNumber, publicationHistory, notes, pleiadesID, pleiadesCoordinateX, pleiadesCoordinateY, credits).filter(textid == cdliID.description)
 
-        guard let r = try? db.pluck(query) else {return nil}
-        guard let row = r else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
         return rowToEntry(row)
     }
 
     func getTextStrings(_ textId: TextID) -> TextEditionStringContainer? {
         let query = textTable.select(textStrings).filter(textid == textId.description)
 
-        guard let encodedStringRow = try? db.pluck(query) else {return nil}
-        guard let row = encodedStringRow else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
         let encodedString = row[textStrings]
 
-        let decoder = NSKeyedUnarchiver(forReadingWith: encodedString)
-        guard let stringContainer = TextEditionStringContainer(coder: decoder) else {return nil}
+        guard
+            let decoder = try? NSKeyedUnarchiver(forReadingFrom: encodedString),
+            let stringContainer = TextEditionStringContainer(coder: decoder)
+        else {return nil}
 
         return stringContainer
     }

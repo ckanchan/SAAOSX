@@ -1,43 +1,41 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "CDKOraccInterface",
-        "repositoryURL": "https://github.com/ckanchan/CDKOraccInterface.git",
-        "state": {
-          "branch": "master",
-          "revision": "4e8840c1e10f2bed97b95992e94c5e76e7647496",
-          "version": null
-        }
-      },
-      {
-        "package": "CDKSwiftOracc",
-        "repositoryURL": "https://github.com/ckanchan/CDKSwiftOracc.git",
-        "state": {
-          "branch": "master",
-          "revision": "ce58148bb46c064a33bcd6a9b2282120b37b8d89",
-          "version": null
-        }
-      },
-      {
-        "package": "SQLite.swift",
-        "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
-        "state": {
-          "branch": "master",
-          "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
-          "version": null
-        }
-      },
-      {
-        "package": "ZIPFoundation",
-        "repositoryURL": "https://github.com/weichsel/ZIPFoundation/",
-        "state": {
-          "branch": null,
-          "revision": "edbeaa39b426e54702194b0a601342322f01e400",
-          "version": "0.9.9"
-        }
+  "pins" : [
+    {
+      "identity" : "cdkoraccinterface",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ckanchan/CDKOraccInterface.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e25c669bb487a0afc43e0d47148f363d3d211ebf"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "cdkswiftoracc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ckanchan/CDKSwiftOracc.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "68c41b95ae8687c2f7ee53dfa1f3de20e438f120"
+      }
+    },
+    {
+      "identity" : "sqlite.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stephencelis/SQLite.swift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "926b87da689bc68159298627aa97f20c24ddd2d8"
+      }
+    },
+    {
+      "identity" : "zipfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weichsel/ZIPFoundation/",
+      "state" : {
+        "revision" : "43ec568034b3731101dbf7670765d671c30f54f3",
+        "version" : "0.9.16"
+      }
+    }
+  ],
+  "version" : 2
 }

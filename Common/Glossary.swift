@@ -56,20 +56,17 @@ final public class Glossary {
     public func labelsForRow(row: Int) -> (String, String)? {
         let query = entries.select(citationForm, guideWord).filter(rowid == Int64(row))
 
-        guard let r = try? db.pluck(query) else {return nil}
-
-        guard let row = r else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
 
         return(cf: row[citationForm], gw: row[guideWord] ?? "")
     }
 
     public func entryForRow(row: Int) -> GlossaryEntry? {
         let query = entries.filter(rowid == Int64(row))
-        guard let r = try? db.pluck(query) else {return nil}
-
-        guard let row = r else {return nil}
-
-        guard let result: GlossaryEntry = try? row.decode() else {return nil}
+        guard
+            let row = try? db.pluck(query),
+            let result: GlossaryEntry = try? row.decode()
+        else {return nil}
 
         return result
 
@@ -96,16 +93,14 @@ final public class Glossary {
     
     public func getNameForId(_ idToQuery: String) -> String? {
         let query = entries.select(guideWord).filter(id == idToQuery)
-        guard let r = try? db.pluck(query) else {return nil}
-        guard let row = r else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
         guard let guideWord = row[guideWord] else {return nil}
         return guideWord
     }
     
     public func getIDforName(_ nameToQuery: String) -> String? {
         let query = entries.select(id).filter(citationForm == nameToQuery)
-        guard let r = try? db.pluck(query) else {return nil}
-        guard let row = r else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
         return row[id]
     }
 

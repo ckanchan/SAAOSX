@@ -13,7 +13,6 @@
 		5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */; };
 		542E88A322D33D28001CBB92 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 542E88A222D33D28001CBB92 /* SQLite */; };
 		542E88A622D33DCA001CBB92 /* CDKSwiftOracc in Frameworks */ = {isa = PBXBuildFile; productRef = 542E88A522D33DCA001CBB92 /* CDKSwiftOracc */; };
-		542E88A922D33DDA001CBB92 /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 542E88A822D33DDA001CBB92 /* CDKOraccInterface */; };
 		54317DE8209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		54317DE9209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 54317DE7209F618900B157D8 /* SAAO_CompleteGlossary.sqlite3 */; };
 		5435F30321CE5771000A1FC8 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435F30221CE5771000A1FC8 /* GeoJSON.swift */; };
@@ -81,6 +80,7 @@
 		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
 		54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EFA200C018F00AB364C /* ProjectListWindowController.swift */; };
 		54FE04EA21D141F5000214E5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE04E921D141F5000214E5 /* MapViewController.swift */; };
+		54FEEF65297330A80003C568 /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 54FEEF64297330A80003C568 /* CDKOraccInterface */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,7 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				542E88A922D33DDA001CBB92 /* CDKOraccInterface in Frameworks */,
+				54FEEF65297330A80003C568 /* CDKOraccInterface in Frameworks */,
 				542E88A622D33DCA001CBB92 /* CDKSwiftOracc in Frameworks */,
 				542E88A322D33D28001CBB92 /* SQLite in Frameworks */,
 				54E207DC21E60038004663C7 /* MapKit.framework in Frameworks */,
@@ -450,7 +450,7 @@
 			packageProductDependencies = (
 				542E88A222D33D28001CBB92 /* SQLite */,
 				542E88A522D33DCA001CBB92 /* CDKSwiftOracc */,
-				542E88A822D33DDA001CBB92 /* CDKOraccInterface */,
+				54FEEF64297330A80003C568 /* CDKOraccInterface */,
 			);
 			productName = SAAOSX;
 			productReference = 544138D92004D27A00A64CB2 /* SAAo-SX.app */;
@@ -498,12 +498,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = "Chaitanya Kanchan";
 				TargetAttributes = {
 					544138D82004D27A00A64CB2 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
@@ -525,6 +525,7 @@
 					};
 					544138EA2004D27A00A64CB2 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 						TestTargetID = 544138D82004D27A00A64CB2;
 					};
@@ -546,7 +547,7 @@
 			packageReferences = (
 				542E88A122D33D28001CBB92 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				542E88A422D33DCA001CBB92 /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */,
-				542E88A722D33DDA001CBB92 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */,
+				54FEEF63297330A80003C568 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */,
 			);
 			productRefGroup = 544138DA2004D27A00A64CB2 /* Products */;
 			projectDirPath = "";
@@ -736,6 +737,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -744,6 +746,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -761,12 +764,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -795,6 +799,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -803,6 +808,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -814,11 +820,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -831,6 +838,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
@@ -841,7 +849,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -854,6 +862,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SAAOSX/Info.plist;
@@ -864,7 +873,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -876,6 +885,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
 				INFOPLIST_FILE = SAAOSXTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -886,7 +896,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAAOSX.app/Contents/MacOS/SAAOSX";
 			};
 			name = Debug;
@@ -899,6 +909,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E5EXHV7YGE;
 				INFOPLIST_FILE = SAAOSXTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -909,7 +920,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ckprivate.2017.SAAOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAAOSX.app/Contents/MacOS/SAAOSX";
 			};
 			name = Release;
@@ -922,7 +933,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -944,7 +955,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7C57J6H3NZ;
 				INFOPLIST_FILE = SAAiOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1013,15 +1024,15 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ckanchan/CDKSwiftOracc.git";
 			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
-		542E88A722D33DDA001CBB92 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */ = {
+		54FEEF63297330A80003C568 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ckanchan/CDKOraccInterface.git";
+			repositoryURL = "https://github.com/ckanchan/CDKOraccInterface";
 			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
@@ -1038,9 +1049,9 @@
 			package = 542E88A422D33DCA001CBB92 /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */;
 			productName = CDKSwiftOracc;
 		};
-		542E88A822D33DDA001CBB92 /* CDKOraccInterface */ = {
+		54FEEF64297330A80003C568 /* CDKOraccInterface */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 542E88A722D33DDA001CBB92 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */;
+			package = 54FEEF63297330A80003C568 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */;
 			productName = CDKOraccInterface;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -8,7 +8,7 @@
 import Foundation
 import CDKSwiftOracc
 import SQLite
-import SQLiteObjc
+import SQLite3
 
 /// Conform to this protocol to allow BookmarkedTextController to refresh the table view when entries are added or removed from the database.
 @objc public protocol BookmarkDisplaying: AnyObject {
@@ -117,7 +117,7 @@ final public class Bookmarks: CatalogueProvider {
     }
 
     public func save(entry: OraccCatalogEntry, strings: TextEditionStringContainer) throws {
-        let archiver = NSKeyedArchiver()
+        let archiver = NSKeyedArchiver(requiringSecureCoding: true)
         strings.encode(with: archiver)
         let data = archiver.encodedData
 
@@ -162,8 +162,7 @@ final public class Bookmarks: CatalogueProvider {
         let rowID = Int64(rowID)
         let query = Bookmarks.bookmarks.select(Bookmarks.id, Bookmarks.displayName, Bookmarks.displayName, Bookmarks.title).filter(rowid == rowID)
 
-        guard let r = try? db.pluck(query) else { return nil }
-        guard let row = r else {return nil}
+        guard let row = try? db.pluck(query) else { return nil }
 
         return (row[Bookmarks.displayName], row[Bookmarks.title], row[Bookmarks.id])
 
@@ -178,9 +177,7 @@ final public class Bookmarks: CatalogueProvider {
             Bookmarks.project
             ).filter(rowid == Int64(rowID))
 
-        guard let r = try? db.pluck(query) else { return nil }
-
-        guard let row = r else { return nil}
+        guard let row = try? db.pluck(query) else { return nil }
         let tID = TextID(stringLiteral: row[Bookmarks.id])
 
         let catalogueEntry = OraccCatalogEntry(id: tID, displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
@@ -197,9 +194,7 @@ final public class Bookmarks: CatalogueProvider {
             Bookmarks.project
             ).filter(Bookmarks.id == id)
 
-        guard let r = try? db.pluck(query) else { return nil }
-
-        guard let row = r else { return nil}
+        guard let row = try? db.pluck(query) else { return nil }
         let tID = TextID(stringLiteral: row[Bookmarks.id])
         
         let catalogueEntry = OraccCatalogEntry(id: tID, displayName: row[Bookmarks.displayName], ancientAuthor: row[Bookmarks.ancientAuthor], title: row[Bookmarks.title], project: row[Bookmarks.project])
@@ -210,12 +205,13 @@ final public class Bookmarks: CatalogueProvider {
     public func getTextStrings(_ id: String) -> TextEditionStringContainer? {
         let query = Bookmarks.bookmarks.select(Bookmarks.textStrings).filter(Bookmarks.id == id)
 
-        guard let encodedStringRow = try? db.pluck(query) else {return nil}
-        guard let row = encodedStringRow else {return nil}
+        guard let row = try? db.pluck(query) else {return nil}
         let encodedString = row[Bookmarks.textStrings]
 
-        let decoder = NSKeyedUnarchiver(forReadingWith: encodedString)
-        guard let stringContainer = TextEditionStringContainer(coder: decoder) else {return nil}
+        guard
+            let decoder = try? NSKeyedUnarchiver(forReadingFrom: encodedString),
+            let stringContainer = TextEditionStringContainer(coder: decoder)
+        else {return nil}
 
         return stringContainer
 
@@ -224,8 +220,7 @@ final public class Bookmarks: CatalogueProvider {
     public func remove(entry: OraccCatalogEntry) {
         let query = Bookmarks.bookmarks.select(rowid).filter(Bookmarks.id == entry.id.description)
 
-        guard let r = try? db.pluck(query) else {return}
-        guard let row = r else {return}
+        guard let row = try? db.pluck(query) else {return}
         let rowID = row[rowid]
         remove(at: Int(rowID))
         entry.deindexItem()

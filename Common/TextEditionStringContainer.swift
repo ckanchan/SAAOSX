@@ -56,10 +56,12 @@ final public class TextEditionStringContainer: NSCoding {
     }
 
     required convenience public init?(coder aDecoder: NSCoder) {
-        guard let cuneiform = aDecoder.decodeObject(forKey: "cuneiform") as? String,
-            let transliteration = aDecoder.decodeObject(forKey: "transliteration") as? NSAttributedString,
-            let normalisation = aDecoder.decodeObject(forKey: "normalisation") as? NSAttributedString,
-            let translation = aDecoder.decodeObject(forKey: "translation") as? String else {return nil}
+        guard
+            let cuneiform = aDecoder.decodeObject(of: NSString.self, forKey: "cuneiform") as? String,
+            let transliteration = aDecoder.decodeObject(of: NSAttributedString.self, forKey: "transliteration"),
+            let normalisation = aDecoder.decodeObject(of: NSAttributedString.self, forKey: "normalisation"),
+            let translation = aDecoder.decodeObject(of: NSString.self, forKey: "translation") as? String
+        else {return nil}
 
         self.init(cuneiform: cuneiform, transliteration: transliteration, normalisation: normalisation, translation: translation)
     }
