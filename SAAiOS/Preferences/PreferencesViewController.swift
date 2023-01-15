@@ -135,7 +135,7 @@ class PreferencesViewController: UITableViewController {
                 present(alert, animated: true)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
-                let progressIndicator = UIActivityIndicatorView(style: .gray)
+                let progressIndicator = UIActivityIndicatorView(style: .medium)
                 cell.accessoryView = progressIndicator
                 progressIndicator.startAnimating()
                 sqlite.insert(volume) { [downloadedVolumes] result in
