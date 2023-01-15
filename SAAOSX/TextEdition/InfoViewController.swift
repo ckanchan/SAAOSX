@@ -12,4 +12,7 @@ import CDKSwiftOracc
 class InfoViewController: NSViewController {
     @IBOutlet weak var infoLabel: NSTextField!
     var textID: TextID?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }

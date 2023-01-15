@@ -20,13 +20,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var glossary: Glossary = { return Glossary() }()
     lazy var bookmarks: Bookmarks = { return try! Bookmarks() }()
     lazy var sqlite: SQLiteCatalogue? = { return SQLiteCatalogue() }()
+ 
 
-
+ 
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
     }
-    
 
     func setOraccInterface(to interface: InterfaceType) {
         switch interface {
@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         GlossaryWindowController.new(self)
     }
     
-
+    
     @IBAction func openPreferencesWindow(_ sender: Any) {
         if NSApp.windows.contains(where: {
             $0.title == "Preferences"

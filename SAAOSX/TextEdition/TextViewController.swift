@@ -66,6 +66,9 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         self.windowController = nil
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     func highlightSearchTerm(_ searchTerm: String, in textView: NSTextView) {
         textView.textStorage?.enumerateAttribute(.oraccCitationForm, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
             value, range, _ in
@@ -268,8 +271,8 @@ extension TextViewController {
             }
             
             if let pleiadesID = self?.catalogueEntry.pleiadesID,
-                let record = PleiadesRecord.lookupInPleiades(id: pleiadesID),
-                let (longitude, latitude) = record.representativePoint {
+               let record = PleiadesRecord.lookupInPleiades(id: pleiadesID),
+               let (longitude, latitude) = record.representativePoint {
                 let letterExcavationSite = AncientLocation(latitude: latitude, longitude: longitude, title: record.title, subtitle: record.description)
                 placesDictionary["excavationSite"] = letterExcavationSite
                 
