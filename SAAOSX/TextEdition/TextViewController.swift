@@ -9,6 +9,12 @@
 import Cocoa
 import CDKSwiftOracc
 
+public extension NSAttributedString.Key {
+    static var referenceContext: NSAttributedString.Key {
+        return self.init("referenceContext")
+    }
+}
+
 class TextViewController: NSViewController, NSTextViewDelegate {
 
     public enum Navigate {
@@ -57,7 +63,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         self.title = catalogueEntry?.title ?? "Text Edition"
         setText(self)
         textView.delegate = self
-        annotationsWereUpdated()
     }
     
     override func viewDidDisappear() {
@@ -69,35 +74,13 @@ class TextViewController: NSViewController, NSTextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(annotationsDidChange),
-                                               name: .annotationsChangedForText,
-                                               object: nil)
     }
     
     @objc func annotationsDidChange(_ notification: Notification) {
         guard let userInfo = notification.userInfo as? [String: TextID],
             catalogueEntry.id == userInfo["textID"] else {return}
-        
-        annotationsWereUpdated()
     }
     
-    func highlightAnnotations(in textView: NSTextView, annotations: [String: Annotation]) {
-        textView.textStorage?.enumerateAttribute(.reference, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
-            value, range, _ in
-            guard let stringVal = value as? String else {return}
-            let fullPath = String(catalogueEntry.id) + "." + stringVal
-            if let annotation = annotations[fullPath] {
-                guard range.length > 2 else {return}
-                let newRange = NSRange(location: range.location, length: range.length - 1)
-                textView.textStorage?.addAttributes(
-                    [NSAttributedString.Key.backgroundColor: NSColor.systemPink,
-                     NSAttributedString.Key.toolTip: annotation.annotation
-                    ],
-                    range: newRange)
-            }
-        })
-    }
     
     func highlightSearchTerm(_ searchTerm: String, in textView: NSTextView) {
         textView.textStorage?.enumerateAttribute(.oraccCitationForm, in: NSRange(location: 0, length: textView.textStorage!.length), options: .longestEffectiveRangeNotRequired, using: {
@@ -122,7 +105,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
             textView.textStorage?.setAttributedString(stringContainer.transliteration)
         case 2:
             textView.textStorage?.setAttributedString(stringContainer.normalisation)
-            annotationsWereUpdated()
             if let searchTerm = searchTerm {
                 highlightSearchTerm(searchTerm, in: textView)
             }
@@ -147,8 +129,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
 
         infoView.textID = self.catalogueEntry.id
         infoView.infoLabel.stringValue = self.catalogueEntry.description
-        infoView.annotations = notesDB.retrieveAnnotations(forID: self.catalogueEntry.id)
-        
         infoWindow.showWindow(nil)
     }
 
@@ -202,24 +182,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
                                                              .instanceTranslation: translation,
                                                              .reference: reference,
                                                              .referenceContext: contextStr]
-        
-        let annotationLabel: String
-        
-        if let highlight = metadata[.backgroundColor] as? NSColor,
-            highlight == .systemPink {
-            annotationLabel = "Edit annotation"
-        } else {
-            annotationLabel = "Add annotation"
-        }
-        
-        let annotationItem = NSMenuItem(title: annotationLabel, action: #selector(newAnnotationWindow), keyEquivalent: "")
-        let annotatedTitle = NSAttributedString(string: annotationLabel,
-                                                        attributes: menuMetadata)
-        
-        annotationItem.attributedTitle = annotatedTitle
-        
-        menu.addItem(annotationItem)
-        
         return menu
     }
 
@@ -227,38 +189,6 @@ class TextViewController: NSViewController, NSTextViewDelegate {
         GlossaryWindowController.searchField(sender)
     }
     
-    @objc func newAnnotationWindow(_ sender: NSMenuItem) {
-        let window: NSWindowController?
-        guard let metadata = sender.attributedTitle?.attributes(at: 0, effectiveRange: nil) else {return}
-        guard let reference = metadata[.reference] as? String else {return}
-        let userTags = notesDB.tagSet ?? UserTags([])
-        
-        #warning("this code needs  to differentiate between short and long nodereferences encoded in the nsattrubutedstring")
-        let nodeReference = NodeReference(base: catalogueEntry.id,
-                                          path: reference.split(separator: ".").map({String($0)}))
-        
-        if let annotation = notesDB.retrieveSingleAnnotation(nodeReference) {
-            window = AnnotationPopupController.new(withAnnotation: annotation, userTags: userTags)
-        } else {
-            guard let citationForm = metadata[.oraccCitationForm] as? String,
-                let transliteration = metadata[.writtenForm] as? String,
-                let translation = metadata[.instanceTranslation] as? String,
-                let context = metadata[.referenceContext] as? String,
-                let reference = metadata[.reference] as? String else {return}
-            
-            let nodeReference = NodeReference(base: catalogueEntry.id, path: reference.split(separator: ".").map { String($0)})
-            window = AnnotationPopupController.new(textID: catalogueEntry.id,
-                                                   node: nodeReference,
-                                                   transliteration: transliteration,
-                                                   normalisation: citationForm,
-                                                   translation: translation,
-                                                   context: context,
-                                                   userTags: userTags)
-        }
-        window?.showWindow(self)
-        guard let annotationVc = window?.contentViewController as? AnnotationPopupController else {return}
-        annotationVc.textField.becomeFirstResponder()
-    }
 
     func textViewDidChangeSelection(_ notification: Notification) {
         switch self.textSelected.selectedSegment {
@@ -365,8 +295,8 @@ extension TextViewController {
             }
             
             if let pleiadesID = self?.catalogueEntry.pleiadesID,
-                let record = PleiadesRecord.lookupInPleiades(id: pleiadesID),
-                let (longitude, latitude) = record.representativePoint {
+               let record = PleiadesRecord.lookupInPleiades(id: pleiadesID),
+               let (longitude, latitude) = record.representativePoint {
                 let letterExcavationSite = AncientLocation(latitude: latitude, longitude: longitude, title: record.title, subtitle: record.description)
                 placesDictionary["excavationSite"] = letterExcavationSite
                 
@@ -376,69 +306,6 @@ extension TextViewController {
             DispatchQueue.main.async {
                 MapViewController.new(forMap: ancientMap)
             }
-        }
-    }
-    
-    @IBAction func exportNotes(_ sender: NSButton) {
-        guard let catalogueEntry = self.catalogueEntry else {return}
-        let note = notesDB.retrieveNote(forID: catalogueEntry.id)
-        let annotations = notesDB.retrieveAnnotations(forID: catalogueEntry.id)
-        
-        let exportString = NSMutableAttributedString()
-        
-        switch (note, annotations.isEmpty) {
-            // Notes and annotations are available
-        case (.some(let note), false):
-            exportString.append(note.formatted(withMetadata: catalogueEntry))
-            exportString.append(.singleLineBreak)
-            exportString.append(annotations.formatted(withMetadata: catalogueEntry)!)
-            
-            // Annotations, no note
-        case (.none, false):
-            exportString.append(annotations.formatted(withMetadata: catalogueEntry)!)
-            
-            // Note, no annotations
-        case (.some(let note), true):
-            exportString.append(note.formatted(withMetadata: catalogueEntry))
-            
-            // Nothing
-        case (.none, true):
-            return
-        }
-        
-        let documentAttributes: [NSAttributedString.DocumentAttributeKey: Any] = [
-            .documentType: NSAttributedString.DocumentType.officeOpenXML,
-            .title: catalogueEntry.title
-        ]
-        
-        #warning("Return an error here")
-        guard let data = try? exportString.data(from: NSMakeRange(0, exportString.length), documentAttributes: documentAttributes) else {return}
-        
-        let panel = NSSavePanel()
-        panel.allowedFileTypes = ["docx"]
-        panel.nameFieldStringValue = "exported_notes_\(catalogueEntry.id)"
-        panel.message = "Choose a location to save your exported notes and annotations for \(catalogueEntry.displayName)"
-        
-        guard let window = view.window else {return}
-        panel.beginSheetModal(for: window) { response in
-            guard response == .OK,
-                let url = panel.url else {return}
-            
-            try? data.write(to: url)
-        }
-    }
-}
-extension TextViewController {
-    func annotationsWereUpdated() {
-        let annotations = notesDB.retrieveAnnotations(forID: catalogueEntry.id)
-        var strAnnotations = [String: Annotation]()
-        annotations.forEach{
-            strAnnotations[String($0.nodeReference)] = $0
-        }
-        
-        DispatchQueue.main.async { [weak self] in
-            guard let vc = self else {return}
-            vc.highlightAnnotations(in: vc.textView, annotations: strAnnotations)
         }
     }
 }
