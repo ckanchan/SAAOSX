@@ -11,6 +11,7 @@ import Foundation
 enum PreferenceKey: String {
     case textWindowNumber
     case userTags
+    case downloadedVolumes
 }
 
 class UserDefaultsController {
@@ -22,18 +23,11 @@ class UserDefaultsController {
         return defaults.integer(forKey: PreferenceKey.textWindowNumber.rawValue)
     }
     
-    var userTags: Set<String> {
-        let tags = defaults.array(forKey: PreferenceKey.userTags.rawValue) as? [String] ?? []
-        return Set(tags)
-    }
 
     func saveTextPreference(_ number: Int) {
         defaults.set(number, forKey: PreferenceKey.textWindowNumber.rawValue)
     }
     
-    func saveTags(_ tags: Set<String>) {
-        let tags = Array(tags)
-        defaults.set(tags, forKey: PreferenceKey.userTags.rawValue)
-    }
+    
 
 }

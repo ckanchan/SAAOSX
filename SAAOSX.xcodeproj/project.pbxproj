@@ -131,7 +131,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5401C5E721F2643D0037628F /* SAAo-SX.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SAAo-SX.help"; sourceTree = "<group>"; };
+		5401C5E721F2643D0037628F /* SAAo-SX.help */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "SAAo-SX.help"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
 		540DBAB522DB857500DB293D /* RINAP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RINAP.swift; sourceTree = "<group>"; };
 		540DBAB822DBA0FE00DB293D /* SAA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAA.swift; sourceTree = "<group>"; };
@@ -309,10 +309,10 @@
 		544138DB2004D27A00A64CB2 /* SAAOSX */ = {
 			isa = PBXGroup;
 			children = (
-				54C5394922808D0E00397906 /* Preferences */,
 				5401C5E721F2643D0037628F /* SAAo-SX.help */,
-				54D3B4E621D7F2D700F836E2 /* Extensions */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
+				54C5394922808D0E00397906 /* Preferences */,
+				54D3B4E621D7F2D700F836E2 /* Extensions */,
 				5491DD4C21CD381100B49B7D /* Maps */,
 				54737B3920387C450030F71D /* Project */,
 				54737B3820387C0E0030F71D /* TextEdition */,

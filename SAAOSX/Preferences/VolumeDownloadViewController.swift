@@ -10,9 +10,18 @@ import Cocoa
 
 class VolumeDownloadViewController: NSViewController {
 
+    @IBOutlet weak var volumeTableView: NSTableView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
     
+}
+
+extension VolumeDownloadViewController: NSTableViewDataSource, NSTableViewDelegate {
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        Volume.allVolumes.count
+    }
 }
