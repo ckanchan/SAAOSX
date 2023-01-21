@@ -117,7 +117,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5401C5E721F2643D0037628F /* SAAo-SX.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SAAo-SX.help"; sourceTree = "<group>"; };
+		5401C5E721F2643D0037628F /* SAAo-SX.help */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "SAAo-SX.help"; sourceTree = "<group>"; };
 		5407124320A6173D00666489 /* TextPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPanelViewController.swift; sourceTree = "<group>"; };
 
 		5418DF0A200F71C7001EE385 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
@@ -273,10 +273,10 @@
 		544138DB2004D27A00A64CB2 /* SAAOSX */ = {
 			isa = PBXGroup;
 			children = (
-				5401C5E721F2643D0037628F /* SAAo-SX.help */,
+				54854B8E297C97D1006AC378 /* Documentation */,
+				54C5394922808D0E00397906 /* Preferences */,
 				54D3B4E621D7F2D700F836E2 /* Extensions */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
-				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
 				5491DD4C21CD381100B49B7D /* Maps */,
 				54737B3920387C450030F71D /* Project */,
 				54737B3820387C0E0030F71D /* TextEdition */,
@@ -284,8 +284,6 @@
 				54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */,
 				544138E02004D27A00A64CB2 /* Assets.xcassets */,
 				544138DC2004D27A00A64CB2 /* AppDelegate.swift */,
-				54C91A812017AAB0001AA675 /* PreferencesViewController.swift */,
-				54C91A832017AB9F001AA675 /* UserDefaultsController.swift */,
 				544138E52004D27A00A64CB2 /* Info.plist */,
 				54D9CD082019C974005498A3 /* Credits.rtf */,
 			);
@@ -362,6 +360,14 @@
 			path = TextEdition;
 			sourceTree = "<group>";
 		};
+		54854B8E297C97D1006AC378 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				5401C5E721F2643D0037628F /* SAAo-SX.help */,
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
 		548C57D120A1C4CE008E8C1F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +417,17 @@
 				5429F7C820448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		54C5394922808D0E00397906 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				54C91A7F2017A8C0001AA675 /* Preferences.storyboard */,
+				54C91A812017AAB0001AA675 /* PreferencesViewController.swift */,
+				54C91A832017AB9F001AA675 /* UserDefaultsController.swift */,
+				54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		54D3B4DD21D7B56D00F836E2 /* Resources */ = {
@@ -667,18 +684,18 @@
 			files = (
 				54657A6120A0D6E000FAC8E3 /* OnlineViewController.swift in Sources */,
 				5498CAFA204EB0B8004C774A /* Glossary.swift in Sources */,
-				54C9845020A767930026C5AA /* NotesViewController.swift in Sources */,
+
 				5498CADF204EAF63004C774A /* TextEditionViewController.swift in Sources */,
 				54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */,
 				5498CAF9204EB0B8004C774A /* Catalogue.swift in Sources */,
-				5463D28C20A782B8002B368A /* UserManager.swift in Sources */,
+
 				5498CAF7204EB0B8004C774A /* Bookmarks.swift in Sources */,
 				543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */,
-				5407124220A5F47000666489 /* UIVIewController+Theming.swift in Sources */,
+
 				548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */,
-				54041CE921EE6E09006EAF8D /* TextAnnotationManager.swift in Sources */,
+
 				5498CAF8204EB0B8004C774A /* TextEditionStringContainer.swift in Sources */,
-				54041CED21EE6E19006EAF8D /* CloudKitPull.swift in Sources */,
+
 				5498CADD204EAF63004C774A /* ProjectListViewController.swift in Sources */,
 				5439770C20A421E6002072AE /* PreferencesViewController.swift in Sources */,
 				54041CEA21EE6E10006EAF8D /* Annotation.swift in Sources */,
