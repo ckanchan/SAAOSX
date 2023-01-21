@@ -15,7 +15,11 @@ import UIKit
 import AppKit
 #endif
 
-struct Volume: Hashable {
+struct Volume: Hashable, Identifiable {
+    var id: String {
+        code
+    }
+    
     enum Project: String { case cams, rinap, riao, saa }
     var project: Project
     var code: String

@@ -9,13 +9,22 @@
 import SwiftUI
 
 struct VolumeInformationList: View {
+    @State var selectedVolume: Volume
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            List(Volume.allVolumes, selection: $selectedVolume) {
+                //VolumeInformationView(volume: $0)
+                Text($0.title)
+            }
+            VolumeInformationDetail(volume: selectedVolume)
+        }
+        .frame(maxWidth:.infinity, maxHeight: .infinity)
     }
 }
 
 struct VolumeInformationList_Previews: PreviewProvider {
     static var previews: some View {
-        VolumeInformationList()
+        VolumeInformationList(selectedVolume: Volume.saa01)
     }
 }

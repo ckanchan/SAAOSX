@@ -63,6 +63,8 @@
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
 		547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE627201345830001B8BF /* GlossaryEntryViewController.swift */; };
+		54812A49297482B2005BBFA2 /* VolumeInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54812A48297482B2005BBFA2 /* VolumeInformationView.swift */; };
+		54812A4B297487A7005BBFA2 /* VolumeInformationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54812A4A297487A7005BBFA2 /* VolumeInformationList.swift */; };
 		54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */; };
 		548C57D320A1EC04008E8C1F /* UIKeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */; };
 		5491DD4E21CD385100B49B7D /* Maps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5491DD4D21CD385100B49B7D /* Maps.storyboard */; };
@@ -100,6 +102,7 @@
 		54D3B4E321D7ED0E00F836E2 /* PleiadesRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E221D7ED0E00F836E2 /* PleiadesRecord.swift */; };
 		54D3B4E521D7F0F100F836E2 /* NSAlertExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3B4E421D7F0F100F836E2 /* NSAlertExtensions.swift */; };
 		54D9CD092019C974005498A3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 54D9CD082019C974005498A3 /* Credits.rtf */; };
+		54DF25E82975D72500B7F1A9 /* VolumeInformationDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DF25E72975D72500B7F1A9 /* VolumeInformationDetail.swift */; };
 		54ED887420109F5C00B10E8F /* InfoSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */; };
 		54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */; };
 		54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */; };
@@ -177,6 +180,8 @@
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
 		547BE627201345830001B8BF /* GlossaryEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryEntryViewController.swift; sourceTree = "<group>"; };
+		54812A48297482B2005BBFA2 /* VolumeInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeInformationView.swift; sourceTree = "<group>"; };
+		54812A4A297487A7005BBFA2 /* VolumeInformationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeInformationList.swift; sourceTree = "<group>"; };
 		54884E3E20185627007F7A22 /* QuickSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSearchResultsViewController.swift; sourceTree = "<group>"; };
 		548C57D220A1EC04008E8C1F /* UIKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommands.swift; sourceTree = "<group>"; };
 		5491DD4D21CD385100B49B7D /* Maps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Maps.storyboard; sourceTree = "<group>"; };
@@ -211,6 +216,7 @@
 		54D3B4E421D7F0F100F836E2 /* NSAlertExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAlertExtensions.swift; sourceTree = "<group>"; };
 		54D9CD082019C974005498A3 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		54D9CD0A2019CF8E005498A3 /* SAAOSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAAOSX.entitlements; sourceTree = "<group>"; };
+		54DF25E72975D72500B7F1A9 /* VolumeInformationDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeInformationDetail.swift; sourceTree = "<group>"; };
 		54ED887320109F5C00B10E8F /* InfoSideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSideBarViewController.swift; sourceTree = "<group>"; };
 		54FC1EF2200BDA2C00AB364C /* ProjectListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
 		54FC1EF8200BDF9700AB364C /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -312,6 +318,7 @@
 				5401C5E721F2643D0037628F /* SAAo-SX.help */,
 				544138E22004D27A00A64CB2 /* Main.storyboard */,
 				54C5394922808D0E00397906 /* Preferences */,
+				54812A472974827D005BBFA2 /* Preferences_SwiftUI */,
 				54D3B4E621D7F2D700F836E2 /* Extensions */,
 				5491DD4C21CD381100B49B7D /* Maps */,
 				54737B3920387C450030F71D /* Project */,
@@ -421,6 +428,16 @@
 				5407124320A6173D00666489 /* TextPanelViewController.swift */,
 			);
 			path = TextEdition;
+			sourceTree = "<group>";
+		};
+		54812A472974827D005BBFA2 /* Preferences_SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				54812A48297482B2005BBFA2 /* VolumeInformationView.swift */,
+				54812A4A297487A7005BBFA2 /* VolumeInformationList.swift */,
+				54DF25E72975D72500B7F1A9 /* VolumeInformationDetail.swift */,
+			);
+			path = Preferences_SwiftUI;
 			sourceTree = "<group>";
 		};
 		548C57D120A1C4CE008E8C1F /* Extensions */ = {
@@ -726,6 +743,7 @@
 				544D4FFE204196F6009016DA /* SQLiteCatalogue.swift in Sources */,
 				541F74CF29743CDC00453C58 /* VolumeDownloadViewController.swift in Sources */,
 				54FC1EF9200BDF9700AB364C /* ViewControllerExtensions.swift in Sources */,
+				54812A49297482B2005BBFA2 /* VolumeInformationView.swift in Sources */,
 				54A9521C204058D60042E1BA /* Bookmarks.swift in Sources */,
 				541F74CB2974355E00453C58 /* InfoViewController.swift in Sources */,
 				54C91A842017ABA0001AA675 /* UserDefaultsController.swift in Sources */,
@@ -737,9 +755,11 @@
 				54FC1EF3200BDA2C00AB364C /* ProjectListViewController.swift in Sources */,
 				5435F30321CE5771000A1FC8 /* GeoJSON.swift in Sources */,
 				5418DF0B200F71C7001EE385 /* TextViewController.swift in Sources */,
+				54812A4B297487A7005BBFA2 /* VolumeInformationList.swift in Sources */,
 				540DBAB922DBA0FE00DB293D /* SAA.swift in Sources */,
 				5473AD1222D7C5E00029317F /* Volume.swift in Sources */,
 				5429F7C920448A7E004D6FD2 /* OraccCatalogEntry+CoreSpotlight.swift in Sources */,
+				54DF25E82975D72500B7F1A9 /* VolumeInformationDetail.swift in Sources */,
 				54D3B4E321D7ED0E00F836E2 /* PleiadesRecord.swift in Sources */,
 				54D3B4E121D7BBE000F836E2 /* AncientMapTableViewDelegate.swift in Sources */,
 				54884E3F20185627007F7A22 /* QuickSearchResultsViewController.swift in Sources */,

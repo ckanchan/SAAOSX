@@ -9,13 +9,21 @@
 import SwiftUI
 
 struct VolumeInformationDetail: View {
+    var volume: Volume?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text(volume?.title ?? "No title selected")
+                .font(.title)
+            
+            Text(volume?.blurb ?? "")
+                .font(.caption)
+        }
     }
 }
 
 struct VolumeInformationDetail_Previews: PreviewProvider {
     static var previews: some View {
-        VolumeInformationDetail()
+        VolumeInformationDetail(volume: Volume.saa01)
     }
 }

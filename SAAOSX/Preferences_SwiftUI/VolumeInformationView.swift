@@ -9,13 +9,25 @@
 import SwiftUI
 
 struct VolumeInformationView: View {
+    var volume: Volume
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+
+                Text(volume.title)
+          
+            Spacer()
+            
+            Image(nsImage: volume.image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 50, height: 120, alignment: .trailing)
+        }
     }
 }
 
 struct VolumeInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        VolumeInformationView()
+        VolumeInformationView(volume: Volume.saa01)
     }
 }

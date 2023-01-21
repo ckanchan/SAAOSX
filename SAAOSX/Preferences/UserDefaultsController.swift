@@ -28,6 +28,11 @@ class UserDefaultsController {
         defaults.set(number, forKey: PreferenceKey.textWindowNumber.rawValue)
     }
     
-    
-
+    var downloadedVolumes: Set<String> {
+        get {
+            return Set(UserDefaults.standard.stringArray(forKey: PreferenceKey.downloadedVolumes.rawValue) ?? [])
+        } set {
+            return UserDefaults.standard.set(Array(newValue), forKey: PreferenceKey.downloadedVolumes.rawValue)
+        }
+    }
 }
