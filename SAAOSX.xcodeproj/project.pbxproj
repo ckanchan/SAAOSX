@@ -31,6 +31,7 @@
 		54657A6320A0DFA500FAC8E3 /* GlossaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54657A6220A0DFA500FAC8E3 /* GlossaryTableViewController.swift */; };
 		546D462121CFB6730012C1EE /* AncientLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546D462021CFB6730012C1EE /* AncientLocation.swift */; };
 		54781E4029A3DCBF006EA569 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54781E3F29A3DCBF006EA569 /* Log.swift */; };
+		54781E4229A3DEB1006EA569 /* SAAVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54781E4129A3DEB1006EA569 /* SAAVolume.swift */; };
 		547BE620201321670001B8BF /* GlossaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE61F201321670001B8BF /* GlossaryListViewController.swift */; };
 		547BE62420133BCD0001B8BF /* GlossarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */; };
 		547BE62620133DFD0001B8BF /* GlossaryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */; };
@@ -136,6 +137,7 @@
 		54657A6220A0DFA500FAC8E3 /* GlossaryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryTableViewController.swift; sourceTree = "<group>"; };
 		546D462021CFB6730012C1EE /* AncientLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AncientLocation.swift; sourceTree = "<group>"; };
 		54781E3F29A3DCBF006EA569 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		54781E4129A3DEB1006EA569 /* SAAVolume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAAVolume.swift; sourceTree = "<group>"; };
 		547BE61F201321670001B8BF /* GlossaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryListViewController.swift; sourceTree = "<group>"; };
 		547BE62320133BCD0001B8BF /* GlossarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossarySplitViewController.swift; sourceTree = "<group>"; };
 		547BE62520133DFD0001B8BF /* GlossaryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryWindowController.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 		54A9520B204058C40042E1BA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				54781E4129A3DEB1006EA569 /* SAAVolume.swift */,
 				54D3B4DF21D7B5B300F836E2 /* Maps */,
 				543DC34520B676B60019FF1E /* Catalogues */,
 				54781E3F29A3DCBF006EA569 /* Log.swift */,
@@ -641,6 +644,7 @@
 				54A356C521D8ED6D0022C2EC /* CLLocationCoordinate2D+Equatable.swift in Sources */,
 				54A9521B204058D60042E1BA /* Catalogue.swift in Sources */,
 				547BE628201345830001B8BF /* GlossaryEntryViewController.swift in Sources */,
+				54781E4229A3DEB1006EA569 /* SAAVolume.swift in Sources */,
 				5418DF0F200FD62A001EE385 /* InfoViewController.swift in Sources */,
 				54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */,
 				54FC1EFB200C018F00AB364C /* ProjectListWindowController.swift in Sources */,
