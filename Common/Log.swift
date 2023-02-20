@@ -10,14 +10,6 @@ import Foundation
 import os
 
 enum Log {
-    static var CloudKit: OSLog {
-        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "CloudKit")
-    }
-    
-    static var NoteSQLite: OSLog {
-        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "NoteSQLite")
-    }
-    
     static var BookmarksSQLite: OSLog {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "BookmarksSQLite")
     }
