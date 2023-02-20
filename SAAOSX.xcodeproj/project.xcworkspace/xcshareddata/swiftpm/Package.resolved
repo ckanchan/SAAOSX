@@ -15,7 +15,7 @@
       "location" : "https://github.com/ckanchan/CDKSwiftOracc.git",
       "state" : {
         "branch" : "main",
-        "revision" : "68c41b95ae8687c2f7ee53dfa1f3de20e438f120"
+        "revision" : "93f3acc0f2872301e6bb736d9302084dd792cdd3"
       }
     },
     {
@@ -24,7 +24,7 @@
       "location" : "https://github.com/stephencelis/SQLite.swift.git",
       "state" : {
         "branch" : "master",
-        "revision" : "926b87da689bc68159298627aa97f20c24ddd2d8"
+        "revision" : "35d30678b376211569efbde702996f77f88a5bb2"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/weichsel/ZIPFoundation/",
       "state" : {
-        "revision" : "43ec568034b3731101dbf7670765d671c30f54f3",
-        "version" : "0.9.16"
+        "revision" : "edbeaa39b426e54702194b0a601342322f01e400",
+        "version" : "0.9.9"
       }
     }
   ],
