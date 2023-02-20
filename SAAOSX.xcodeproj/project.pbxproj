@@ -43,9 +43,6 @@
 		543709AC209F9D8C00CE41F7 /* CuneiformNA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 543709AA209F9D8C00CE41F7 /* CuneiformNA.ttf */; };
 		543709AE209F9EB300CE41F7 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543709AD209F9EB300CE41F7 /* UIFontExtensions.swift */; };
 		5439770C20A421E6002072AE /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439770B20A421E6002072AE /* PreferencesViewController.swift */; };
-		543D400222AEC43500C5A96D /* CDKSwiftOracc in Frameworks */ = {isa = PBXBuildFile; productRef = 543D400122AEC43500C5A96D /* CDKSwiftOracc */; };
-		543D400522AEC44800C5A96D /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 543D400422AEC44800C5A96D /* CDKOraccInterface */; };
-		543D400822AEC45A00C5A96D /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 543D400722AEC45A00C5A96D /* SQLite */; };
 		543DC34820B6787A0019FF1E /* UserTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DC34720B6787A0019FF1E /* UserTags.swift */; };
 		543DC34920B6787A0019FF1E /* UserTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DC34720B6787A0019FF1E /* UserTags.swift */; };
 		544138DD2004D27A00A64CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544138DC2004D27A00A64CB2 /* AppDelegate.swift */; };
@@ -107,6 +104,12 @@
 		54AEE983203A02D800A81B97 /* TextEdition.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AEE982203A02D800A81B97 /* TextEdition.storyboard */; };
 		54B3C1B621D6952B00F00F39 /* AncientMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B521D6952B00F00F39 /* AncientMapViewDelegate.swift */; };
 		54B3C1B821D698BB00F00F39 /* AncientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C1B721D698BB00F00F39 /* AncientMap.swift */; };
+		54B4B2FE29A3CBBB008903B5 /* CDKSwiftOracc in Frameworks */ = {isa = PBXBuildFile; productRef = 54B4B2FD29A3CBBB008903B5 /* CDKSwiftOracc */; };
+		54B4B30129A3CBC8008903B5 /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 54B4B30029A3CBC8008903B5 /* CDKOraccInterface */; };
+		54B4B30429A3CBD6008903B5 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 54B4B30329A3CBD6008903B5 /* SQLite */; };
+		54B4B30629A3CCCD008903B5 /* CDKSwiftOracc in Frameworks */ = {isa = PBXBuildFile; productRef = 54B4B30529A3CCCD008903B5 /* CDKSwiftOracc */; };
+		54B4B30829A3CCD0008903B5 /* CDKOraccInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 54B4B30729A3CCD0008903B5 /* CDKOraccInterface */; };
+		54B4B30A29A3CCD3008903B5 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 54B4B30929A3CCD3008903B5 /* SQLite */; };
 		54B5B95321DBDB94002528FC /* CKRecord+Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5B95221DBDB94002528FC /* CKRecord+Conversions.swift */; };
 		54C21A60227F0DB50093E494 /* NoteSQLTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C21A5F227F0DB50093E494 /* NoteSQLTags.swift */; };
 		54C5394B22808D6100397906 /* NotesPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C5394A22808D6100397906 /* NotesPreferencesViewController.swift */; };
@@ -262,10 +265,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				543D400822AEC45A00C5A96D /* SQLite in Frameworks */,
-				543D400222AEC43500C5A96D /* CDKSwiftOracc in Frameworks */,
+				54B4B30429A3CBD6008903B5 /* SQLite in Frameworks */,
+				54B4B2FE29A3CBBB008903B5 /* CDKSwiftOracc in Frameworks */,
 				5434C8F4226CE488005572B3 /* CloudKit.framework in Frameworks */,
-				543D400522AEC44800C5A96D /* CDKOraccInterface in Frameworks */,
+				54B4B30129A3CBC8008903B5 /* CDKOraccInterface in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +283,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54B4B30A29A3CCD3008903B5 /* SQLite in Frameworks */,
+				54B4B30829A3CCD0008903B5 /* CDKOraccInterface in Frameworks */,
+				54B4B30629A3CCCD008903B5 /* CDKSwiftOracc in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,9 +623,9 @@
 			);
 			name = "SAAo-SX";
 			packageProductDependencies = (
-				543D400122AEC43500C5A96D /* CDKSwiftOracc */,
-				543D400422AEC44800C5A96D /* CDKOraccInterface */,
-				543D400722AEC45A00C5A96D /* SQLite */,
+				54B4B2FD29A3CBBB008903B5 /* CDKSwiftOracc */,
+				54B4B30029A3CBC8008903B5 /* CDKOraccInterface */,
+				54B4B30329A3CBD6008903B5 /* SQLite */,
 			);
 			productName = SAAOSX;
 			productReference = 544138D92004D27A00A64CB2 /* SAAo-SX.app */;
@@ -656,6 +662,11 @@
 			dependencies = (
 			);
 			name = SAAi;
+			packageProductDependencies = (
+				54B4B30529A3CCCD008903B5 /* CDKSwiftOracc */,
+				54B4B30729A3CCD0008903B5 /* CDKOraccInterface */,
+				54B4B30929A3CCD3008903B5 /* SQLite */,
+			);
 			productName = SAAiOS;
 			productReference = 5498CAD8204EAF63004C774A /* SAAi.app */;
 			productType = "com.apple.product-type.application";
@@ -710,9 +721,9 @@
 			);
 			mainGroup = 544138D02004D27A00A64CB2;
 			packageReferences = (
-				543D400022AEC43500C5A96D /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */,
-				543D400322AEC44800C5A96D /* XCRemoteSwiftPackageReference "CDKOraccInterface" */,
-				543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				54B4B2FC29A3CBBB008903B5 /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */,
+				54B4B2FF29A3CBC8008903B5 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */,
+				54B4B30229A3CBD6008903B5 /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			productRefGroup = 544138DA2004D27A00A64CB2 /* Products */;
 			projectDirPath = "";
@@ -1055,6 +1066,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1078,6 +1090,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.chaidk.SAAo-SX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1221,25 +1234,25 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		543D400022AEC43500C5A96D /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */ = {
+		54B4B2FC29A3CBBB008903B5 /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ckanchan/CDKSwiftOracc.git";
+			repositoryURL = "https://github.com/ckanchan/CDKSwiftOracc";
 			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
-		543D400322AEC44800C5A96D /* XCRemoteSwiftPackageReference "CDKOraccInterface" */ = {
+		54B4B2FF29A3CBC8008903B5 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ckanchan/CDKOraccInterface.git";
+			repositoryURL = "https://github.com/ckanchan/CDKOraccInterface";
 			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
-		543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+		54B4B30229A3CBD6008903B5 /* XCRemoteSwiftPackageReference "SQLite" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -1248,19 +1261,34 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		543D400122AEC43500C5A96D /* CDKSwiftOracc */ = {
+		54B4B2FD29A3CBBB008903B5 /* CDKSwiftOracc */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 543D400022AEC43500C5A96D /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */;
+			package = 54B4B2FC29A3CBBB008903B5 /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */;
 			productName = CDKSwiftOracc;
 		};
-		543D400422AEC44800C5A96D /* CDKOraccInterface */ = {
+		54B4B30029A3CBC8008903B5 /* CDKOraccInterface */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 543D400322AEC44800C5A96D /* XCRemoteSwiftPackageReference "CDKOraccInterface" */;
+			package = 54B4B2FF29A3CBC8008903B5 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */;
 			productName = CDKOraccInterface;
 		};
-		543D400722AEC45A00C5A96D /* SQLite */ = {
+		54B4B30329A3CBD6008903B5 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 543D400622AEC45A00C5A96D /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			package = 54B4B30229A3CBD6008903B5 /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
+		};
+		54B4B30529A3CCCD008903B5 /* CDKSwiftOracc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54B4B2FC29A3CBBB008903B5 /* XCRemoteSwiftPackageReference "CDKSwiftOracc" */;
+			productName = CDKSwiftOracc;
+		};
+		54B4B30729A3CCD0008903B5 /* CDKOraccInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54B4B2FF29A3CBC8008903B5 /* XCRemoteSwiftPackageReference "CDKOraccInterface" */;
+			productName = CDKOraccInterface;
+		};
+		54B4B30929A3CCD3008903B5 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54B4B30229A3CBD6008903B5 /* XCRemoteSwiftPackageReference "SQLite" */;
 			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
